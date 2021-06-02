@@ -1,0 +1,254 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<script type="text/javascript">
+
+  function resizeIframe(iframe) {
+    var newheight;
+    var newwidth;
+
+    if(document.getElementById){
+        newwidth=iframe.contentWindow.document.body.scrollWidth;
+        newheight=iframe.contentWindow.document.body.scrollHeight;
+    }
+
+    iframe.height= (newheight) + "px";
+    iframe.width= (newwidth) + "px";
+  }
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>User News</title>
+
+<link href="/web.css" rel="stylesheet" type="text/css">
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+   <td width="1%" align="left" class="bgred" valign="top">
+      <div align="center">
+      &nbsp;<br>
+      <a href="http://www.wisc.edu">
+
+      <img src="/images/uw-sm-red.png" width="125" height="46" border="0"> </a>
+       </div>
+
+	<ul class="sidebar">
+	<li><a href="/">CHTC Home</a></li>
+	
+	<li>About
+		<ul>
+		<li><a href="/approach.shtml">Our Approach</a></li>
+<!--comment		<li><a href="/resources.shtml">Our Resources</a></li>   -->
+		<li><a href="/projects.shtml">Our Customers</a></li>
+		<li><a href="/people.shtml">Our Staff</a></li>
+		<li><a href="/jobs.shtml">Our Open Positions</a></li>
+		</ul>
+	</li>
+	
+	<li>How To's
+		<ul>
+		<li><a href="/get-started.shtml">Get Started</a></li>
+		<li><a href="/get-help.shtml">Get Help</a></li>
+        	<li><a href="/guides.shtml">All User Guides</a></li>
+                <li><a href="/use-submit-node.shtml">Use an HTC Submit Server</a></li>
+		<li><a href="/helloworld.shtml">Run Your First HTC Jobs</a></li>
+		<li><a href="/howto_overview.shtml">HTC for MatLab, Python or R</a></li>
+		<li><a href="/hpc-overview.shtml">Use the HPC Cluster</a></li>
+		<li><a href="/cite-chtc.shtml">Cite CHTC Resources</a></li>
+		</ul>
+	</li>
+	<li><a href="/user-news.shtml">User News</a></li>
+	<li>Other Resources
+		<ul>
+		<!--<li><a href="http://monitor.chtc.wisc.edu/uw_condor_usage/usage1.shtml">Pool Usage Reports</a></li>-->
+<!--comment		<li><a href="/opmetrics.shtml">Operational Metrics</a></li>  -->
+		<li><a href="/gpu-lab.shtml">CHTC GPU Lab</a></li>
+		<li><a href="http://research.cs.wisc.edu/htcondor/">HTCondor Project</a></li>
+		<li><a href="http://www.neos-server.org/">NEOS Optimization Service</a></li>
+		<li><a href="http://www.opensciencegrid.org/">Open Science Grid</a></li>
+		<li><a href="http://wid.wisc.edu/">WID (Wisconsin Institute for Discovery)</a></li>
+		</ul>
+	</li>
+	</ul>
+
+	</td>
+
+<td width="97%" valign="top"> 
+
+
+	<TABLE SUMMARY="Navigation layout" BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<TR ALIGN="left"> 
+  <TD WIDTH="100%" height="400" Align="left" VALIGN="top"> 
+    <A  name="body"></a> 
+	<div id = "main">
+
+<!-- Top of Page Body -->
+<table BORDER="0" WIDTH="100%">
+<!-- <h1 align=left valign=center>The Center for High Throughput Computing</h1> -->
+
+<div id="osg_power"> <span style="height: 30px">Powered by:</span><br /><a href="http://opensciencegrid.org"><img alt="Open Science Grid" src="/images/Open_Science_Grid_Consortium(Logo).jpg" width="123" height="70" /></a></div>
+
+<div id="hours"> <span style="height: 30px">
+	<a href="https://twitter.com/CHTC_UW" style="color:white;"><center><img alt="Twitter" src="/images/twitter.png" width="50" height="50"></center></a> 
+	<center><a href="https://github.com/CHTC/chtc-website-source" style="color:white;"><img alt="GitHub" src="/images/GitHub_Logo_White.png" width="92" height="38"></center></a></span></div>
+
+<div id="hours"> <span style="height: 35px">
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<a href="http://chtc.cs.wisc.edu/get-help.shtml" style="color:white;">
+<center><b>Office Hours!</b>
+<p style="margin-bottom: 1px;"></p>
+Tues/Thurs, 3-5pm
+Click for details
+</center></a></span>
+<p style="margin-bottom: 1px;"></p>
+<center><a href="http://chtc.cs.wisc.edu/sign-in.shtml" style="color:white;">Sign-In Here</a></center>
+</div>
+	
+<div style="margin-top:1em;"><a href="http://chtc.cs.wisc.edu/"><img alt="Center for High Throughput Computing" src="/images/CHTC-logo.png" width="500" height="90"></a></div>
+
+<h1>User News</h1>
+
+
+<p>Below is a list of important user news updates, sorted by date. Please
+stay up to date with news which is relevant to you, as CHTC policy
+changes may affect the jobs of users.</p>
+
+<p>For older updates not shown on this page, see our <a href="https://www-auth.cs.wisc.edu/lists/chtc-users/">user mailing list
+archives</a>.</p>
+
+<hr />
+<h2 id="limited-response-to-emails-today-june-2">Limited response to emails today (June 2)</h2>
+<h3 id="wednesday-june-2-2021">Wednesday, June 2, 2021</h3>
+
+<p>Greetings CHTC Users,</p>
+
+<p>Most of CHTC’s Research Computing Facilitation team will be out of the
+office today, June 2nd. Responses to email will be limited or delayed.</p>
+
+<p>Please continue to contact chtc@cs.wisc.edu with any CHTC-related
+questions or concerns.</p>
+
+<p>Best,</p>
+
+<p>Your CHTC Team</p>
+
+<hr />
+<h2 id="htcondor-week-2021-may-24-27-expect-delayed-chtc-replies-through-may-28">HTCondor Week 2021 May 24-27; Expect delayed CHTC replies through May 28.</h2>
+<h3 id="wednesday-may-19-2021">Wednesday, May 19, 2021</h3>
+
+<p>Greetings CHTC Users,</p>
+
+<p>This is a reminder that HTCondor Week takes place next week. It’s free and virtual, but make sure to <a href="https://agenda.hep.wisc.edu/event/1579">register</a>.</p>
+
+<p>Additionally, <strong>please expect replies from CHTC staff (via chtc@cs.wisc.edu) to take a bit longer than usual from May 20-28</strong>, while our staff are busy preparing for and executing the conference.</p>
+
+<p>That said …</p>
+
+<ul>
+  <li>CHTC Virtual Office Hours will continue Tu/Th 3-5pm.</li>
+  <li><strong>Please continue to use chtc@cs.wisc.edu for any issues or questions about using CHTC services.</strong></li>
+</ul>
+
+<p>We hope to see you there!
+Your CHTC Team</p>
+
+<hr />
+<h2 id="osg-virtual-school-2021-learn-to-harness-large-scale-computing-for-research">OSG Virtual School 2021: Learn to harness large-scale computing for research</h2>
+<h3 id="thursday-may-13-2021">Thursday, May 13, 2021</h3>
+
+<p>Greetings CHTC users,</p>
+
+<p>As we have in previous years, we invite you to apply to this year’s Open Science Grid Virtual School, which will be held online this year. Check out the short application form and let us know if you have any questions by emailing chtc@cs.wisc.edu or user-school@opensciencegrid.org.</p>
+
+<p>Cheers,
+Your CHTC team</p>
+
+<p>We are seeking applicants for the OSG Virtual School 2021, which will take
+place the weeks of August 2-6 and 9-13.  As the name indicates, the School
+will be all virtual again this year.</p>
+
+<p>https://opensciencegrid.org/virtual-school-2021/</p>
+
+<p>Participants will learn to use high throughput computing (HTC) to harness
+vast amounts of computing power for research, applicable to nearly any
+field of study.  In past Schools, we have helped people in physics,
+chemistry, engineering, life sciences, earth sciences, agricultural and
+animal sciences, economics, social sciences, medicine, and more.</p>
+
+<p>Participation in the event is free, but a selective application process is
+required.</p>
+
+<p>Ideal candidates are graduate students doing research and staff (e.g.,
+facilitators, admins) supporting research that involves or could involve
+large-scale computing - work that cannot be done on one laptop or a handful
+of computers.  Also, we accept some post-doctoral students, faculty,
+research staff, and advanced undergraduates, so make a strong case for
+yourself regardless of your current role!</p>
+
+<p>IMPORTANT DATES</p>
+
+<ul>
+  <li>Application Period (OPEN NOW): 7-28 May 2021</li>
+  <li>OSG Virtual School: 2-13 August 2021</li>
+</ul>
+
+<p>MORE INFORMATION AND APPLICATIONS</p>
+
+<ul>
+  <li>Web: https://www.opensciencegrid.org/virtual-school-2021/</li>
+  <li>Twitter: https://twitter.com/OSGUserSchool</li>
+</ul>
+
+<hr />
+<h2 id="certain-execute-nodes-shut-down">Certain execute nodes shut down</h2>
+<h3 id="wednesday-may-12-2021">Wednesday, May 12, 2021</h3>
+
+<p>Greetings CHTC users,</p>
+
+<p>There was a short chilled water interruption this morning, leading to the shut off of 5 HTC System execute nodes, and 20 HPC Cluster execute nodes.</p>
+
+<p>We expect that the impacted servers will be back up within the next day, but jobs running on these will have been interrupted and may require action from users:</p>
+
+<ul>
+  <li>In the HTC System, these jobs are automatically re-queued to run again elsewhere, likely requiring no action from the user.</li>
+  <li>In the HPC Cluster, such jobs may need to be re-queued.</li>
+</ul>
+
+<p>Please review your jobs and email us at chtc@cs.wisc.edu if you’re not sure how to cleanly re-run work that may have been affected. We’ll be happy to help.</p>
+
+<p>Best,</p>
+
+<p>Your CHTC team</p>
+
+<hr />
+
+<center><a class="twitter-timeline" data-width="800" data-height="500" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/CHTC_UW?ref_src=twsrc%5Etfw">Tweets by CHTC_UW</a> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></center>
+
+
+
+<div id = "copyright">
+     <p align = "center"> 
+	  
+     For all user support, questions, and comments:
+     <strong><a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></strong>
+
+</p>
+</div>
+
+</div>
+
+  </td>
+  </tr>
+
+</TABLE>
+</td>
+</table>
+
+</body>
+</html>
+
+
