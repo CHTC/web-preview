@@ -18,10 +18,10 @@
             iframe.width = (newwidth) + "px";
         }
     </script>
-    <script src="/assets/js/uw-style.min.js"> </script>
-    <link href="/web.css" rel="stylesheet" type="text/css">
-    <link href="/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
-    <link href="/assets/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="/web-preview/assets/js/uw-style.min.js"></script>
+    <link type="text/css" href="/web-preview/web.css" rel="stylesheet">
+    <link type="text/css" href="/web-preview/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
+    <link type="text/css" href="/web-preview/assets/css/style.css" rel="stylesheet">
     <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'')})(document.documentElement)</script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
@@ -35,7 +35,7 @@
     <div class="uw-header-container">
         <div class="uw-header-crest-title">
             <div class="uw-header-crest">
-                <a href="http://www.wisc.edu"><img class="uw-crest-svg" src="/images/uw-crest.svg" alt="Link to University of Wisconsin-Madison home page"></a>
+                <a href="http://www.wisc.edu"><img class="uw-crest-svg" src="/web-preview/images/uw-crest.svg" alt="Link to University of Wisconsin-Madison home page"></a>
             </div>
             <div class="uw-title-tagline">
                 <h1 id="site-title" class="uw-site-title">
