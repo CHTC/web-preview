@@ -39,7 +39,7 @@
             </div>
             <div class="uw-title-tagline">
                 <h1 id="site-title" class="uw-site-title">
-                    <a href="/" rel="home">CHTC</a>
+                    <a href="/web-preview/" rel="home">CHTC</a>
                 </h1>
                 <div id="site-description" class="uw-site-tagline">Center for High Throughput Computing</div>
             </div>
@@ -54,10 +54,10 @@
         <nav class="uw-nav-menu uw-nav-menu-reverse" aria-label="Main Menu">
             <ul id="uw-main-nav">
                 <li class="current-menu-item">
-                    <a href="/" aria-current="page">Home</a>
+                    <a href="/web-preview/" aria-current="page">Home</a>
                 </li>
                 <li id="menu-our-approach" class="uw-dropdown">
-                    <a href="fallback_url_for_no_js" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="/web-preview/about" role="button" aria-haspopup="true" aria-expanded="false">
                         About
                         <svg aria-hidden="true" class="uw-caret" focusable="false">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
@@ -68,21 +68,21 @@
                     </a>
                     <ul aria-hidden="true" aria-label="Our Approach submenu" class="uw-child-menu">
                         <li>
-                            <a href="/approach">Our Approach</a>
+                            <a href="/web-preview/approach">Our Approach</a>
                         </li>
                         <li>
-                            <a href="/projects">Our Customers</a>
+                            <a href="/web-preview/projects">Our Customers</a>
                         </li>
                         <li>
-                            <a href="/people">Our Staff</a>
+                            <a href="/web-preview/people">Our Staff</a>
                         </li>
                         <li>
-                            <a href="/jobs">Our Open Positions</a>
+                            <a href="/web-preview/jobs">Our Open Positions</a>
                         </li>
                     </ul>
                 </li>
                 <li id="menu-how-tos" class="uw-dropdown">
-                    <a href="fallback_url_for_no_js" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="/web-preview/how-tos" role="button" aria-haspopup="true" aria-expanded="false">
                         How To's
                         <svg aria-hidden="true" class="uw-caret" focusable="false">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
@@ -93,36 +93,36 @@
                     </a>
                     <ul aria-hidden="true" aria-label="How To's submenu" class="uw-child-menu">
                         <li>
-                            <a href="/get-started">Get Started</a>
+                            <a href="/web-preview/get-started">Get Started</a>
                         </li>
                         <li>
-                            <a href="/get-help">Get Help</a>
+                            <a href="/web-preview/get-help">Get Help</a>
                         </li>
                         <li>
-                            <a href="/guides">All User Guides</a>
+                            <a href="/web-preview/guides">All User Guides</a>
                         </li>
                         <li>
-                            <a href="/use-submit-node">Use an HTC Submit Server</a>
+                            <a href="/web-preview/use-submit-node">Use an HTC Submit Server</a>
                         </li>
                         <li>
-                            <a href="/helloworld">Run Your First HTC Jobs</a>
+                            <a href="/web-preview/helloworld">Run Your First HTC Jobs</a>
                         </li>
                         <li>
-                            <a href="/howto_overview">HTC for MatLab, Python or R</a>
+                            <a href="/web-preview/howto_overview">HTC for MatLab, Python or R</a>
                         </li>
                         <li>
-                            <a href="/hpc-overview">Use the HPC Cluster</a>
+                            <a href="/web-preview/hpc-overview">Use the HPC Cluster</a>
                         </li>
                         <li>
-                            <a href="/cite-chtc">Cite CHTC Resources</a>
+                            <a href="/web-preview/cite-chtc">Cite CHTC Resources</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="/user-news">User News</a>
+                    <a href="/web-preview/user-news">User News</a>
                 </li>
                 <li id="menu-other-resources" class="uw-dropdown">
-                    <a href="fallback_url_for_no_js" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a href="/web-preview/other-resources" role="button" aria-haspopup="true" aria-expanded="false">
                         Other Resources
                         <svg aria-hidden="true" class="uw-caret" focusable="false">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
@@ -133,7 +133,7 @@
                     </a>
                     <ul aria-hidden="true" aria-label="Other Resources submenu" class="uw-child-menu">
                         <li>
-                            <a href="/gpu-lab">CHTC GPU Lab</a>
+                            <a href="/web-preview/gpu-lab">CHTC GPU Lab</a>
                         </li>
                         <li>
                             <a href="http://research.cs.wisc.edu/htcondor/">HTCondor Project</a>
@@ -157,11 +157,11 @@
             <ul>
                 <li id="menu-news" class="uw-dropdown">
                     <a href="http://news.wisc.edu" aria-haspopup="true" aria-expanded="false">
-                        News<svg aria-hidden="true" class="uw-caret" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use></svg><svg aria-hidden="true" class="uw-caret" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-up"></use></svg>
+                        //TODO decided on what to put up here<svg aria-hidden="true" class="uw-caret" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use></svg><svg aria-hidden="true" class="uw-caret" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-up"></use></svg>
                     </a>
                     <ul aria-hidden="true" aria-label="News submenu" class="uw-child-menu">
                         <li>
-                            <a href="http://localhost:8001/about/">About</a>
+                            <a href="/about">about</a>
                         </li>
                         <li>
                             <a href="http://localhost:8001/contact-us/our-location/">Our Location</a>
@@ -230,7 +230,7 @@ Guides will be added to the list as we can provide them. Please contact us
 
 <p><br /></p>
 <div class="card border-secondary text-center" style="width: 60%; margin: auto;">  
-	<a href="/approach.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Our Approach: High Throughput Versus High Performance Computing</li></a>
+	<a href="/web-preview/approach"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Our Approach: High Throughput Versus High Performance Computing</li></a>
 </div>
 
 <hr />
@@ -240,7 +240,7 @@ Guides will be added to the list as we can provide them. Please contact us
 
 <!-- <h2>HTC Roadmap</h2>
 
-<p>If you are new to high throughput computing, our <a href="/roadmap.shtml">HTC roadmap</a> walks you 
+<p>If you are new to high throughput computing, our <a href="/web-preview/roadmap">HTC roadmap</a> walks you 
 through the process of creating your own large-scale job submission, step-by-step.</p> -->
 
 <h2>Guides by Topic</h2>
@@ -249,10 +249,10 @@ through the process of creating your own large-scale job submission, step-by-ste
 		 <img alt="Card image cap" class="card-img-top img-responsive" src="guide-icons/checkmark.png" style="margin-left: auto;margin-right: auto;width: 30%;" />
 		<h5 class="card-title text-center">Basics and Policies</h5>
 		<ul class="list-group list-group-flush" style="height: auto !important; border-radius: 1px;">
-			<a href="/use-submit-node.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Using CHTC's HTC Submit Nodes</li></a>
-			<a href="/connecting.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Connecting to CHTC</li></a>
-			<a href="/check-quota.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Checking Disk Quota and Usage</li></a>
-			<a href="/get-help.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Get Help</li></a>
+			<a href="/web-preview/use-submit-node"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Using CHTC's HTC Submit Nodes</li></a>
+			<a href="/web-preview/connecting"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Connecting to CHTC</li></a>
+			<a href="/web-preview/check-quota"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Checking Disk Quota and Usage</li></a>
+			<a href="/web-preview/get-help"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Get Help</li></a>
 		</ul>
 	</div>
 			
@@ -260,11 +260,11 @@ through the process of creating your own large-scale job submission, step-by-ste
 		 <img alt="Card image cap" class="card-img-top img-responsive" src="guide-icons/laptop_arrow.png" style="margin-left: auto;margin-right: auto;width: 30%;" />
 		<h5 class="card-title text-center">Job Submission</h5>
 		<ul class="list-group list-group-flush" style="height: auto; border-radius: 1px;">
-			<a href="/helloworld.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running Your First HTC Jobs</li></a>
-			<a href="/condor_q.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Learning About Your Jobs Using <code>condor_q</code></li></a>
-			<a href="/multiple-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Submitting Multiple Jobs</li></a>
-			<a href="/multiple-job-dirs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Submitting Multiple Jobs in Different Directories</li></a>
-			<a href="/os-transition.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Opting Into a Specific Operating System</li></a>
+			<a href="/web-preview/helloworld"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running Your First HTC Jobs</li></a>
+			<a href="/web-preview/condor_q"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Learning About Your Jobs Using <code>condor_q</code></li></a>
+			<a href="/web-preview/multiple-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Submitting Multiple Jobs</li></a>
+			<a href="/web-preview/multiple-job-dirs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Submitting Multiple Jobs in Different Directories</li></a>
+			<a href="/web-preview/os-transition"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Opting Into a Specific Operating System</li></a>
 		</ul>
 	</div>
 		
@@ -273,11 +273,11 @@ through the process of creating your own large-scale job submission, step-by-ste
 		 <img alt="Card image cap" class="card-img-top img-responsive" src="guide-icons/data.png" style="margin-left: auto;margin-right: auto;width: 30%;" />
 		<h5 class="card-title text-center">Handling Data in Jobs</h5>
 		<ul class="list-group list-group-flush" style="height: auto !important; border-radius: 1px;">
-			<a href="/file-availability.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Small Input and Output File Transfer</li></a>
-        	<a href="/file-avail-squid.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Large Input File Availability Via Squid</li></a>
-        	<a href="/file-avail-largedata.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Large Input and Output File Availability Via Staging</li></a>
-        	<a href="/transfer-data-researchdrive.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Transferring Files Between CHTC and Research Drive</li></a>
-        	<a href="/globus.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Using Globus to Transfer Files to and from CHTC</li></a>
+			<a href="/web-preview/file-availability"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Small Input and Output File Transfer</li></a>
+        	<a href="/web-preview/file-avail-squid"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Large Input File Availability Via Squid</li></a>
+        	<a href="/web-preview/file-avail-largedata"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Large Input and Output File Availability Via Staging</li></a>
+        	<a href="/web-preview/transfer-data-researchdrive"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Transferring Files Between CHTC and Research Drive</li></a>
+        	<a href="/web-preview/globus"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Using Globus to Transfer Files to and from CHTC</li></a>
 		</ul>
 	</div>
 			
@@ -290,16 +290,16 @@ through the process of creating your own large-scale job submission, step-by-ste
 		 <img alt="Card image cap" class="card-img-top img-responsive" src="guide-icons/gear.png" style="margin-left: auto;margin-right: auto;width: 30%;" />
 		<h5 class="card-title text-center">Software Solutions</h5>
 		<ul class="list-group list-group-flush" style="height: auto !important; border-radius: 1px;">
-			<a href="/inter-submit.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Compiling Software in an Interactive Job</li></a>
-			<a href="/matlab-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running Matlab Jobs</li></a>
-			<a href="/python-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running Python Jobs</li></a>
-			<a href="/conda-installation.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Using Conda Environments to Run Python Jobs</li></a>
-			<a href="/r-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running R Jobs</li></a>
-			<a href="/java-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running Java jobs</li></a>
-			<a href="/docker-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Using Software Installed in a Docker Container</li></a>
-			<a href="/docker-build.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Create a Docker Container</li></a>
-			<a href="/licensed-software.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Licensed Software on the HTC system</li></a>
-			<a href="/mpi-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Submitting Jobs that use MPI</li></a>
+			<a href="/web-preview/inter-submit"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Compiling Software in an Interactive Job</li></a>
+			<a href="/web-preview/matlab-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running Matlab Jobs</li></a>
+			<a href="/web-preview/python-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running Python Jobs</li></a>
+			<a href="/web-preview/conda-installation"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Using Conda Environments to Run Python Jobs</li></a>
+			<a href="/web-preview/r-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running R Jobs</li></a>
+			<a href="/web-preview/java-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Running Java jobs</li></a>
+			<a href="/web-preview/docker-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Using Software Installed in a Docker Container</li></a>
+			<a href="/web-preview/docker-build"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Create a Docker Container</li></a>
+			<a href="/web-preview/licensed-software"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Licensed Software on the HTC system</li></a>
+			<a href="/web-preview/mpi-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Submitting Jobs that use MPI</li></a>
 		</ul>
 	</div>				
 			
@@ -307,11 +307,11 @@ through the process of creating your own large-scale job submission, step-by-ste
 		 <img alt="Card image cap" class="card-img-top img-responsive" src="guide-icons/processor.png" style="margin-left: auto;margin-right: auto;width: 30%;" />
 		<h5 class="card-title text-center">Special Use Cases</h5>
 		<ul class="list-group list-group-flush" style="height: auto !important; border-radius: 1px;">
-			<a href="/machine-learning-htc.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Run Machine Learning Jobs</li></a> 
-			<a href="/scaling-htc.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Scaling Beyond Local HTC Capacity</li></a> 
-			<a href="/high-memory-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Submitting High Memory Jobs</li></a>
-			<a href="/gpu-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Submitting Jobs that use GPUs</li></a>
-			<a href="/mpi-jobs.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Submitting Jobs that use MPI</li></a>
+			<a href="/web-preview/machine-learning-htc"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Run Machine Learning Jobs</li></a> 
+			<a href="/web-preview/scaling-htc"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Scaling Beyond Local HTC Capacity</li></a> 
+			<a href="/web-preview/high-memory-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Submitting High Memory Jobs</li></a>
+			<a href="/web-preview/gpu-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Submitting Jobs that use GPUs</li></a>
+			<a href="/web-preview/mpi-jobs"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Submitting Jobs that use MPI</li></a>
 		</ul>
 	</div>
 			
@@ -319,8 +319,8 @@ through the process of creating your own large-scale job submission, step-by-ste
 		 <img alt="Card image cap" class="card-img-top img-responsive" src="guide-icons/trouble.png" style="margin-left: auto;margin-right: auto;width: 30%;" />
 		<h5 class="card-title text-center">Troubleshooting</h5>
 		<ul class="list-group list-group-flush" style="height: auto !important;">
-        	<a href="/dos-unix.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Windows/Linux Incompatibility</li></a>
-        	<a href="/docker-test.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Explore and Test Docker Containers</li></a>
+        	<a href="/web-preview/dos-unix"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Windows/Linux Incompatibility</li></a>
+        	<a href="/web-preview/docker-test"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">Explore and Test Docker Containers</li></a>
 		</ul>
 	</div>						
 </div>
@@ -332,7 +332,7 @@ through the process of creating your own large-scale job submission, step-by-ste
 
 <!--<h2>HPC Roadmap</h2>
 
-<p>Our <a href="/roadmap.shtml">HPC Cluster roadmap</a> walks you 
+<p>Our <a href="/web-preview/roadmap">HPC Cluster roadmap</a> walks you 
 through the process of using the cluster, step-by-step.</p> -->
 
 <h2>Guides by Topic</h2>
@@ -342,10 +342,10 @@ through the process of using the cluster, step-by-step.</p> -->
 		 <img alt="Card image cap" class="card-img-top img-responsive" src="guide-icons/servers.png" style="margin-left: auto;margin-right: auto;width: 30%;" />
 		<h5 class="card-title text-center">HPC Cluster Guides</h5>
 		<ul class="list-group list-group-flush" style="height: auto !important;">
-			<a href="/connecting.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Connecting to CHTC</li></a>
-			<a href="/hpc-overview.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">HPC Cluster Overview Guide</li></a>
-			<a href="/hpc-software.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">HPC Software</li></a>
-			<a href="/hpc-job-submission.shtml"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">HPC Job Submission</li></a>
+			<a href="/web-preview/connecting"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">Connecting to CHTC</li></a>
+			<a href="/web-preview/hpc-overview"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">HPC Cluster Overview Guide</li></a>
+			<a href="/web-preview/hpc-software"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important; border-radius: 1px;">HPC Software</li></a>
+			<a href="/web-preview/hpc-job-submission"><li class="list-group-item list-group-item-action list-group-item-dark h-100" style="width: auto; height: auto !important;">HPC Job Submission</li></a>
 		</ul>
 	</div>
 
@@ -368,7 +368,7 @@ through the process of using the cluster, step-by-step.</p> -->
 
 <hr />
 
-<p><a href="/icon_credits.shtml">Icon Credits</a></p>
+<p><a href="/web-preview/icon_credits">Icon Credits</a></p>
 
         </div>
     </div>
@@ -385,7 +385,7 @@ through the process of using the cluster, step-by-step.</p> -->
         <div class="uw-footer-contact">
             <h3 class="uw-footer-header">Contact Us</h3>
             <ul class="uw-contact-list">
-                <li class="uw-contact-item">Office Hours: <a href="/get-help">Tues/Thurs, 3-5pm</a></li>
+                <li class="uw-contact-item">Office Hours: <a href="/web-preview/get-help">Tues/Thurs, 3-5pm</a></li>
                 <li class="uw-contact-item">Email: <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></li>
                 <li class="uw-contact-item">Github: <a href="https://github.com/CHTC/chtc-website-source">chtc-website-source</a></li>
                 <li>
