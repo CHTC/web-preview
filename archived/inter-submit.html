@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Transferring Files Between CHTC and ResearchDrive</title>
+    <title></title>
     <script type="text/javascript">
         function resizeIframe(iframe) {
             var newheight;
@@ -167,7 +167,7 @@
     <div class="uw-row">
         <div class="uw-col">
             <h1 class="uw-mini-bar">
-                Transferring Files Between CHTC and ResearchDrive
+                
             </h1>
         </div>
     </div>
@@ -176,119 +176,192 @@
 <div class="uw-row-full">
     <div class="uw-row">
         <div class="uw-col uw-body">
-            <p>UW Madison provides a shared data storage for research called <a href="https://it.wisc.edu/services/researchdrive/">ResearchDrive</a>. It 
-is possible to transfer files directly between ResearchDrive and CHTC’s large data system. The 
-instructions in this guide may also work for accessing other data services on campus; contact us if you 
-would like to know more.</p>
+            <!--#set var="title" value="Compiling or Testing Code with an Interactive Job"-->
+<!--#include virtual="/includes/template-1-openhead.shtml" -->
+<style type="text/css"><!--
+li {
+	margin-top: 0.5em;
+}
+.tight li {
+	margin-top: 0;
+}
+--></style>
 
-<h2 id="a-pre-requisites">A. Pre-Requisites</h2>
+<!--#include virtual="/includes/template-2-opensidebar.shtml" -->
+<!--#include virtual="/includes/template-3-sidebar.shtml" -->
+<!--#include virtual="/includes/template-4-mainbody.shtml" -->
 
-<p>In order to follow the steps in this guide, you need:</p>
+<blockquote>
+These guides were replaced by a new, updated process on <b>Monday, October 21, 2019</b>. If you're 
+starting a new project, we recommend using the updated process instead of the guides below. See
+<a href="/web-preview/inter-submit">this page</a> for the new guides.
+</blockquote>
+
+<p>
+The CHTC has two "build" machines configured for compiling code 
+interactively. Furthermore, any CHTC execute server can be used for 
+testing commands and programs before submitting large batches of 
+non-interactive jobs ('typical' jobs like our 
+<a href="/web-preview/helloworld">"hello-world"
+example).</a>
+<br /><br />
+<b>Typically, any compilable code to be run in CHTC should be compiled 
+on our compiling servers</b>. 
+<br /><br />
+(Note: If you are using a non-CHTC submit server to submit jobs to a 
+non-CHTC HTCondor Pool, you may have different capabilities for 
+submitting jobs interactively that are not covered here.)
+</p>
+
+<h1>Contents</h1>
 <ol>
-  <li>Access to a ResearchDrive share, either as PI or member of your PI’s group.</li>
-  <li>Access to CHTC’s “transfer” server, <code>transfer.chtc.wisc.edu</code>.</li>
-</ol>
-
-<p>The instructions provided here are for transferring large input and output files to 
-and from CHTC’s large data location on the HTC System, <code>/staging/</code>. However, it is also 
-possible to transfer files directly between a submit server <code>/home</code> directory and ResearchDrive 
-using the same steps.</p>
-
-<h2 id="b-transferring-files">B. Transferring Files</h2>
-
-<p>To transfer data between ResearchDrive and <code>/staging</code>, do the following:</p>
-
-<ol>
-  <li><strong>Log in:</strong> Log into the transfer server, <code>transfer.chtc.wisc.edu</code>.</li>
-  <li><strong>Choose a folder:</strong> Navigate to the folder in <code>/staging</code> where you would like to get or put files.</li>
-  <li><strong>Connect to ResearchDrive:</strong> Run the following command to connect to ResearchDrive, filling in the username of 
-your PI:
-    <pre class="term"><code> [alice@transfer]$ smbclient -k //research.drive.wisc.edu/PI-Name
-</code></pre>
-    <p>Your prompt should change to look like this:</p>
-    <pre class="term"><code> smb: \&gt; 
-</code></pre>
-    <blockquote>
-      <h2 id="note-about-netids">Note about NetIDs</h2>
-      <p>If your CHTC account is not tied to your campus NetID or you are accessing a data 
-storage service that doesn’t use your NetID, you’ll need to omit the <code>-k</code> flag above</p>
-    </blockquote>
-  </li>
-  <li><strong>Choose a folder, part 2:</strong> If you type <code>ls</code> now, you’ll see the files in ResearchDrive, not CHTC. 
-Navigate through ResearchDrive (using <code>cd</code>) until you are at the folder where you would 
-like to get or put files.</li>
-  <li><strong>Move files:</strong> To move files, you will use the <code>get</code> and <code>put</code> commands:
+	<li><a href="#setup">Setup</a></li>
+  <li><a href="#creat">Creating Interactive Submit Files</a>
     <ul>
-      <li>To move files from CHTC to ResearchDrive, run:
-        <pre class="term"><code>  smb: \&gt; put filename
-</code></pre>
-      </li>
-      <li>To move files from ResearchDrive to CHTC, run:
-        <pre class="term"><code>  smb: \&gt; get filename
-</code></pre>
-      </li>
-    </ul>
-  </li>
-  <li><strong>Finish:</strong> Once you are done moving files, you can type <code>exit</code> to leave the connection to ResearchDrive.</li>
+    <li><a href="#transfer">Transfer Files</a></li>	
+    <li><a href="#os">Operating System</a></li>
+		<li><a href="#ohters">Other Files</a></li>
+	  </ul></li>
+  <li><a href="#submitwork">Submitting and Working Interactively</a>
+	<ul>
+	  <li><a href="#submit">Submitting</a></li>
+		 <li><a href="#workinter">Working Interactively</a></li>
+	   <li><a href="#output">Output Files</a></li>
+	  </ul></li>
+	 <li><a href="#exit">Exiting</a></li>
 </ol>
 
-<h2 id="transferring-a-batch-of-files">Transferring A Batch of Files</h2>
+<p><a name="setup"></a></p>
+<h1>1. Setup</h1>
+<p>If you've already downloaded the source code for your program 
+(like a <code>Python-4.3.2.tar.gz</code> file or <code>R-3.3.0.tar.gz</code>)
+then you can skip this step and move to the next step.</p>
 
-<p>The steps described above work well for transferring a single file, or tar archive of 
-many files, at a time and is best for transferring a few files in a session. However 
-<code>smbclient</code> also provides options for transferring many individual files in a single command 
-using the <code>*</code> wildcard character.</p>
+<p>If you haven't already downloaded your source code as a tarball, it's a 
+good idea to create one with all necessary code and compiling sources/libraries 
+you need, so that you don't have to list every file and/or 
+directory separately for "transfer_input_files" in the submit file.
+&lt;/br&gt;&lt;/br&gt;
+For example, you could use something like the following command within a 
+directory where all of your needed files and directories are located:
+<pre class="term">
+[alice@submit]$ tar -czvf combined.tar.gz file1 file2 dir1 <i>(etc.)</i>
+</pre>
+The above would produce a single file called "<code>combined.tar.gz</code>" 
+that contains all other files and directories indicated at the end of the 
+command.
+</p>
 
-<p>To transfer multiple files at once, first you must turn off the <code>smbclient</code> file transfer prompt, 
-then use either <code>mget</code> or <code>mput</code> for your file transfer. For example, if you have multiple <code>fastq.gz</code> 
-to transfer to <code>/staging</code>:</p>
+<p><a name="creat"></a></p>
+<h1>2. Creating Interactive Submit Files</h1>
+<p>
+Create a file called interactive.sub (or any other 
+name you want), and paste in the below lines:
 
-<ol>
-  <li><strong>Log in:</strong> Log into the transfer server, <code>transfer.chtc.wisc.edu</code>.</li>
-  <li><strong>Choose a folder:</strong> Navigate to the folder in <code>/staging</code> where you would like transfer your files to.</li>
-  <li><strong>Connect to ResearchDrive:</strong> Run the following command to connect to ResearchDrive, filling in the username of 
-your PI:
-    <pre class="term"><code> [alice@transfer]$ smbclient -k //research.drive.wisc.edu/PI-Name
-</code></pre>
-  </li>
-  <li><strong>Navigate to appropriate ResearchDrive directory</strong>
-    <pre class="term"><code> smb: \&gt; cd path/to/files
-</code></pre>
-  </li>
-  <li><strong>Turn of Prompting</strong>
-    <pre class="term"><code> smb: \&gt; prompt
-</code></pre>
-  </li>
-  <li><strong>Use <code>mget</code> instead of <code>get</code></strong>
-    <pre class="term"><code> smb: \&gt; mget *.fastq.gz
-</code></pre>
-  </li>
-</ol>
+<pre class="sub">
+universe = vanilla
+# Name the log file:
+log = <i>interactive</i>.log
 
-<p>As another example, use <code>smbclient</code> to transfer multiple <code>tar.gz</code> output files 
-after your jobs complete:</p>
+# Name the files where standard output and error should be saved:
+output = <i>process</i>.out
+error = <i>process</i>.err
 
-<ol>
-  <li><strong>Log in:</strong> Log into the transfer server, <code>transfer.chtc.wisc.edu</code>.</li>
-  <li><strong>Choose a folder:</strong> Navigate to the appropriate directory in <code>/staging</code> where your output is located.</li>
-  <li><strong>Connect to ResearchDrive:</strong> Run the following command to connect to ResearchDrive, filling in the username of 
-your PI:
-    <pre class="term"><code> [alice@transfer]$ smbclient -k //research.drive.wisc.edu/PI-Name
-</code></pre>
-  </li>
-  <li><strong>Navigate to appropriate ResearchDrive directory</strong>
-    <pre class="term"><code> smb: \&gt; cd path/to/directory
-</code></pre>
-  </li>
-  <li><strong>Turn off Prompting</strong>
-    <pre class="term"><code> smb: \&gt; prompt
-</code></pre>
-  </li>
-  <li><strong>Use <code>mput</code> instead of <code>put</code></strong>
-    <pre class="term"><code> smb: \&gt; mput *.tar.gz
-</code></pre>
-  </li>
-</ol>
+# If you wish to compile code, you'll need the below lines. 
+#  Otherwise, LEAVE THEM OUT if you just want to interactively test!
++IsBuildJob = true
+requirements = (OpSysMajorVer =?= 7) &amp;&amp; ( IsBuildSlot == true )
+
+# Indicate all files that need to go into the interactive job session,
+#  including any tar files that you prepared:
+transfer_input_files = <i>combined.tar.gz</i>, <i>other_file.txt</i>
+
+# It's still important to request enough computing resources. The below 
+#  values are a good starting point, but consider your file sizes for an
+#  estimate of "disk" and use any other information you might have
+#  for "memory" and/or "cpus".
+request_cpus = <i>1</i>
+request_memory = <i>1GB</i>
+request_disk =<i>1GB</i>
+
+queue
+</pre>
+
+<p>See the following points for areas that may need to be customized for your program.</p>
+
+<a name="transfer"></a>
+<h2>A. Transfer Files</h2>
+
+<p>Modify the filename for <code>transfer_input_files</code> from 
+the example filenames (<code>combined.tar.gz</code>, <code>other_file.txt</code>), 
+to the name of your source tarball(s) and/or files.  Note that this 
+submit file assumes that the source tarball is present in your 
+home directory on the submit server, in the same folder as this 
+interactive submit file.</p>
+
+<a name="os"></a>
+<h2>B. Operating System</h2>
+
+<p>CHTC primarily runs the Linux flavor CentOS 7.  If you need 
+or want to compile on an earlier version of Linux for a specific 
+reason, we support one build server running Scientific Linux 6.  
+You can see how to request a server with Scientific Linux 6 in 
+our <a href="/web-preview/os-transition">Operating System Transition guide</a>.
+</p>
+
+<a name="ohters"></a>
+<h2>C. Other Files</h2>
+
+<p>Modify the filenames for <code>output</code>, <code>error</code>, 
+and <code>log</code> per your preferences.</p>
+
+<a name="submitwork"></a>
+<h1>3. Submitting and Working Interactively</h1>
+
+<a name="submit"></a>
+<h2>A. Submitting</h2>
+<p>
+When you are ready to go, enter the 
+following with your correct submit file indicated instead:
+<pre class="term">
+[alice@submit]$ condor_submit -i <i>interactive</i>.sub 
+</pre>
+After several minutes (the time it takes for HTCondor to match new jobs 
+to available CHTC execute servers), an SSH connection will be 
+created to an execute server, and the relevant files will have been 
+transfered into the job working directory for you. </p>
+
+<a name="workinter"></a>
+<h2>B. Working Interactively</h2>
+<p>Once the job starts, you are able to un-tar any tar files, compile programs, 
+and test commands as you please.  
+If you are following one of our other guides for building Python, R or Matlab, this 
+is where you should go follow those instructions for installing or compiling.  
+&lt;/br&gt;&lt;/br&gt;
+Typical un-tar command:
+<pre class="term">
+[alice@build]$ tar -xzvf <i>combined.tar.gz</i>
+</pre>
+</p>
+
+<a name="output"></a>
+<h2>C. Output Files</h2>
+<p>HTCondor will ignore any sub-directories created during the course of the job, but 
+wil return any newly created files in the main directory.  In order to return your 
+compiled code, typically you will want to make a new tarball of files you 
+want copied back to the submit server, and delete everything else that you don't want.
+</p>
+<a name="exit"></a>
+<h1>4. Exiting</h1>
+<p>
+To exit as you would for any SSH shell, type <code>exit</code>. Your 
+interactive job will be terminated, and you will return to the 
+location on the submit node from which you submitted the interactive 
+job. Any new files (your new tarball) will have been copied back to 
+this location.
+</p>
+<!--#include virtual="/includes/template-5-finish.shtml" -->
+</p>
 
         </div>
     </div>
