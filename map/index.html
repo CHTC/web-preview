@@ -2,40 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CHTC User Map</title>
-    <script type="text/javascript">
-        function resizeIframe(iframe) {
-            var newheight;
-            var newwidth;
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHTC User Map</title>
+<script type="text/javascript">
+    function resizeIframe(iframe) {
+        var newheight;
+        var newwidth;
 
-            if (document.getElementById) {
-                newwidth = iframe.contentWindow.document.body.scrollWidth;
-                newheight = iframe.contentWindow.document.body.scrollHeight;
-            }
-
-            iframe.height = (newheight) + "px";
-            iframe.width = (newwidth) + "px";
+        if (document.getElementById) {
+            newwidth = iframe.contentWindow.document.body.scrollWidth;
+            newheight = iframe.contentWindow.document.body.scrollHeight;
         }
-    </script>
-    <script type="text/javascript" src="/web-preview/assets/js/uw-style.min.js"></script>
-    <link type="text/css" href="/web-preview/web.css" rel="stylesheet">
-    <link type="text/css" href="/web-preview/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
-    <link type="text/css" href="/web-preview/assets/css/style.css" rel="stylesheet">
-    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'')})(document.documentElement)</script>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        iframe.height = (newheight) + "px";
+        iframe.width = (newwidth) + "px";
+    }
+</script>
+
+<script type="text/javascript" src="/web-preview/assets/js/uw-style.js"></script>
+<link type="text/css" href="/web-preview/web.css" rel="stylesheet">
+<link type="text/css" href="/web-preview/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
+<link type="text/css" href="/web-preview/assets/css/style.css" rel="stylesheet">
+<script>(function(H){H.className=H.className.replace(/\bno-js\b/,'')})(document.documentElement)</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
-    <a class="uw-show-on-focus" href="#main" id="uw-skip-link">Skip to main content</a>
+    
+
 <div class="uw-global-bar" role="navigation">
     <a class="uw-global-name-link" href="http://www.wisc.edu" aria-label="University home page">U<span>niversity <span class="uw-of">of</span> </span>W<span>isconsin</span>–Madison</a>
+
+    
+    <a class="uw-global-name-link" href="/uw-research-computing" aria-label="UW Research Computing Homepage">Go to UW Research Computing Home</a>
+    
 </div>
+    
+
+
+
+
 <header id="branding" class="uw-header">
-    <div class="uw-header-container">
+    <div class="uw-header-container mt-2 mb-2">
         <div class="uw-header-crest-title">
             <div class="uw-header-crest">
-                <a href="/web-preview/"><img class="uw-crest-svg" src="/web-preview/images/uw-crest.svg" alt="Link to Website Home Page"></a>
+                <a href="/web-preview/"><img class="uw-crest-svg" src="/web-preview/images/CHTC-logo-header.png" alt="Link to CHTC Home Page"></a>
             </div>
             <div class="uw-title-tagline">
                 <h1 id="site-title" class="uw-site-title">
@@ -48,122 +59,129 @@
         </div>
     </div>
 </header>
-    <button class="uw-mobile-menu-button-bar uw-mobile-menu-button-bar-reversed uw-is-closed" data-menu="uw-top-menus" aria-label="Open menu" aria-expanded="true" aria-controls="uw-top-menus">Menu<svg aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-menu"></use></svg><svg aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-close"></use></svg></button>
+    
 
 
-<div id="uw-top-menus" class="uw-display-none uw-is-visible uw-horizontal" aria-hidden="false">
+    
+    <button id="uw-top-menus-button" class="uw-mobile-menu-button-bar uw-mobile-menu-button-bar-reversed uw-is-closed" data-menu="uw-top-menus" aria-label="Open menu" aria-expanded="true" aria-controls="uw-top-menus">Menu<svg aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-menu"></use></svg><svg aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-close"></use></svg></button>
+<div id="uw-top-menus" class="uw-is-visible uw-horizontal" aria-hidden="false">
     <div class="uw-main-nav">
         <nav class="uw-nav-menu uw-nav-menu-reverse" aria-label="Main Menu">
             <ul id="uw-main-nav">
-                <li id="home">
-                    <a href="/web-preview/" aria-current="page">Home</a>
-                </li>
-                <li id="menu-our-approach" class="uw-dropdown">
-                    <a href="/web-preview/about" role="button" aria-haspopup="true" aria-expanded="false">
-                        About
-                        <svg aria-hidden="true" class="uw-caret" focusable="false">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
-                        </svg>
-                        <svg aria-hidden="true" class="uw-caret" focusable="false">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-up"></use>
-                        </svg>
-                    </a>
-                    <ul aria-hidden="true" aria-label="Our Approach submenu" class="uw-child-menu">
-                        <li>
-                            <a href="/web-preview/approach">Our Approach</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/projects">Our Customers</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/people">Our Staff</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/jobs">Our Open Positions</a>
-                        </li>
-                    </ul>
-                </li>
-                <li id="get-started">
-                    <a href="/web-preview/get-started" aria-current="page">Get Started</a>
-                </li>
-                <li id="menu-how-tos" class="uw-dropdown">
-                    <a href="/web-preview/how-tos" role="button" aria-haspopup="true" aria-expanded="false">
-                        How To's
-                        <svg aria-hidden="true" class="uw-caret" focusable="false">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
-                        </svg>
-                        <svg aria-hidden="true" class="uw-caret" focusable="false">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-up"></use>
-                        </svg>
-                    </a>
-                    <ul aria-hidden="true" aria-label="How To's submenu" class="uw-child-menu">
-                        <li>
-                            <a href="/web-preview/get-help">Get Help</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/guides">All User Guides</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/use-submit-node">Use an HTC Submit Server</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/helloworld">Run Your First HTC Jobs</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/howto_overview">HTC for MatLab, Python or R</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/hpc-overview">Use the HPC Cluster</a>
-                        </li>
-                        <li>
-                            <a href="/web-preview/cite-chtc">Cite CHTC Resources</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/web-preview/user-news">User News</a>
-                </li>
-                <li id="menu-other-resources" class="uw-dropdown">
-                    <a href="/web-preview/other-resources" role="button" aria-haspopup="true" aria-expanded="false">
-                        Other Resources
-                        <svg aria-hidden="true" class="uw-caret" focusable="false">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
-                        </svg>
-                        <svg aria-hidden="true" class="uw-caret" focusable="false">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-up"></use>
-                        </svg>
-                    </a>
-                    <ul aria-hidden="true" aria-label="Other Resources submenu" class="uw-child-menu">
-                        <li>
-                            <a href="/web-preview/gpu-lab">CHTC GPU Lab</a>
-                        </li>
-                        <li>
-                            <a href="http://research.cs.wisc.edu/htcondor/">HTCondor Project</a>
-                        </li>
-                        <li>
-                            <a href="http://www.neos-server.org/">NEOS Optimization Service</a>
-                        </li>
-                        <li>
-                            <a href="http://www.opensciencegrid.org/">Open Science Grid</a>
-                        </li>
-                        <li>
-                            <a href="http://wid.wisc.edu/">WID (Wisconsin Institute for Discovery)</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="uw-secondary-nav">
-        <nav class="uw-nav-menu uw-nav-menu-secondary" aria-label="Secondary Menu">
-            <ul>
+                
+                    
+
+
+<li id="home">
+    <a href="/web-preview/" aria-current="page">Home</a>
+</li>
+
+
+                
+                    
+
+<li id="about" class="uw-dropdown">
+    <a href="/web-preview/about" role="button" aria-haspopup="true" aria-expanded="false">
+        About
+        <svg aria-hidden="true" class="uw-caret" focusable="false">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
+        </svg>
+        <svg aria-hidden="true" class="uw-caret" focusable="false">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-up"></use>
+        </svg>
+    </a>
+    <ul aria-hidden="true" aria-label="About submenu" class="uw-child-menu">
+
+    
+        <li>
+            <a href="/web-preview/htc">What is HTC?</a>
+        </li>
+    
+        <li>
+            <a href="/web-preview/approach">Our Approach</a>
+        </li>
+    
+        <li>
+            <a href="/web-preview/projects">Our Customers</a>
+        </li>
+    
+        <li>
+            <a href="/web-preview/people">Our Staff</a>
+        </li>
+    
+        <li>
+            <a href="/web-preview/jobs">Our Open Positions</a>
+        </li>
+    
+    </ul>    
+
+
+                
+                    
+
+<li id="services" class="uw-dropdown">
+    <a href="/web-preview/services" role="button" aria-haspopup="true" aria-expanded="false">
+        Services
+        <svg aria-hidden="true" class="uw-caret" focusable="false">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
+        </svg>
+        <svg aria-hidden="true" class="uw-caret" focusable="false">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-up"></use>
+        </svg>
+    </a>
+    <ul aria-hidden="true" aria-label="Services submenu" class="uw-child-menu">
+
+    
+        <li>
+            <a href="/web-preview/uw-research-computing">UW Research Computing</a>
+        </li>
+    
+        <li>
+            <a href="/web-preview/research-facilitation">Research Facilitation</a>
+        </li>
+    
+    </ul>    
+
+
+                
+                    
+
+
+<li id="technologies">
+    <a href="/web-preview/technologies" aria-current="page">Technologies</a>
+</li>
+
+
+                
+                    
+
+
+<li id="research">
+    <a href="/web-preview/research" aria-current="page">Research</a>
+</li>
+
+
+                
+                    
+
+
+<li id="news">
+    <a href="/web-preview/news" aria-current="page">News</a>
+</li>
+
+
+                
             </ul>
         </nav>
     </div>
 </div>
-    <main id="main" class="site-main">
-        <article class="page type-page status-publish hentry">
-            <div class="uw-row-full uw-row-page-title">
+
+
+
+    
+
+    <main id="main">
+    <div class="uw-row-full uw-row-page-title">
     <div class="uw-row">
         <div class="uw-col">
             <h1 class="uw-mini-bar">
@@ -173,7 +191,7 @@
     </div>
 </div>
 
-<div class="uw-row-full">
+<div class="uw-row-full mb-4">
     <div class="uw-row">
         <div class="uw-col uw-body">
             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
@@ -491,8 +509,7 @@ $(document).ready(function ()
         </div>
     </div>
 </div>
-        </article>
-    </main>
+</main>
     <footer id="colophon" class="uw-footer">
     <div class="uw-footer-content">
         <div class="uw-logo">
@@ -503,7 +520,7 @@ $(document).ready(function ()
         <div class="uw-footer-contact">
             <h3 class="uw-footer-header">Contact Us</h3>
             <ul class="uw-contact-list">
-                <li class="uw-contact-item">Office Hours: <a href="/web-preview/get-help">Tues/Thurs, 3-5pm</a></li>
+                <li class="uw-contact-item">Office Hours: <a href="/web-preview/get-help">Tues/Thurs, 3-4:45pm</a></li>
                 <li class="uw-contact-item">Email: <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></li>
                 <li class="uw-contact-item">Github: <a href="https://github.com/CHTC/chtc-website-source">chtc-website-source</a></li>
                 <li>
@@ -522,6 +539,7 @@ $(document).ready(function ()
         <p>© 2017 Board of Regents of the <a href="http://www.wisconsin.edu">University of Wisconsin System</a></p>
     </div>
 </footer>
+
 
     <!-- SVG icons -->
     <svg aria-hidden="true" style="display: inline; height: 0; position: absolute;" xmlns:xlink="http://www.w3.org/1999/xlink">
