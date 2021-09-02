@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title></title>
+<title>Research Facilitation</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -185,7 +185,7 @@
     <div class="uw-row">
         <div class="uw-col">
             <h1 class="uw-mini-bar">
-                
+                Research Facilitation
             </h1>
         </div>
     </div>
@@ -194,192 +194,78 @@
 <div class="uw-row-full mb-4">
     <div class="uw-row">
         <div class="uw-col uw-body">
-            <!--#set var="title" value="Compiling or Testing Code with an Interactive Job"-->
-<!--#include virtual="/includes/template-1-openhead.shtml" -->
-<style type="text/css"><!--
-li {
-	margin-top: 0.5em;
-}
-.tight li {
-	margin-top: 0;
-}
---></style>
+            <p>RC facilitators serve as proactive and personalized guides, helping researchers
+identify and implement computational approaches that result in the greatest impact to their projects. Rather
+than possessing a significant depth of expertise in computational technologies, RC facilitators build and
+leverage their team of expert technical staff and translate the details of computational options for individual
+researchers. Through this two-way relationship-building approach, dedicated RC facilitators have enabled
+previously unimagined and significant scholarship outcomes of scale and scope across a variety of research
+domains, especially within the space of campus-supported research computing centers.</p>
 
-<!--#include virtual="/includes/template-2-opensidebar.shtml" -->
-<!--#include virtual="/includes/template-3-sidebar.shtml" -->
-<!--#include virtual="/includes/template-4-mainbody.shtml" -->
+<h2 id="impact">Impact</h2>
 
-<blockquote>
-These guides were replaced by a new, updated process on <b>Monday, October 21, 2019</b>. If you're 
-starting a new project, we recommend using the updated process instead of the guides below. See
-<a href="/web-preview/inter-submit">this page</a> for the new guides.
-</blockquote>
+<p>Since the hiring of the first Research Computing Facilitator in 2013 usage of computing services by previously underserved researchers
+increased significantlyy (see figure below).  Importantly, more than 95% of usage from the life sciences and
+social sciences has been on an HTC-optimized compute configuration rather than a traditional HPC
+cluster, emphasizing the applicability of multiple compute configurations to meet needs across domains.</p>
 
-<p>
-The CHTC has two "build" machines configured for compiling code 
-interactively. Furthermore, any CHTC execute server can be used for 
-testing commands and programs before submitting large batches of 
-non-interactive jobs ('typical' jobs like our 
-<a href="/web-preview/helloworld">"hello-world"
-example).</a>
-<br /><br />
-<b>Typically, any compilable code to be run in CHTC should be compiled 
-on our compiling servers</b>. 
-<br /><br />
-(Note: If you are using a non-CHTC submit server to submit jobs to a 
-non-CHTC HTCondor Pool, you may have different capabilities for 
-submitting jobs interactively that are not covered here.)
-</p>
+<p><img src="images/Research_Computing_Usage_Graph.png" alt="Figure 1" /></p>
 
-<h1>Contents</h1>
-<ol>
-	<li><a href="#setup">Setup</a></li>
-  <li><a href="#creat">Creating Interactive Submit Files</a>
-    <ul>
-    <li><a href="#transfer">Transfer Files</a></li>	
-    <li><a href="#os">Operating System</a></li>
-		<li><a href="#ohters">Other Files</a></li>
-	  </ul></li>
-  <li><a href="#submitwork">Submitting and Working Interactively</a>
-	<ul>
-	  <li><a href="#submit">Submitting</a></li>
-		 <li><a href="#workinter">Working Interactively</a></li>
-	   <li><a href="#output">Output Files</a></li>
-	  </ul></li>
-	 <li><a href="#exit">Exiting</a></li>
-</ol>
+<h2 id="goals">Goals</h2>
 
-<p><a name="setup"></a></p>
-<h1>1. Setup</h1>
-<p>If you've already downloaded the source code for your program 
-(like a <code>Python-4.3.2.tar.gz</code> file or <code>R-3.3.0.tar.gz</code>)
-then you can skip this step and move to the next step.</p>
+<p>The following outlines the primary goals (the needs) of successful RC facilitation and identifies the related
+major activities for achieving those goals.</p>
 
-<p>If you haven't already downloaded your source code as a tarball, it's a 
-good idea to create one with all necessary code and compiling sources/libraries 
-you need, so that you don't have to list every file and/or 
-directory separately for "transfer_input_files" in the submit file.
-&lt;/br&gt;&lt;/br&gt;
-For example, you could use something like the following command within a 
-directory where all of your needed files and directories are located:
-<pre class="term">
-[alice@submit]$ tar -czvf combined.tar.gz file1 file2 dir1 <i>(etc.)</i>
-</pre>
-The above would produce a single file called "<code>combined.tar.gz</code>" 
-that contains all other files and directories indicated at the end of the 
-command.
-</p>
+<ul>
+  <li>Proactive Engagement</li>
+  <li>Personalized Guidance</li>
+  <li>Teaching Researchers to Fish</li>
+  <li>Building Relationships</li>
+  <li>Advocating for Research Needs</li>
+  <li>Developing Connections among Staff</li>
+</ul>
 
-<p><a name="creat"></a></p>
-<h1>2. Creating Interactive Submit Files</h1>
-<p>
-Create a file called interactive.sub (or any other 
-name you want), and paste in the below lines:
+<h2 id="skills-and-backgrounds">Skills and Backgrounds</h2>
 
-<pre class="sub">
-universe = vanilla
-# Name the log file:
-log = <i>interactive</i>.log
+<p>Three key areas of experience and interest are relevant for successful RC facilitators: individual interests
+and motivation, communication and interpersonal skills, and technical knowledge.</p>
 
-# Name the files where standard output and error should be saved:
-output = <i>process</i>.out
-error = <i>process</i>.err
+<p><strong>Interests and Motivation</strong></p>
 
-# If you wish to compile code, you'll need the below lines. 
-#  Otherwise, LEAVE THEM OUT if you just want to interactively test!
-+IsBuildJob = true
-requirements = (OpSysMajorVer =?= 7) &amp;&amp; ( IsBuildSlot == true )
+<ul>
+  <li>A desire to enable and support the scholarly work of others</li>
+  <li>Interest in a wide set of research domains beyond their own area of expertise</li>
+  <li>The ability and the desire to work in a team environment</li>
+  <li>A desire to further develop the skills and interests relevant to effective facilitation</li>
+</ul>
 
-# Indicate all files that need to go into the interactive job session,
-#  including any tar files that you prepared:
-transfer_input_files = <i>combined.tar.gz</i>, <i>other_file.txt</i>
+<p><strong>Communication and Interpersonal Skills</strong></p>
 
-# It's still important to request enough computing resources. The below 
-#  values are a good starting point, but consider your file sizes for an
-#  estimate of "disk" and use any other information you might have
-#  for "memory" and/or "cpus".
-request_cpus = <i>1</i>
-request_memory = <i>1GB</i>
-request_disk =<i>1GB</i>
+<ul>
+  <li>Excellent written and verbal communication, including active and empathetic listening skills and an
+ability to translate complex and domain-specific information for nonspecialists</li>
+  <li>Demonstrated effectiveness and comfort in teaching and public speaking</li>
+  <li>Success and demonstrated interest in interpersonal networking and liaising</li>
+  <li>The desire to work in a team environment, where staff frequently depend on one another</li>
+  <li>Leadership skills that inspire action and coordinate the activities of shared contributions</li>
+</ul>
 
-queue
-</pre>
+<p><strong>Technical Abilities</strong></p>
 
-<p>See the following points for areas that may need to be customized for your program.</p>
+<ul>
+  <li>Prior experience conducting research projects or other significant scholarly work with some
+integration of relevant computational systems and tools</li>
+  <li>A demonstrated ability to understand multiple aspects of a problem and identify appropriate solutions</li>
+  <li>The ability to provide solution-agnostic support by focusing on research requirements and desired
+outcomes</li>
+  <li>A desire for continuous learning of relevant technology topics</li>
+</ul>
 
-<a name="transfer"></a>
-<h2>A. Transfer Files</h2>
+<h2 id="more-information">More information</h2>
 
-<p>Modify the filename for <code>transfer_input_files</code> from 
-the example filenames (<code>combined.tar.gz</code>, <code>other_file.txt</code>), 
-to the name of your source tarball(s) and/or files.  Note that this 
-submit file assumes that the source tarball is present in your 
-home directory on the submit server, in the same folder as this 
-interactive submit file.</p>
-
-<a name="os"></a>
-<h2>B. Operating System</h2>
-
-<p>CHTC primarily runs the Linux flavor CentOS 7.  If you need 
-or want to compile on an earlier version of Linux for a specific 
-reason, we support one build server running Scientific Linux 6.  
-You can see how to request a server with Scientific Linux 6 in 
-our <a href="/web-preview/os-transition">Operating System Transition guide</a>.
-</p>
-
-<a name="ohters"></a>
-<h2>C. Other Files</h2>
-
-<p>Modify the filenames for <code>output</code>, <code>error</code>, 
-and <code>log</code> per your preferences.</p>
-
-<a name="submitwork"></a>
-<h1>3. Submitting and Working Interactively</h1>
-
-<a name="submit"></a>
-<h2>A. Submitting</h2>
-<p>
-When you are ready to go, enter the 
-following with your correct submit file indicated instead:
-<pre class="term">
-[alice@submit]$ condor_submit -i <i>interactive</i>.sub 
-</pre>
-After several minutes (the time it takes for HTCondor to match new jobs 
-to available CHTC execute servers), an SSH connection will be 
-created to an execute server, and the relevant files will have been 
-transfered into the job working directory for you. </p>
-
-<a name="workinter"></a>
-<h2>B. Working Interactively</h2>
-<p>Once the job starts, you are able to un-tar any tar files, compile programs, 
-and test commands as you please.  
-If you are following one of our other guides for building Python, R or Matlab, this 
-is where you should go follow those instructions for installing or compiling.  
-&lt;/br&gt;&lt;/br&gt;
-Typical un-tar command:
-<pre class="term">
-[alice@build]$ tar -xzvf <i>combined.tar.gz</i>
-</pre>
-</p>
-
-<a name="output"></a>
-<h2>C. Output Files</h2>
-<p>HTCondor will ignore any sub-directories created during the course of the job, but 
-wil return any newly created files in the main directory.  In order to return your 
-compiled code, typically you will want to make a new tarball of files you 
-want copied back to the submit server, and delete everything else that you don't want.
-</p>
-<a name="exit"></a>
-<h1>4. Exiting</h1>
-<p>
-To exit as you would for any SSH shell, type <code>exit</code>. Your 
-interactive job will be terminated, and you will return to the 
-location on the submit node from which you submitted the interactive 
-job. Any new files (your new tarball) will have been copied back to 
-this location.
-</p>
-<!--#include virtual="/includes/template-5-finish.shtml" -->
-</p>
+<p>More information on Research Facilitators can be in the paper 
+<a href="https://library.educause.edu/-/media/files/library/2016/5/erb1602.pdf">“Research Computing Facilitators: The Missing Human Link in Needs-Based Research Cyberinfrastructure”</a>
+co-written by CHTC’s own Lauren Micheal.</p>
 
         </div>
     </div>
@@ -395,7 +281,7 @@ this location.
         <div class="uw-footer-contact">
             <h3 class="uw-footer-header">Contact Us</h3>
             <ul class="uw-contact-list">
-                <li class="uw-contact-item">Office Hours: <a href="/web-preview/get-help">Tues/Thurs, 3-4:45pm</a></li>
+                <li class="uw-contact-item">Office Hours: <a href="/web-preview/uw-research-computing/get-help">Tues/Thurs, 3-4:45pm</a></li>
                 <li class="uw-contact-item">Email: <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></li>
                 <li class="uw-contact-item">Github: <a href="https://github.com/CHTC/chtc-website-source">chtc-website-source</a></li>
                 <li>
