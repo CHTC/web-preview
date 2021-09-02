@@ -34,7 +34,7 @@
     <a class="uw-global-name-link" href="http://www.wisc.edu" aria-label="University home page">U<span>niversity <span class="uw-of">of</span> </span>W<span>isconsin</span>–Madison</a>
 
     
-    <a class="uw-global-name-link" href="/" aria-label="University home page">Go to CHTC Home</a>
+    <a class="uw-global-name-link" href="/web-preview/" aria-label="University home page">Go to CHTC Home</a>
     
 </div>
     
@@ -208,7 +208,7 @@
             <p>To facilitate the submission of large batches of jobs, especially
 batches for Matlab, Python, and R, the CHTC has created the ChtcRun
 package of scripts, files, and directories that will allow you to easily
-construct your own <a href="http://research.cs.wisc.edu/htcondor/">HTCondor</a> workflow (or "DAG" batch). By following
+construct your own <a href="http://htcondor.org">HTCondor</a> workflow (or "DAG" batch). By following
 the ordered set of directions given here, you'll be able to easily set
 up and run a set of high-throughput computing jobs on CHTC-available
 resources, including those outside of the CHTC HTCondor Pool in the UW
@@ -332,7 +332,7 @@ guide</a>.</p>
 job-specific set of command line arguments. The output from from
 running <code>mkdag</code> will be a directory to hold eventual output from
 running the project's job(s), as well as control files: a DAG input
-file for describing the DAG (called <code>mydag.dag</code>) and an <a href="http://research.cs.wisc.edu/htcondor/">HTCondor</a> job
+file for describing the DAG (called <code>mydag.dag</code>) and an <a href="http://htcondor.org">HTCondor</a> job
 submit description files for each of the node jobs within the DAG.
 One of the command line arguments to <code>mkdag</code> will specify the name
 of this directory.</p>
@@ -373,7 +373,7 @@ For a variety of reasons, we cannot necessarily trust the return
 code from MATLAB or R to tell us if the job was successful. We
 determine if a job was successful by checking if at least one
 file was created that includes the pattern "SubString" in
-it's filename, for each <a href="http://research.cs.wisc.edu/htcondor/">HTCondor</a> job submitted. This check is
+it's filename, for each <a href="http://htcondor.org">HTCondor</a> job submitted. This check is
 identical to running</p>
 
         <pre><code>ls *SubString*
@@ -384,7 +384,7 @@ least one file is returned.</p>
       </li>
       <li><code>--parg=ArgumentString</code><br />
 This optional argument identifies a command line argument that
-is to be passed to each invocation (as an <a href="http://research.cs.wisc.edu/htcondor/">HTCondor</a> job) of the
+is to be passed to each invocation (as an <a href="http://htcondor.org">HTCondor</a> job) of the
 executable. This argument will be listed multiple times to
 define more than one command line argument. Optionally, you can
 use "--parg=<em>unique</em>" to pass the name of the job directory
