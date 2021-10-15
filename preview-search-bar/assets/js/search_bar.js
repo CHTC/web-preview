@@ -4,8 +4,8 @@
 
 const MainSearchBar = {
     id: "main-search-bar",
-    idx_path: "/assets/search/index.json",
-    metadata_path: "/assets/search/metadata.json",
+    idx_path: "/web-preview/preview-search-bar/assets/search/index.json",
+    metadata_path: "/web-preview/preview-search-bar/assets/search/metadata.json",
     node: undefined,
     input_node: undefined,
     result_node: undefined,
