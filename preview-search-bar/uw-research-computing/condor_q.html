@@ -19,14 +19,19 @@
     }
 </script>
 
+<meta name="robots" content="noindex">
+
+
+
 
 <script type="text/javascript" src="/web-preview/preview-search-bar/assets/js/uw-style.js"></script>
 <script src="/web-preview/preview-search-bar/assets/js/lunr.js" type="text/javascript" async></script>
 <script type="text/javascript" src="/web-preview/preview-search-bar/assets/js/search_bar.js" defer></script>
 
-<link type="text/css" href="/web-preview/preview-search-bar/web.css" rel="stylesheet">
 <link type="text/css" href="/web-preview/preview-search-bar/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
 <link type="text/css" href="/web-preview/preview-search-bar/assets/css/style.css" rel="stylesheet">
+
+<link type="text/css" href="/web-preview/preview-search-bar/assets/css/research-style.css" rel="stylesheet">
 
 <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'')})(document.documentElement)</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -216,7 +221,7 @@
 </div>
 
 
-    <main id="main">
+    <main id="main" style="min-height: 60vh;">
     <div class="uw-row-full uw-row-page-title">
     <div class="uw-row">
         <div class="uw-col">
@@ -259,6 +264,7 @@ jobs.</p>
             <li><a href="#long">View all details about a job.</a></li>
             <li><a href="#af">View specific details about a job using auto-format.</a></li>
             <li><a href="#constraint">View only specific types of jobs using a constraint</a></li>
+            <li><a href="#remove">Remove a held job from the queue</a></li>
           </ol>
 
         </div>
@@ -554,6 +560,17 @@ attribute. Try running:</p>
 </code></pre>
 
       <p>You should see something very similar to running <code>condor_q -hold</code>!</p>
+
+      <p><a name="remove"></a></p>
+
+      <h2 id="remove-a-held-job-from-the-queue"><strong>11. Remove a held job from the queue</strong></h2>
+
+      <p>To remove a job held in the queue, run:</p>
+
+      <pre class="term"><code>[alice@submit]$ condor_rm &lt;JobID&gt;
+</code></pre>
+
+      <p>This will remove the job in the queue. Once you have made changes to allow the job to run successfully, the job can be resubmitted using <code>condor_submit</code>.</p>
 
       <hr />
 

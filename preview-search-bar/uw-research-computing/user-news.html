@@ -19,14 +19,19 @@
     }
 </script>
 
+<meta name="robots" content="noindex">
+
+
+
 
 <script type="text/javascript" src="/web-preview/preview-search-bar/assets/js/uw-style.js"></script>
 <script src="/web-preview/preview-search-bar/assets/js/lunr.js" type="text/javascript" async></script>
 <script type="text/javascript" src="/web-preview/preview-search-bar/assets/js/search_bar.js" defer></script>
 
-<link type="text/css" href="/web-preview/preview-search-bar/web.css" rel="stylesheet">
 <link type="text/css" href="/web-preview/preview-search-bar/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
 <link type="text/css" href="/web-preview/preview-search-bar/assets/css/style.css" rel="stylesheet">
+
+<link type="text/css" href="/web-preview/preview-search-bar/assets/css/research-style.css" rel="stylesheet">
 
 <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'')})(document.documentElement)</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -216,7 +221,7 @@
 </div>
 
 
-    <main id="main">
+    <main id="main" style="min-height: 60vh;">
     <div class="uw-row-full uw-row-page-title">
     <div class="uw-row">
         <div class="uw-col">
@@ -236,6 +241,50 @@ changes may affect the jobs of users.</p>
 
 <p>For older updates not shown on this page, see our <a href="https://www-auth.cs.wisc.edu/lists/chtc-users/">user mailing list
 archives</a>.</p>
+
+<hr />
+
+<h2 id="full-hpc-and-partial-htc-outages-nov-18---nov-22">Full HPC and Partial HTC Outages Nov 18 - Nov 22</h2>
+<h3 id="november-10-2021">November 10, 2021</h3>
+<p>Greetings,</p>
+
+<p>Due to just-confirmed maintenance for the cooling infrastructure in one of CHTC’s server rooms, we will experience full HPC Cluster and partial HTC System outages beginning in the afternoon on Thursday, November 18, with service being restored by Monday, November 22.</p>
+
+<p><strong>Impacts to the HPC Cluster</strong></p>
+
+<p>All hardware (head nodes, execute nodes, storage) in the HPC cluster will be powered down during the planned outage.</p>
+
+<p>To prevent HPC Cluster jobs from being interrupted by the downtime, we will begin draining the nodes one week prior to the downtime. <strong>Jobs submitted requesting time that would exceed the November 18 downtime</strong> will not run until after the cluster is back up, but will be accepted into the queue. Jobs can still run on the cluster within the week before the downtime, IF their time request (“–time=” in the submit file) indicates that they will complete before the morning of November 18.</p>
+
+<p><strong>Impacts to the HTC System</strong></p>
+
+<p>The following components of the HTC system will be powered down during the outage:</p>
+<ul>
+  <li>a subset of HTC execute nodes</li>
+  <li>the following submit servers may go down (and would likely be inaccessible for through Nov 22), but we hope to keep them up: submit2.chtc.wisc.edu, submit3.chtc.wisc.edu, learn.chtc.wisc.edu</li>
+</ul>
+
+<p>While jobs on the affected submit servers and execute servers will be interrupted when they go down, they will remain in the queue to run again once the submit servers are back up. Otherwise, HTC users should not be impacted by this outage.</p>
+
+<p>It is possible the exact dates of the outage may shift, and we realize this is somewhat short notice, but plan to provide a reminder or update at least one day prior to the start of the downtime.</p>
+
+<p>Please contact us at chtc@cs.wisc.edu with any questions or concerns.</p>
+
+<p>Best, 
+Your CHTC team</p>
+
+<hr />
+
+<h2 id="office-hours-cancelled-today-nov-2">Office Hours cancelled today (Nov 2)</h2>
+<h3 id="november-2-2021">November 2, 2021</h3>
+
+<p>Greetings,</p>
+
+<p>Due to a decrease in availability this afternoon, CHTC’s Research Computing Facilitators will need to cancel today’s office hours. Please continue to write to chtc@cs.wisc.edu with any questions or issues, and know that we’ll reply to you as soon as we can. We plan to resume Office Hours on Thursday, November 4.</p>
+
+<p>Thank you,</p>
+
+<p>Your CHTC Team</p>
 
 <hr />
 
@@ -335,19 +384,6 @@ Your CHTC Team</p>
 <p>Best,</p>
 
 <p>The CHTC facilitation team</p>
-
-<hr />
-<h2 id="chtc-office-hour-changes-staff-out-on-monday-july-5">CHTC office hour changes; staff out on Monday, July 5</h2>
-<h3 id="tuesday-june-29-2021">Tuesday, June 29, 2021</h3>
-
-<p>Greetings CHTC users,</p>
-
-<p>Office hours are now shortened slightly - instead of running from 3 - 5pm on Tuesdays and Thursdays, they will end at 4:45pm. This change is also reflected on the CHTC website and <a href="get-help">Get Help</a> page.</p>
-
-<p>Our facilitation team will be out of the office on Monday, July 5 for observance of the July 4th holiday.</p>
-
-<p>Best,
-The CHTC facilitation team</p>
 
 <hr />
 
