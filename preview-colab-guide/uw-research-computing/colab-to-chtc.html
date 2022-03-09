@@ -244,7 +244,7 @@ GPU Lab resources.</p>
 <ol>
   <li><a href="#a-get-the-needed-packages-from-colab">Get a script and package requirements from the Colab interface.</a></li>
   <li><a href="#b-build-a-docker-container">Build and publish a docker container recreating the Colab software environment.</a></li>
-  <li>[Submit your job on CHTC, paying attention to hardware requirements.(#c-submit-a-job)</li>
+  <li><a href="#c-submit-a-job">Submit your job on CHTC, paying attention to hardware requirements.</a></li>
 </ol>
 
 <h3 id="why-use-chtcs-gpu-lab">Why use CHTC’s GPU Lab?</h3>
@@ -435,7 +435,7 @@ of GPUs and a longer run time limit.</p>
     <p>As with other jobs on CHTC, think about the data requirements for your job.. Jobs with larger requirements may require a larger value for the <code>request_memory</code> and <code>request_disk</code> attributes, and if you intend to transfer the data from the submit node, you may need to do so using one of CHTC’s alternative data transfer methods, such as Squid. More information about large file transfers can be found <a href="https://chtc.cs.wisc.edu/uw-research-computing/file-avail-largedata">here</a>.</p>
   </li>
   <li>
-    <p><strong>Submit a test job, then submit real thing.</strong></p>
+    <p><strong>Submit a test job, then submit the real thing.</strong></p>
 
     <p>Try submitting a scaled-down test job to ensure everything is set up correctly. When the test job runs successfully, submit the real job.</p>
   </li>
