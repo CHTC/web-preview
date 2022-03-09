@@ -242,9 +242,9 @@ GPU Lab resources.</p>
 <p>Go through the following steps to transition from Google Colab to CHTC’s GPU Lab:</p>
 
 <ol>
-  <li>Get a script and package requirements from the Colab interface</li>
-  <li>Build and publish a docker container recreating the Colab software environment</li>
-  <li>Submit your job on CHTC, paying attention to hardware requirements.</li>
+  <li><a href="#a-get-the-needed-packages-from-colab">Get a script and package requirements from the Colab interface.</a></li>
+  <li><a href="#b-build-a-docker-container">Build and publish a docker container recreating the Colab software environment.</a></li>
+  <li>[Submit your job on CHTC, paying attention to hardware requirements.(#c-submit-a-job)</li>
 </ol>
 
 <h3 id="why-use-chtcs-gpu-lab">Why use CHTC’s GPU Lab?</h3>
@@ -255,6 +255,8 @@ to run many GPU-based calculations or need more time, CHTC can provide a larger 
 of GPUs and a longer run time limit.</p>
 
 <h2 id="a-get-the-needed-packages-from-colab">A. Get the Needed Packages From Colab</h2>
+
+<p><b>These steps are run from the Colab notebook.</b></p>
 
 <p>Assume the notebook you’d like to run on CHTC’s system is already open.</p>
 
@@ -289,6 +291,8 @@ of GPUs and a longer run time limit.</p>
 <h2 id="b-build-a-docker-container">B. Build a Docker Container</h2>
 
 <p><b>The rest of the instructions occur on the CHTC system.</b></p>
+
+<p>If you don’t already have a Docker Hub account before starting this section, create one: <a href="https://hub.docker.com/">Docker Hub</a></p>
 
 <ol>
   <li>
@@ -371,7 +375,7 @@ of GPUs and a longer run time limit.</p>
     <pre class="term"><code> podman push &lt;Hash ID&gt; &lt;dockerhub_user/container_name:tag&gt;
 </code></pre>
 
-    <p>Again, for chtc_user, this might look like <code>podman push 123456 chtc_user/pytorch:v1</code></p>
+    <p>Again, for <code>chtc_user</code>, this might look like <code>podman push 123456 chtc_user/pytorch:v1</code></p>
 
     <p>Once podman has finished uploading the container, the container should be ready for use by HTCondor.</p>
   </li>
@@ -382,7 +386,7 @@ of GPUs and a longer run time limit.</p>
   </li>
 </ol>
 
-<h2 id="c-submit-a-job">C. Submit a job</h2>
+<h2 id="c-submit-a-job">C. Submit a Job</h2>
 
 <ol>
   <li>
@@ -402,6 +406,9 @@ of GPUs and a longer run time limit.</p>
  when_to_transfer_output = ON_EXIT
  #transfer_input_files = 
 
+ request_gpus = 1
+ # list other GPU requirements, if needed
+    
  request_cpus = 1
  request_memory = 1GB
  request_disk = 1GB
@@ -428,7 +435,7 @@ of GPUs and a longer run time limit.</p>
     <p>As with other jobs on CHTC, think about the data requirements for your job.. Jobs with larger requirements may require a larger value for the <code>request_memory</code> and <code>request_disk</code> attributes, and if you intend to transfer the data from the submit node, you may need to do so using one of CHTC’s alternative data transfer methods, such as Squid. More information about large file transfers can be found <a href="https://chtc.cs.wisc.edu/uw-research-computing/file-avail-largedata">here</a>.</p>
   </li>
   <li>
-    <p>Submit a test job, then submit real thing.</p>
+    <p><strong>Submit a test job, then submit real thing.</strong></p>
 
     <p>Try submitting a scaled-down test job to ensure everything is set up correctly. When the test job runs successfully, submit the real job.</p>
   </li>
