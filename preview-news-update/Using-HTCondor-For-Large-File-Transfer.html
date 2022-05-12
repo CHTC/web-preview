@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home</title>
+<title>How to Transfer 460 Terabytes? A File Transfer Case Study</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -192,295 +192,47 @@
     
 
     <main id="main" style="min-height: 60vh;">
-        <div class="bg-light py-3">
-    <div class="container-lg mw-1000">
-        <img src="/web-preview/preview-news-update/images/HTC_Graphic_Outline.svg"  alt="CHTC Logo" />
-    </div>
-</div>
+        <main id="main" style="min-height: 60vh;">
+    <!-- This Layout is to adhere the page to the optimal char per lines for accessibility -->
+
+
 <div class="container-xxl">
     <div class="row justify-content-center">
-        <div class="col">
-            <div class="row  mb-4 mt-4 ">
-    <div class="col-12 col-md-8">
-        
+        <div class="col-12 col-sm-11 col-md-9 col-lg-8">
             <h1 class="uw-mini-bar mb-4">
-                Center for High Throughput Computing
+                How to Transfer 460 Terabytes? A File Transfer Case Study
             </h1>
-        
-        <div>
-<p><strong>The Center for High Throughput Computing (CHTC), established in 2006, aims to bring the power
-of High Throughput Computing to all fields of research, and to allow the future of HTC to be shaped
-by insight from all fields.</strong></p>
+            <p>When Greg Daues at the <a href="https://resources.istcoalition.org/national-center-for-supercomputing-applications" target="_blank">National Center for Supercomputing Applications (NCSA)</a> needed to transfer 460 Terabytes of NCSA files from <a href="https://in2p3.cnrs.fr/en/node/11" target="_blank">the National Institute of Nuclear and Particle Physics (IN2P3)</a> in Lyon, France to Urbana, Illinois, for a project they were working with <a href="https://www.fnal.gov/" target="_blank">FNAL</a>, <a href="https://cc.in2p3.fr/en/" target="_blank">CC-IN2P3</a> and the <a href="https://www.lsst.org/" target="_blank">Rubin Data Production team</a>, he turned to the <a href="https://research.cs.wisc.edu/htcondor/" target="_blank">HTCondor High Throughput system</a>, not to run computationally intensive jobs, as many do, but to manage the hundreds of thousands of I/O bound transfers.</p>
 
-<p><a href="htc.html">High Throughput Computing</a> is a collection of principles and techniques which maximize the effective throughput
-of computing resources towards a given problem.  When applied for scientific computing, HTC can result in
-improved use of a computing resource, improved automation, and help drive the scientific problem forward.</p>
+<h2>The Data</h2>
 
-<p>The team at CHTC develops technologies and services for HTC.  CHTC is the home of the <a href="http://htcondor.org">HTCondor Software
-Suite</a> which has over 30 years of experience in tackling HTC problems;
-it manages shared computing resources
-for researchers on the UW-Madison campus; and it leads the <a href="https://osg-htc.org">OSG Consortium</a>,
-a national-scale environment for distributed HTC.</p>
+<p>IN2P3 made the data available via https, but the number of files and their total size made the management of the transfer an engineering challenge.  There were two kinds of files to be transferred, with 3.5 million files with a median size of roughly 100 Mb, and another 3.5 million smaller files, with a median size of about 10 megabytes.  Total transfer size is roughly 460 Terabytes.</p>
 
-</div>
-    </div>
-    <div class="col-1 d-md-block d-none"></div>
-    <div class="col-3 d-md-flex d-none">
-        <img class="w-100 mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/CHTC_Small_Logo.svg" alt="CHTC Small Logo" />
-    </div>
-</div>
-        </div>
-    </div>
-</div>
-<div class="bg-light py-4">
-    <div class="container-lg">
-        <div class="row justify-content-center" >
-            
-            
-            <a href="/web-preview/preview-news-update/EHT.html" class="news-post col-12 col-sm-6 col-lg-4  col-12 ">
-    <div class="d-flex flex-column p-2">
-        <div class="img-container">
-            <img class="img-fluid" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/SagA-black-hole.jpg" alt="Simulated image of Sagittarius A* black hole. Image library credit: EHT Theory Working Group, CK Chan." />
-        </div>
-        <h3 class="my-1 text-dark">High-throughput computing as an enabler of black hole science</h3>
-        <div class="text-dark d-flex flex-row justify-content-between">
-            <div class="w-auto">
-                By: Brian Mattmiller
-            </div>
-            <div class="w-auto">
-                May 12, 2022
-            </div>
-        </div>
-        <div>
-            <p class="text-dark mb-0">
-                The stunning new image of a supermassive black hole in the center of the Milky Way was created by eight telescopes, 300 international astronomers and more than 5 million computational tasks. This Morgridge Institute article describes how the Wisconsin-based Open Science Pool helped make sense of it all.
-            </p>
-        </div>
-    </div>
-</a>
-            
-            <a href="/web-preview/preview-news-update/NIAID.html" class="news-post col-12 col-sm-6 col-lg-4  col-12 ">
-    <div class="d-flex flex-column p-2">
-        <div class="img-container">
-            <img class="img-fluid" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/NIAID-card.jpeg" alt="Map of Africa; Mali and Uganda are highlighted where their respective flags point. Image credit: © 2010 Roland Urbanek. Flags are edited in and overlayed on the image." />
-        </div>
-        <h3 class="my-1 text-dark">NIAID/ACE - OSG collaboration leads to a successful virtual training session</h3>
-        <div class="text-dark d-flex flex-row justify-content-between">
-            <div class="w-auto">
-                By: Hannah Cheren
-            </div>
-            <div class="w-auto">
-                May 02, 2022
-            </div>
-        </div>
-        <div>
-            <p class="text-dark mb-0">
-                The U.S. National Institute of Allergy and Infectious Diseases (NIAID) and the African Centers for Excellence in Bioinformatics and Data-Intensive Science (ACE) partnered with the OSG Consortium to host a virtual high throughput computing training session for graduate students from Makerere University and the University Of Sciences, Techniques, and Technologies of Bamako (USTTB).
-            </p>
-        </div>
-    </div>
-</a>
-            
-            <a href="/web-preview/preview-news-update/ML-and-Image-Analyses-for-Livestock-Data.html" class="news-post col-12 col-sm-6 col-lg-4  col-12 ">
-    <div class="d-flex flex-column p-2">
-        <div class="img-container">
-            <img class="img-fluid" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/cow-ml-image-cropped.jpg" alt="Cows Feeding with ML overlay" />
-        </div>
-        <h3 class="my-1 text-dark">Machine Learning and Image Analyses for Livestock Data</h3>
-        <div class="text-dark d-flex flex-row justify-content-between">
-            <div class="w-auto">
-                By: Hannah Cheren
-            </div>
-            <div class="w-auto">
-                Feb 22, 2022
-            </div>
-        </div>
-        <div>
-            <p class="text-dark mb-0">
-                In this presentation from HTCondor Week 2021, Joao Dorea from the Digital Livestock Lab explains how high-throughput computing is used in the field of animal and dairy sciences.
-            </p>
-        </div>
-    </div>
-</a>
-            
-        </div>
-    </div>
-</div>
-<div class="container-lg">
-        <div class="row flex-row-reverse mb-4 mt-4 ">
-    <div class="col-12 col-md-8">
-        
-            <h1 class="uw-mini-bar mb-4">
-                HTCSS
-            </h1>
-        
-        <div>
-<p>The <a href="http://htcondor.org">HTCondor Software Suite (HTCSS)</a> provides sites and users with the ability to manage and execute
-HTC workloads.  Whether it’s managing a single laptop or 250,000 cores at CERN, HTCondor
-helps solve computational problems through the application of the HTC principles.</p>
+<h2>The Requirements</h2>
 
-</div>
-    </div>
-    <div class="col-1 d-md-block d-none"></div>
-    <div class="col-3 d-md-flex d-none">
-        <img class="w-100 mt-auto mb-auto" src="/web-preview/preview-news-update/images/laptop.svg" alt="Laptop" />
-    </div>
-</div>
-        <div class="row  mb-4 mt-4 ">
-    <div class="col-12 col-md-8">
-        
-            <h1 class="uw-mini-bar mb-4">
-                Services
-            </h1>
-        
-        <div>
-<h3 id="uw-research-computing"><a href="uw-research-computing">UW Research Computing</a></h3>
-<p>CHTC manages over 20,000 cores and dozens of GPUs for the UW-Madison
-campus; this resource, which is free and shared, aims to advance the
-mission of the University of Wisconsin in support of the Wisconsin
-Idea.  Researchers can place their workloads on an access point at
-CHTC and utilize the resources at CHTC, across the campus, and across
-the nation.</p>
+<p>The requirement for this transfer was to reliably transfer all the files in a reasonably performant way, minimizing the human time to set up, run, and manage the transfer.  Note the noni-goal of optimizing for the fastest possible transfer time – reliability and minimizing the human effort take priority here.  Reliability, in this context implies:</p>
 
-<h3 id="research-facilitation">Research Facilitation</h3>
-<p>CHTC’s Research Facilitation team empowers researchers to utilize computing to achieve
-their goals.  The Research Facilitation approach emphasizes teaching users skills and
-methodologies to manage &amp; automate workloads on resources like those at CHTC, the campus,
-or across the world.</p>
+<p>Failed transfers are identified and re-run (with millions of files, a failed transfer is almost inevitable)
+Every file will get transferred
+The operation will not overload the sender, the receiver, or any network in between</p>
 
-</div>
-    </div>
-    <div class="col-1 d-md-block d-none"></div>
-    <div class="col-3 d-md-flex d-none">
-        <img class="w-100 mt-auto mb-auto" src="/web-preview/preview-news-update/images/microscope.svg" alt="Microscope" />
-    </div>
-</div>
+<h2>The Inspiration</h2>
 
-</div>
+<p>Daues presented unrelated work at the <a href="https://research.cs.wisc.edu/htcondor/HTCondorWeek2017/" target="_blank">2017 HTCondor Week workshop</a>.  At this workshop, he heard about the work of Phillip Papodopolous at UCSD, and his international Data Placement Lab (iDPL).   iDPL used HTCondor jobs solely for transferring data between international sites.  Daues re-used and adapted some of these ideas for NCSA’s needs.</p>
 
-<div class="bg-light pb-5">
-    <hr/>
-    <div class="container-lg">
-        <h3 class="text-center mb-5">
-            As part of its many services to UW-Madison and beyond,
-            the CHTC is home to or supports the following Research
-            Projects and Partners.
-        </h3>
-        <div class="row justify-content-center  mb-4 mt-4 ">
-    <div class="col col-md-8">
-        <h1><a href="https://osg-htc.org">OSG</a></h1>
-        <p>
-        The OSG is a consortium of research collaborations, campuses, national laboratories and software
-        providers dedicated to the advancement of all of open science via the practice of distributed High Throughput
-        Computing (dHTC), and the advancement of its state of the art. The OSG operates a fabric of dHTC services
-        for the national science and engineering community and CHTC has been a major force in OSG since its inception
-        in 2005.
-        </p>
-    </div>
-    <div class="col-1 d-md-block d-none"></div>
-    <a href="https://osg-htc.org" class="col-3 d-md-flex d-none">
-        <img style="" class="w-100 mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/OSG-logo.svg" alt="OSG Logo" />
-    </a>
-</div>
-        <div class="row justify-content-center  flex-row-reverse mb-4 mt-4">
-    <div class="col col-md-8">
-        <h1><a href="https://path-cc.io/">PATh</a></h1>
-        <p>
-        The Partnership to Advance Throughput Computing (PATh) is a partnership between
-        CHTC and OSG to advance throughput computing.  Funded through a major investment
-        from NSF, PATh helps advance HTC at a national level through support for
-        HTCSS and provides a fabric of services for the NSF science and engineering community
-        to access resources across the nation.
-        </p>
-    </div>
-    <div class="col-1 d-md-block d-none"></div>
-    <a href="https://path-cc.io/" class="col-3 d-md-flex d-none">
-        <img style="max-width: 12rem;" class="w-100 mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/PATh_Logo.png" alt="PATh Logo" />
-    </a>
-</div>
-        <div class="row justify-content-center  mb-4 mt-4 ">
-    <div class="col col-md-8">
-        <h1><a href="https://morgridge.org/">Morgridge Institute for Research</a></h1>
-        <p>
-        The Morgridge Institute for Research is a private, biomedical research institute
-        located on the UW-Madison campus.  Morgridge’s Research Computing Theme is a unique
-        partner with CHTC, investing in the vision of HTC and its ability to advance basic
-        research.
-        </p>
-    </div>
-    <div class="col-1 d-md-block d-none"></div>
-    <a href="https://morgridge.org/" class="col-3 d-md-flex d-none">
-        <img style="" class="w-100 mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/Morgridge_Logo.svg" alt="Morgridge Logo" />
-    </a>
-</div>
-        <div class="row justify-content-center">
+<h2>The Solution</h2>
+<p>First, Daues installed a <a href="https://hub.docker.com/r/htcondor/mini" target="_blank">“mini-condor”</a>, an HTCondor pool entirely on one machine, with an access point and eight execution slots on that same machine.  Then, given a single large file containing the names of all the files to transfer, he ran the Unix split command to create separate files with either 50 of the larger files, or 200 of the smaller files.  Finally, using the HTCondor submit file command</p>
 
-            
-            <a href="https://xdd.wisc.edu/" class="col-8 col-lg-4 col-md-5 col-sm-5">
-    <div style="min-height: 160px;" class="row h-100 justify-content-center pt-3 pb-3">
-        <div class="col-12 col-sm-6 d-flex">
-            <h2 class="mt-auto mb-auto">xDD</h2>
-        </div>
-        <div class="col-6 col-sm-6 d-flex">
-            <img style="" class=" mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/xDD_Logo.svg" alt="xDD logo" />
-        </div>
-    </div>
-</a>
+<p>Queue filename matching files *.txt</p>
 
+<p>the condor_submit command creates one job per split file, which runs the wget2 command and passes the list of filenames to wget2.  The HTCondor access point can handle tens of thousands of idle jobs, and will schedule these jobs on the eight execution slots.  While more slots would yield more overlapped i/o, eight slots were chosen to throttle the total network bandwidth used.  Over the course of days, this machine with eight slots maintained roughly 600 MB/seconds.</p>
 
-            <a href="https://iris-hep.org/" class="col-8 col-lg-4 col-md-5 col-sm-5">
-    <div style="min-height: 160px;" class="row h-100 justify-content-center pt-3 pb-3">
-        <div class="col-12 col-sm-6 d-flex">
-            <h2 class="mt-auto mb-auto">IRIS-HEP</h2>
-        </div>
-        <div class="col-6 col-sm-6 d-flex">
-            <img style="" class=" mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/IRIS-HEP_Logo.png" alt="IRIS-HEP logo" />
-        </div>
-    </div>
-</a>
-
-
-            <a href="https://neos-server.org/neos/" class="col-8 col-lg-4 col-md-5 col-sm-5">
-    <div style="min-height: 160px;" class="row h-100 justify-content-center pt-3 pb-3">
-        <div class="col-12 col-sm-6 d-flex">
-            <h2 class="mt-auto mb-auto">NEOS</h2>
-        </div>
-        <div class="col-6 col-sm-6 d-flex">
-            <img style="" class=" mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/NEOS_Logo.svg" alt="NEOS logo" />
-        </div>
-    </div>
-</a>
-
-
-            <a href="https://bmrb.io/" class="col-8 col-lg-4 col-md-5 col-sm-5">
-    <div style="min-height: 160px;" class="row h-100 justify-content-center pt-3 pb-3">
-        <div class="col-12 col-sm-6 d-flex">
-            <h2 class="mt-auto mb-auto">BMRB</h2>
-        </div>
-        <div class="col-6 col-sm-6 d-flex">
-            <img style="" class=" mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/BMRB_Logo.svg" alt="BMRB logo" />
-        </div>
-    </div>
-</a>
-
-
-            <a href="https://pegasus.isi.edu/" class="col-8 col-lg-4 col-md-5 col-sm-5">
-    <div style="min-height: 160px;" class="row h-100 justify-content-center pt-3 pb-3">
-        <div class="col-12 col-sm-6 d-flex">
-            <h2 class="mt-auto mb-auto">Pegasus</h2>
-        </div>
-        <div class="col-6 col-sm-6 d-flex">
-            <img style="" class=" mt-auto mb-auto" src="/web-preview/preview-news-update/images/logos/Pegasus_Logo.png" alt="Pegasus logo" />
-        </div>
-    </div>
-</a>
-
-
+<p><em>(Note that the machine running HTCondor did not crash during this run, but if it had, all the jobs, after submission, were stored reliably on the local disk, and at such time as the crashed machine restarted, and the init program restarted the HTCondor system, all interrupted jobs would be restarted, and the process would continue without human intervention.)</em></p>
 
         </div>
     </div>
 </div>
-
+</main>
     </main>
     <footer id="colophon" class="uw-footer">
     <div class="uw-footer-content">
