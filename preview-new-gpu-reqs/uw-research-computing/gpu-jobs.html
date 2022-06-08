@@ -254,6 +254,14 @@ determine:</p>
   <li><a href="#e-prepare-software-using-gpus">Prepare software using GPUs</a></li>
 </ul>
 
+<blockquote>
+  <h3 id="recent-changes-as-of-june-2022">Recent Changes (as of June 2022)</h3>
+
+  <p>Due to recent updates in HTCondor, specific GPU qualities like GPU memory and compute “capability” are being tracked by HTCondor in a different way. If your jobs require specific GPU qualities like these, the mechanism for requesting them in jobs has changed. 
+Details are included in the section on <a href="#1-choose-gpu-related-submit-file-options">Choosing GPU-Related Submit File Options</a>. The previous recommendation of 
+using job <code>requirements</code> will be phased out at a later date.</p>
+</blockquote>
+
 <h1 id="a-available-chtc-gpus">A. Available CHTC GPUs</h1>
 
 <h2 id="1-gpu-lab">1. GPU Lab</h2>
@@ -272,7 +280,7 @@ the capacity of the GPU Lab to run their work.</p>
     <th>GPUs / Server</th>
     <th>GPU Type (<code>GPUs_DeviceName</code>)</th>
     <th>Hardware Generation <code>GPUs_Capability</code></th>
-    <th>Max <code>GPUs_DriverVersion</code></th>
+    <th>GPU Memory <code>GPUs_GlobalMemoryMB</code></th>
   </tr>
 <!--  <tr>
     <td>gpu-3.chtc.wisc.edu</td> 
@@ -285,7 +293,7 @@ the capacity of the GPU Lab to run their work.</p>
     <td>2</td>
     <td>Tesla P100-PCIE-16GB</td>
     <td>6.0</td>
-    <td>11.5</td>
+    <td>16GB</td>
   </tr>
   <tr>
     <td>4</td>
@@ -293,7 +301,7 @@ the capacity of the GPU Lab to run their work.</p>
     <td>8</td>
     <td>GeForce RTX 2080 Ti</td>
     <td>7.5</td>
-    <td>11.5</td>
+    <td>10GB</td>
   </tr>
   <tr>
     <td>2</td>
@@ -301,7 +309,7 @@ the capacity of the GPU Lab to run their work.</p>
     <td>4</td>
     <td>A100-SXM4-40GB</td>
     <td>8.0</td>
-    <td>11.5</td>
+    <td>40GB</td>
   </tr>
 </table>
 
@@ -376,9 +384,9 @@ like to submit by using the submit file option below.
   </li>
   <li><strong>Request Specific GPUs or CUDA Functionality Using <code>require_gpus</code> (optional)</strong>: If your software or code requires a certain
 type of GPU, or has some other special requirement, there is a special submit file line 
-to request these capabilities, <code>require_gpus</code>. Each GPU attribute that can be requested 
-in this way is structured as <code>GPUs_feature</code>. You can request specific features by using 
-the feature name in the <code>require_gpus</code> statment.  For example, if you want a certain 
+to request these capabilities, <code>require_gpus</code>. Each GPU quality that can be requested 
+in this way is structured as <code>GPUs_&lt;Feature&gt;</code>. You can request specific features by using 
+the feature name (dropping the <code>GPUs_</code> prefix) in the <code>require_gpus</code> statement.  For example, if you want a certain 
 class of GPU, represented by 
 the attribute <code>GPUs_Capability</code>, your <code>require_gpus</code> statement would look like this:
     <pre class="sub"><code>require_gpus = (Capability &gt; 7.5)
@@ -532,7 +540,7 @@ GPU-enabled servers by running:</p>
 can use the “auto-format” option for <code>condor_status</code> and the names of
 specific server attributes. For example, the tables below can be mostly
 recreated using the attributes <code>Machine</code>, <code>TotalGpus</code>,
-<code>CUDADeviceName</code> and <code>CUDACapability</code>:</p>
+<code>GPUs_DeviceName</code> and <code>GPUs_Capability</code>:</p>
 
 <pre class="term"><code>[alice@submit]$ condor_status -compact -constraint 'TotalGpus &gt; 0' \
 				-af Machine TotalGpus GPUs_DeviceName GPUs_Capability
