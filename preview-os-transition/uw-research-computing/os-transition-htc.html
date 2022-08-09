@@ -246,7 +246,7 @@ the near future as well and have a separate transition page.</p>
 <p>All updates to the HTC system will be reflected on this page; significant changes may 
 also include a notification to the <code>chtc-users</code> mailing list.</p>
 
-<h1 id="important-dates">Important Dates</h1>
+<h2 id="important-dates">Important Dates</h2>
 
 <ul>
   <li><strong>August 2022</strong>: significant HTC capacity running CentOS Stream 8, available for testing 
@@ -255,9 +255,9 @@ and general use.</li>
   <li><strong>TBD</strong>: More than 75% of CHTC capacity is run on CentOS Stream 8</li>
 </ul>
 
-<h1 id="what-you-need-to-do">What You Need to Do</h1>
+<h2 id="what-you-need-to-do">What You Need to Do</h2>
 
-<h2 id="actions-for-all-users">Actions For All Users</h2>
+<h3 id="actions-for-all-users">Actions For All Users</h3>
 
 <p>All users of CHTC’s HTC system should <strong>test their existing workflows</strong>. 
 The only exception are those users who use Docker or Singularity containers 
@@ -287,7 +287,7 @@ the facilitation team at chtc@cs.wisc.edu.</p>
 wait for the default setting for jobs to change, or opt into using both in 
 the meantime. See immediately below for how to do this.</p>
 
-<h2 id="get-more-computing-optional">Get More Computing (Optional)</h2>
+<h3 id="get-more-computing-optional">Get More Computing (Optional)</h3>
 
 <p>Additionally, for those who want to maximize their usage of HTC system 
 resources, we recommend <strong>opting into use of computers with both operating systems</strong>.</p>
@@ -300,9 +300,9 @@ versions of Linux: <a href="use-both-centos-7-current-default-and-centos-stream-
 specify use of both operating systems. These jobs will run on servers using either 
 operating system without any changes to your submit file.</p>
 
-<h1 id="current-status-of-the-htc-system">Current Status of the HTC System</h1>
+<h2 id="current-status-of-the-htc-system">Current Status of the HTC System</h2>
 
-<h2 id="capacity-available-in-the-htc-system">Capacity Available in the HTC System</h2>
+<h3 id="capacity-available-in-the-htc-system">Capacity Available in the HTC System</h3>
 
 <table class="gtable">
   <tr>
@@ -313,28 +313,28 @@ operating system without any changes to your submit file.</p>
   <tr>
     <td>CentOS 7</td> 
     <td>85%</td>
-    <td>Range of GPU servers, high memory nodes</td>
+    <td>Build nodes, range of GPU servers, high memory nodes</td>
   </tr>
   <tr>
     <td>CentOS Stream 8</td> 
     <td>15%</td>
-    <td>Servers with A100 GPUs</td>
+    <td>Build node, Servers with A100 GPUs</td>
   </tr>
 </table>
 
-<h2 id="default-operating-system">Default Operating System</h2>
+<h3 id="default-operating-system">Default Operating System</h3>
 
 <p>Currently, CHTC-managed submit servers automatically add a job 
 requirement requesting servers with our most recent operating system,
 CentOS 7. To override this default, see below: <a href="#requesting-a-specific-operating-system">Requesting a Specific
 Operating System</a>.</p>
 
-<h1 id="requesting-a-specific-operating-system">Requesting a Specific Operating System</h1>
+<h2 id="requesting-a-specific-operating-system">Requesting a Specific Operating System</h2>
 
 <p>Throughout this transition, you can require a specific operating system 
 version (or versions) for your jobs.</p>
 
-<h2 id="require-centos-stream-8-upcoming-default">Require CentOS Stream 8 (upcoming default)</h2>
+<h3 id="require-centos-stream-8-upcoming-default">Require CentOS Stream 8 (upcoming default)</h3>
 
 <p>To request that your jobs run on servers with CentOS Stream 8 <strong>only</strong> add the
 following requirements line to your submit file:</p>
@@ -342,7 +342,7 @@ following requirements line to your submit file:</p>
 <pre><code class="language-{.sub}">requirements = (OpSysMajorVer == 8)
 </code></pre>
 
-<h2 id="use-both-centos-7-current-default-and-centos-stream-8-upcoming-default">Use Both CentOS 7 (current default) and CentOS Stream 8 (upcoming default)</h2>
+<h3 id="use-both-centos-7-current-default-and-centos-stream-8-upcoming-default">Use Both CentOS 7 (current default) and CentOS Stream 8 (upcoming default)</h3>
 
 <p>To request that your jobs run on computers running <strong>either</strong> version of 
 CentOS Linux, add the following requirements line to your submit file:</p>
@@ -356,7 +356,7 @@ newer version of Linux may not run older versions of Linux. Make
 sure to test your jobs specifically on both CentOS Stream 8 and CentOS 7
 before using the option above.</p>
 
-<h2 id="combining-requirements">Combining Requirements</h2>
+<h3 id="combining-requirements">Combining Requirements</h3>
 
 <p>Does your job already have a requirements statement? If so, you can
 add the requirements above to the pre-existing requirements by using
