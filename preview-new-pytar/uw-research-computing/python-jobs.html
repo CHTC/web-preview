@@ -615,11 +615,11 @@ guide linked above.</li>
 order to make sure your requests for a large batch are accurate!<br />
 Disk space and memory usage can be found in the log file after the job completes.</li>
   <li>Change transfer_input_files to include the python tar file, packages, script, and any other 
-needed files. If you used our CentOS 7 version of Python, this may look like:
+needed files. <strong>If you used our CentOS 7 version of Python</strong>, this may look like:
     <pre class="sub"><code>transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/python##.tar.gz, packages.tar.gz, my_script.py
 </code></pre>
 
-    <p>If you used our CentOS Stream 8 version of Python, this may look like:</p>
+    <p><strong>If you used our CentOS Stream 8 version of Python</strong>, this may look like:</p>
     <pre class="sub"><code>transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/el8/python##.tar.gz, packages.tar.gz, my_script.py
 </code></pre>
   </li>
