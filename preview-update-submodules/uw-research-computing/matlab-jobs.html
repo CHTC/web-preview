@@ -42,13 +42,27 @@
 
     
 
-<div class="uw-global-bar" role="navigation">
-    <a class="uw-global-name-link" href="http://www.wisc.edu" aria-label="University home page">U<span>niversity <span class="uw-of">of</span> </span>W<span>isconsin</span>–Madison</a>
-
-    
-    <a class="uw-global-name-link" href="/web-preview/preview-update-submodules/" aria-label="University home page">Go to CHTC Home</a>
-    
+<div class="container-fluid">
+    <div class="row justify-content-between bg-primary"  role="navigation">
+        <div class="col-auto">
+            <a class="uw-global-name-link" href="http://www.wisc.edu" aria-label="University home page">U<span>niversity <span class="uw-of">of</span> </span>W<span>isconsin</span>–Madison</a>
+        </div>
+        <div class="col-auto">
+            <div class="row">
+                <div class="col-auto pe-0">
+                    
+                    <a class="uw-global-name-link" href="/web-preview/preview-update-submodules/" aria-label="University home page">Go to CHTC Home</a>
+                    
+                </div>
+                <div class="col-auto d-flex">
+                    <a class="button btn-light px-2  my-auto rounded" href="/uw-research-computing/form.html">Request Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
     
 
 
@@ -283,6 +297,9 @@ randomness</a> below.</p>
     <tr>
       <td>Matlab 2020a</td>
     </tr>
+    <tr>
+      <td>Matlab 2021b</td>
+    </tr>
   </tbody>
 </table>
 
@@ -320,7 +337,7 @@ log = interactive.log
 transfer_input_files = script.m, functions.tar.gz
 
 +IsBuildJob = true
-requirements = (OpSysMajorVer =?= 7)
+requirements = (OpSysMajorVer =?= 8)
 request_cpus = 1
 request_memory = 4GB
 request_disk = 2GB
@@ -471,7 +488,8 @@ your code. Options available on our proxy include:</p>
     <ul>
       <li><code>r2015b.tar.gz</code></li>
       <li><code>r2018b.tar.gz</code></li>
-      <li><code>r2020a.tar.gz</code><br /></li>
+      <li><code>r2020a.tar.gz</code></li>
+      <li><code>r2021b.tar.gz</code><br /></li>
     </ul>
 
     <p>To send the runtime package to your jobs, list a link to the
@@ -504,6 +522,10 @@ in <code>readme.txt</code>).</p>
         <tr>
           <td><code>r2020a.tar.gz</code></td>
           <td><code>v98</code></td>
+        </tr>
+        <tr>
+          <td><code>r2021b.tar.gz</code></td>
+          <td><code>v911</code></td>
         </tr>
       </tbody>
     </table>
