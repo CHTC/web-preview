@@ -314,7 +314,9 @@ that is necessary for your installation is not installed, contact CHTC staff.</p
   </li>
   <li>
     <p><strong>Change MPI execution:</strong> Our systems administrators now recommend using <code>srun</code> 
-instead of <code>mpirun</code> or <code>mpiexec</code> to execute MPI type code.</p>
+with the <code>--mpi=pmix</code> flag instead of <code>mpirun</code> or <code>mpiexec</code> to execute MPI type code. It
+should look like this:
+     srun –mpi=pmix mpi_program</p>
   </li>
   <li>
     <p><strong>Change #SBATCH options:</strong> The new cluster has different partition names <em>and</em> 
@@ -345,7 +347,7 @@ for different sized jobs:</p>
 #SBATCH --ntasks-per-node=80 # designate cores per node
 		</pre> OR:  <pre>
 #SBATCH --nodes=2
-#SBATCH --ntasks=80 # designate overall cores
+#SBATCH --ntasks=160 # designate overall cores
 		</pre></td>
 	</tr>
 	<tr>
