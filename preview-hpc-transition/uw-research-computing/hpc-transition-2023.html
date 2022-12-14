@@ -248,8 +248,7 @@
 
             <p>The Center for High Throughput Computing’s High Performance Cluster is being 
 replaced by a new High Performance System! All components of the system (execute 
-nodes, network, shared file system) are new and we expect excellent performance 
-on the cluster.</p>
+nodes, network, shared file system) are new and we expect an improved experience for our HPC users.</p>
 
 <p>ALL USERS OF THE EXISTING HPC SYSTEM WILL NEED TO MIGRATE TO THIS NEW CLUSTER. 
 Importantly, access to the existing cluster will be phased out in early 2022. 
@@ -274,10 +273,10 @@ files.</li>
 <h2 id="important-dates">Important Dates</h2>
 
 <ul>
-  <li>Early January, 2023: New cluster available for general use</li>
+  <li>Early January 2023: New cluster available for general use</li>
   <li>February 14, 2023: Jobs will no longer run on the old cluster</li>
   <li>March 1, 2023: Access to <code>hpclogin1.chtc.wisc.edu</code> login node and old file 
-system removed, <strong>Data for all users will be deleted.</strong></li>
+system removed, <strong>Data for all users will be deleted on the old HPC system.</strong></li>
 </ul>
 
 <h2 id="what-you-need-to-do">What You Need to Do</h2>
@@ -301,9 +300,9 @@ will run, paying attention to these important changes:</p>
 <ol>
   <li>
     <p><strong>Use <code>/home</code> and <code>/scratch</code> correctly:</strong> jobs should be run out of <code>/scratch/$USER</code> 
-and the home directory should only be used for software installations and copies 
-of important files and templates. Scratch space has a 100GB quota and home 
-directories have a 20GB quota. The <code>/software</code> directory is being phased out.</p>
+and the <code>/home</code> directory should only be used for software installations and copies 
+of important files and templates. <code>\scratch</code> space has a quota of 100GB disk space and 250,000 items and <code>\home</code>
+directories have a quota of 20GB disk space and 250,000 items. The <code>/software</code> directory is being phased out.</p>
   </li>
   <li>
     <p><strong>Build software with new modules:</strong> users will need to reinstall and/or rebuild 
@@ -351,7 +350,7 @@ for different sized jobs:</p>
 		</pre></td>
 	</tr>
 	<tr>
-		<td>128 or 256 cores (whole nodes</td>
+		<td>128 or 256 cores (whole nodes)</td>
 		<td>Example for 256 cores: <pre>
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=128
