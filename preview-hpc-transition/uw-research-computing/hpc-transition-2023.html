@@ -300,8 +300,8 @@ will run, paying attention to these important changes:</p>
 <ol>
   <li><strong>Appropriate usage of <code>/home</code> and <code>/scratch</code>:</strong>
     <ul>
-      <li>Jobs should be run out of <code>/scratch/$USER</code> and has a quota of  100GB disk space and 250,000 items</li>
-      <li>Only use your <code>/home</code> directory should for software installations and copies of important files and templates.
+      <li>Jobs should be run out of <code>/scratch/$USER</code>. Your scratch directory has a quota of  100GB disk space and 250,000 items</li>
+      <li>Only use your <code>/home</code> directory for software installations and general job files and templates.
 Your <code>/home</code> directory has a quota of 20GB disk space and 250,000 items.</li>
       <li>The <code>/software</code> directory is being phased out.</li>
     </ul>
@@ -311,7 +311,8 @@ Your <code>/home</code> directory has a quota of 20GB disk space and 250,000 ite
 their software on the new HPC cluster. Users may encounter different versions of 
 common tools on the new cluster, so it is important to try installing your 
 software early to ensure compatibility. If a software or library is not available 
-that is necessary for your installation is not installed, contact CHTC staff.</p>
+that is necessary for your installation is not installed, contact CHTC staff (see 
+our <a href="/uw-research-computing/get-help.html">get help page</a>).</p>
   </li>
   <li>
     <p><strong>Change MPI execution:</strong> Our systems administrators now recommend using <code>srun</code> 
