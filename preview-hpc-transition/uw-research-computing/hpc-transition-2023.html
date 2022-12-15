@@ -257,7 +257,7 @@ CHTC staff are here to assist with your transition.</p>
 <h2 id="highlights">Highlights</h2>
 
 <ul>
-  <li>The existing HPC cluster is being replaced by a new cluster. After February 2023 
+  <li>The existing HPC cluster is being replaced by a new cluster. After <strong>February 2023</strong> 
 ALL users will lose access to the existing cluster, and all user files will be 
 deleted.</li>
   <li>Custom software will need to be reinstalled and jobs will need to be tested on 
@@ -273,9 +273,9 @@ files.</li>
 <h2 id="important-dates">Important Dates</h2>
 
 <ul>
-  <li>Early January 2023: New cluster available for general use</li>
-  <li>February 14, 2023: Jobs will no longer run on the old cluster</li>
-  <li>March 1, 2023: Access to <code>hpclogin1.chtc.wisc.edu</code> login node and old file 
+  <li><strong>Early January 2023:</strong> New cluster available for general use</li>
+  <li><strong>February 14, 2023:</strong> Jobs will no longer run on the old cluster</li>
+  <li><strong>March 1, 2023:</strong> Access to <code>hpclogin1.chtc.wisc.edu</code> login node and old file 
 system removed, <strong>Data for all users will be deleted on the old HPC system.</strong></li>
 </ul>
 
@@ -298,11 +298,13 @@ existing system starting March 1, 2023.</strong></p>
 will run, paying attention to these important changes:</p>
 
 <ol>
-  <li>
-    <p><strong>Use <code>/home</code> and <code>/scratch</code> correctly:</strong> jobs should be run out of <code>/scratch/$USER</code> 
-and the <code>/home</code> directory should only be used for software installations and copies 
-of important files and templates. <code>\scratch</code> space has a quota of 100GB disk space and 250,000 items and <code>\home</code>
-directories have a quota of 20GB disk space and 250,000 items. The <code>/software</code> directory is being phased out.</p>
+  <li><strong>Appropriate usage of <code>/home</code> and <code>/scratch</code>:</strong>
+    <ul>
+      <li>Jobs should be run out of <code>/scratch/$USER</code> and has a quota of  100GB disk space and 250,000 items</li>
+      <li>Only use your <code>/home</code> directory should for software installations and copies of important files and templates.
+Your <code>/home</code> directory has a quota of 20GB disk space and 250,000 items.</li>
+      <li>The <code>/software</code> directory is being phased out.</li>
+    </ul>
   </li>
   <li>
     <p><strong>Build software with new modules:</strong> users will need to reinstall and/or rebuild 
@@ -317,14 +319,12 @@ with the <code>--mpi=pmix</code> flag instead of <code>mpirun</code> or <code>mp
 should look like this:
      srun –mpi=pmix mpi_program</p>
   </li>
-  <li>
-    <p><strong>Change #SBATCH options:</strong> The new cluster has different partition names <em>and</em> 
+  <li><strong>Change #SBATCH options:</strong> The new cluster has different partition names <em>and</em> 
 different sized nodes. The main general use partition is now called <code>shared</code> 
 instead of <code>univ2</code> or <code>univ3</code>. We also recommend the following changes because 
 most of our nodes now have 128 cores, so requesting multiple nodes is not 
 advantageous if your jobs are smaller than 128 cores. Here are our recommendations 
-for different sized jobs:</p>
-  </li>
+for different sized jobs:</li>
 </ol>
 
 <table>
