@@ -229,7 +229,7 @@ const CollegeTable = (props) => {
 
     const [data, setData] = useState([]);
     useEffect(() => {
-        fetch("/assets/data/college-table.json")
+        fetch("/web-preview/preview-homepage-visuals/assets/data/college-table.json")
             .then(r => r.json())
             .then(d => setData(d))
     }, [])
