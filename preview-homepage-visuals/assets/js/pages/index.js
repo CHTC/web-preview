@@ -174,7 +174,7 @@ function useOnScreen(ref, rootMargin = "0px") {
 const Counter = ({endValue, numIncrements, sleep, decimals, ...props}) => {
 
     const ref = useRef();
-    const isOnScreen = useOnScreen(ref, "-200px");
+    const isOnScreen = useOnScreen(ref, "-100px");
 
     const [index, setIndex] = useState(0);
 
@@ -199,7 +199,7 @@ const StatisticRow = () => {
 
     const [data, setData] = useState([]);
     useEffect(() => {
-        fetch("/assets/data/college-table.json")
+        fetch("/web-preview/preview-homepage-visuals/assets/data/college-table.json")
             .then(r => r.json())
             .then(d => setData(d))
     }, [])
