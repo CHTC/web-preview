@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Checking Disk Quota and Usage</title>
+<title>Remotely Access a Private GitHub Repository</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -243,75 +243,149 @@
     <div class="row justify-content-center">
         <div class="col mw-1000">
             <h1 class="uw-mini-bar mb-4">
-    Checking Disk Quota and Usage
+    Remotely Access a Private GitHub Repository
 </h1>
 
-            <p>The following commands will allow you to monitor the amount of disk
-space you are using in your home directory on our (or another) submit node and to determine the
-amount of disk space you have been allotted (your quota).</p>
+            <p>This guide describes how to remotely access a private GitHub repository from the HTC and HPC clusters, specifically</p>
+<ul>
+  <li>
+    <p>how to generate an SSH key pair</p>
+  </li>
+  <li>
+    <p>how to add a public SSH key to your GitHub account</p>
+  </li>
+  <li>
+    <p>how to remotely access your private GitHub repository</p>
+  </li>
+</ul>
 
-<p>If you also have a <code>/staging</code> directory on the HTC system, see our 
-<a href="file-avail-largedata.html#5-checking-your-quota-data-use-and-file-counts">staging guide</a> for 
-details on how to check your quota and usage. 
-<br />
-The default quota allotment on CHTC submit nodes is 20 GB with a hard
-limit of 30 GB (at which point you cannot write more files).<br />
-<br />
-<strong>Note: The CHTC submit nodes are not backed up, so you will want to
-copy completed jobs to a secure location as soon as a batch completes,
-and then delete them on the submit node in order to make room for future
-jobs.</strong> If you need more disk space to run a single batch or concurrent
-batches of jobs, please contact us (<a href="get-help.html">Get Help!</a>). We have multiple ways of dealing with large disk space
-requirements to make things easier for you.</p>
+<p>You will need to have access to a CHTC cluster.  You will also need to have a GitHub account  with access to the private repository of interest.</p>
 
-<h2 id="1-checking-your-user-quota-and-usage"><strong>1. Checking Your User Quota and Usage</strong></h2>
+<h2 id="a-generate-the-ssh-key-pair">A. Generate the SSH Key Pair</h2>
 
-<p>From any directory location within your home directory, type
-<code>quota -vs</code>. See the example below:</p>
+<p>We will be following the instructions provided by GitHub to generate the SSH key pair (<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">Generating a new SSH key…</a>).</p>
 
-<pre class="term"><code>[alice@submit]$ quota -vs
-Disk quotas for user alice (uid 20384): 
-     Filesystem   space   quota   limit   grace   files   quota   limit   grace
-      /dev/sdb1  12690M  20480M  30720M            161k       0       0        
+<ol>
+  <li>
+    <p>Log in to the submit node as usual (<a href="connecting.html">Connecting to CHTC</a>).</p>
+  </li>
+  <li>Generate the SSH key by running the following command, where the example email is replaced with the email that you use for your GitHub account.
+    <pre class="term"><code>ssh-keygen -t ed25519 -C "your_email@example.com"
 </code></pre>
 
-<p>The output will list your total data usage under <code>blocks</code>, your soft
-<code>quota</code>, and your hard <code>limit</code> at which point your jobs will no longer
-be allowed to save data. Each of the values given are in 1-kilobyte
-blocks, so you can divide each number by 1024 to get megabytes (MB), and
-again for gigabytes (GB). (It also lists information for ` files`, but
-we don't typically allocate disk space by file count.)</p>
-
-<h2 id="2-checking-the-size-of-directories-and-contents"><strong>2. Checking the Size of Directories and Contents</strong></h2>
-
-<p>Move to the directory you'd like to check and type <code>du</code> . After several
-moments (longer if you're directory contents are large), the command
-will add up the sizes of directory contents and output the total size of
-each contained directory in units of kilobytes with the total size of
-that directory listed last. See the example below:</p>
-
-<pre class="term"><code>[alice@submit]$ du ./
-4096    ./dir/subdir/file.txt
-4096    ./dir/subdir
-7140    ./dir
-74688   .
+    <p>A message will appear stating that the key pair is being generated.</p>
+  </li>
+  <li>A second message will appear prompting you to enter the location where the SSH keys should be stored:
+    <pre class="term"><code>Enter a file in which to save the key (/home/your_NetID/.ssh/ed25519):
 </code></pre>
 
-<p>As for quota usage above, you can divide each value by 1024 to get
-megabytes, and again for gigabytes.</p>
+    <p>Simply hit the enter key to accept the specified file path.</p>
+    <blockquote>
+      <p><em>Note</em>: If a SSH key already exists at the displayed path it will be overwritten by this action.
+This can be avoided by typing in an alternate path before pressing the enter key.</p>
+    </blockquote>
+  </li>
+  <li>You will be prompted to create a passphrase.  Type your desired passphrase and then hit enter.  Repeat a second time when asked to confirm your passphrase.
+    <blockquote>
+      <p><strong>Warning</strong>: If you leave the passphrase empty (hit enter without typing anything), a passphrase will not be created nor required for using the SSH connection.  In principle, this means anyone with access to the private key can access and modify your GitHub account remotely.</p>
+    </blockquote>
+  </li>
+  <li>A message will appear confirming the creation of the SSH key pair, as well as the paths and names of the private and public keys that were generated.  Make note of these paths for use in the following steps.</li>
+</ol>
 
-<p>Using <code>du</code> with the <code>-h</code> or <code>--human-readable</code> flags will display the
-same values with only two significant digits and a K, M, or G to denote
-the byte units. The <code>-s</code> or <code>--summarize</code> flags will total up the size
-of the current directory without listing the size of directory contents
-. You can also specify which directory you'd like to query, without
-moving to it, by adding the relative filepath after the flags. See the
-below example from the <code>home</code> directory which contains the directory
-<code>dir</code>:</p>
+<h2 id="b-add-the-ssh-key-to-your-github-account">B. Add the SSH Key to Your GitHub Account</h2>
 
-<pre class="term"><code>[alice@submit]$ du -sh dir
-7.1K    dir
+<p>Now we will be adding the SSH public key to your GitHub account, following the instructions provided by GitHub (<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Adding a new SSH key to your GitHub account</a>).</p>
+
+<ol>
+  <li>
+    <p>Copy the contents of the public SSH key file (<code>id_ed25519.pub</code>) created in Part A.  There are several ways of doing this.</p>
+
+    <blockquote>
+      <p>If you provided an alternate file name in Step 3. of Part A., then the public SSH key will be the name of that file plus the <code>.pub</code> extension.</p>
+    </blockquote>
+
+    <ul>
+      <li>Print the contents of the file to the screen by entering the following command, replacing <code>your_NetID</code> with your actual NetID.
+        <pre class="term"><code> cat /home/your_NetID/.ssh/id_ed25519.pub
 </code></pre>
+      </li>
+      <li>Use a terminal editor (<code>nano</code>, <code>vi</code>, etc.) to open and view the file</li>
+      <li>Use a file transfer method to transfer the file to your local computer (<a href="connecting.html#transfer">Transferring Files</a>).</li>
+    </ul>
+  </li>
+  <li>Next, log in to <a href="https://github.com/">github.com</a> using the same email that you used in Step 2. of Part A.</li>
+  <li>Go to your account settings by clicking on your profile icon in the top right corner of the webpage, then click on <strong>Settings</strong> within the drop-down menu.  <em>If your browser window is small, the <strong>Settings</strong> button can be found by clicking the menu button at the top left of the webpage.</em></li>
+  <li>Go to the <strong>SSH and GPG keys</strong> section.  Under the <strong>SSH keys</strong> section, click <strong>New SSH key</strong>.</li>
+  <li>Paste the contents of the SSH public key from Step 1. into the <strong>Key</strong> textbox.</li>
+  <li>Name the SSH key using the <strong>Title</strong> textbox.  We recommend “CHTC” plus the name of the submit node.  For example: “CHTC submit1”.</li>
+  <li>Click <strong>Add SSH key</strong>.  The SSH key will now appear in the <strong>SSH keys</strong> section in your GitHub account settings.</li>
+</ol>
+
+<h2 id="c-accessing-your-private-github-repository-from-the-cluster">C. Accessing Your Private GitHub Repository from the Cluster</h2>
+<p>Once the SSH key has been added to your GitHub account, you can access your private repository using the repository’s SSH address.</p>
+
+<ol>
+  <li>In your web browser and while logged in to your GitHub account, go to webpage for the private repository.</li>
+  <li>Click the <strong>&lt;&gt;Code</strong> button, then select the <strong>Local</strong> tab and then the <strong>SSH</strong> tab.</li>
+  <li>Copy the SSH address that is shown.</li>
+  <li>
+    <p>On the CHTC submit node, you can now access the repository using <code>git</code> commands by using the SSH address in place of the HTTPS address.  For example,</p>
+
+    <pre class="term"><code>git clone git@github.com:username/user-private-repository.git
+</code></pre>
+  </li>
+  <li>If prompted for a passphrase when running commands with the SSH address, provide the passphrase you created in Step 4. of Part A.</li>
+</ol>
+
+<h3 id="from-an-interactive-job">From an interactive job</h3>
+
+<p>Because the interactive job takes place on a different node than the submit node, it will not know about the SSH key that you set up above.  Use the following instructions to transfer and use the private identity key in the interactive job (see <a href="inter-submit.html">Compiling or Testing Code with an Interactive Job</a> for more information on interactive jobs).</p>
+
+<ol>
+  <li>
+    <p>When creating the submit file for your interactive job, include the path to the private SSH key identity file as a value for the <code>transfer_input_files</code> keyword.  This will ensure that the identity file is copied to the interactive job directory.  For example,</p>
+
+    <pre><code>transfer_input_files = /home/your_NetID/.ssh/id_ed25519, /path/to/include/other/files
+</code></pre>
+
+    <blockquote>
+      <p><em>Note:</em> Make sure that you are transferring the <em>private</em> SSH key file, not the <em>public</em>.  The public SSH key should have the <code>.pub</code> extension, while the private SSH key does not.</p>
+    </blockquote>
+  </li>
+  <li>Once your submit file is set up, start the interactive job using <code>condor_submit -i</code> and then the name of your submit file.  When the interactive job has started, you will see that the private SSH key file is included in the initial directory.  The SSH program, however, still needs to be told to use it.</li>
+  <li>
+    <p>Initialize an SSH agent using the command</p>
+
+    <pre class="term"><code>eval "$(ssh-agent -s)"
+</code></pre>
+  </li>
+  <li>
+    <p>Add the private SSH to the SSH agent by using the <code>ssh-add</code> command followed by the name of the private SSH key file that you transferred.  You will be prompted to enter the passphrase that you created when you created the SSH key pair.  For example,</p>
+
+    <pre class="term"><code>ssh-add id_ed25519
+</code></pre>
+
+    <p>You will now be able to access the repository during the interactive job.</p>
+  </li>
+</ol>
+
+<h2 id="additional-notes">Additional Notes</h2>
+
+<ul>
+  <li>If you forget the passphrase you created in Step 4. of Part A., you will need to repeat this guide to create a new SSH key pair to replace the previous one.</li>
+  <li>
+    <p>When using the SSH address to your repository with non-<code>git</code> commands, you may need to replace the colon (<code>:</code>) in the address with a forward slash (<code>/</code>).  For example,</p>
+
+    <p><strong>Original SSH address</strong></p>
+    <pre class="term"><code> git@github.com:username/user-private-repository.git
+</code></pre>
+
+    <p><strong>Modified SSH address</strong></p>
+    <pre class="term"><code> git@github.com/username/user-private-repository.git
+</code></pre>
+  </li>
+</ul>
 
         </div>
     </div>
