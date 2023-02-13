@@ -417,11 +417,6 @@ srun --mpi=pmix -n 64 /home/username/mpiprogram
 <p>If you want to run your job commands yourself, as a test before submitting 
 a job as described above, you can request an interactive job on the cluster.</p>
 
-<blockquote>
-  <p>Note: At this time, interactive jobs on the “Spark” HPC Cluster can not be used
-to run MPI code.</p>
-</blockquote>
-
 <p>There is a dedicated partition 
 for interactive work called <code>int</code>; you may request up to a full node (128 CPUs, 
 512 GB RAM) when requesting an interactive session in the "int" partition and 
@@ -430,6 +425,11 @@ mean your interactive job is subject to the limits of that partition.</p>
 
 <p>The command to request an interactive job is <code>srun --mpi=pmix</code>, and includes the partition
 in which you’d like to run the interactive job.</p>
+
+<blockquote>
+  <p>Note: At this time, interactive jobs on the “Spark” HPC Cluster can not be used
+to run MPI code.</p>
+</blockquote>
 
 <pre class="term"><code>[alice@login]$ srun --mpi=pmix -n4 -N1 -p int --pty bash
 </code></pre>
