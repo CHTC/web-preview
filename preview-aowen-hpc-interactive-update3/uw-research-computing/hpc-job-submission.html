@@ -517,7 +517,7 @@ will return the job ID number that corresponds to an entry in your SLURM queue
   <p>A more convenient option is to update your <code>.bashrc</code> file so that the command
 prompt changes when you are in an allocation.  This can be done using the
 following commands:</p>
-  <pre class="term"><code>echo 'PS1="$SLURM_JOB_ID[\u@\h \W]\$ " &gt;&gt; ~/.bashrc
+  <pre class="term"><code>echo 'PS1="$SLURM_JOB_ID[\u@\h \W]\$ " ' &gt;&gt; ~/.bashrc
 echo 'export PS1' &gt;&gt; ~/.bashrc
 </code></pre>
 
