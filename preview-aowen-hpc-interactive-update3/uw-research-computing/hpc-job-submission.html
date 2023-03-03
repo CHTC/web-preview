@@ -456,49 +456,56 @@ when you're done working by typing <code>exit</code></strong>.</p>
 resources using <code>salloc</code>, then (2) use <code>srun</code> to run the MPI code, and finally (3)
 give up the allocated resources.  In brief,</p>
 
-<p>1) <em>Request resources</em></p>
-<pre class="term"><code>   [alice@login]$ salloc -n4 -N1 -p int
+<ol>
+  <li>
+    <p><strong>Request resources</strong></p>
+
+    <pre class="term"><code>[alice@login]$ salloc -n4 -N1 -p int
 </code></pre>
 
-<p>This command requests 4 CPUs (<code>-n4</code>) on a single node (<code>-N1</code>) in the "int"
-   partition (<code>-p int</code>), and assigns the resources to a new terminal session
-   on the login node.  When the allocation has started, you will see a message
-   like this:</p>
-<pre class="term"><code>   salloc: Granted job allocation 18701
-               Guest on spark-a005.chtc.wisc.edu
+    <p>This command requests 4 CPUs (<code>-n4</code>) on a single node (<code>-N1</code>) in the "int"
+partition (<code>-p int</code>), and assigns the resources to a new terminal session
+on the login node.  When the allocation has started, you will see a message
+like this:</p>
+    <pre class="term"><code>salloc: Granted job allocation 18701
+            Guest on spark-a005.chtc.wisc.edu
 </code></pre>
 
-<p><strong><em>Do not attempt to run any programs or code at this point!</em></strong></p>
+    <p><strong><em>Do not attempt to run any programs or code at this point!</em></strong></p>
+  </li>
+  <li>
+    <p><strong>Use resources</strong></p>
 
-<p>2) <em>Use resources</em></p>
-
-<p>At this point, your terminal is still running on the login node.  To run
-   commands using the resources in the allocation, you will need to use <code>srun</code>.</p>
-<pre class="term"><code>   [alice@login]$ srun --mpi=pmix /path/to/mpi/script
+    <p>At this point, your terminal is still running on the login node.  To run
+commands using the resources in the allocation, you will need to use <code>srun</code>.</p>
+    <pre class="term"><code>[alice@login]$ srun --mpi=pmix /path/to/mpi/script
 </code></pre>
 
-<p>This will execute the specified script using the allocated resources.
-   When the <code>srun</code> calculation has finished, you will remain in the allocation
-   session, allowing you to run <code>srun</code> multiple times in quick succession.</p>
+    <p>This will execute the specified script using the allocated resources.
+When the <code>srun</code> calculation has finished, you will remain in the allocation
+session, allowing you to run <code>srun</code> multiple times in quick succession.</p>
 
-<p>You can also use the allocated resources interactively with</p>
-<pre class="term"><code>   [alice@login]$ srun --mpi=pmix --pty bash
+    <p>You can also use the allocated resources interactively with</p>
+    <pre class="term"><code>[alice@login]$ srun --mpi=pmix --pty bash
 </code></pre>
 
-<p>which will start an interactive terminal session in your allocation (this 
-   is evident by the change in the command prompt from <code>[alice@login]</code> to 
-   <code>[alice@spark-a###]</code>).  Keep in mind that you will not be able to use
-   MPI inside the interactive session.  You can exit the interactive session
-   and return to the allocation by entering <code>exit</code>.</p>
+    <p>which will start an interactive terminal session in your allocation (this 
+is evident by the change in the command prompt from <code>[alice@login]</code> to 
+<code>[alice@spark-a###]</code>).  Keep in mind that you will not be able to use
+MPI inside the interactive session.  You can exit the interactive session
+and return to the allocation by entering <code>exit</code>.</p>
+  </li>
+  <li>
+    <p><strong>Give up resources</strong></p>
 
-<p>3) <em>Give up resources</em></p>
-
-<p>To end your allocation, simply enter <code>exit</code>.  You will see a message like
-   this:</p>
-<pre class="term"><code>   exit
-   salloc: Relinquishing job allocation 18701
-   salloc: Job allocation 18701 has been revoked.
+    <p>To end your allocation, simply enter <code>exit</code>.  You will see a message like
+this:</p>
+    <pre class="term"><code>exit
+salloc: Relinquishing job allocation 18701
+salloc: Job allocation 18701 has been revoked.
 </code></pre>
+  </li>
+</ol>
 
 <blockquote>
   <p>It can be difficult to remember whether or not you are currently using an
