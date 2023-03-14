@@ -490,15 +490,16 @@ For example, <code>numpy==1.23.5</code> would install version <code>1.23.5</code
 [alice@build]$ python3 -m pip install --target=$PWD/packages package1 package2 etc.
 </code></pre>
 
-<blockquote class="term">
+<blockquote>
   <p>The python packages (and versions) can instead be installed using the file <code>requirements.txt</code>, which contains one package name (and versions, if needed) per line.<br />
 This file can be created manually or, if you have a working python installation that you want to duplicate, by running</p>
-  <pre><code>   python3 -m pip freeze &gt; requirements.txt
+
+  <pre class="term"><code>python3 -m pip freeze &gt; requirements.txt
 </code></pre>
-</blockquote>
-<blockquote class="term">
+
   <p>To install the packages contained within <code>requirements.txt</code>, run</p>
-  <pre><code>   python3 -m pip install -r requirements.txt
+
+  <pre class="term"><code>python3 -m pip install -r requirements.txt
 </code></pre>
 </blockquote>
 
