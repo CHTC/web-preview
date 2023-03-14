@@ -479,6 +479,11 @@ use a more descriptive name than "packages"</p>
 install. <code>pip</code> should download all dependent packages and install them.
 Certain packages may take longer than others.</p>
 
+<blockquote>
+  <p>If a specific version of a package is required, you can provide the version number using the syntax <code>packagename==X.Y.Z</code>.
+For example, <code>numpy==1.23.5</code> would install version <code>1.23.5</code> of <code>numpy</code>.</p>
+</blockquote>
+
 <p>If you have difficulties installing a package, we recommend you upgrade <code>pip</code> and then try reinstalling your packages:</p>
 
 <pre class="term"><code>[alice@build]$ python3 -m pip install --upgrade pip
