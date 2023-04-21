@@ -242,14 +242,14 @@ Additionally, similar to Docker containers, Apptainer jobs are able to take adva
 Similarly, Apptainer jobs can more easily back fill on external compute resources (e.g.<a href="scaling-htc.html"><code>+WantFlocking</code> and <code>+WantGlideIn</code> resources</a>).</p>
 
 <h2 id="1-choose-or-create-an-apptainer-image">1. Choose or create an Apptainer Image</h2>
-<p>To run an Apptainer job, it is necessary to first choose a preexisting Apptainer image or create your own.</p>
+<p>To run an Apptainer job, it is necessary to first choose a pre-existing Apptainer image or create your own.</p>
 
-<h3 id="a-preexisting-images">A. Preexisting Images</h3>
-<p>Like with Docker, the easiest way to use Apptainer in your jobs is to find a preexisting image that contains your desired software and environment setup.</p>
+<h3 id="a-pre-existing-images">A. Pre-existing Images</h3>
+<p>Like with Docker, the easiest way to use Apptainer in your jobs is to find a pre-existing image that contains your desired software and environment setup.</p>
 
-<p>Preexisting images can be found in reputable sources such as the <a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/">OSG</a>. 
+<p>Pre-existing images can be found in reputable sources such as the <a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/">OSG</a>. 
 It is also possible to convert a Docker container (e.g your own or from DockerHub) to a Apptainer image. 
-<strong>If your apptainer image does not require any additional packages or libraries, skip to <a href="#7-use-an-apptainer-container-in-htc-jobs">section 7</a>.</strong></p>
+<strong>If your apptainer image does not require any additional packages or libraries, skip to <a href="#7-use-an-apptainer-container-in-htc-jobs">7. Use an Apptainer Container in HTC Jobs</a>.</strong></p>
 
 <h3 id="b-create-your-own-image">B. Create your Own Image</h3>
 <p>To create your own image, it is still necessary to select a “base” image to add to. 
@@ -308,7 +308,7 @@ In the <code>image.def</code> file, the installation instructions are placed in 
 Note that because the <code>rocker</code> container already contains R, there is no need to install R in the <code>%post</code> section.</p>
 
 <p>Let’s say that you want to install the R package <code>cowsay</code>, which does not come preinstalled in the <code>rocker</code> container.
-To do so, you will need to add install command to the <code>%post</code> section:</p>
+To do so, you will need to add an install command to the <code>%post</code> section:</p>
 
 <pre><code>%post
     R -e "install.packages('cowsay', dependencies=TRUE, repos='http://cran.rstudio.com/')"
@@ -367,14 +367,30 @@ This can be done using the built-in package manager (<code>apt</code>) of Ubuntu
 </code></pre>
 
 <p>The first command is <code>apt-get update</code> and will update the list of available packages, which is necessary to get the latest versions of the packages in the following <code>apt-get install</code> command.
-The following <code>apt-get install</code> command will install the dependencies required by the SUMO program.
+The <code>apt-get install</code> command will install the dependencies required by the SUMO program.
 Note that these installation commands do not use <code>sudo</code>, as Apptainer already has permissions to install programs in the container.</p>
 
+<p>There can be issues with installing packages in a container that would not normally occur when installing manually in the terminal. 
+In the present case, the <code>apt</code> command needs access to the <code>tmp</code> folder in order to install the packages within the container.
+This can be done by adding the following line at the start of the <code>%post</code> section:</p>
+
+<pre><code>   chmod 777 /tmp
+</code></pre>
+
+<p>Similarly, some packages require that the user answer interactive prompts for selecting various options.
+Since the Apptainer build is non-interactive, this can cause the package installation to hang.
+While this isn’t an issue in the present example, the issue can be avoided by adding the following line near the start of the <code>%post</code> section:</p>
+
+<pre><code>   DEBIAN_FRONTEND=noninteractive
+</code></pre>
+<p>Note that this only applies to Debian-based container images, such as Ubuntu.</p>
+
 <h4 id="compile-the-program">Compile the program</h4>
-<p>The above commands will install the required dependencies, but you still need to include the commands for installing the SUMO program itself. 
-Simply add the installation commands after the commands for installing the dependencies, but still within the <code>%post</code> section:</p>
+<p>The above commands will install the required dependencies, but you still need to include the commands for compiling the SUMO program itself. 
+Simply add the compiling commands after the installation commands for the dependencies, but still within the <code>%post</code> section:</p>
 
 <pre><code>%post
+    chmod 777 /tmp
     apt-get update -y
     apt-get install -y \
             git \
@@ -393,7 +409,7 @@ Simply add the installation commands after the commands for installing the depen
             libeigen3-dev
 
     git clone --recursive https://github.com/eclipse/sumo
-    export SUMO_HOME="$PWD/sumo"
+    export SUMO_HOME=/sumo
     mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
     cmake ../..
     make
@@ -404,11 +420,11 @@ Simply add the installation commands after the commands for installing the depen
 
 <h4 id="setting-environment-variables">Setting environment variables</h4>
 <p>Before building the image, you will want to update the environment for actually using the program.
-For example, in the <code>%post</code> section there is the command <code>export SUMO_HOME="$PWD/sumo"</code>, which sets the environment variable <code>SUMO_HOME</code> to the location of the <code>sumo</code> directory.
+For example, in the <code>%post</code> section there is the command <code>export SUMO_HOME=/sumo</code>, which sets the environment variable <code>SUMO_HOME</code> to the location of the <code>sumo</code> directory.
 This environment variable, however, is only active during the installation phase of the container build, and will not be set when the container is actually ran.</p>
 
 <p>To set environment variables for use in run time, you need to add them in the <code>%environment</code> section.
-For the present example, you will want to set <code>SUMO_HOME</code> and update <code>PATH</code> with the location of the SUMO <code>bin</code> folder.
+For the present example, you will need to set <code>SUMO_HOME</code> and update <code>PATH</code> with the location of the SUMO <code>bin</code> folder.
 To do so, add the following lines to the <code>image.def</code> file:</p>
 
 <pre><code>%environment
@@ -426,6 +442,7 @@ To do so, add the following lines to the <code>image.def</code> file:</p>
 From: ubuntu:22.04
 
 %post
+    chmod 777 /tmp
     apt-get update -y
     apt-get install -y \
             git \
@@ -444,7 +461,7 @@ From: ubuntu:22.04
             libeigen3-dev
 
     git clone --recursive https://github.com/eclipse/sumo
-    export SUMO_HOME="/sumo"
+    export SUMO_HOME=/sumo
     mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
     cmake ../..
     make
@@ -471,7 +488,7 @@ The process of building an apptainer image will convert your <code>.def</code> f
 
 <p>As the command runs, a variety of information will be printed to the terminal regarding the container build process.
 Unless something goes wrong, this information can be safely ignored.
-Once the command has finished running, you should see <code>INFO:    Build complete: my-container.sif</code>).
+Once the command has finished running, you should see <code>INFO:    Build complete: my-container.sif</code>.
 Using the <code>ls</code> command, you should now see your executable Apptainer/Singularity file <code>my-container.sif</code>.</p>
 
 <p>If the build command fails, examine the output for error messages that may explain why the build was unsuccessful.
@@ -493,14 +510,14 @@ Then rebuild the image, and now the relevant error messages should be near the e
 
 <h2 id="5-testing-your-container">5. Testing Your Container</h2>
 
-<p>Just like it is important to test your codes and jobs at a small scale, you should make sure that your container is working correctly. To do this, start an “interactive Apptainer session” with the Apptainer/Singularity “shell” mode. The recommended command line, similar to how containers are started for jobs, is:</p>
+<p>Just like it is important to test your codes and jobs at a small scale, you should make sure that your container is working correctly. To do this, start an interactive Apptainer session with the Apptainer/Singularity “shell” mode. The recommended command line, similar to how containers are started for jobs, is:</p>
 
 <pre class="term"><code>apptainer shell \
             --home $PWD:/srv \
             --pwd /srv \
             --scratch /var/tmp \
             --scratch /tmp \
-            --contain --ipc --pid \
+            --containall \
             my-container.sif
 </code></pre>
 
@@ -571,7 +588,7 @@ queue
 
 <blockquote>
   <p><strong>Before running multiple jobs using your container, be sure to check the size of the <code>.sif</code> file.</strong>
-If greater than 100 MB, the <code>.sif</code> file should <strong>NOT</strong> transferred using <code>transfer_input_files</code>.
+If greater than 100 MB, the <code>.sif</code> file should <strong>NOT</strong> be transferred using <code>transfer_input_files</code>.
 Instead, you should plan to use either CHTC’s web proxy (SQUID) or large data filesystem (<code>/staging</code>).
 For more information, see our guides on SQUID (<a href="file-avail-squid.html">Transfer Large Input Files Via Squid</a>) and <code>/staging</code> (<a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a>).</p>
 </blockquote>
@@ -582,14 +599,18 @@ For more information, see our guides on SQUID (<a href="file-avail-squid.html">T
 The main difference is that instead of running on the execute point’s default operation system, the job is run inside the container.</p>
 
 <p>When you submit a job to HTCondor using a submit file with <code>container_image</code> set, HTCondor automatically handles the process of obtaining and running the container.
-The process looks roughly like
-    * Claim machine that satisifies submit file requirements
-    * Pull (or transfer) the container image
-    * Transfer input files, executable to working directory 
-    * Run the executable script inside the container, as the submit user, with key directories mounted inside (such as the working directory, /staging directories, etc.)
-    * Transfer output files back to the submit server</p>
+The process looks roughly like</p>
+
+<ul>
+  <li>Claim machine that satisifies submit file requirements</li>
+  <li>Pull (or transfer) the container image</li>
+  <li>Transfer input files, executable to working directory</li>
+  <li>Run the executable script inside the container, as the submit user, with key directories mounted inside (such as the working directory, /staging directories, etc.)</li>
+  <li>Transfer output files back to the submit server</li>
+</ul>
 
 <p>For testing purposes, you can replicate the behavior of a container job with the following command (remember to first start an interactive job if you are logged in to the submit server).</p>
+
 <pre class="term"><code>apptainer exec \
         --scratch /tmp \
         --scratch /var/tmp \
