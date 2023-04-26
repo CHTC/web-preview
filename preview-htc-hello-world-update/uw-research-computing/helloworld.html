@@ -280,7 +280,8 @@ HTCondor <em>how</em> to run the jobs for you in the form of a <em>submit file</
 describes the set of jobs.</p>
 
 <p><strong><em>Note: You must be logged into an HTCondor submit machine for the
-following example to work.</em></strong></p>
+following example to work.</em></strong>
+See the <a href="connecting.html">Connecting to CHTC</a> guide for more information on how to log in.</p>
 
 <p><strong>1.</strong> Copy the highlighted text below, and paste it into file called
 <code>hello-chtc.sub</code> (we recommend using a command line text editor) in your home directory on the submit
@@ -387,6 +388,12 @@ batch name (if provided), or executable name. To show all of your jobs
 on individual lines, add the <code>-nobatch</code> option. For more details on this
 option, and other options to <code>condor_q</code>, see our <a href="condor_q.html">condor_q
 guide</a>.</p>
+
+<p>Alternately, you can run the <code>condor_watch_q</code> command to display the
+status of your jobs in the queue along with color-coded progress bars.
+The display is updated automatically every couple seconds, allowing you
+to monitor the status of your jobs in real time.  To exit the view,
+use the keyboard shortcut <code>Ctrl</code> + <code>c</code>.</p>
 
 <blockquote>
   <p><strong>Potential Failures</strong></p>
