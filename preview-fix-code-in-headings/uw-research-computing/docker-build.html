@@ -309,7 +309,7 @@ multiple images for different parts of your workflow,
 you should create a separate folder for each 
 new image with the a <code>Dockerfile</code> inside each of them.</p>
 
-<h3 id="choose-a-base-image-with-from">Choose a base image with <code>FROM</code></h3>
+<h3>Choose a base image with <code class="h3">FROM</code></h3>
 
 <p>Usually you don’t want to start building your image from scratch. 
 Instead you’ll want to choose a “base” image to add things to.</p>
@@ -361,7 +361,7 @@ in <code>FROM</code> statements.</p>
   <li><a href="https://hub.docker.com/r/pytorch/pytorch">PyTorch</a></li>
 </ul>
 
-<h3 id="install-packaged-software-with-run">Install packaged software with <code>RUN</code></h3>
+<h3>Install packaged software with <code class="h3">RUN</code></h3>
 
 <p>The next step is the most challenging. We need to add commands to the
 Dockerfile to install the desired software. There are a few standard ways to
@@ -430,7 +430,7 @@ RUN cd /tmp \
 RUN install2.r --error rjags
 </code></pre>
 
-<h3 id="set-up-the-environment-with-env">Set up the environment with <code>ENV</code></h3>
+<h3>Set up the environment with <code class="h3">ENV</code></h3>
 
 <p>Your software might rely on certain environment variables being set correctly.</p>
 
