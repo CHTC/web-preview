@@ -32,7 +32,7 @@
 <script type="text/javascript" src="/web-preview/preview-update-submodules/assets/js/search_bar.js" defer></script>
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
-<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v8.css" rel="stylesheet">
+<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v10.css" rel="stylesheet">
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/css/research-style.css" rel="stylesheet">
 
@@ -82,7 +82,7 @@
     <div class="uw-header-container mt-2 mb-2">
         <div class="uw-header-crest-title">
             <div class="uw-header-crest">
-                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Small_Logo.svg" alt="Link to CHTC Home Page"></a>
+                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
             </div>
             <div class="uw-title-tagline">
                 <h1 id="site-title" class="uw-site-title">
@@ -280,7 +280,8 @@ HTCondor <em>how</em> to run the jobs for you in the form of a <em>submit file</
 describes the set of jobs.</p>
 
 <p><strong><em>Note: You must be logged into an HTCondor submit machine for the
-following example to work.</em></strong></p>
+following example to work.</em></strong>
+See the <a href="connecting.html">Connecting to CHTC</a> guide for more information on how to log in.</p>
 
 <p><strong>1.</strong> Copy the highlighted text below, and paste it into file called
 <code>hello-chtc.sub</code> (we recommend using a command line text editor) in your home directory on the submit
@@ -370,8 +371,6 @@ appears as:</p>
 <pre class="term"><code>[alice@submit]$ condor_q
 </code></pre>
 
-<p>(If you want to see everyone's jobs, use <code>condor_q -all</code>.)</p>
-
 <p>The output of <code>condor_q</code> should look like this:</p>
 
 <pre class="term"><code>-- Schedd: submit-2.chtc.wisc.edu : &lt;128.104.101.92:9618?... @ 04/05/19 15:35:17
@@ -387,6 +386,12 @@ batch name (if provided), or executable name. To show all of your jobs
 on individual lines, add the <code>-nobatch</code> option. For more details on this
 option, and other options to <code>condor_q</code>, see our <a href="condor_q.html">condor_q
 guide</a>.</p>
+
+<p>Alternately, you can run the <code>condor_watch_q</code> command to display the
+status of your jobs in the queue along with color-coded progress bars.
+The display is updated automatically every couple seconds, allowing you
+to monitor the status of your jobs in real time.  To exit the view,
+use the keyboard shortcut <code>Ctrl</code> + <code>c</code>.</p>
 
 <blockquote>
   <p><strong>Potential Failures</strong></p>

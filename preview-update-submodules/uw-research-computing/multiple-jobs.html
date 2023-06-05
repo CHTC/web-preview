@@ -32,7 +32,7 @@
 <script type="text/javascript" src="/web-preview/preview-update-submodules/assets/js/search_bar.js" defer></script>
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
-<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v8.css" rel="stylesheet">
+<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v10.css" rel="stylesheet">
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/css/research-style.css" rel="stylesheet">
 
@@ -82,7 +82,7 @@
     <div class="uw-header-container mt-2 mb-2">
         <div class="uw-header-crest-title">
             <div class="uw-header-crest">
-                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Small_Logo.svg" alt="Link to CHTC Home Page"></a>
+                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
             </div>
             <div class="uw-title-tagline">
                 <h1 id="site-title" class="uw-site-title">
@@ -252,7 +252,7 @@ HTCondor. If you are interested in a particular approach that isn’t described 
 please contact <a href="mailto:chtc@cs.wisc.edu">CHTC’s research computing facilitators</a> and we will 
 work with you to identify options to meet the needs of your work.</p>
 
-<h1 id="submit-multiple-jobs-using-queue">Submit Multiple Jobs Using <code>queue</code></h1>
+<h1>Submit Multiple Jobs Using <code class="h1">queue</code></h1>
 
 <p>All HTCondor submit files require a <code>queue</code> attribute (which must also be 
 the last line of the submit file). By default, <code>queue</code> will submit one job, but 
@@ -289,7 +289,8 @@ like input file names, file locations (aka paths), etc. <strong>When selecting a
 variable name, users must avoid bespoke HTCondor submit file variables 
 such as <code>Cluster</code>, <code>Process</code>, <code>output</code>, and <code>input</code>, <code>arguments</code>, etc.</strong></p>
 
-<h2 id="1-use-queue-n-in-you-htcondor-submit-files">1. Use <code>queue N</code> in you HTCondor submit files<a name="process"></a></h2>
+<h2>1. Use <code class="h2">queue N</code> in your HTCondor submit files</h2>
+<p><a name="process"></a></p>
 
 <p>When using <code>queue N</code>, HTCondor will submit a total of <em>N</em> 
 jobs, counting from 0 to <em>N</em> - 1 and each job will be assigned 

@@ -32,7 +32,7 @@
 <script type="text/javascript" src="/web-preview/preview-update-submodules/assets/js/search_bar.js" defer></script>
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
-<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v8.css" rel="stylesheet">
+<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v10.css" rel="stylesheet">
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/css/research-style.css" rel="stylesheet">
 
@@ -82,7 +82,7 @@
     <div class="uw-header-container mt-2 mb-2">
         <div class="uw-header-crest-title">
             <div class="uw-header-crest">
-                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Small_Logo.svg" alt="Link to CHTC Home Page"></a>
+                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
             </div>
             <div class="uw-title-tagline">
                 <h1 id="site-title" class="uw-site-title">
@@ -542,10 +542,25 @@ Apptainer&gt; exit
 
 <h2 id="6-exit-your-htcondor-interactive-job">6. Exit your HTCondor Interactive Job</h2>
 
-<p>Now that you have prepared your Apptainer image and tested it, you are ready to exit your interactive session. 
-By default, when you exit the interactive job the definition file and image file will return to same directory as your submit file on the submit file.
-If your <code>.sif</code> file is large (&gt; 100 MB), however, you should consider first moving it to your staging directory (<code>mv my-container.sif /staging/yourNetID/</code>).
+<p>Once you have tested your container image and are ready to use it in regular jobs, there are a couple of things to do before you exit the interactive job.</p>
+
+<h3 id="a-decide-where-to-host-the-sif-file">A. Decide where to host the <code>.sif</code> file</h3>
+
+<p>By default, when you exit the interactive job the definition file and image file will return to same directory as your submit file on the submit file.
+If your <code>.sif</code> file is large (&gt; 100 MB), however, you should consider moving it to your staging directory instead (<code>mv my-container.sif /staging/yourNetID/</code>).
 See our <code>/staging</code> guide at <a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a> for more information.</p>
+
+<h3 id="b-clear-out-the-apptainer-cache">B. Clear out the Apptainer cache</h3>
+
+<p>When building the <code>.sif</code> file, Apptainer saves key parts of container image to a cache directory.
+This allows repeated build attempts to run more quickly by skipping the download step for these key parts.
+The cache, however, should be emptied out once you are done with the build and those files are no longer needed.
+To clear our the cache directory, run the command</p>
+
+<pre><code>apptainer cache clean -f
+</code></pre>
+
+<h3 id="c-exit-the-interactive-session">C. Exit the interactive session</h3>
 
 <p>To exit, simply enter <code>exit</code> to end the interactive session and return to the submit node.</p>
 

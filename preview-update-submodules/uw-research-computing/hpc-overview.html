@@ -32,7 +32,7 @@
 <script type="text/javascript" src="/web-preview/preview-update-submodules/assets/js/search_bar.js" defer></script>
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
-<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v8.css" rel="stylesheet">
+<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v10.css" rel="stylesheet">
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/css/research-style.css" rel="stylesheet">
 
@@ -82,7 +82,7 @@
     <div class="uw-header-container mt-2 mb-2">
         <div class="uw-header-crest-title">
             <div class="uw-header-crest">
-                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Small_Logo.svg" alt="Link to CHTC Home Page"></a>
+                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
             </div>
             <div class="uw-title-tagline">
                 <h1 id="site-title" class="uw-site-title">
@@ -513,9 +513,10 @@ the current items quota, simply indicate that in your request.</p>
 on the HPC Cluster</strong> in our efforts to maintain filesystem performance
 for all users.</p>
 
-<p><strong>Local scratch space</strong> is available on each execute node in
-<code>/local/$USER</code> and is automatically cleaned out upon completion
-of scheduled job sessions (interactive or non-interactive).</p>
+<p><strong>Local scratch space</strong> is available on each execute node in <code>/local/$USER</code>.
+This space is <strong>NOT</strong> automatically cleaned out, so if you use this space,
+be sure to remove the files before the end of your job script or 
+interactive session.</p>
 
 <h2 id="tools-for-managing-home-and-software-space">Tools for managing home and software space</h2>
 
