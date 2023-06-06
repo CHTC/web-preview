@@ -255,10 +255,16 @@
 
 <h1 id="1-installing-spack">1. Installing Spack</h1>
 
-<p>Spack is a package manager for installing and - more importantly - compiling software. To get started, first log in to the HPC cluster. You can then install Spack following its <a href="https://spack.readthedocs.io/en/latest/getting_started.html">documentation</a>:</p>
+<p>Spack is a package manager for installing and - more importantly - compiling software. To get started, first log in to the HPC cluster. You can then install Spack following its <a href="https://spack.readthedocs.io/en/latest/getting_started.html">documentation</a>.</p>
+
+<p>First, download the Spack code from their GitHub repository:</p>
 
 <pre class="term"><code>git clone -c feature.manyFiles=true https://github.com/spack/spack.git
-. spack/share/spack/setup-env.sh
+</code></pre>
+
+<p>Next,</p>
+
+<pre class="term"><code>. spack/share/spack/setup-env.sh
 </code></pre>
 
 <p>That’s it! You can test that Spack has been installed by entering <code>spack</code> and you should see the help text print out.</p>
@@ -281,13 +287,16 @@
 <pre><code>. /home/yourNetID/spack/share/spack/setup-env.sh
 </code></pre>
 
+<p>where you need to replace <code>yourNetID</code> with your NetID.</p>
+
 <blockquote>
   <p>For a group installation of Spack, the line that you add to your <code>.bash_profile</code> should look like</p>
 
   <pre><code>. /home/yourGroupDirectory/spack/share/spack/setup-env.sh
 </code></pre>
 
-  <p>Have the other members of your group also add this line to their <code>.bash_profile</code> to get access to the group installation.</p>
+  <p>where you need to replace <code>yourGroupDirectory</code> with the name of your group directory.
+Have the other members of your group also add this line to their <code>.bash_profile</code> to get access to the group installation.</p>
 </blockquote>
 
 <h2 id="b-create-a-directory-for-the-configuration-files">B. Create a Directory for the Configuration Files</h2>
@@ -325,8 +334,8 @@
 <p>In the <code>.spack</code> directory that you created in the <a href="#b-create-a-directory-for-the-configuration-files">previous section</a>, create a file called <code>upstreams.yaml</code>. Add the following lines to the file:</p>
 
 <pre><code>upstreams:
-	spack-instance-1:
-		install_tree: /software/chtc/spack/software
+  spack-instance-1:
+    install_tree: /software/chtc/spack/software
 </code></pre>
 
 <p>Now if you run <code>spack find</code> again, you should see a list of system-wide installed packages.  Spack can use these packages to satisfy the dependencies for installing your own software.</p>
@@ -348,7 +357,12 @@ cd linux
 <pre class="term"><code>/software/chtc/spack/software/spack/v0.19/bin/spack config get compilers &gt; compilers.yaml
 </code></pre>
 
-<p>Confirm that Spack has access to the system compilers by running <code>spack compiler list</code>, which should show <code>aocc@=3.2.0</code> and <code>gcc@=11.3.0</code> in the printout.</p>
+<p>Confirm that Spack has access to the system compilers by running</p>
+
+<pre class="term"><code>spack compiler list
+</code></pre>
+
+<p>which should show <code>aocc@=3.2.0</code> and <code>gcc@=11.3.0</code> in the printout.</p>
 
 <blockquote>
   <p>For a group installation of Spack, this configuration will be automatically found if the <code>SPACK_USER_CONFIG_PATH</code> is properly set, as described <a href="#b-create-a-directory-for-the-configuration-files">above</a>.</p>
@@ -356,9 +370,13 @@ cd linux
 
 <h2 id="d-configure-installation-paths">D. Configure Installation Paths</h2>
 
-<p>Next, decide where in your home directory you want to have your programs installed (remember that the <code>/home</code> directory is for storing software programs). We recommend that you create a directory <code>spack_programs</code> in your home directory to hold the software you install using Spack. You will need to communicate this location to Spack with another configuration file.</p>
+<p>Next, decide where in your home directory you want to have your programs installed (remember that the <code>/home</code> directory is for storing software programs). We recommend that you create a directory <code>spack_programs</code> in your home directory to hold the software you install using Spack.</p>
 
-<p>In the <code>.spack</code> directory that you created <a href="#b-create-a-directory-for-the-configuration-files">above</a>, create the file <code>config.yaml</code> and add the following lines:</p>
+<pre class="term"><code>mkdir ~/spack_programs
+</code></pre>
+
+<p>You will need to communicate this location to Spack with another configuration file. 
+In the <code>.spack</code> directory that you created <a href="#b-create-a-directory-for-the-configuration-files">above</a>, create the file <code>config.yaml</code> and add the following lines:</p>
 
 <pre><code>config:
 	install_tree:
@@ -392,24 +410,26 @@ cd linux
 <pre class="term"><code>spack env activate yourEnvironmentName
 </code></pre>
 
-<p>You can see a list of your available environments using</p>
-
-<pre class="term"><code>spack env list
-</code></pre>
-
-<p>and you can see which environment you are currently using with</p>
-
-<pre class="term"><code>spack env status
-</code></pre>
-
-<p>To deactivate the environment, run</p>
-
-<pre class="term"><code>spack env deactivate
-</code></pre>
-
-<p>or close the terminal session.</p>
-
 <p>You will need to activate the environment when you wish to use the software that was installed in that environment.</p>
+
+<blockquote>
+  <p>You can see a list of your available environments using</p>
+
+  <pre class="term"><code>spack env list
+</code></pre>
+
+  <p>and you can see which environment you are currently using with</p>
+
+  <pre class="term"><code>spack env status
+</code></pre>
+
+  <p>To deactivate the environment, run</p>
+
+  <pre class="term"><code>spack env deactivate
+</code></pre>
+
+  <p>or close the terminal session.</p>
+</blockquote>
 
 <h2 id="b-finding-program-packages-in-spack">B. Finding Program Packages in Spack</h2>
 
