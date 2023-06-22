@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Computing Guides</title>
+<title>Installing Software Using Spack</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -225,341 +225,400 @@
 
 
     <main id="main" style="min-height: 60vh;">
-        <main id="main" style="min-height: 60vh;">
-    <div class="container-xxl mb-5">
+        <div class="container-xxl mb-5">
     <div class="row justify-content-center">
-        <div class="col mw-1000">
+        <div class="col-12 col-lg-9 mw-1000">
             <h1 class="uw-mini-bar mb-4">
-    Computing Guides
+    Installing Software Using Spack
 </h1>
 
-            <p>
-Below is a list of guides for some of the most common tasks our users need to
-carry out as they begin and continue to use the resources at the CHTC. 
-Some of these are general computing solutions; others are specific to <a href="http://research.cs.wisc.edu/htcondor/">HTCondor</a>
-or to the configuration of CHTC computing resources.
-</p>
-<p>
-Guides will be added to the list as we can provide them. Please contact us
-(email at bottom of page) if you find any of the information to be incorrect.
-</p>
+            <blockquote>
+                These guides have been recently updated with information
+                about the new "Spark" HPC cluster. For a full summary of changes and
+                recommended actions to transition jobs from the old cluster to Spark,
+                see this <a href="https://chtc.cs.wisc.edu/uw-research-computing/hpc-transition-2023">transition guide</a>
+            </blockquote>
+            <p>CHTC uses Spack (<a href="https://github.com/spack/spack">https://github.com/spack/spack</a>) for installing and managing software packages on the HPC cluster for all users to use, via the <code>module</code> command (see <a href="hpc-software.md">Using Software on the HPC Cluster</a>). Recently, Spack has developed a feature that allows for users to integrate their local installation of Spack with the system-wide installation. This means that when a user installs software with their local installation of Spack, they can automatically incorporate the system-wide packages to satisfy their software’s dependencies.</p>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<div class="px-2 w-100">
-		<button class="navbar-toggler w-100 mb-2 mb-lg-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<a class="nav-link btn btn-primary text-white mb-2 mb-lg-0 w-100" aria-current="page" href="#htc-documentation">HTC System</a>
-			<a class="nav-link btn btn-primary text-white mb-2 mb-lg-0 w-100 ms-auto ms-lg-2" aria-current="page" href="#hpc-documentation">HPC System</a>
-			<a class="nav-link btn btn-primary text-white mb-2 mb-lg-0 w-100 ms-0 ms-lg-2" aria-current="page" href="/approach.html">HTC vs HPC</a>
-			<a class="nav-link btn btn-primary text-white mb-2 mb-lg-0 w-100 ms-0 ms-lg-2" aria-current="page" href="#external-documentation">External Resources</a>
-		</div>
-	</div>
-</nav>
+<p><strong>This guide describes how to install and manage software using Spack, including how to install and use a specific compiler.</strong> If you or your group still need to set up your local installation of spack, see our other guide, <a href="hpc-spack-setup.md">Setting Up Spack on HPC</a>.</p>
 
+<blockquote>
+  <p>If your group has already set up a shared group installation of Spack, make sure that you have followed the instructions in <a href="hpc-spack-setup.md#3-using-a-shared-group-installation">3. Using a Shared Group Installation</a> in <a href="hpc-spack-setup.md">Setting Up Spack on HPC</a> before using this guide.</p>
+</blockquote>
 
+<h1 id="contents">Contents</h1>
 
-<h2 id="htc-documentation" class="">HTC Documentation</h2>
+<ol>
+  <li><a href="#1-installing-software-using-spack">Installing Software Using Spack</a></li>
+  <li><a href="#2-using-software-installed-using-spack">Using Software Installed Using Spack</a></li>
+  <li><a href="#3-creating-custom-modules-using-spack">Creating Custom Modules Using Spack</a></li>
+  <li><a href="#4-using-custom-modules">Using Custom Modules</a></li>
+  <li><a href="#5-installing-and-using-a-specific-compiler">Installing and Using a Specific Compiler</a></li>
+</ol>
 
-<div class="row gx-2">
+<h1 id="1-installing-software-using-spack">1. Installing Software Using Spack</h1>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/checkmark.png" />
-					<h4 class="mt-0 mx-auto">Basics and Policies</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/os-transition-htc" class="list-group-item list-group-item-action bg-warning">HTC System Transition to a New Linux Version (CentOS Stream 8)</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/use-submit-node" class="list-group-item list-group-item-action ">Using CHTC's HTC Submit Nodes</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/connecting" class="list-group-item list-group-item-action ">Connecting to CHTC</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/configure-ssh" class="list-group-item list-group-item-action ">Automating CHTC Log In</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/transfer-data-researchdrive" class="list-group-item list-group-item-action ">Transferring Files Between CHTC and ResearchDrive</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/globus" class="list-group-item list-group-item-action ">Using Globus to Transfer Files to and from CHTC</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/github-remote-access" class="list-group-item list-group-item-action ">Remotely Access a Private GitHub Repository</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/check-quota" class="list-group-item list-group-item-action ">Checking Disk Quota and Usage</a>
-				
-			</div>
-		</div>
-	
+<p>Once your local installation of Spack has been properly configured, you are now ready to install software using Spack. The following describes the general process for installing program packages with Spack. Check the documentation for the program you want to install to see if they have instructions for installation using Spack. Even if your program can’t be installed using Spack, you can still use it to install the dependencies that your program needs.</p>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/laptop_arrow.png" />
-					<h4 class="mt-0 mx-auto">Job Submission</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/helloworld" class="list-group-item list-group-item-action ">Running Your First HTC Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/condor_q" class="list-group-item list-group-item-action ">Learning About Your Jobs Using condor_q</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/multiple-jobs" class="list-group-item list-group-item-action ">Submitting Multiple Jobs Using HTCondor</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/dagman-workflows" class="list-group-item list-group-item-action ">Workflows with HTCondor's DAGMan</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/multiple-job-dirs" class="list-group-item list-group-item-action ">Submitting Multiple Jobs in Different Directories</a>
-				
-			</div>
-		</div>
-	
+<h2 id="a-creating-and-using-a-spack-environment">A. Creating and Using a Spack Environment</h2>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/data.png" />
-					<h4 class="mt-0 mx-auto">Handling Data in Jobs</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/file-availability" class="list-group-item list-group-item-action ">Transfer Small Input and Output</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/file-avail-squid" class="list-group-item list-group-item-action ">Transfer Large Input Files Via Squid</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/file-avail-largedata" class="list-group-item list-group-item-action ">Use Large Input and Output Files Via Staging</a>
-				
-			</div>
-		</div>
-	
+<p>Software installations with Spack should be done inside of a Spack environment, to help manage the shell and paths to access programs and libraries needed for a particular software installation.</p>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/gear.png" />
-					<h4 class="mt-0 mx-auto">Software Solutions</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/inter-submit" class="list-group-item list-group-item-action ">Compiling Software in an Interactive Job</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/matlab-jobs" class="list-group-item list-group-item-action ">Running Matlab Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/python-jobs" class="list-group-item list-group-item-action ">Running Python Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/conda-installation" class="list-group-item list-group-item-action ">Using Conda Environments to Run Python Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/r-jobs" class="list-group-item list-group-item-action ">Running R Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/java-jobs" class="list-group-item list-group-item-action ">Running Java Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/julia-jobs" class="list-group-item list-group-item-action ">Running Julia Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/docker-jobs" class="list-group-item list-group-item-action ">Using Software Installed in a Docker Container</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/docker-build" class="list-group-item list-group-item-action ">Building a Docker Container Image</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/licensed-software" class="list-group-item list-group-item-action ">Using Licensed Software</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/singularity-htc" class="list-group-item list-group-item-action ">Using Apptainer (Singularity) Environments</a>
-				
-			</div>
-		</div>
-	
+<p>To create a Spack environment, run the command</p>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/processor.png" />
-					<h4 class="mt-0 mx-auto">Special Use Cases</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/gpu-jobs" class="list-group-item list-group-item-action ">Submitting Jobs That Use GPUs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/machine-learning-htc" class="list-group-item list-group-item-action ">Run Machine Learning Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/scaling-htc" class="list-group-item list-group-item-action ">Scaling Beyond Local HTC Capacity</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/checkpointing" class="list-group-item list-group-item-action ">Checkpointing Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/high-memory-jobs" class="list-group-item list-group-item-action ">Submitting High Memory Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/mpi-jobs" class="list-group-item list-group-item-action ">Running MPI Jobs</a>
-				
-			</div>
-		</div>
-	
+<pre class="term"><code>spack env create yourEnvironmentName
+</code></pre>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/trouble.png" />
-					<h4 class="mt-0 mx-auto">Troubleshooting</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/dos-unix" class="list-group-item list-group-item-action ">Windows / Linux Incompatibility</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/docker-test" class="list-group-item list-group-item-action ">Explore and Test Docker Containers</a>
-				
-			</div>
-		</div>
-	
+<p>where you should replace <code>yourEnvironmentName</code> with your desired name for the environment. You can then activate the environment with</p>
 
-</div>
+<pre class="term"><code>spack env activate yourEnvironmentName
+</code></pre>
 
-<h2 id="hpc-documentation">HPC Documentation</h2>
+<p>You will need to activate the environment when you wish to use the software that was installed in that environment.</p>
 
-<div class="row gx-2">
-	
-		
-		
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="list-group mb-3">
-					<div class="list-group-item d-flex flex-column">
-						
-						
-						
-						
-						
-						
-						<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/checkmark.png" />
-						<h4 class="mt-0 mx-auto">Basics and Policies</h4>
-					</div>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-transition-2023" class="list-group-item list-group-item-action bg-warning">Transitioning to a New HPC Cluster</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-overview" class="list-group-item list-group-item-action ">HPC Cluster Overview</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/connecting" class="list-group-item list-group-item-action ">Connecting to CHTC</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/configure-ssh" class="list-group-item list-group-item-action ">Automating CHTC Log In</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/transfer-data-researchdrive" class="list-group-item list-group-item-action ">Transferring Files Between CHTC and ResearchDrive</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/github-remote-access" class="list-group-item list-group-item-action ">Remotely Access a Private GitHub Repository</a>
-					
-				</div>
-			</div>
-		
-	
-		
-		
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="list-group mb-3">
-					<div class="list-group-item d-flex flex-column">
-						
-						
-						
-						
-						
-						
-						<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/laptop_arrow.png" />
-						<h4 class="mt-0 mx-auto">Job Submission</h4>
-					</div>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-job-submission" class="list-group-item list-group-item-action ">Submitting and Managing Jobs Using SLURM</a>
-					
-				</div>
-			</div>
-		
-	
-		
-		
-	
-		
-		
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="list-group mb-3">
-					<div class="list-group-item d-flex flex-column">
-						
-						
-						
-						
-						
-						
-						<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/gear.png" />
-						<h4 class="mt-0 mx-auto">Software Solutions</h4>
-					</div>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-software" class="list-group-item list-group-item-action ">Using Software on the HPC Cluster</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-setup" class="list-group-item list-group-item-action ">Setting Up Spack on HPC</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-install" class="list-group-item list-group-item-action ">Installing Software Using Spack</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-modules" class="list-group-item list-group-item-action ">Creating Custom Modules Using Spack</a>
-					
-				</div>
-			</div>
-		
-	
-		
-		
-	
-		
-		
-	
-</div>
+<blockquote>
+  <p>You can see a list of your available environments using</p>
 
-<h2 id="external-documentation">External Documentation</h2>
-<div class="list-group">
-	<a href="http://software-carpentry.org/lessons/" class="list-group-item list-group-item-action">Software Carpentry ( Online courses and videos; readings )</a>
-	<a href="http://research.cs.wisc.edu/htcondor/manual/" class="list-group-item list-group-item-action">HTCondor Manual</a>
-	<a href="http://slurm.schedmd.com/" class="list-group-item list-group-item-action">Slurm Manual</a>
-	<a href="http://www.doit.wisc.edu/training/student/" class="list-group-item list-group-item-action">DoIT Software Training for Students ( free on-campus courses )</a>
-</div>
+  <pre class="term"><code>spack env list
+</code></pre>
+
+  <p>and you can see which environment you are currently using with</p>
+
+  <pre class="term"><code>spack env status
+</code></pre>
+
+  <p>To deactivate the environment, run</p>
+
+  <pre class="term"><code>spack env deactivate
+</code></pre>
+
+  <p>or close the terminal session.</p>
+</blockquote>
+
+<h2 id="b-finding-program-packages-in-spack">B. Finding Program Packages in Spack</h2>
+
+<p>To see what packages are installed in the current Spack environment, run the command</p>
+
+<pre class="term"><code>spack find
+</code></pre>
+
+<p>For a new environment, this will show that there are no programs installed.  The output of this command will update after you install program packages in the environment.</p>
+
+<p>To search for packages to install using Spack, use the command</p>
+
+<pre class="term"><code>spack list nameOfProgram
+</code></pre>
+
+<p>where you should replace <code>nameOfProgram</code> with the program that you are interested in finding. Spack will search for the package and print out a list of all the packages that match that name. (The first time you run this command may take several minutes while Spack downloads a current list of packages that can be installed.) Alternatively, you can browse their website for currently available packages: <a href="https://spack.readthedocs.io/en/latest/package_list.html">https://spack.readthedocs.io/en/latest/package_list.html</a>.</p>
+
+<p>To learn more about an available package, use the exact name of the program and run</p>
+
+<pre class="term"><code>spack info exactNameOfProgram
+</code></pre>
+
+<p>This will print out information about the program, including a short description of the program, a link to the developer’s website, and the available versions of the program and its dependencies.</p>
+
+<h2 id="c-adding-package-specifications-to-the-environment">C. Adding Package Specifications to the Environment</h2>
+
+<p>Once you find the packages that you want to install, add their specifications to the environment using</p>
+
+<pre class="term"><code>spack add exactNameOfProgram
+</code></pre>
+
+<p>Spack will automatically decide which version of the program to use at installation time based on the other packages that you’ve added.</p>
+
+<p>If you want a specific version of a package, you can specify it by appending <code>@=</code> to the end of the package name, followed by the version number. For example,</p>
+
+<pre class="term"><code>spack add python@=3.10
+</code></pre>
+
+<p>will tell the environment that you want to install version 3.10 of Python. There are additional ways of defining specifications for package versions, the compiler to be used, and dependencies. The <a href="https://spack.readthedocs.io/en/latest/basic_usage.html#specs-dependencies">documentation for Spack</a> provides the details on how this is done.</p>
+
+<p><em>If you need to install a compiler, or need to use a specific compiler to install the desired packages, see the section <a href="#e-installing-and-using-a-specific-compiler">E. Installing and Using a Specific Compiler</a>.</em></p>
+
+<h2 id="d-installing-a-package">D. Installing a Package</h2>
+
+<p>Once you have identified the package(s) you would like to install and have added the specifications to your environment, you should start an interactive Slurm session for the actual installation and compilation of the package.</p>
+
+<h3 id="i-start-an-interactive-session">i. Start an interactive session</h3>
+
+<p>Use the following command to start the interactive session:</p>
+
+<pre class="term"><code>srun --mpi=pmix -n4 -N1 -t 240 -p int --pty bash
+</code></pre>
+
+<p>Note the number associated with <code>-n</code>, as that is the number of processors you are requesting to use. This number will be used later in the install command itself to specify the number of threads to use for the installation and compiling.  For large and complex installations, you may want to increase the number of processors (and correspondingly the number of threads) to speed up the process.</p>
+
+<p>Next, remember to reload the Spack environment</p>
+
+<pre class="term"><code>spack env activate yourEnvironmentName
+</code></pre>
+
+<p>since the interactive session will start with the environment deactivated.</p>
+
+<h3 id="ii-create-the-local-scratch-directory">ii. Create the local scratch directory</h3>
+
+<p>Using the configurations we defined above, Spack will try to use the machine’s local disk space for staging and compiling files before transferring the finished results to the final installation directory.  Using this space will greatly improve the speed of the installation process.</p>
+
+<pre class="term"><code>mkdir /local/yourNetID/spack_build
+</code></pre>
+
+<p>At the end of the session, remember to delete this directory so that other people can use the disk space in their jobs.</p>
+
+<blockquote>
+  <p>If the directory already exists, that means you forgot to remove it after one of your previous Spack installation sessions.  Simply remove the directory and make it again.</p>
+
+  <pre class="term"><code>rm -rf /local/yourNetID/spack_build
+mkdir /local/yourNetID/spack_build
+</code></pre>
+</blockquote>
+
+<h3 id="iii-check-the-programspackages-to-be-installed">iii. Check the programs/packages to be installed</h3>
+
+<p>If you’ve added the installation specifications to the environment, then you can check the installation plan using the command</p>
+
+<pre class="term"><code>spack spec -lI
+</code></pre>
+
+<p>(the first letter after the hyphen is lowercase “L” and the second letter is the uppercase “i”).</p>
+
+<p>This command identifies what dependencies Spack needs in order to install your desired packages along with how it will obtain them.  Assuming their are no problems, then it will print a list of the packages and their dependencies, where entries that begin with a green <code>[+]</code> have already been installed somewhere in your local copy, while those that begin with a green <code>[^]</code> are referencing the system installation, and those beginning with a gray <code>-</code> will need to be downloaded and installed.</p>
+
+<p>If you are satisfied with the results, then you can proceed to install the programs.</p>
+
+<h3 id="iv-install-the-environment-packages">iv. Install the environment packages</h3>
+
+<p>Assuming that you are in an interactive Slurm session &amp; have activated the desired environment containing the package specifications, you can run</p>
+
+<pre class="term"><code>spack install -j 4
+</code></pre>
+
+<p>to install the packages inside of the Spack environment, where the number that comes after <code>-j</code> needs to match the number that you noted from when you started the interactive session (the one after <code>-n</code> when you ran the <code>srun</code> command for the interactive session). You can also add the <code>-v</code> option to have the installation be verbose, which will cause Spack to print the compile &amp; make outputs in addition to the standard Spack output.</p>
+
+<p>Depending on the number &amp; complexity of the programs you are installing, and how much can be bootstrapped from the system installation, the installation step can take anywhere from several minutes to several hours.</p>
+
+<blockquote>
+  <p>If something goes wrong or your connection is interrupted, the installation process can be resumed at a later time without having to start from scratch. Make sure that you are in an interactive Slurm session &amp; that you have activated the Spack environment, then simply rerun the <code>spack install</code> command again.</p>
+</blockquote>
+
+<h3 id="v-finishing-the-installation">v. Finishing the installation</h3>
+
+<p>After the installation has successfully finished, you should be able to see that the programs have been installed by running</p>
+
+<pre class="term"><code>spack find
+</code></pre>
+
+<p>which should list the programs under the compiler heading used for installing the programs.</p>
+
+<p>You may need to deactivate and reactivate the environment in order to properly use the programs that have been installed.</p>
+
+<pre class="term"><code>spack env deactivate
+spack env activate yourEnvironmentName
+</code></pre>
+
+<p>Once you are satisfied that the programs have been installed properly, you can remove the local build directory that Spack used during the installation with</p>
+
+<pre class="term"><code>rm -rf /local/yourNetID/spack_build
+</code></pre>
+
+<p>and then enter <code>exit</code> to end the interactive session.</p>
+
+<p>To use the packages that you installed, follow the instructions in <a href="4-using-software-installed-using-spack">4. Using Software Installed using Spack</a>.</p>
+
+<h1 id="2-using-software-installed-using-spack">2. Using Software Installed Using Spack</h1>
+
+<p>If your account is configured correctly for using Spack, and the software has been installed inside of a Spack environment, then to use the software all you need to do is activate the corresponding environment. Simply use the command</p>
+
+<pre class="term"><code>spack env activate yourEnvironmentName 
+</code></pre>
+
+<p>and Spack will update your shell accordingly. If you want to see the available Spack environments, enter <code>spack env list</code>.</p>
+
+<p>For submitting jobs through Slurm, you will need to add this command to the beginning of your <code>sbatch</code> file before the <code>srun</code> command. For example,</p>
+
+<pre><code>#!/bin/sh
+#This file is called submit-script.sh
+#SBATCH --partition=shared       # default "shared", if not specified
+#SBATCH --time=0-04:30:00       # run time in days-hh:mm:ss
+#SBATCH --nodes=1               # require 1 nodes
+#SBATCH --ntasks-per-node=64    # cpus per node (by default, "ntasks"="cpus")
+#SBATCH --mem-per-cpu=4000             # RAM per node in megabytes
+#SBATCH --error=job.%J.err
+#SBATCH --output=job.%J.out
+
+spack env activate yourEnvironmentName
+
+srun --mpi=pmix -n 64 /home/username/mpiprogram
+</code></pre>
+
+<p>When Slurm executes this <code>sbatch</code> file, it will first activate the Spack environment, and then your program will be run using the programs that are installed inside that environment.</p>
+
+<h1 id="3-creating-custom-modules-using-spack">3. Creating Custom Modules Using Spack</h1>
+
+<h1 id="4-using-custom-modules">4. Using Custom Modules</h1>
+
+<h1 id="5-installing-and-using-a-specific-compiler">5. Installing and Using a Specific Compiler</h1>
+
+<p><strong><em>!!!Needs to be updated!!!</em></strong></p>
+
+<p>Using the configuration files above, Spack will attempt to install these packages using the system compilers, most likely <code>gcc@=11.3.0</code>. If your program requires that a specific compiler be used, you will need to first add <em>and</em> install the compiler before adding the other packages. To use version 9 of <code>gcc</code>, you would find which exact versions are available and decide which to use. For example,</p>
+
+<pre><code>spack add gcc@=9.5.0
+</code></pre>
+
+<p class="term">Then follow the instructions in the <a href="#d-installing-a-package">next section</a> to install the compiler. Once the compiler has been installed, you then need to add the compiler to Spack’s list of available compilers using</p>
+
+<pre><code>spack compiler add "$(spack location -i gcc@=9.5.0)"
+</code></pre>
+
+<p class="term">Once the compiler has been installed and recognized, you can now add the packages that need to be compiled with it. Use the compiler specification <code>%</code> to specify this compiler for use during installation. For example,</p>
+
+<pre><code>spack add python@=3.10 %gcc@=9.5.0
+</code></pre>
+
+<p class="term">will use <code>gcc</code> version 9.5.0 to compile Python 3.10 when installing the package. As a general rule, you should use the same compiler for installing all of your packages within an environment, unless your program’s installation instructions say otherwise.</p>
+
+        </div>
+        <div class="col-3 d-none d-lg-block">
+            
 
 
 
-<a href="/web-preview/preview-aowen-hpc-spack/icon_credits.html">Icon Credits</a>
+    <div id="guide-sidebar">
+        
+            
+
+            
+            
+
+            <h6 class="mt-5">HPC Guides</h6>
+            <div class="accordion accordion-flush">
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="basics-and-policies">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#basics-and-policies-collapse" aria-expanded="false" aria-controls="basics-and-policies">
+                                    Basics and Policies
+                                </button>
+                            </h2>
+                            <div id="basics-and-policies-collapse" class="accordion-collapse collapse " aria-labelledby="basics-and-policies" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-transition-2023">Transitioning to a New HPC Cluster</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-overview">HPC Cluster Overview</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/connecting">Connecting to CHTC Using CHTC's HTC Submit Nodes</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/configure-ssh">Automating CHTC Log In</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/transfer-data-researchdrive">Transferring Files Between CHTC and ResearchDrive</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/github-remote-access">Remotely Access a Private GitHub Repository</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="job-submission">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#job-submission-collapse" aria-expanded="false" aria-controls="job-submission">
+                                    Job Submission
+                                </button>
+                            </h2>
+                            <div id="job-submission-collapse" class="accordion-collapse collapse " aria-labelledby="job-submission" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-job-submission">Submitting and Managing Jobs Using SLURM</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="software-solutions">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                    Software Solutions
+                                </button>
+                            </h2>
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-software">Using Software on the HPC Cluster</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-setup">Setting Up Spack on HPC</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="fw-bolder" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-install">Installing Software Using Spack</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-modules">Creating Custom Modules Using Spack</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+                
+                    
+                
+            </div>
+        
+    </div>
+
+
 
         </div>
     </div>
 </div>
-</main>
+
     </main>
     <footer id="colophon" class="uw-footer">
     <div class="uw-footer-content">

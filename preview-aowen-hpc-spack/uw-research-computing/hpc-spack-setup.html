@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Computing Guides</title>
+<title>Setting Up Spack on HPC</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -225,341 +225,382 @@
 
 
     <main id="main" style="min-height: 60vh;">
-        <main id="main" style="min-height: 60vh;">
-    <div class="container-xxl mb-5">
+        <div class="container-xxl mb-5">
     <div class="row justify-content-center">
-        <div class="col mw-1000">
+        <div class="col-12 col-lg-9 mw-1000">
             <h1 class="uw-mini-bar mb-4">
-    Computing Guides
+    Setting Up Spack on HPC
 </h1>
 
-            <p>
-Below is a list of guides for some of the most common tasks our users need to
-carry out as they begin and continue to use the resources at the CHTC. 
-Some of these are general computing solutions; others are specific to <a href="http://research.cs.wisc.edu/htcondor/">HTCondor</a>
-or to the configuration of CHTC computing resources.
-</p>
-<p>
-Guides will be added to the list as we can provide them. Please contact us
-(email at bottom of page) if you find any of the information to be incorrect.
-</p>
+            <blockquote>
+                These guides have been recently updated with information
+                about the new "Spark" HPC cluster. For a full summary of changes and
+                recommended actions to transition jobs from the old cluster to Spark,
+                see this <a href="https://chtc.cs.wisc.edu/uw-research-computing/hpc-transition-2023">transition guide</a>
+            </blockquote>
+            <p>CHTC uses Spack (<a href="https://github.com/spack/spack">https://github.com/spack/spack</a>) for installing and managing software packages on the HPC cluster for all users to use, via the <code>module</code> command (see <a href="hpc-software.md">Using Software on the HPC Cluster</a>). Recently, Spack has developed a feature that allows for users to integrate their local installation of Spack with the system-wide installation. This means that when a user installs software with their local installation of Spack, they can automatically incorporate the system-wide packages to satisfy their software’s dependencies.</p>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<div class="px-2 w-100">
-		<button class="navbar-toggler w-100 mb-2 mb-lg-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<a class="nav-link btn btn-primary text-white mb-2 mb-lg-0 w-100" aria-current="page" href="#htc-documentation">HTC System</a>
-			<a class="nav-link btn btn-primary text-white mb-2 mb-lg-0 w-100 ms-auto ms-lg-2" aria-current="page" href="#hpc-documentation">HPC System</a>
-			<a class="nav-link btn btn-primary text-white mb-2 mb-lg-0 w-100 ms-0 ms-lg-2" aria-current="page" href="/approach.html">HTC vs HPC</a>
-			<a class="nav-link btn btn-primary text-white mb-2 mb-lg-0 w-100 ms-0 ms-lg-2" aria-current="page" href="#external-documentation">External Resources</a>
-		</div>
-	</div>
-</nav>
+<p><strong>This guide describes how to set up a local copy of Spack and integrate it with the system installation, either for an individual user or for a group of users.</strong> For instructions on how to install packages with Spack, see our other guide, <a href="hpc-spack-install.md">Installing Software Using Spack</a>.</p>
 
+<blockquote>
+  <p>If your group has already set up a shared group installation of Spack, you can skip to the end of this guide: <a href="#3-using-a-shared-group-installation">3. Using a Shared Group Installation</a>.</p>
+</blockquote>
 
+<h1 id="contents">Contents</h1>
 
-<h2 id="htc-documentation" class="">HTC Documentation</h2>
+<ol>
+  <li><a href="#1-setting-up-spack-for-individual-use">Setting Up Spack for Individual Use</a></li>
+  <li><a href="#2-setting-up-spack-for-group-use">Setting Up Spack for Group Use</a></li>
+  <li><a href="#3-using-a-shared-group-installation">Using a Shared Group Installation</a></li>
+</ol>
 
-<div class="row gx-2">
+<h1 id="1-setting-up-spack-for-individual-use">1. Setting Up Spack for Individual Use</h1>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/checkmark.png" />
-					<h4 class="mt-0 mx-auto">Basics and Policies</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/os-transition-htc" class="list-group-item list-group-item-action bg-warning">HTC System Transition to a New Linux Version (CentOS Stream 8)</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/use-submit-node" class="list-group-item list-group-item-action ">Using CHTC's HTC Submit Nodes</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/connecting" class="list-group-item list-group-item-action ">Connecting to CHTC</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/configure-ssh" class="list-group-item list-group-item-action ">Automating CHTC Log In</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/transfer-data-researchdrive" class="list-group-item list-group-item-action ">Transferring Files Between CHTC and ResearchDrive</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/globus" class="list-group-item list-group-item-action ">Using Globus to Transfer Files to and from CHTC</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/github-remote-access" class="list-group-item list-group-item-action ">Remotely Access a Private GitHub Repository</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/check-quota" class="list-group-item list-group-item-action ">Checking Disk Quota and Usage</a>
-				
-			</div>
-		</div>
-	
+<h2 id="a-downloading-spack-individual">A. Downloading Spack (Individual)</h2>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/laptop_arrow.png" />
-					<h4 class="mt-0 mx-auto">Job Submission</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/helloworld" class="list-group-item list-group-item-action ">Running Your First HTC Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/condor_q" class="list-group-item list-group-item-action ">Learning About Your Jobs Using condor_q</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/multiple-jobs" class="list-group-item list-group-item-action ">Submitting Multiple Jobs Using HTCondor</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/dagman-workflows" class="list-group-item list-group-item-action ">Workflows with HTCondor's DAGMan</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/multiple-job-dirs" class="list-group-item list-group-item-action ">Submitting Multiple Jobs in Different Directories</a>
-				
-			</div>
-		</div>
-	
+<p>First, log in to the HPC cluster.</p>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/data.png" />
-					<h4 class="mt-0 mx-auto">Handling Data in Jobs</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/file-availability" class="list-group-item list-group-item-action ">Transfer Small Input and Output</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/file-avail-squid" class="list-group-item list-group-item-action ">Transfer Large Input Files Via Squid</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/file-avail-largedata" class="list-group-item list-group-item-action ">Use Large Input and Output Files Via Staging</a>
-				
-			</div>
-		</div>
-	
+<p>You can then install Spack following its <a href="https://spack.readthedocs.io/en/latest/getting_started.html">documentation</a>. Download the Spack code from their GitHub repository:</p>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/gear.png" />
-					<h4 class="mt-0 mx-auto">Software Solutions</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/inter-submit" class="list-group-item list-group-item-action ">Compiling Software in an Interactive Job</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/matlab-jobs" class="list-group-item list-group-item-action ">Running Matlab Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/python-jobs" class="list-group-item list-group-item-action ">Running Python Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/conda-installation" class="list-group-item list-group-item-action ">Using Conda Environments to Run Python Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/r-jobs" class="list-group-item list-group-item-action ">Running R Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/java-jobs" class="list-group-item list-group-item-action ">Running Java Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/julia-jobs" class="list-group-item list-group-item-action ">Running Julia Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/docker-jobs" class="list-group-item list-group-item-action ">Using Software Installed in a Docker Container</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/docker-build" class="list-group-item list-group-item-action ">Building a Docker Container Image</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/licensed-software" class="list-group-item list-group-item-action ">Using Licensed Software</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/singularity-htc" class="list-group-item list-group-item-action ">Using Apptainer (Singularity) Environments</a>
-				
-			</div>
-		</div>
-	
+<pre class="term"><code>git clone -c feature.manyFiles=true https://github.com/spack/spack.git
+</code></pre>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/processor.png" />
-					<h4 class="mt-0 mx-auto">Special Use Cases</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/gpu-jobs" class="list-group-item list-group-item-action ">Submitting Jobs That Use GPUs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/machine-learning-htc" class="list-group-item list-group-item-action ">Run Machine Learning Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/scaling-htc" class="list-group-item list-group-item-action ">Scaling Beyond Local HTC Capacity</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/checkpointing" class="list-group-item list-group-item-action ">Checkpointing Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/high-memory-jobs" class="list-group-item list-group-item-action ">Submitting High Memory Jobs</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/mpi-jobs" class="list-group-item list-group-item-action ">Running MPI Jobs</a>
-				
-			</div>
-		</div>
-	
+<p>and then activate Spack by sourcing (the <code>.</code> command) the setup script.</p>
 
-	
-	
-		<div class="col-12 col-sm-6 col-lg-4">
-			<div class="list-group mb-3">
-				<div class="list-group-item d-flex flex-column">
-					
-					
-					
-					
-					
-					
-					<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/trouble.png" />
-					<h4 class="mt-0 mx-auto">Troubleshooting</h4>
-				</div>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/dos-unix" class="list-group-item list-group-item-action ">Windows / Linux Incompatibility</a>
-				
-				<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/docker-test" class="list-group-item list-group-item-action ">Explore and Test Docker Containers</a>
-				
-			</div>
-		</div>
-	
+<pre class="term"><code>. spack/share/spack/setup-env.sh
+</code></pre>
 
-</div>
+<p>That’s it! You can test that Spack has been installed by entering <code>spack</code> and you should see the help text print out. But before trying to install packages using your Spack installation, you should configure it to recognize the system installation of Spack.</p>
 
-<h2 id="hpc-documentation">HPC Documentation</h2>
+<blockquote>
+  <p>This guide assumes that you ran the <code>git clone</code> command in your home directory, i.e. <code>/home/yourNetID</code>. If you did not, then run the following command to print the full path to your Spack installation.</p>
 
-<div class="row gx-2">
-	
-		
-		
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="list-group mb-3">
-					<div class="list-group-item d-flex flex-column">
-						
-						
-						
-						
-						
-						
-						<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/checkmark.png" />
-						<h4 class="mt-0 mx-auto">Basics and Policies</h4>
-					</div>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-transition-2023" class="list-group-item list-group-item-action bg-warning">Transitioning to a New HPC Cluster</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-overview" class="list-group-item list-group-item-action ">HPC Cluster Overview</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/connecting" class="list-group-item list-group-item-action ">Connecting to CHTC</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/configure-ssh" class="list-group-item list-group-item-action ">Automating CHTC Log In</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/transfer-data-researchdrive" class="list-group-item list-group-item-action ">Transferring Files Between CHTC and ResearchDrive</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/github-remote-access" class="list-group-item list-group-item-action ">Remotely Access a Private GitHub Repository</a>
-					
-				</div>
-			</div>
-		
-	
-		
-		
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="list-group mb-3">
-					<div class="list-group-item d-flex flex-column">
-						
-						
-						
-						
-						
-						
-						<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/laptop_arrow.png" />
-						<h4 class="mt-0 mx-auto">Job Submission</h4>
-					</div>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-job-submission" class="list-group-item list-group-item-action ">Submitting and Managing Jobs Using SLURM</a>
-					
-				</div>
-			</div>
-		
-	
-		
-		
-	
-		
-		
-			<div class="col-12 col-sm-6 col-lg-4">
-				<div class="list-group mb-3">
-					<div class="list-group-item d-flex flex-column">
-						
-						
-						
-						
-						
-						
-						<img class="mx-auto" style="height: 60px;" src="/web-preview/preview-aowen-hpc-spack/uw-research-computing/guide-icons/gear.png" />
-						<h4 class="mt-0 mx-auto">Software Solutions</h4>
-					</div>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-software" class="list-group-item list-group-item-action ">Using Software on the HPC Cluster</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-setup" class="list-group-item list-group-item-action ">Setting Up Spack on HPC</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-install" class="list-group-item list-group-item-action ">Installing Software Using Spack</a>
-					
-					<a href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-modules" class="list-group-item list-group-item-action ">Creating Custom Modules Using Spack</a>
-					
-				</div>
-			</div>
-		
-	
-		
-		
-	
-		
-		
-	
-</div>
+  <pre class="term"><code>echo $SPACK_ROOT
+</code></pre>
 
-<h2 id="external-documentation">External Documentation</h2>
-<div class="list-group">
-	<a href="http://software-carpentry.org/lessons/" class="list-group-item list-group-item-action">Software Carpentry ( Online courses and videos; readings )</a>
-	<a href="http://research.cs.wisc.edu/htcondor/manual/" class="list-group-item list-group-item-action">HTCondor Manual</a>
-	<a href="http://slurm.schedmd.com/" class="list-group-item list-group-item-action">Slurm Manual</a>
-	<a href="http://www.doit.wisc.edu/training/student/" class="list-group-item list-group-item-action">DoIT Software Training for Students ( free on-campus courses )</a>
-</div>
+  <p>We will refer to this path as the <code>SpackRootPath</code> and you will need to use this path where noted in the instructions below.</p>
+</blockquote>
+
+<h2 id="b-using-spack-in-future-sessions-individual">B. Using Spack in Future Sessions (Individual)</h2>
+
+<p>While Spack has been installed, for each session that you want to use it you will need to rerun the command</p>
+
+<pre class="term"><code>. /home/yourNetID/spack/share/spack/setup-env.sh
+</code></pre>
+
+<p>A more convenient option is simply to update your account to run this command whenever you log in. Add the command to the end of the <code>.bash_profile</code> file in your home directory, e.g. <code>nano ~/.bash_profile</code>, with the full path to the file.  If you ran the <code>git clone</code> command in your home directory, then the line you add should be</p>
+
+<pre><code>. /home/yourNetID/spack/share/spack/setup-env.sh
+</code></pre>
+
+<p>where you need to replace <code>yourNetID</code> with your NetID.</p>
+
+<blockquote>
+  <p>If Spack was not installed to your home directory, use the following command instead, where you need to replace <code>SpackRootPath</code> with the path that you noted above.</p>
+
+  <pre><code>. SpackRootPath/share/spack/setup-env.sh
+</code></pre>
+</blockquote>
+
+<h2 id="c-obtain-the-provided-configuration-files-individual">C. Obtain the Provided Configuration Files (Individual)</h2>
+
+<p>To simplify the process of configuring your local installation of Spack, we have provided a folder with the necessary configuration files. All that you need to do is copy it to your home directory using the following command.</p>
+
+<pre class="term"><code>cp -R /software/chtc/spack/chtc-user-config/ ~/.spack
+</code></pre>
+
+<p>Your local Spack installation will automatically find the configuration files and will now recognize the packages that are installed system-wide. You can confirm this with the command</p>
+
+<pre class="term"><code>spack find
+</code></pre>
+
+<p>This should show a list of packages similar to what you see when you run the <code>module avail</code> command.</p>
+
+<p>You are now ready to use Spack for installing the packages that you need! See the instructions in <a href="hpc-spack-install.md">Installing Software Using Spack</a>.</p>
+
+<h1 id="2-setting-up-spack-for-group-use">2. Setting Up Spack for Group Use</h1>
+
+<p>The following instructions for a group installation of Spack assumes that shared directories have already been set up for your group, and that you have access to the group. We also recommend getting permission from your colleagues before proceeding.</p>
+
+<h2 id="a-downloading-spack-group">A. Downloading Spack (Group)</h2>
+
+<p>First, log in to the HPC cluster, and navigate to your group’s shared directory in <code>/home</code>. Note this path for use throughout this guide, and communicate it to your group members for configuring their access to the installation.</p>
+
+<pre class="term"><code>cd /home/groups/yourGroupName
+</code></pre>
+
+<p>You can then install Spack following its <a href="https://spack.readthedocs.io/en/latest/getting_started.html">documentation</a>. Download the Spack code from their GitHub repository:</p>
+
+<pre class="term"><code>git clone -c feature.manyFiles=true https://github.com/spack/spack.git
+</code></pre>
+
+<p>and then activate Spack by sourcing (the <code>.</code> command) the setup script.</p>
+
+<pre class="term"><code>. spack/share/spack/setup-env.sh
+</code></pre>
+
+<p>That’s it! You can test that Spack has been installed by entering <code>spack</code> and you should see the help text print out. But before trying to install packages using your Spack installation, you should configure it to recognize the system installation of Spack.</p>
+
+<blockquote>
+  <p>This guide assumes that you ran the <code>git clone</code> command in your group’s home directory, i.e. <code>/home/groups/yourGroupName</code>. If you did not, then run the following command to obtain the full path to your Spack installation.  We will refer to this path as the <code>SpackRootPath</code> and you will need to use this path where noted in the instructions below.</p>
+
+  <pre class="term"><code>echo $SPACK_ROOT
+</code></pre>
+</blockquote>
+
+<h2 id="b-using-spack-in-future-sessions-group">B. Using Spack in Future Sessions (Group)</h2>
+
+<p>While Spack has been installed, for each session that you want to use it you will need to rerun the command</p>
+
+<pre class="term"><code>. /home/groups/yourGroupName/spack/share/spack/setup-env.sh
+</code></pre>
+
+<p>A more convenient option is simply to update your account to run this command whenever you log in. You and your group members should add the command to the end of the <code>.bash_profile</code> file in your home directory, e.g. <code>nano ~/.bash_profile</code>, with the full path to the file.  For a group installation, the line should look like</p>
+
+<pre><code>. /home/groups/yourGroupName/spack/share/spack/setup-env.sh
+</code></pre>
+
+<p>where you need to replace <code>yourGroupName</code> with the name of your group.</p>
+
+<blockquote>
+  <p>If Spack was not installed in your group’s home directory, use the following command instead, where you will need to replace <code>SpackRootPath</code> with the path that you noted above.</p>
+
+  <pre><code>. SpackRootPath/share/spack/setup-env.sh
+</code></pre>
+</blockquote>
+
+<h2 id="c-obtain-the-provided-configuration-files-group">C. Obtain the Provided Configuration Files (Group)</h2>
+
+<h3 id="i-copy-the-configuration-files">i. Copy the configuration files</h3>
+
+<p>To simplify the process of configuring your local installation of Spack, we have provided a folder with the necessary configuration files. All that you need to do is copy it to your home directory using the following command.</p>
+
+<pre class="term"><code>cp -R /software/chtc/spack/chtc-user-config/ /home/groups/yourGroupName/.spack
+</code></pre>
+
+<p>where you need to replace <code>yourGroupName</code> with your group’s name.</p>
+
+<h3 id="ii-updating-location-of-configuration-files">ii. Updating location of configuration files</h3>
+
+<p>The group installation of Spack need to be instructed on where to find these configuration files. You can do this by running the command</p>
+
+<pre class="term"><code>export SPACK_USER_CONFIG_PATH=/home/groups/yourGroupName/.spack
+</code></pre>
+
+<p>and Spack should now recognize the packages that are installed system-wide. You can confirm this with the command</p>
+
+<pre class="term"><code>spack find
+</code></pre>
+
+<p>This should show a list of packages similar to what you see when you run the <code>module avail</code> command.</p>
+
+<p>To ensure that the configuration files are found in future terminal sessions, you and your group members need to edit your <code>~/.bash_profile</code> file to include the above <code>export</code> command. That is, use a command-line text editor to open the file at <code>~/.bash_profile</code> and add the following line to the end of the file:</p>
+
+<pre><code>export SPACK_USER_CONFIG_PATH=/home/groups/yourGroupName/.spack
+</code></pre>
+
+<p>You are now ready to use Spack for installing the packages that you need! See the instructions in <a href="hpc-spack-install.md">Installing Software Using Spack</a>.</p>
+
+<h3 id="iii-updating-location-of-module-files">iii. Updating location of module files</h3>
+
+<p>If you or someone in your group is interested in creating custom modules following the instructions in the guide <a href="hpc-spack-modules.md">Creating Custom Modules Using Spack</a>, then you should update the location where the module files will be saved. The location for the module files is specified within the <code>modules.yaml</code> file in the <code>.spack</code> folder that you created above. If you followed the instructions above, then the path to the file is given by <code>${SPACK_USER_CONFIG_PATH}/modules.yaml</code>. Open this file with a command-line text editor and change the following lines from</p>
+
+<pre><code>    roots:
+      lmod: /home/$user/spack_modules
+      tcl: /home/$user/spack_modules
+</code></pre>
+
+<p>to</p>
+
+<pre><code>    roots:
+      lmod: /home/groups/yourGroupName/spack_modules
+      tcl: /home/groups/yourGroupName/spack_modules
+</code></pre>
+
+<p>where you replace <code>yourGroupName</code> with your group’s name. Be careful to not to change the indentation of the lines; the number of spaces at the start of the line should be the same before and after you change the path.</p>
+
+<h1 id="3-using-a-shared-group-installation">3. Using a Shared Group Installation</h1>
+
+<p>Users who want to use a shared group installation of Spack, but who did not set up the installation, only need to modify their <code>~/.bash_profile</code> file with instructions regarding the path to the shared group installation and its configuration files.</p>
+
+<ol>
+  <li>Log in to the HPC cluster (<a href="connecting.md">Connecting to CHTC</a>).
+    <pre class="term"><code>ssh yourNetID@hpclogin3.chtc.wisc.edu
+</code></pre>
+  </li>
+  <li>
+    <p>Edit the <code>.bash_profile</code> file in your home directory (<code>/home/yourNetID</code>).
+You should be able to simply add the following two lines to the end of the file</p>
+
+    <pre><code>. /home/groups/yourGroupName/spack/share/spack/setup-env.sh
+export SPACK_USER_CONFIG_PATH=/home/groups/yourGroupName/.spack
+</code></pre>
+
+    <p>where <code>yourGroupName</code> should be replaced with the name of your group. Confirm the exact commands with the user who installed Spack for your group.</p>
+
+    <blockquote>
+      <p>You should be able to find the requisite paths if necessary. For the first line, the command</p>
+      <pre class="term"><code>find /home/groups/yourGroupName -type d -name spack | grep "share/spack"
+</code></pre>
+
+      <p>should give the path you need; simply add “setup-env.sh” to the end of the path. For the second line, the command</p>
+      <pre class="term"><code>find /home/groups/yourGroupName -type d -name .spack | sort -n | head -n 1
+</code></pre>
+
+      <p>should give the path you need. If it doesn’t, try again without <code>| sort -n | head -n 1</code> to see the full list of matches, and choose the appropriate one.</p>
+    </blockquote>
+  </li>
+  <li>Source the <code>.bash_profile</code> with
+    <pre class="term"><code>. ~/.bash_profile
+</code></pre>
+
+    <p>or else close the terminal and log in again.</p>
+  </li>
+</ol>
+
+<p>Once configured, you can follow the instructions in this section to use the shared installation.</p>
+
+        </div>
+        <div class="col-3 d-none d-lg-block">
+            
 
 
 
-<a href="/web-preview/preview-aowen-hpc-spack/icon_credits.html">Icon Credits</a>
+    <div id="guide-sidebar">
+        
+            
+
+            
+            
+
+            <h6 class="mt-5">HPC Guides</h6>
+            <div class="accordion accordion-flush">
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="basics-and-policies">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#basics-and-policies-collapse" aria-expanded="false" aria-controls="basics-and-policies">
+                                    Basics and Policies
+                                </button>
+                            </h2>
+                            <div id="basics-and-policies-collapse" class="accordion-collapse collapse " aria-labelledby="basics-and-policies" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-transition-2023">Transitioning to a New HPC Cluster</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-overview">HPC Cluster Overview</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/connecting">Connecting to CHTC Using CHTC's HTC Submit Nodes</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/configure-ssh">Automating CHTC Log In</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/transfer-data-researchdrive">Transferring Files Between CHTC and ResearchDrive</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/github-remote-access">Remotely Access a Private GitHub Repository</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="job-submission">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#job-submission-collapse" aria-expanded="false" aria-controls="job-submission">
+                                    Job Submission
+                                </button>
+                            </h2>
+                            <div id="job-submission-collapse" class="accordion-collapse collapse " aria-labelledby="job-submission" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-job-submission">Submitting and Managing Jobs Using SLURM</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="software-solutions">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                    Software Solutions
+                                </button>
+                            </h2>
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-software">Using Software on the HPC Cluster</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="fw-bolder" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-setup">Setting Up Spack on HPC</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-install">Installing Software Using Spack</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-modules">Creating Custom Modules Using Spack</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+                
+                    
+                
+            </div>
+        
+    </div>
+
+
 
         </div>
     </div>
 </div>
-</main>
+
     </main>
     <footer id="colophon" class="uw-footer">
     <div class="uw-footer-content">
