@@ -265,7 +265,7 @@
 <pre class="term"><code>git clone -c feature.manyFiles=true https://github.com/spack/spack.git
 </code></pre>
 
-<p>and then activate Spack by sourcing (the <code>.</code> command) the setup script.</p>
+<p>and then activate Spack by sourcing the setup script with the <code>.</code> command</p>
 
 <pre class="term"><code>. spack/share/spack/setup-env.sh
 </code></pre>
@@ -324,17 +324,19 @@
 
 <h2 id="a-downloading-spack-group">A. Downloading Spack (Group)</h2>
 
-<p>First, log in to the HPC cluster, and navigate to your group’s shared directory in <code>/home</code>. Note this path for use throughout this guide, and communicate it to your group members for configuring their access to the installation.</p>
+<p>First, log in to the HPC cluster, and navigate to your group’s shared directory in <code>/home</code> with</p>
 
 <pre class="term"><code>cd /home/groups/yourGroupName
 </code></pre>
+
+<p>where you should replace <code>yourGroupName</code> with your group’s name. Note this path for use throughout this guide, and communicate it to your group members for configuring their access to the installation.</p>
 
 <p>You can then install Spack following its <a href="https://spack.readthedocs.io/en/latest/getting_started.html">documentation</a>. Download the Spack code from their GitHub repository:</p>
 
 <pre class="term"><code>git clone -c feature.manyFiles=true https://github.com/spack/spack.git
 </code></pre>
 
-<p>and then activate Spack by sourcing (the <code>.</code> command) the setup script.</p>
+<p>and then activate Spack by sourcing the setup script with the <code>.</code> command.</p>
 
 <pre class="term"><code>. spack/share/spack/setup-env.sh
 </code></pre>
@@ -355,7 +357,7 @@
 <pre class="term"><code>. /home/groups/yourGroupName/spack/share/spack/setup-env.sh
 </code></pre>
 
-<p>A more convenient option is simply to update your account to run this command whenever you log in. You and your group members should add the command to the end of the <code>.bash_profile</code> file in your home directory, e.g. <code>nano ~/.bash_profile</code>, with the full path to the file.  For a group installation, the line should look like</p>
+<p>A more convenient option is simply to update your account to run this command whenever you log in. You and your group members should add the command to the end of the <code>.bash_profile</code> file in your respective home directories, e.g. <code>nano ~/.bash_profile</code>, with the full path to the file.  For a group installation, the line should look like</p>
 
 <pre><code>. /home/groups/yourGroupName/spack/share/spack/setup-env.sh
 </code></pre>
@@ -382,7 +384,7 @@
 
 <h3 id="ii-updating-location-of-configuration-files">ii. Updating location of configuration files</h3>
 
-<p>The group installation of Spack need to be instructed on where to find these configuration files. You can do this by running the command</p>
+<p>The group installation of Spack needs to be instructed on where to find these configuration files. You can do this by running the command</p>
 
 <pre class="term"><code>export SPACK_USER_CONFIG_PATH=/home/groups/yourGroupName/.spack
 </code></pre>
@@ -394,7 +396,7 @@
 
 <p>This should show a list of packages similar to what you see when you run the <code>module avail</code> command.</p>
 
-<p>To ensure that the configuration files are found in future terminal sessions, you and your group members need to edit your <code>~/.bash_profile</code> file to include the above <code>export</code> command. That is, use a command-line text editor to open the file at <code>~/.bash_profile</code> and add the following line to the end of the file:</p>
+<p>To ensure that the configuration files are found in future terminal sessions, you and your group members need to edit your respective <code>~/.bash_profile</code> files to include the above <code>export</code> command. That is, use a command-line text editor to open the file at <code>~/.bash_profile</code> and add the following line to the end of the file:</p>
 
 <pre><code>export SPACK_USER_CONFIG_PATH=/home/groups/yourGroupName/.spack
 </code></pre>
@@ -458,7 +460,7 @@ export SPACK_USER_CONFIG_PATH=/home/groups/yourGroupName/.spack
   </li>
 </ol>
 
-<p>Once configured, you can follow the instructions in this section to use the shared installation.</p>
+<p>Once configured, you can follow the instructions in our guide <a href="hpc-spack-install.md">Installing Software Using Spack</a> to install or use already-installed packages in Spack.</p>
 
         </div>
         <div class="col-3 d-none d-lg-block">

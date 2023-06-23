@@ -250,10 +250,8 @@
 
 <ol>
   <li><a href="#1-installing-software-using-spack">Installing Software Using Spack</a></li>
-  <li><a href="#2-using-software-installed-using-spack">Using Software Installed Using Spack</a></li>
-  <li><a href="#3-creating-custom-modules-using-spack">Creating Custom Modules Using Spack</a></li>
-  <li><a href="#4-using-custom-modules">Using Custom Modules</a></li>
-  <li><a href="#5-installing-and-using-a-specific-compiler">Installing and Using a Specific Compiler</a></li>
+  <li><a href="#2-using-software-installed-in-spack">Using Software Installed in Spack</a></li>
+  <li><a href="#3-installing-and-using-a-specific-compiler">Installing and Using a Specific Compiler</a></li>
 </ol>
 
 <h1 id="1-installing-software-using-spack">1. Installing Software Using Spack</h1>
@@ -262,7 +260,7 @@
 
 <h2 id="a-creating-and-using-a-spack-environment">A. Creating and Using a Spack Environment</h2>
 
-<p>Software installations with Spack should be done inside of a Spack environment, to help manage the shell and paths to access programs and libraries needed for a particular software installation.</p>
+<p>Software installations with Spack should be done inside of a Spack environment, to help manage the shell and the paths to access programs and libraries needed for a particular software installation.</p>
 
 <p>To create a Spack environment, run the command</p>
 
@@ -334,9 +332,9 @@
 
 <p>will tell the environment that you want to install version 3.10 of Python. There are additional ways of defining specifications for package versions, the compiler to be used, and dependencies. The <a href="https://spack.readthedocs.io/en/latest/basic_usage.html#specs-dependencies">documentation for Spack</a> provides the details on how this is done.</p>
 
-<p><em>If you need to install a compiler, or need to use a specific compiler to install the desired packages, see the section <a href="#e-installing-and-using-a-specific-compiler">E. Installing and Using a Specific Compiler</a>.</em></p>
+<p><em>If you need to install a compiler, or need to use a specific compiler to install the desired packages, see section <a href="#3-installing-and-using-a-specific-compiler">3. Installing and Using a Specific Compiler</a>.</em></p>
 
-<h2 id="d-installing-a-package">D. Installing a Package</h2>
+<h2 id="d-installing-packages-in-an-environment">D. Installing Packages in an Environment</h2>
 
 <p>Once you have identified the package(s) you would like to install and have added the specifications to your environment, you should start an interactive Slurm session for the actual installation and compilation of the package.</p>
 
@@ -358,12 +356,12 @@
 
 <h3 id="ii-create-the-local-scratch-directory">ii. Create the local scratch directory</h3>
 
-<p>Using the configurations we defined above, Spack will try to use the machine’s local disk space for staging and compiling files before transferring the finished results to the final installation directory.  Using this space will greatly improve the speed of the installation process.</p>
+<p>Using the default configuration from <a href="hpc-spack-setup.md">Setting Up Spack on HPC</a>, Spack will try to use the machine’s local disk space for staging and compiling files before transferring the finished results to the final installation directory.  Using this space will greatly improve the speed of the installation process. Create the local directory with the command</p>
 
 <pre class="term"><code>mkdir /local/yourNetID/spack_build
 </code></pre>
 
-<p>At the end of the session, remember to delete this directory so that other people can use the disk space in their jobs.</p>
+<p>where you should replace <code>yourNetID</code> with your NetID. At the end of the session, remember to delete this directory so that other people can use the disk space in their jobs.</p>
 
 <blockquote>
   <p>If the directory already exists, that means you forgot to remove it after one of your previous Spack installation sessions.  Simply remove the directory and make it again.</p>
@@ -380,25 +378,25 @@ mkdir /local/yourNetID/spack_build
 <pre class="term"><code>spack spec -lI
 </code></pre>
 
-<p>(the first letter after the hyphen is lowercase “L” and the second letter is the uppercase “i”).</p>
+<p>(the first letter after the hyphen is a lowercase “L” and the second letter is an uppercase “i”).</p>
 
-<p>This command identifies what dependencies Spack needs in order to install your desired packages along with how it will obtain them.  Assuming their are no problems, then it will print a list of the packages and their dependencies, where entries that begin with a green <code>[+]</code> have already been installed somewhere in your local copy, while those that begin with a green <code>[^]</code> are referencing the system installation, and those beginning with a gray <code>-</code> will need to be downloaded and installed.</p>
+<p>This command identifies what dependencies Spack needs in order to install your desired packages along with how it will obtain them.  Assuming their are no problems, then it will print a list of the packages and their dependencies, where entries that begin with a green <code>[+]</code> have already been installed somewhere in your local Spack installation, while those that begin with a green <code>[^]</code> are referencing the system installation, and those beginning with a gray <code>-</code> will need to be downloaded and installed.</p>
 
 <p>If you are satisfied with the results, then you can proceed to install the programs.</p>
 
 <h3 id="iv-install-the-environment-packages">iv. Install the environment packages</h3>
 
-<p>Assuming that you are in an interactive Slurm session &amp; have activated the desired environment containing the package specifications, you can run</p>
+<p>Assuming that you are in an interactive Slurm session and have activated the desired environment containing the package specifications, you can run</p>
 
 <pre class="term"><code>spack install -j 4
 </code></pre>
 
-<p>to install the packages inside of the Spack environment, where the number that comes after <code>-j</code> needs to match the number that you noted from when you started the interactive session (the one after <code>-n</code> when you ran the <code>srun</code> command for the interactive session). You can also add the <code>-v</code> option to have the installation be verbose, which will cause Spack to print the compile &amp; make outputs in addition to the standard Spack output.</p>
+<p>to install the packages inside of the Spack environment, where the number that comes after <code>-j</code> needs to match the number that you noted from when you started the interactive session (the one after <code>-n</code> when you ran the <code>srun</code> command for the interactive session). You can also add the <code>-v</code> option to have the installation be verbose, which will cause Spack to print the compile and make outputs in addition to the standard Spack output.</p>
 
-<p>Depending on the number &amp; complexity of the programs you are installing, and how much can be bootstrapped from the system installation, the installation step can take anywhere from several minutes to several hours.</p>
+<p>Depending on the number and complexity of the programs you are installing, and how much can be bootstrapped from the system installation, the installation step can take anywhere from several minutes to several hours.</p>
 
 <blockquote>
-  <p>If something goes wrong or your connection is interrupted, the installation process can be resumed at a later time without having to start from scratch. Make sure that you are in an interactive Slurm session &amp; that you have activated the Spack environment, then simply rerun the <code>spack install</code> command again.</p>
+  <p>If something goes wrong or your connection is interrupted, the installation process can be resumed at a later time without having to start over from the beginning. Make sure that you are in an interactive Slurm session and that you have activated the Spack environment, then simply rerun the <code>spack install</code> command again.</p>
 </blockquote>
 
 <h3 id="v-finishing-the-installation">v. Finishing the installation</h3>
@@ -423,60 +421,118 @@ spack env activate yourEnvironmentName
 
 <p>and then enter <code>exit</code> to end the interactive session.</p>
 
-<p>To use the packages that you installed, follow the instructions in <a href="4-using-software-installed-using-spack">4. Using Software Installed using Spack</a>.</p>
+<p>To use the packages that you installed, follow the instructions in <a href="2-using-software-installed-in-spack">2. Using Software Installed in Spack</a>. If you want to create custom modules using the installed packages, see our guide <a href="hpc-spack-modules.md">Creating Custom Modules Using Spack</a>.</p>
 
-<h1 id="2-using-software-installed-using-spack">2. Using Software Installed Using Spack</h1>
+<h1 id="2-using-software-installed-in-spack">2. Using Software Installed in Spack</h1>
 
 <p>If your account is configured correctly for using Spack, and the software has been installed inside of a Spack environment, then to use the software all you need to do is activate the corresponding environment. Simply use the command</p>
 
 <pre class="term"><code>spack env activate yourEnvironmentName 
 </code></pre>
 
-<p>and Spack will update your shell accordingly. If you want to see the available Spack environments, enter <code>spack env list</code>.</p>
+<p>and Spack will update your shell accordingly. (Remember that you can see the available Spack environments by running the command <code>spack env list</code>).  Once the environment has been activated, you should be able to use the packages just as normal. You can confirm you are using a command installed using Spack by running</p>
 
-<p>For submitting jobs through Slurm, you will need to add this command to the beginning of your <code>sbatch</code> file before the <code>srun</code> command. For example,</p>
+<pre class="term"><code>which nameOfYourCommand
+</code></pre>
+
+<p>where you replace <code>nameOfYourCommand</code> with the name of the command. The command will output a path, and you should see something like <code>spack/var/spack/environments/yourEnvironmentName/</code> in that path.</p>
+
+<p><strong>For submitting jobs using Slurm</strong>, you will need to make sure that you activate the Spack environment near the beginning of your <code>sbatch</code> file before the <code>srun</code> command. For example,</p>
 
 <pre><code>#!/bin/sh
-#This file is called submit-script.sh
+# This file is called submit-script.sh
 #SBATCH --partition=shared       # default "shared", if not specified
-#SBATCH --time=0-04:30:00       # run time in days-hh:mm:ss
-#SBATCH --nodes=1               # require 1 nodes
-#SBATCH --ntasks-per-node=64    # cpus per node (by default, "ntasks"="cpus")
-#SBATCH --mem-per-cpu=4000             # RAM per node in megabytes
+#SBATCH --time=0-04:30:00        # run time in days-hh:mm:ss
+#SBATCH --nodes=1                # require 1 nodes
+#SBATCH --ntasks-per-node=64     # cpus per node (by default, "ntasks"="cpus")
+#SBATCH --mem-per-cpu=4000       # RAM per node in megabytes
 #SBATCH --error=job.%J.err
 #SBATCH --output=job.%J.out
 
+# v---Remember to activate your Spack environment!! 
 spack env activate yourEnvironmentName
 
 srun --mpi=pmix -n 64 /home/username/mpiprogram
 </code></pre>
 
-<p>When Slurm executes this <code>sbatch</code> file, it will first activate the Spack environment, and then your program will be run using the programs that are installed inside that environment.</p>
+<p>When you submit this job to Slurm and it executes the commands in the <code>sbatch</code> file, it will first activate the Spack environment, and then your program will be run using the programs that are installed inside that environment.</p>
 
-<h1 id="3-creating-custom-modules-using-spack">3. Creating Custom Modules Using Spack</h1>
+<blockquote>
+  <p>Some programs include explicit <code>module load</code> commands in their execution, which may override the paths provided by the Spack environment. If your program appears to use the system versions of the packages instead of the versions installed in your Spack environment, you may need to remove or modify these explicit commands. Consult your program’s documentation for how to do so. You may want to create your own custom modules and modify your program to explicitly load your custom modules. See <a href="hpc-spack-modules.md">Creating Custom Modules Using Spack</a> for more information on how to create your own modules using Spack.</p>
+</blockquote>
 
-<h1 id="4-using-custom-modules">4. Using Custom Modules</h1>
+<h1 id="3-installing-and-using-a-specific-compiler">3. Installing and Using a Specific Compiler</h1>
 
-<h1 id="5-installing-and-using-a-specific-compiler">5. Installing and Using a Specific Compiler</h1>
+<p>By default, Spack will attempt to compile packages it installs using one of the system compilers, most likely with GCC version 11.3.0. Some programs, however, may need to be compiled using a specific compiler, or require that their dependencies be built using a specific compiler. While this is possible using Spack, the process for installing and using a compiler is a bit more complicated than that for installing “regular” packages as was described above.</p>
 
-<p><strong><em>!!!Needs to be updated!!!</em></strong></p>
+<p>In brief, you will first create a separate environment for installing the compiler. Then you will add that compiler to the list of available compilers that Spack can use. Finally, you can install your desired packages as in a new environment, but you will need to specify which compiler to use.</p>
 
-<p>Using the configuration files above, Spack will attempt to install these packages using the system compilers, most likely <code>gcc@=11.3.0</code>. If your program requires that a specific compiler be used, you will need to first add <em>and</em> install the compiler before adding the other packages. To use version 9 of <code>gcc</code>, you would find which exact versions are available and decide which to use. For example,</p>
+<h2 id="a-install-the-compiler-in-its-own-environment">A. Install the Compiler in its Own Environment</h2>
 
-<pre><code>spack add gcc@=9.5.0
+<h3 id="i-identify-the-compiler-and-version">i. Identify the compiler and version</h3>
+
+<p>The first step is to identify the compiler and version you need for your program. Consult your program’s documentation for the requirements that it has. Then follow the instructions in <a href="#b-finding-program-packages-in-spack">B. Finding Program Packages in Spack</a> to find the package name and confirm the version is available.</p>
+
+<h3 id="ii-create-the-compilers-environment">ii. Create the compiler’s environment</h3>
+
+<p>Next, create and activate an environment for installing the desired compiler. For example,</p>
+
+<pre class="term"><code>spack env create compilerName_compilerVersion
+spack env activate compilerName_compilerVersion
 </code></pre>
 
-<p class="term">Then follow the instructions in the <a href="#d-installing-a-package">next section</a> to install the compiler. Once the compiler has been installed, you then need to add the compiler to Spack’s list of available compilers using</p>
+<p>where you should replace <code>compilerName</code> and <code>compilerVersion</code> with the name and version of the desired compiler.</p>
 
-<pre><code>spack compiler add "$(spack location -i gcc@=9.5.0)"
+<h3 id="iii-add-the-compiler-specification-to-its-environment">iii. Add the compiler specification to its environment</h3>
+
+<p>Once you’ve activated the environment, add the exact specification for the compiler to the Spack environment with</p>
+
+<pre class="term"><code>spack add compilerName@=compilerVersion
 </code></pre>
 
-<p class="term">Once the compiler has been installed and recognized, you can now add the packages that need to be compiled with it. Use the compiler specification <code>%</code> to specify this compiler for use during installation. For example,</p>
+<p>where you need to replace <code>compilerName</code> and <code>compilerVersion</code> with the name and version of the compiler that you identified above.</p>
 
-<pre><code>spack add python@=3.10 %gcc@=9.5.0
+<h3 id="iv-install-the-compiler-in-its-environment">iv. Install the compiler in its environment</h3>
+
+<p>Next, follow the instructions in <a href="#d-installing-packages-in-an-environment">D. Installing Packages in an Environment</a> to install the desired compiler in this environment. Installing the compiler may take several hours, so consider increasing the number of threads to speed up the installation.</p>
+
+<h2 id="b-add-the-compiler-to-spack">B. Add the Compiler to Spack</h2>
+
+<h3 id="i-identify-the-compilers-installation-path">i. Identify the compiler’s installation path</h3>
+
+<p>After installing the compiler, you need to find its location. First, activate the compiler’s environment with <code>spack env activate compilerName_compilerVersion</code>. Next, use the following command to save the path to the compiler as the shell variable <code>compilerPath</code>:</p>
+
+<pre class="term"><code>compilerPath=$(spack location -i compilerName@=compilerVersion)
 </code></pre>
 
-<p class="term">will use <code>gcc</code> version 9.5.0 to compile Python 3.10 when installing the package. As a general rule, you should use the same compiler for installing all of your packages within an environment, unless your program’s installation instructions say otherwise.</p>
+<p>where you need to replace <code>compilerName</code> and <code>compilerVersion</code> with the name and version of the compiler that you installed. You can see print out the path using the command <code>echo $compilerPath</code>.</p>
+
+<h3 id="ii-give-the-compilers-path-to-spack">ii. Give the compiler’s path to Spack</h3>
+
+<p>Now that you know where the compiler is installed, deactivate the environment with <code>spack env deactivate</code>. Then run the following command to tell Spack to add the compiler to its list of available compilers:</p>
+
+<pre class="term"><code>spack compiler add $compilerPath
+</code></pre>
+
+<h3 id="iii-confirm-compiler-has-been-added-to-spack">iii. Confirm compiler has been added to Spack</h3>
+
+<p>The command</p>
+
+<pre class="term"><code>spack compiler list
+</code></pre>
+
+<p>will print out the list of compilers that Spack can use, and should now show <code>compilerName@compilerVersion</code> in the results.</p>
+
+<h2 id="c-install-packages-using-the-new-compiler">C. Install Packages Using the New Compiler</h2>
+
+<p>Once the compiler has been installed and recognized by Spack, you can now create and activate a new environment for installing your desired packages, following the instructions in <a href="#1-installing-software-using-spack">Installing Software Using Spack</a>.</p>
+
+<p><strong>To make sure the packages are installed using your desired compiler</strong>, you need to include the compiler when you add the package specification to the environment (<a href="#c-adding-package-specifications-to-the-environment">C. Adding Package Specifications to the Environment</a>). To include the compiler in the specification, you need to add the symbol <code>%</code> followed by the compiler name and version to the end of the <code>spack add</code> command. For example,</p>
+
+<pre class="term"><code>spack add python@=3.10 %gcc@=9.5.0
+</code></pre>
+
+<p>will use GCC version 9.5.0 to compile Python 3.10 when installing the package. As a general rule, you should use the same compiler for installing all of your packages within an environment, unless your program’s installation instructions say otherwise.</p>
 
         </div>
         <div class="col-3 d-none d-lg-block">
