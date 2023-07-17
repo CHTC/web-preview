@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Using Custom Modules with Spack</title>
+<title>Creating Custom Modules Using Spack</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -229,7 +229,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
             <h1 class="uw-mini-bar mb-4">
-    Using Custom Modules with Spack
+    Creating Custom Modules Using Spack
 </h1>
 
             <blockquote>
@@ -267,19 +267,12 @@
 
 <h1 id="2-creating-custom-modules-using-spack">2. Creating Custom Modules Using Spack</h1>
 
-<p><strong><em>Spack will automatically create the module files for you when you install your software packages, and save the files to the location described above.</em></strong></p>
-
-<p>If you’d like to manually update the module files, you should first activate the Spack environment in which you installed the packages as instructed in <a href="hpc-spack-install.md">Installing Software Using Spack</a>. Then, to create or update the module files, simply enter the following command:</p>
+<p>First, activate the Spack environment in which you installed the packages as instructed in <a href="hpc-spack-install.md">Installing Software Using Spack</a>. Then, to create the module files, simply enter the following command:</p>
 
 <pre class="term"><code>spack module tcl refresh
 </code></pre>
 
-<p>Spack will print out a list of all the packages installed in the current environment, and you’ll be asked to confirm if you wish to create module files for all of these packages. If you have made changes to the Spack configuration for module files, then you may need to include the <code>--delete-tree</code> option, i.e.</p>
-
-<pre class="term"><code>spack module tcl refresh --delete-tree
-</code></pre>
-
-<p>which will make sure to remove the older module files. This is especially necessary if you have changed the configuration for where the module files</p>
+<p>Spack will print out a list of all the packages installed in the current environment, and you’ll be asked to confirm if you wish to create module files for all of these packages.</p>
 
 <h1 id="3-using-custom-modules">3. Using Custom Modules</h1>
 
@@ -458,7 +451,7 @@ module use ~/spack_modules/my-second-env
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-modules">Using Custom Modules with Spack</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-aowen-hpc-spack/uw-research-computing/hpc-spack-modules">Creating Custom Modules Using Spack</a>
                                     </div>
                                 
                             </div>
