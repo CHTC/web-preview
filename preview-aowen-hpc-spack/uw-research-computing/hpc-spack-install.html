@@ -258,6 +258,10 @@
 
 <p>Once your local installation of Spack has been properly configured, you are now ready to install software using Spack. The following describes the general process for installing program packages with Spack. Check the documentation for the program you want to install to see if they have instructions for installation using Spack. Even if your program can’t be installed using Spack, you can still use it to install the dependencies that your program needs.</p>
 
+<blockquote>
+  <p><strong>Note</strong>: For a group installation of Spack, you will not be able to modify or remove the packages installed by a different user. We recommend that you consult with the rest of your group for permission before proceeding.</p>
+</blockquote>
+
 <h2 id="a-creating-and-using-a-spack-environment">A. Creating and Using a Spack Environment</h2>
 
 <p>Software installations with Spack should be done inside of a Spack environment, to help manage the shell and the paths to access programs and libraries needed for a particular software installation.</p>
@@ -340,9 +344,10 @@
 
 <h3 id="i-start-an-interactive-session">i. Start an interactive session</h3>
 
-<p>Use the following command to start the interactive session:</p>
+<p>Deactivate the current Spack environment and then start the interactive session:</p>
 
-<pre class="term"><code>srun --mpi=pmix -n4 -N1 -t 240 -p int --pty bash
+<pre class="term"><code>spack env deactivate
+srun --mpi=pmix -n4 -N1 -t 240 -p int --pty bash
 </code></pre>
 
 <p>Note the number associated with <code>-n</code>, as that is the number of processors you are requesting to use. This number will be used later in the install command itself to specify the number of threads to use for the installation and compiling.  For large and complex installations, you may want to increase the number of processors (and correspondingly the number of threads) to speed up the process.</p>

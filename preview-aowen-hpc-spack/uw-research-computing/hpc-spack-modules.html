@@ -290,7 +290,12 @@
 
 <h1 id="3-creating-custom-modules-using-spack">3. Creating Custom Modules Using Spack</h1>
 
-<p>You may need to manually create the custom module files, especially after editing any of the modules configuration for Spack. To create the module files, simply enter the following command:</p>
+<p>You may need to manually create the custom module files, especially after editing any of the modules configuration for Spack. To create the module files,  first activate the desired environment with</p>
+
+<pre class="term"><code>spack env activate yourEnvironmentName
+</code></pre>
+
+<p>(where you should replace <code>yourEnvironmentName</code> with the your environment name) and then simply enter the following command:</p>
 
 <pre class="term"><code>spack module tcl refresh
 </code></pre>
@@ -306,6 +311,12 @@
 
 <pre class="term"><code>spack module tcl refresh --upstream-modules
 </code></pre>
+
+<blockquote>
+  <p><strong>Note</strong>: You should only run this command inside of an activated Spack environment, otherwise you will be prompted to create module files for ALL Spack packages, including those installed system-wide, regardless of whether they are required dependencies!</p>
+</blockquote>
+
+<p>Lastly, note that Spack will not directly create module files for software installed independently of Spack (for example, using <code>pip install</code>).</p>
 
 <h1 id="4-working-with-multiple-environments">4. Working with Multiple Environments</h1>
 
