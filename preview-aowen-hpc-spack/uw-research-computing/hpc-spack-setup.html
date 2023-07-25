@@ -238,7 +238,7 @@
                 recommended actions to transition jobs from the old cluster to Spark,
                 see this <a href="https://chtc.cs.wisc.edu/uw-research-computing/hpc-transition-2023">transition guide</a>
             </blockquote>
-            <p>CHTC uses Spack (<a href="https://github.com/spack/spack">https://github.com/spack/spack</a>) for installing and managing software packages on the HPC cluster for all users to use, via the <code>module</code> command (see <a href="hpc-software.md">Using Software on the HPC Cluster</a>). Recently, Spack has developed a feature that allows for users to integrate their local installation of Spack with the system-wide installation. This means that when a user installs software with their local installation of Spack, they can automatically incorporate the system-wide packages to satisfy their software’s dependencies.</p>
+            <p>CHTC uses Spack (<a href="https://github.com/spack/spack">https://github.com/spack/spack</a>) for installing and managing software packages on the HPC cluster for all users to use, via the <code>module</code> command). Recently, Spack has developed a feature that allows for users to integrate their local installation of Spack with the system-wide installation. This means that when a user installs software with their local installation of Spack, they can automatically incorporate the system-wide packages to satisfy their software’s dependencies (similar to Conda and Miniconda).</p>
 
 <p><strong>This guide describes how to set up a local copy of Spack and integrate it with the system installation, either for an individual user or for a group of users.</strong> For instructions on how to install packages with Spack, see our other guide, <a href="hpc-spack-install.md">Installing Software Using Spack</a>.</p>
 
@@ -320,7 +320,7 @@
 
 <h1 id="2-setting-up-spack-for-group-use">2. Setting Up Spack for Group Use</h1>
 
-<p>The following instructions for a group installation of Spack assumes that shared directories have already been set up for your group, and that you have access to the group. We also recommend getting permission from your colleagues before proceeding.</p>
+<p>The following instructions for a group installation of Spack assumes that a shared directory has already been created for your group, and that you have access to this shared folder. We also recommend communicating with your colleagues before proceeding.</p>
 
 <h2 id="a-downloading-spack-group">A. Downloading Spack (Group)</h2>
 
@@ -415,7 +415,7 @@ spack config add 'modules:default:roots:tcl:/home/groups/yourGroupName/spack_mod
 
 <h1 id="3-using-a-shared-group-installation">3. Using a Shared Group Installation</h1>
 
-<p>Users who want to use a shared group installation of Spack, but who did not set up the installation, only need to modify their <code>~/.bash_profile</code> file with instructions regarding the path to the shared group installation and its configuration files.</p>
+<p><strong>Users who want to use a shared group installation of Spack, but who did not set up the installation</strong>, only need to modify their <code>~/.bash_profile</code> file with instructions regarding the path to the shared group installation and its configuration files.</p>
 
 <ol>
   <li>Log in to the HPC cluster (<a href="connecting.md">Connecting to CHTC</a>).

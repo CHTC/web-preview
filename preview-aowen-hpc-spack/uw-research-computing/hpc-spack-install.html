@@ -238,13 +238,11 @@
                 recommended actions to transition jobs from the old cluster to Spark,
                 see this <a href="https://chtc.cs.wisc.edu/uw-research-computing/hpc-transition-2023">transition guide</a>
             </blockquote>
-            <p>CHTC uses Spack (<a href="https://github.com/spack/spack">https://github.com/spack/spack</a>) for installing and managing software packages on the HPC cluster for all users to use, via the <code>module</code> command (see <a href="hpc-software.md">Using Software on the HPC Cluster</a>). Recently, Spack has developed a feature that allows for users to integrate their local installation of Spack with the system-wide installation. This means that when a user installs software with their local installation of Spack, they can automatically incorporate the system-wide packages to satisfy their software’s dependencies.</p>
+            <p>CHTC uses Spack (<a href="https://github.com/spack/spack">https://github.com/spack/spack</a>) for installing and managing software packages on the HPC cluster for all users to use, via the <code>module</code> command. Recently, Spack has developed a feature that allows for users to integrate their local installation of Spack with the system-wide installation. This means that when a user installs software with their local installation of Spack, they can automatically incorporate the system-wide packages to satisfy their software’s dependencies (similar to Conda and Miniconda).</p>
 
-<p><strong>This guide describes how to install and manage software using Spack, including how to install and use a specific compiler.</strong> If you or your group still need to set up your local installation of spack, see our other guide, <a href="hpc-spack-setup.md">Setting Up Spack on HPC</a>.</p>
+<p><strong>This guide describes how to install and manage software using Spack, including how to install and use a specific compiler.</strong></p>
 
-<blockquote>
-  <p>If your group has already set up a shared group installation of Spack, make sure that you have followed the instructions in <a href="hpc-spack-setup.md#3-using-a-shared-group-installation">3. Using a Shared Group Installation</a> in <a href="hpc-spack-setup.md">Setting Up Spack on HPC</a> before using this guide.</p>
-</blockquote>
+<p><strong>This guide assumes you or your group has already set up your local installation of Spack.</strong> If you have not installed Spack, follow the instructions in <a href="hpc-spack-setup.md">Setting Up Spack on HPC</a>.</p>
 
 <h1 id="contents">Contents</h1>
 
@@ -256,7 +254,9 @@
 
 <h1 id="1-installing-software-using-spack">1. Installing Software Using Spack</h1>
 
-<p>Once your local installation of Spack has been properly configured, you are now ready to install software using Spack. The following describes the general process for installing program packages with Spack. Check the documentation for the program you want to install to see if they have instructions for installation using Spack. Even if your program can’t be installed using Spack, you can still use it to install the dependencies that your program needs.</p>
+<p>Once your local installation of Spack has been properly configured, you are now ready to install software using Spack.</p>
+
+<p>Check the documentation for the program you want to install to see if they have instructions for installation using Spack. Even if your program can’t be installed using Spack, you can still use it to install the dependencies that your program needs.</p>
 
 <blockquote>
   <p><strong>Note</strong>: For a group installation of Spack, you will not be able to modify or remove the packages installed by a different user. We recommend that you consult with the rest of your group for permission before proceeding.</p>
@@ -299,7 +299,7 @@
 
 <h2 id="b-finding-program-packages-in-spack">B. Finding Program Packages in Spack</h2>
 
-<p>To see what packages are installed in the current Spack environment, run the command</p>
+<p>Once inside an active Spack environment, you can run the following command to see what packages are installed in the current environment</p>
 
 <pre class="term"><code>spack find
 </code></pre>
@@ -464,7 +464,7 @@ spack env activate yourEnvironmentName
 <pre class="term"><code>spack env activate yourEnvironmentName 
 </code></pre>
 
-<p>and Spack will update your shell accordingly. (Remember that you can see the available Spack environments by running the command <code>spack env list</code>).  Once the environment has been activated, you should be able to use the packages just as normal. You can confirm you are using a command installed using Spack by running</p>
+<p>and Spack will update your shell accordingly. (Remember that you can see the available Spack environments by running the command <code>spack env list</code>). Once the environment has been activated, you should be able to use the packages just as normal. You can confirm you are using a command installed using Spack by running</p>
 
 <pre class="term"><code>which nameOfYourCommand
 </code></pre>
