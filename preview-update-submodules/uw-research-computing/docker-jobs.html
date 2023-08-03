@@ -248,7 +248,7 @@ advantageous if the software installation 1) has many dependencies, 2)
 requires installation to a specific location, or 3) “hard-codes” paths
 into the installation.</p>
 
-<p>CHTC (and the OS Pool) have capabilities to access and start containers and
+<p>CHTC has capabilities to access and start containers and
 run jobs inside them. This guide shows how to do this for
 <a href="https://www.docker.com/what-docker">Docker</a> containers.</p>
 
@@ -268,8 +268,8 @@ executable = myExecutable.sh
 transfer_input_files = other_job_files
 
 log = job.log
-err = job.err
-out = job.out
+error = job.err
+output = job.out
 
 request_cpus = 1
 request_memory = 4GB
@@ -674,7 +674,7 @@ interactive flag with <code>condor_submit</code>:
             <ul class="uw-contact-list">
                 <li class="uw-contact-item">Office Hours: <a href="/web-preview/preview-update-submodules/uw-research-computing/get-help.html#office-hours">Tues: 10:30am-12pm; Thurs: 3-4:30pm</a></li>
                 <li class="uw-contact-item">Email: <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></li>
-                <li class="uw-contact-item">Github: <a href="https://github.com/CHTC/chtc-website-source">chtc-website-source</a></li>
+                <li class="uw-contact-item">Newsletter: <a href="/newsletter.html">Subscribe Now</a></li>
                 <li>
                     <ul class="uw-social-icons">
                         <li id="uw-icon-twitter" class="uw-social-icon">

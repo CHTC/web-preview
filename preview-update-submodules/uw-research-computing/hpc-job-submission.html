@@ -232,12 +232,6 @@
     Submitting and Managing Jobs Using SLURM
 </h1>
 
-            <blockquote>
-                These guides have been recently updated with information
-                about the new "Spark" HPC cluster. For a full summary of changes and
-                recommended actions to transition jobs from the old cluster to Spark,
-                see this <a href="https://chtc.cs.wisc.edu/uw-research-computing/hpc-transition-2023">transition guide</a>
-            </blockquote>
             <p>The HPC Cluster uses SLURM to manage jobs on the HPC Cluster. This page describes 
 how to submit and manage jobs using SLURM.</p>
 
@@ -298,7 +292,7 @@ srun --mpi=pmix -n 64 /home/username/mpiprogram
 
 <h2 id="b-optimizing-your-submit-file"><strong>B. Optimizing Your Submit File</strong></h2>
 
-<p>The new cluster has different partition names and different sized nodes. We  recommend the following changes because most of our nodes now have 128 cores, so requesting multiple nodes is not advantageous if your jobs are smaller than 128 cores. We also now recommend requesting memory per core instead of memory per node, for similar reasons, using the <code>--mem-per-cpu</code> flag with units of MB. Here are our recommendations for different sized jobs:</p>
+<p>The new cluster has different partition names and different sized nodes. <strong>We always recommend requesting cores per node (instead of total cores), using a multiple of 32 cores as your request per node.</strong> Requesting multiple nodes is not advantageous if your jobs are smaller than 128 cores. We also now recommend requesting memory per core instead of memory per node, for similar reasons, using the <code>--mem-per-cpu</code> flag with units of MB. Here are our recommendations for different sized jobs:</p>
 
 <table>
 	<tr>
@@ -307,21 +301,18 @@ srun --mpi=pmix -n 64 /home/username/mpiprogram
 	</tr>
 	<tr>
 		<td>32-128 cores</td>
-		<td>Example for 32 cores: <pre>
+		<td>Example for 64 cores: <pre>
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=32 # recommend multiples of 16
+#SBATCH --ntasks-per-node=64 # recommend multiples of 32
 #SBATCH --mem-per-cpu=4000</pre></td>
 	</tr>
 	<tr>
-		<td>96 - 256 cores</td>
-		<td>Split over a few nodes, for example for 160 cores: <pre>
+		<td>128 - 256 cores</td>
+		<td>Split over a few nodes, for example for 128 cores: <pre>
 #SBATCH --nodes=2
-#SBATCH --ntasks-per-node=80 # designate cores per node
+#SBATCH --ntasks-per-node=64 # designate cores per node
 #SBATCH --mem-per-cpu=4000</pre> 
-	OR:  <pre>
-#SBATCH --nodes=2
-#SBATCH --ntasks=160 # designate overall cores
-#SBATCH --mem-per-cpu=4000</pre></td>
+</td>
 	</tr>
 	<tr>
 		<td>128 or 256 cores (whole nodes)</td>
@@ -690,6 +681,21 @@ you can “hold” a submitted job by using:</p>
                                         <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/hpc-software">Using Software on the HPC Cluster</a>
                                     </div>
                                 
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/hpc-spack-setup">Setting Up Spack on HPC</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/hpc-spack-install">Installing Software Using Spack</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/hpc-spack-modules">Creating Custom Modules Using Spack</a>
+                                    </div>
+                                
                             </div>
                         </div>
                     
@@ -721,7 +727,7 @@ you can “hold” a submitted job by using:</p>
             <ul class="uw-contact-list">
                 <li class="uw-contact-item">Office Hours: <a href="/web-preview/preview-update-submodules/uw-research-computing/get-help.html#office-hours">Tues: 10:30am-12pm; Thurs: 3-4:30pm</a></li>
                 <li class="uw-contact-item">Email: <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></li>
-                <li class="uw-contact-item">Github: <a href="https://github.com/CHTC/chtc-website-source">chtc-website-source</a></li>
+                <li class="uw-contact-item">Newsletter: <a href="/newsletter.html">Subscribe Now</a></li>
                 <li>
                     <ul class="uw-social-icons">
                         <li id="uw-icon-twitter" class="uw-social-icon">
