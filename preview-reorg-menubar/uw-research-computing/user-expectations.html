@@ -245,8 +245,8 @@ deactivate their account or remove files without notice.</p>
 
 <h2 id="access-and-use">Access and Use</h2>
 
-<p>Use of CHTC services should be in support of UW - Madison’s research and teaching 
-mission.</p>
+<p>Use of CHTC services are free to use in support of UW - Madison’s research and 
+teaching mission.</p>
 
 <p>Accounts are linked to individuals and should NOT be shared. We are happy to make new
 accounts for individuals or group-owned spaces for sharing files. Accounts that we 
@@ -289,6 +289,11 @@ head nodes and/or disable user accounts that violate this policy</p>
 <code>cron</code> or using a workflow manager on the login node is not allowed without prior 
 discussion with the facilitation or infrastructure team.</p>
 
+<p><strong>(HTC system specific): Do not run <code>watch</code> with <code>condor_q</code></strong>. The <code>condor_q</code> command 
+is sufficiently complex that running it with the <code>watch</code> command can impair queue 
+performance for everyone. Use <code>condor_watch_q</code> as an alternative that is more 
+efficient.</p>
+
 <p><strong>Test your jobs</strong>. We recommend testing a small version of your overall workflow 
 before submitting the “real thing” for many reasons:</p>
 
@@ -296,6 +301,7 @@ before submitting the “real thing” for many reasons:</p>
   <li>confirming how long the job(s) will run</li>
   <li>confirming the size and number of input and output files and whether your quota is accurate</li>
 </ul>
+
 
         </div>
         <div class="col-3 d-none d-lg-block">
