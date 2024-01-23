@@ -309,7 +309,7 @@ number of CPUs you specify.</p>
 
 <p>Only execute nodes will be used for performing your computational work. 
 The execute nodes are organized into several "partitions", including 
-the <code>univ2</code>, <code>pre</code>, and <code>int</code> partitions which are available to 
+the <code>shared</code>, <code>pre</code>, and <code>int</code> partitions which are available to 
 all HPC users as well as research group specific partitions that consist 
 of researcher-owned hardware and which all HPC users can access on a 
 backfill capacity via the <code>pre</code> partition (more details below).</p>
@@ -344,9 +344,9 @@ backfill capacity via the <code>pre</code> partition (more details below).</p>
       <td>2</td>
       <td>1 hr</td>
       <td>4 hrs</td>
-      <td>320</td>
+      <td>16</td>
       <td>64 or 128</td>
-      <td>512</td>
+      <td>512 (max 64 per job)</td>
     </tr>
     <tr>
       <td>Pre-emptable (backfill)</td>
@@ -379,7 +379,7 @@ can request and use up to 7 days of running time.</p>
   </li>
   <li>
     <p><code>int</code> consists of two compute nodes is intended for short and immediate interactive 
-testing on a single node (up to 32 CPUs, 128 GB RAM). Jobs submitted to this partition 
+testing on a single node (up to 16 CPUs, 64 GB RAM). Jobs submitted to this partition 
 can run for up to 4 hours.</p>
   </li>
   <li>
