@@ -241,24 +241,29 @@ This form applies to the following locations for both individual and shared (gro
     <tr>
       <th>Location</th>
       <th>Purpose</th>
+      <th>More Information</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>HTC <code>/home</code></td>
       <td>For files less than 1 GB for jobs on the HTC system</td>
+      <td><a href="check-quota.md">Checking Disk Quota and Usage</a></td>
     </tr>
     <tr>
       <td>HTC <code>/staging</code></td>
       <td>For files greater than 1 GB for jobs on the HTC system</td>
+      <td><a href="file-avail-largedata.md">Staging</a></td>
     </tr>
     <tr>
       <td>HPC <code>/home</code></td>
       <td>For repeatedly used files for jobs on the HPC system</td>
+      <td><a href="hpc-overview.md#data-storage-and-management">HPC Data Storage and Management</a></td>
     </tr>
     <tr>
       <td>HPC <code>/scratch</code></td>
       <td>For working data for jobs on the HPC system</td>
+      <td><a href="hpc-overview.md#data-storage-and-management">HPC Data Storage and Management</a></td>
     </tr>
   </tbody>
 </table>
@@ -266,6 +271,15 @@ This form applies to the following locations for both individual and shared (gro
 <p>For other locations, please email us at <a href="Mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a>. 
 Remember, <strong>CHTC data locations are not for long-term storage and are NOT backed up</strong>.
 Please review our data policies on the <a href="user-expectations.html#data-policies">Policies and Expectations for Users</a> page.</p>
+
+<h2 id="how-to-check-your-quotas">How to Check Your Quotas</h2>
+
+<p>The form asks for the current quotas of the folders you wish to change.
+For individual directories, your quotas are printed on login.
+For group directories at HTC <code>/staging</code>, HPC <code>/home</code>, HPC <code>/scratch</code>, you can retrieve your quotas using the command</p>
+
+<pre><code>get_quotas /path/to/group/directory
+</code></pre>
 
 <h2 id="quota-request-form">Quota Request Form</h2>
 
