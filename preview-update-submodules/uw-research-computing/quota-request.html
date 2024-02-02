@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Policies and Expectations for Using CHTC</title>
+<title>Request a Quota Change</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -230,124 +230,70 @@
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
             <h1 class="uw-mini-bar mb-4">
-    Policies and Expectations for Using CHTC
+    Request a Quota Change
 </h1>
 
-            <p>This page lists important policies and expectations for using CHTC computing and 
-data services. Our goal is to support a community of users and a variety of 
-research. If an individual user is taking 
-action that negatively impacts our services, we reserve the right to 
-deactivate their account or remove files without notice.</p>
+            <p>To request a change in quota(s) for data storage locations on CHTC systems, please fill out the form below.
+This form applies to the following locations for both individual and shared (group) directories:</p>
 
-<h2 id="access-and-use">Access and Use</h2>
+<table class="gtable">
+  <thead>
+    <tr>
+      <th>Location</th>
+      <th>Purpose</th>
+      <th>More Information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HTC <code>/home</code></td>
+      <td>For files less than 1 GB for jobs on the HTC system</td>
+      <td><a href="check-quota">Checking Disk Quota and Usage</a></td>
+    </tr>
+    <tr>
+      <td>HTC <code>/staging</code></td>
+      <td>For files greater than 1 GB for jobs on the HTC system</td>
+      <td><a href="file-avail-largedata#5-checking-your-quota-data-use-and-file-counts">Staging Guide</a></td>
+    </tr>
+    <tr>
+      <td>HPC <code>/home</code></td>
+      <td>For repeatedly used files for jobs on the HPC system</td>
+      <td><a href="hpc-overview#data-storage-and-management">HPC Data Storage and Management</a></td>
+    </tr>
+    <tr>
+      <td>HPC <code>/scratch</code></td>
+      <td>For working data for jobs on the HPC system</td>
+      <td><a href="hpc-overview#data-storage-and-management">HPC Data Storage and Management</a></td>
+    </tr>
+  </tbody>
+</table>
 
-<p>Use of CHTC services are free to use in support of UW - Madison’s research and 
-teaching mission.</p>
+<p>For other locations, please email us at <a href="Mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a>. 
+Remember, <strong>CHTC data locations are not for long-term storage and are NOT backed up</strong>.
+Please review our data policies on the <a href="user-expectations.html#data-policies">Policies and Expectations for Users</a> page.</p>
 
-<p><strong>Accounts are linked to individuals and should NOT be shared.</strong> We are happy to make new
-accounts for individuals or group-owned spaces for sharing files. Accounts that we 
-notice being shared will be immediately disabled and a meeting with the PI 
-(faculty advisor) may be necessary to reinstate the account.</p>
+<h2 id="how-to-check-your-quotas">How to Check Your Quotas</h2>
 
-<p>For more information on access to CHTC after graduation, see <a href="#access-chtc-resources-after-graduation">below</a>.</p>
+<p>The form asks for the current quotas of the folders you wish to change.
+For individual directories, your quotas are printed on login.
+For group directories at HTC <code>/staging</code>, HPC <code>/home</code>, HPC <code>/scratch</code>, you can retrieve your quotas using the command</p>
 
-<h2 id="data-policies">Data Policies</h2>
+<pre><code>get_quotas /path/to/group/directory
+</code></pre>
 
-<p><strong>CHTC data locations are not backed up</strong>, and users should
-treat CHTC compute systems as temporary storage locations for <em>active</em>,
-currently-queued computational work. Users should remove data from CHTC
-systems upon completion of a batch of computational work and keep copies of
-all essential files in a non-CHTC location. CHTC staff reserve the right
-to delete data from any CHTC data location at at any time, to preserve
-systems performance, and are not responsible for data loss or file system
-corruption, which are possible in the absence of back-ups.</p>
+<h2 id="quota-request-form">Quota Request Form</h2>
 
-<p><strong>CHTC is not HIPAA-compliant</strong> and users should not bring HIPAA data into 
-CHTC services. If you have data security concerns or any questions about 
-data security in CHTC, <a href="https://chtc.cs.wisc.edu/uw-research-computing/get-help.html">please get in touch</a>!</p>
+<p>The following link leads to a Qualtrics form that we use for requesting quota changes.</p>
 
-<p>To request a change in the quotas for a storage location, please see
-our <a href="quota-request">Request a Quota Change</a> guide.</p>
+<div class="d-flex mb-3">
+	<div class="p-3 m-auto">
+		<a class="btn btn-primary" href="https://uwmadison.co1.qualtrics.com/jfe/form/SV_0JMj2a83dHcwX5k">Request a Quota Change</a>
+	</div>
+</div>
 
-<h3 id="export-control">Export Control</h3>
+<p>If you do not receive an automated email from <a href="Mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a> within a few hours of completing the form,
+ OR if you do not receive a response from a human within two business days (M-F), please email <a href="Mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a>.</p>
 
-<p>Users agree not to access, utilize, store, or in any way run export controlled data, information, 
-programs, etc. on CHTC software, equipment, or computing resources without prior review by the 
-UW-Madison Export Control Office.</p>
-
-<p>Export controlled information is subject to federal government rules on handling and viewing and has 
-restrictions on who and where it may be accessed. A license can be required for access by foreign 
-persons and in foreign jurisdictions so it’s important to ensure that all legal requirements are 
-followed.
-If you have export controlled information that you would like to use on the CHTC, or you are unsure 
-if the information you have is export controlled, please contact the Export Control Office at 
-<a href="mailto:exportcontrol@grad.wisc.edu">exportcontrol@grad.wisc.edu</a> for guidance.</p>
-
-<p><strong>Note: The CHTC is not compliant with Controlled Unclassified Information (CUI) requirements.</strong></p>
-
-<h2 id="user-expectations">User Expectations</h2>
-
-<p>Because our systems are shared by many CHTC users, everyone contributes to 
-helping the systems run smoothly. The following are some best practices 
-to get the most out of CHTC without harming other users. Our goal 
-is always to help you get your work done - if you think the following recommendations 
-limit your capacity to run work, please contact us to discuss alternatives.</p>
-
-<p><strong>Never run computationally intensive tasks on the login nodes</strong> for either 
-system. As a rule of thumb, anything that runs for more than a few seconds, or 
-is known to use a lot of cores or memory should not be run directly, but as a job. 
-Small scripts and commands (to compress data, create directories,
-etc.) that run within a few minutes on the submit server are okay,
-but their use should be minimized when possible. If you have questions about this, 
-please contact the facilitation team. CHTC staff reserve the right to kill any long-running or problematic processes on the 
-head nodes and/or disable user accounts that violate this policy</p>
-
-<p><strong>Avoid unsupervised scripts on the login nodes.</strong> Automating tasks via tools like 
-<code>cron</code>, <code>watch</code>, or using a workflow manager (not including HTCondor’s DAGMan) on the login node is not allowed without prior 
-discussion with the facilitation or infrastructure team.</p>
-
-<blockquote>
-  <p><strong>(HTC system specific):</strong> Since use of <code>watch</code> with <code>condor_q</code> is prohibited, 
-we recommend using <code>condor_watch_q</code> as an alternative for live updates on your jobs 
-in the queue. <code>condor_watch_q</code> is more efficient and will not impair system performance.</p>
-</blockquote>
-
-<p><strong>Test your jobs</strong>. We recommend testing a small version of your overall workflow 
-before submitting your full workflow. By testing a smaller version of your jobs, 
-you can determine resource requests, runtimes, and whether you may need an increase 
-in your user quota. Both our HTC and HPC systems use a fair shair policy and each 
-researcher has a user priority. <strong>Submitting many jobs that fail or do not produce 
-the unexpected output will decrease your user priority without helping you complete 
-your research.</strong>  User priorities naturally reset over time.</p>
-
-<h2 id="access-chtc-resources-after-graduation">Access CHTC Resources after Graduation</h2>
-
-<p>We understand that some users may need to continue carrying out their computational 
-analyses after graduation and the subsequent expiration of their NetID.</p>
-
-<p>To maintain access to CHTC resources after you leave your position at the University, 
-your faculty advisor can sponsor continued access to CHTC resources and your NetID. 
-Your Faculty Sponsor should email CHTC (chtc@cs.wisc.edu) and provide:</p>
-
-<ol>
-  <li>Your name,</li>
-  <li>The reason you need continued access to CHTC resources,</li>
-  <li>The amount of time they would like to sponsor your account,</li>
-  <li>Your new city/country of residence, and</li>
-  <li>Your new institution.</li>
-</ol>
-
-<p>CHTC staff will then go through the needed steps to extend your account.</p>
-
-<ul>
-  <li>We highly recommend reaching out to CHTC staff before your NetID expires, if possible.</li>
-  <li>Your faculty sponsor can sponsor your account for up to one year at a time. If 
-you need continued access past one year, your faculty sponsor must contact us and 
-re-confirm that you should have continued access.</li>
-  <li>As a reminder, CHTC accounts are deactivated and user data is erased after a user 
-is no longer actively using their account (~1 year of inactivity). It is your responsibility
-to maintain your data and important files in a location that is not CHTC’s file systems.</li>
-</ul>
 
         </div>
         <div class="col-3 d-none d-lg-block">
