@@ -348,7 +348,7 @@ nodes. All users log in at a login node, and submit their workflow as HTCondor j
 
 <h2 id="htc-submit-servers">HTC Submit Servers</h2>
 
-<p>There are multiple submit servers for the HTC system. The two most common submit servers are <code>submit1.chtc.wisc.edu</code> and <code>submit2.chtc.wisc.edu</code>. All users will be notified what submit server they should log into when their account is created.</p>
+<p>There are multiple submit servers for the HTC system. The two most common submit servers are <code>ap2001.chtc.wisc.edu</code> and <code>ap2002.chtc.wisc.edu</code> (formerly <code>submit1.chtc.wisc.edu</code> and <code>submit2.chtc.wisc.edu</code>, respectively). All users will be notified what submit server they should log into when their account is created.</p>
 
 <p><span name="execute-nodes"></span></p>
 
@@ -411,7 +411,7 @@ Disk quotas for user alice (uid 20384):
 <h3 id="check-staging-quota-and-usage">Check <code>/staging</code> Quota and Usage</h3>
 
 <p>To see your <code>/staging</code> quota and usage, use the <code>get_quotas &lt;NetID&gt;</code> command. For example,</p>
-<pre class="term"><code>[NetID@submit1 ~]$ get_quotas /staging/NetID
+<pre class="term"><code>[NetID@ap2001 ~]$ get_quotas /staging/NetID
 </code></pre>
 
 <p>If the output of this command is blank, it means you do not have a <code>/staging</code> directory. Contact CHTC staff to request one at any time.</p>
@@ -422,8 +422,8 @@ Disk quotas for user alice (uid 20384):
 <p>Alternatively, the <code>ncdu</code> command can also be used to see how many 
 files and directories are contained in a given path:</p>
 
-<pre class="term"><code>[NetID@submit1 ~]$ ncdu /home/NetID
-[NetID@submit1 ~]$ ncdu /staging/NetID
+<pre class="term"><code>[NetID@ap2001 ~]$ ncdu /home/NetID
+[NetID@ap2001 ~]$ ncdu /staging/NetID
 </code></pre>
 
 <p>When <code>ncdu</code> has finished running, the output will give you a total file
