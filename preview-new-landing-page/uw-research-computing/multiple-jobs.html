@@ -85,14 +85,7 @@
             <div class="uw-header-crest">
                 <a href="/web-preview/preview-new-landing-page/"><img class="uw-crest-svg" src="/web-preview/preview-new-landing-page/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
             </div>
-            <div class="uw-title-tagline">
-                <h1 id="site-title" class="uw-site-title">
-                    <a href="/web-preview/preview-new-landing-page/" rel="home">CHTC</a>
-                </h1>
-                <a href="/web-preview/preview-new-landing-page/" rel="home">
-                    <div id="site-description" class="uw-site-tagline">UW Research Computing</div>
-                </a>
-            </div>
+            
         </div>
     </div>
 </header>
@@ -148,11 +141,11 @@
         </li>
     
         <li>
-            <a href="/web-preview/preview-new-landing-page/uw-research-computing/guides.html#htc-documentation">HTC Guides</a>
+            <a href="/web-preview/preview-new-landing-page/uw-research-computing/htc/guides.html">HTC Guides</a>
         </li>
     
         <li>
-            <a href="/web-preview/preview-new-landing-page/uw-research-computing/guides.html#hpc-documentation">HPC Guides</a>
+            <a href="/web-preview/preview-new-landing-page/uw-research-computing/hpc/guides.html">HPC Guides</a>
         </li>
     
         <li>
@@ -192,7 +185,7 @@
         </li>
     
         <li>
-            <a href="http://research.cs.wisc.edu/htcondor/">HTCondor Project</a>
+            <a href="https://htcondor.org/manual/">HTCondor Project</a>
         </li>
     
         <li>
@@ -230,6 +223,20 @@
     <div class="container-xxl mb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
+            
+            
+                
+                
+                <br>
+                <div class="p-3 mb-2 bg-danger text-white fw-bold">
+                    Logins have changed for users with accounts on submit1 and submit2: please see the
+                    <a href="https://chtc.cs.wisc.edu/uw-research-computing/connecting" class="link-light"><u>login guide</u></a>
+                    for details on your new login information.
+                </div>
+                
+
+            
+
             <h1 class="uw-mini-bar mb-4">
     Submitting Multiple Jobs Using HTCondor
 </h1>
@@ -300,7 +307,7 @@ Therefore, plan ahead for the following to scenarios:</p>
 
 </blockquote>
 
-<p><span name="queue"></span></p>
+<p><a name="queue"></a></p>
 <h1>1. Submit Multiple Jobs Using <code class="h1">queue</code></h1>
 
 <p>All HTCondor submit files require a <code>queue</code> attribute (which must also be 
@@ -339,7 +346,7 @@ variable name, users must avoid bespoke HTCondor submit file variables
 such as <code>Cluster</code>, <code>Process</code>, <code>output</code>, and <code>input</code>, <code>arguments</code>, etc.</strong></p>
 
 <h2>2. Use <code class="h2">queue N</code> in your HTCondor submit files</h2>
-<p><span name="queueN"></span></p>
+<p><a name="queueN"></a></p>
 
 <p>When using <code>queue N</code>, HTCondor will submit a total of <em>N</em> 
 jobs, counting from 0 to <em>N</em> - 1 and each job will be assigned 
@@ -387,7 +394,7 @@ executable used by the job.</p>
 <p><strong><em>What if my jobs are not identical?</em></strong> <code>queue N</code> may still be a great 
 option! Additional examples for using this option include:</p>
 
-<p><span name="integer"></span></p>
+<p><a name="integer"></a></p>
 <h3 id="2a-use-integer-numbered-input-files">2A. Use integer numbered input files</h3>
 
 <pre class="term"><code>[user@login]$ ls *.data
@@ -404,7 +411,7 @@ option! Additional examples for using this option include:</p>
 queue 100
 </code></pre>
 
-<p><span name="rowcol"></span></p>
+<p><a name="rowcol"></a></p>
 <h3 id="2b-specify-a-row-or-column-number-for-each-job">2B. Specify a row or column number for each job</h3>
 
 <p>$(Process) can be used to specify a unique row or column of information in a 
@@ -422,7 +429,7 @@ queue 100
 <p>The above exmaples assumes that your job is set up to use an argument to 
 specify the row or column to be used by your software.</p>
 
-<p><span name="n1"></span></p>
+<p><a name="n1"></a></p>
 <h3 id="2c-need-n-to-start-at-1">2C. Need <em>N</em> to start at 1</h3>
 
 <p>If your input files are numbered 1 - 100 instead of 0 - 99, or your matrix 
@@ -442,7 +449,7 @@ queue 100
 have otherwise used <code>$(Process)</code>. Note that there is nothing special about the 
 names <code>plusone</code> and <code>NewProcess</code>, you can use any names you want as variables.</p>
 
-<p><span name="variables"></span></p>
+<p><a name="variables"></a></p>
 <h2 id="3-submit-multiple-jobs-with-one-or-more-distinct-variables-per-job">3. Submit multiple jobs with one or more distinct variables per job</h2>
 
 <p>Think about what’s different between each job that needs to be submitted. 
@@ -491,7 +498,7 @@ executable = compare_states
 queue state from states.txt
 </code></pre>
 
-<p><span name="multiple_variables"></span></p>
+<p><a name="multiple_variables"></a></p>
 <h3 id="3a-use-multiple-variables-for-each-job">3A. Use multiple variables for each job</h3>
 
 <p>Let’s imagine that each state <code>.data</code> file contains data spanning several 
@@ -524,10 +531,10 @@ executable = compare_states
 queue state,year from states.txt
 </code></pre>
 
-<p><span name="initialdir"></span></p>
+<p><a name="initialdir"></a></p>
 <h2 id="4-organizing-jobs-into-individual-directories">4. Organizing Jobs Into Individual Directories</h2>
 
-<p><span name="initialdir_states"></span></p>
+<p><a name="initialdir_states"></a></p>
 <h3 id="4a-submitting-multiple-jobs-in-different-directories-with-queue-variable-from-list">4A. Submitting Multiple Jobs in Different Directories with <code>queue &lt;variable&gt; from list</code></h3>
 
 <p>One way to organize jobs is to assign each job to its own directory,
@@ -586,7 +593,7 @@ Therefore, <code>transfer_input_files = input.data</code> can be used without sp
 the path to this <code>input.data</code> file. Any output generated by the job will then be returned to the <code>initialdir</code> 
 location.</p>
 
-<p><span name="initialdir_jobs"></span></p>
+<p><a name="initialdir_jobs"></a></p>
 <h3 id="4b-submitting-multiple-jobs-in-different-directories-with-queue-directory-matching-">4B. Submitting Multiple Jobs in Different Directories with <code>queue &lt;directory&gt; matching *</code></h3>
 
 <p>This section demonstrates how to submit multiple jobs, using a specific
@@ -717,27 +724,27 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/configure-ssh">Automating CHTC Log In</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/configure-ssh">Automate CHTC Log In</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/transfer-data-researchdrive">Transferring Files Between CHTC and ResearchDrive</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/transfer-data-researchdrive">Transfer Files Between CHTC and ResearchDrive</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/globus">Using Globus to Transfer Files to and from CHTC</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/globus">Use Globus to Transfer Files to and from CHTC</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/github-remote-access">Remotely Access a Private GitHub Repository</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/github-remote-access">Access a Private GitHub Repository Remotely</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/check-quota">Checking Disk Quota and Usage</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/check-quota">Check Disk Quota and Usage</a>
                                     </div>
                                 
                             </div>
@@ -760,12 +767,12 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/helloworld">Running Your First HTC Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/condor_q">Learn About Your Jobs Using condor_q</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/condor_q">Learning About Your Jobs Using condor_q</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/htcondor-job-submission">Practice: Submit HTC Jobs using HTCondor</a>
                                     </div>
                                 
 
@@ -846,7 +853,7 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/python-jobs">Running Python Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/python-jobs">Run Python Jobs</a>
                                     </div>
                                 
 
@@ -856,17 +863,17 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/r-jobs">Running R Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/r-jobs">Run R Jobs</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/java-jobs">Running Java Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/java-jobs">Run Java Jobs</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/julia-jobs">Running Julia Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/julia-jobs">Run Julia Jobs</a>
                                     </div>
                                 
 
@@ -876,17 +883,17 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/docker-build">Building a Docker Container Image</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/docker-build">Build a Docker Container Image</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/licensed-software">Using Licensed Software</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/licensed-software">Use Licensed Software</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/singularity-htc">Using Apptainer (Singularity) Environments</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/singularity-htc">Use Apptainer (Singularity) Environments</a>
                                     </div>
                                 
                             </div>
@@ -909,7 +916,7 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/gpu-jobs">Submitting Jobs That Use GPUs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/gpu-jobs">Use GPUs</a>
                                     </div>
                                 
 
@@ -919,7 +926,7 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/scaling-htc">Scaling Beyond Local HTC Capacity</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/scaling-htc">Scale Beyond Local HTC Capacity</a>
                                     </div>
                                 
 
@@ -929,7 +936,7 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/high-memory-jobs">Submitting High Memory Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/high-memory-jobs">Submit High Memory Jobs</a>
                                     </div>
                                 
 
@@ -939,12 +946,7 @@ the directories have in common in the final queue statement in place of "job".</
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/mpi-jobs">Running MPI Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/os-transition-htc">Using Custom Linux Versions in CHTC</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/os-transition-htc">Use Custom Linux Versions in CHTC</a>
                                     </div>
                                 
                             </div>
@@ -1003,6 +1005,7 @@ the directories have in common in the final queue statement in place of "job".</
                 <li class="uw-contact-item">Office Hours: <a href="/web-preview/preview-new-landing-page/uw-research-computing/get-help.html#office-hours">Tues: 10:30am-12pm; Thurs: 3-4:30pm</a></li>
                 <li class="uw-contact-item">Email: <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></li>
                 <li class="uw-contact-item">Newsletter: <a href="/newsletter.html">Subscribe Now</a></li>
+                <li class="uw-contact-item">LinkedIn: <a href="https://www.linkedin.com/company/center-for-high-throughput-computing/">Website</a></li>
                 <li>
                     <ul class="uw-social-icons">
                         <li id="uw-icon-twitter" class="uw-social-icon">

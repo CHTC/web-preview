@@ -85,14 +85,7 @@
             <div class="uw-header-crest">
                 <a href="/web-preview/preview-new-landing-page/"><img class="uw-crest-svg" src="/web-preview/preview-new-landing-page/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
             </div>
-            <div class="uw-title-tagline">
-                <h1 id="site-title" class="uw-site-title">
-                    <a href="/web-preview/preview-new-landing-page/" rel="home">CHTC</a>
-                </h1>
-                <a href="/web-preview/preview-new-landing-page/" rel="home">
-                    <div id="site-description" class="uw-site-tagline">UW Research Computing</div>
-                </a>
-            </div>
+            
         </div>
     </div>
 </header>
@@ -148,11 +141,11 @@
         </li>
     
         <li>
-            <a href="/web-preview/preview-new-landing-page/uw-research-computing/guides.html#htc-documentation">HTC Guides</a>
+            <a href="/web-preview/preview-new-landing-page/uw-research-computing/htc/guides.html">HTC Guides</a>
         </li>
     
         <li>
-            <a href="/web-preview/preview-new-landing-page/uw-research-computing/guides.html#hpc-documentation">HPC Guides</a>
+            <a href="/web-preview/preview-new-landing-page/uw-research-computing/hpc/guides.html">HPC Guides</a>
         </li>
     
         <li>
@@ -192,7 +185,7 @@
         </li>
     
         <li>
-            <a href="http://research.cs.wisc.edu/htcondor/">HTCondor Project</a>
+            <a href="https://htcondor.org/manual/">HTCondor Project</a>
         </li>
     
         <li>
@@ -230,6 +223,20 @@
     <div class="container-xxl mb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
+            
+            
+                
+                
+                <br>
+                <div class="p-3 mb-2 bg-danger text-white fw-bold">
+                    Logins have changed for users with accounts on submit1 and submit2: please see the
+                    <a href="https://chtc.cs.wisc.edu/uw-research-computing/connecting" class="link-light"><u>login guide</u></a>
+                    for details on your new login information.
+                </div>
+                
+
+            
+
             <h1 class="uw-mini-bar mb-4">
     Use Software Available in Modules
 </h1>
@@ -243,29 +250,19 @@ understanding of:</strong></p>
   <li>Using the command line to: navigate within directories,
 create/copy/move/delete files and directories, and run their
 intended programs (aka "executables").</li>
-  <li><a href="helloworld.html">The CHTC's Intro to Running HTCondor
-Jobs</a></li>
+  <li><a href="helloworld.html">The CHTC's Intro to Running HTCondor Jobs</a></li>
 </ul>
 
+<h2 id="overview">Overview</h2>
+
 <ol>
-  <li>General Software Policies</li>
-  <li>Using Pre-Installed Software in Modules
-A. See Available Software Modules
-B. Load Software in Modules
-C. Unload Software in Modules</li>
-  <li>Installing Software on the HTC System
- A. Overview
-    <h2 id="b-step-by-step-process">B. Step by Step Process</h2>
-  </li>
-  <li>Example: Using an MPI module in HTC Jobs</li>
-  <li>A. Requirements and Use Cases</li>
-  <li>B. View MPI Modules on the HTC System</li>
-  <li>C. Submitting MPI jobs</li>
+  <li><a href="#1-general-software-policies">General Software Policies</a></li>
+  <li><a href="#2-using-pre-installed-software-in-modules">Using Pre-Installed Software in Modules</a></li>
+  <li><a href="#3-installing-software-on-the-htc-system">Installing Software on the HTC System</a></li>
+  <li><a href="4-example-using-an-mpi-module-in-htc-jobs">Example: Using an MPI module in HTC Jobs</a></li>
 </ol>
 
-<h1 id="overview">Overview</h1>
-
-<h1 id="1-general-software-policies">1. General Software Policies</h1>
+<h2 id="1-general-software-policies">1. General Software Policies</h2>
 
 <p>In CHTC, we install a minimal set of software for use 
 on our systems. On the HTC System, CHTC staff manage installations of 
@@ -279,12 +276,12 @@ the following types of programs:</p>
 <p>Information on how to access CHTC-managed installations is in the next 
 section of this guide.</p>
 
-<h1 id="2-using-pre-installed-software-in-modules">2. Using Pre-Installed Software in Modules</h1>
+<h2 id="2-using-pre-installed-software-in-modules">2. Using Pre-Installed Software in Modules</h2>
 
 <p>All software on the HTC system that is installed by CHTC staff is available via 
 a tool called “modules”.</p>
 
-<h2 id="a-see-available-software-modules">A. See Available Software Modules</h2>
+<h3 id="a-see-available-software-modules">A. See Available Software Modules</h3>
 
 <p>There are two ways to search through the software modules on the HTC system:</p>
 
@@ -303,7 +300,7 @@ a tool called “modules”.</p>
   </li>
 </ol>
 
-<h2 id="b-load-software-in-modules">B. Load Software in Modules</h2>
+<h3 id="b-load-software-in-modules">B. Load Software in Modules</h3>
 
 <p>Once you find a software module that you want to use, you need to “load” it 
 into your command line environment to make it active, filling in <code>module_name</code> with the name you found through one of the above steps.</p>
@@ -322,7 +319,7 @@ testing, this should be done in an interactive job; otherwise, the module
 should be loaded in the job submit file.</p>
 </blockquote>
 
-<h2 id="c-unload-software-in-modules">C. Unload Software in Modules</h2>
+<h3 id="c-unload-software-in-modules">C. Unload Software in Modules</h3>
 
 <p>If you no longer want to use a specific software installation, you can “unload”
 the software module with the following command:</p>
@@ -335,9 +332,9 @@ the software module with the following command:</p>
 <pre><code>[alice@submit]$ module purge
 </code></pre>
 
-<h1 id="3-installing-software-on-the-htc-system">3. Installing Software on the HTC System</h1>
+<h2 id="3-installing-software-on-the-htc-system">3. Installing Software on the HTC System</h2>
 
-<h2 id="a-overview">A. Overview</h2>
+<h3 id="a-overview">A. Overview</h3>
 
 <p>Unless you are using a licensed software program provided via modules, you 
 are able to compile and install the software you need on the HTC System.</p>
@@ -354,7 +351,7 @@ members, please contact us about getting a shared “group” directory.</p>
 <p>If you are new to software installation, see the section below for 
 a more step-by-step description of the process.</p>
 
-<h2 id="b-step-by-step-process-1">B. Step by Step Process</h2>
+<h3 id="b-step-by-step-process">B. Step by Step Process</h3>
 <p>The process for installing software is described in more detail in our <a href="inter-submit.html">Compiling or Testing Code with an Interactive Job</a></p>
 <ol>
   <li><strong>Start an Interactive Job</strong> - it is necessary to build software in an interactive job as noted in <a href="inter-submit.html">Compiling or Testing Code with an Interactive Job</a></li>
@@ -438,11 +435,11 @@ available via our modules. If this is the case, send an email to
 <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a>, to find out if we can install
 that library into the module system.</p>
 
-<h1 id="c-submitting-mpi-jobs">C. Submitting MPI jobs</h1>
+<h3 id="c-submitting-mpi-jobs">C. Submitting MPI jobs</h3>
 
 <p><span name="compile"></span></p>
 
-<h3 id="1-compile-mpi-code">1. Compile MPI Code</h3>
+<h4 id="1-compile-mpi-code">1. Compile MPI Code</h4>
 
 <p>You can compile your program by submitting an interactive build job to
 one of our compiling servers. Do not compile code on the submit server,
@@ -487,7 +484,7 @@ Facilitators at <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a> if this i
 
 <p><span name="script"></span></p>
 
-<h3 id="2-script-for-running-mpi-jobs">2. Script For Running MPI Jobs</h3>
+<h4 id="2-script-for-running-mpi-jobs">2. Script For Running MPI Jobs</h4>
 
 <p>To run your newly compiled program within a job, you need to write a
 script that loads an MPI module and then runs the program, like so:</p>
@@ -516,7 +513,7 @@ check the program's documentation about running multi-core processes.</p>
 
 <p><span name="submit"></span></p>
 
-<h3 id="3-submit-file-requirements">3. Submit File Requirements</h3>
+<h4 id="3-submit-file-requirements">3. Submit File Requirements</h4>
 
 <p>There are several important requirements to consider when writing a
 submit file for multicore jobs. They are shown in the sample submit file
@@ -620,27 +617,27 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/configure-ssh">Automating CHTC Log In</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/configure-ssh">Automate CHTC Log In</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/transfer-data-researchdrive">Transferring Files Between CHTC and ResearchDrive</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/transfer-data-researchdrive">Transfer Files Between CHTC and ResearchDrive</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/globus">Using Globus to Transfer Files to and from CHTC</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/globus">Use Globus to Transfer Files to and from CHTC</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/github-remote-access">Remotely Access a Private GitHub Repository</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/github-remote-access">Access a Private GitHub Repository Remotely</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/check-quota">Checking Disk Quota and Usage</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/check-quota">Check Disk Quota and Usage</a>
                                     </div>
                                 
                             </div>
@@ -663,12 +660,12 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/helloworld">Running Your First HTC Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/condor_q">Learn About Your Jobs Using condor_q</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/condor_q">Learning About Your Jobs Using condor_q</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/htcondor-job-submission">Practice: Submit HTC Jobs using HTCondor</a>
                                     </div>
                                 
 
@@ -749,7 +746,7 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/python-jobs">Running Python Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/python-jobs">Run Python Jobs</a>
                                     </div>
                                 
 
@@ -759,17 +756,17 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/r-jobs">Running R Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/r-jobs">Run R Jobs</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/java-jobs">Running Java Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/java-jobs">Run Java Jobs</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/julia-jobs">Running Julia Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/julia-jobs">Run Julia Jobs</a>
                                     </div>
                                 
 
@@ -779,17 +776,17 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/docker-build">Building a Docker Container Image</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/docker-build">Build a Docker Container Image</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/licensed-software">Using Licensed Software</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/licensed-software">Use Licensed Software</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/singularity-htc">Using Apptainer (Singularity) Environments</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/singularity-htc">Use Apptainer (Singularity) Environments</a>
                                     </div>
                                 
                             </div>
@@ -812,7 +809,7 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/gpu-jobs">Submitting Jobs That Use GPUs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/gpu-jobs">Use GPUs</a>
                                     </div>
                                 
 
@@ -822,7 +819,7 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/scaling-htc">Scaling Beyond Local HTC Capacity</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/scaling-htc">Scale Beyond Local HTC Capacity</a>
                                     </div>
                                 
 
@@ -832,7 +829,7 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/high-memory-jobs">Submitting High Memory Jobs</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/high-memory-jobs">Submit High Memory Jobs</a>
                                     </div>
                                 
 
@@ -842,12 +839,7 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/mpi-jobs">Running MPI Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/os-transition-htc">Using Custom Linux Versions in CHTC</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/os-transition-htc">Use Custom Linux Versions in CHTC</a>
                                     </div>
                                 
                             </div>
@@ -906,6 +898,7 @@ queue
                 <li class="uw-contact-item">Office Hours: <a href="/web-preview/preview-new-landing-page/uw-research-computing/get-help.html#office-hours">Tues: 10:30am-12pm; Thurs: 3-4:30pm</a></li>
                 <li class="uw-contact-item">Email: <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></li>
                 <li class="uw-contact-item">Newsletter: <a href="/newsletter.html">Subscribe Now</a></li>
+                <li class="uw-contact-item">LinkedIn: <a href="https://www.linkedin.com/company/center-for-high-throughput-computing/">Website</a></li>
                 <li>
                     <ul class="uw-social-icons">
                         <li id="uw-icon-twitter" class="uw-social-icon">

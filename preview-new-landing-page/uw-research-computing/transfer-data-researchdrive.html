@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Transferring Files Between CHTC and ResearchDrive</title>
+<title>Transfer Files Between CHTC and ResearchDrive</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -85,14 +85,7 @@
             <div class="uw-header-crest">
                 <a href="/web-preview/preview-new-landing-page/"><img class="uw-crest-svg" src="/web-preview/preview-new-landing-page/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
             </div>
-            <div class="uw-title-tagline">
-                <h1 id="site-title" class="uw-site-title">
-                    <a href="/web-preview/preview-new-landing-page/" rel="home">CHTC</a>
-                </h1>
-                <a href="/web-preview/preview-new-landing-page/" rel="home">
-                    <div id="site-description" class="uw-site-tagline">UW Research Computing</div>
-                </a>
-            </div>
+            
         </div>
     </div>
 </header>
@@ -148,11 +141,11 @@
         </li>
     
         <li>
-            <a href="/web-preview/preview-new-landing-page/uw-research-computing/guides.html#htc-documentation">HTC Guides</a>
+            <a href="/web-preview/preview-new-landing-page/uw-research-computing/htc/guides.html">HTC Guides</a>
         </li>
     
         <li>
-            <a href="/web-preview/preview-new-landing-page/uw-research-computing/guides.html#hpc-documentation">HPC Guides</a>
+            <a href="/web-preview/preview-new-landing-page/uw-research-computing/hpc/guides.html">HPC Guides</a>
         </li>
     
         <li>
@@ -192,7 +185,7 @@
         </li>
     
         <li>
-            <a href="http://research.cs.wisc.edu/htcondor/">HTCondor Project</a>
+            <a href="https://htcondor.org/manual/">HTCondor Project</a>
         </li>
     
         <li>
@@ -230,8 +223,22 @@
     <div class="container-xxl mb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
+            
+            
+                
+                
+                <br>
+                <div class="p-3 mb-2 bg-danger text-white fw-bold">
+                    Logins have changed for users with accounts on submit1 and submit2: please see the
+                    <a href="https://chtc.cs.wisc.edu/uw-research-computing/connecting" class="link-light"><u>login guide</u></a>
+                    for details on your new login information.
+                </div>
+                
+
+            
+
             <h1 class="uw-mini-bar mb-4">
-    Transferring Files Between CHTC and ResearchDrive
+    Transfer Files Between CHTC and ResearchDrive
 </h1>
 
             <p>UW Madison provides a shared data storage for research called <a href="https://it.wisc.edu/services/researchdrive/">ResearchDrive</a>. It 
@@ -254,7 +261,7 @@ in to one of the HPC login nodes.</p>
   <li><strong>Log in:</strong>
     <ol>
       <li>If you are transferring files to or from a <code>/staging</code> directory, log in to <code>transfer.chtc.wisc.edu</code>.</li>
-      <li>If you are transferring files and or from your <code>/home</code> directory, log into your usual submit server (typically <code>submit1.chtc.wisc.edu</code> or <code>submit2.chtc.wisc.edu</code>).</li>
+      <li>If you are transferring files and or from your <code>/home</code> directory, log into your usual submit server (typically <code>ap2001.chtc.wisc.edu</code> or <code>ap2002.chtc.wisc.edu</code>).</li>
     </ol>
   </li>
   <li><strong>Choose a folder:</strong> Navigate to the folder in CHTC (<code>/staging</code> or <code>/home</code>), where you would like to transfer files.</li>
@@ -306,7 +313,7 @@ to transfer to CHTC:</p>
   <li><strong>Log in:</strong>
     <ol>
       <li>If you are transferring files to or from a <code>/staging</code> directory, log in to <code>transfer.chtc.wisc.edu</code>.</li>
-      <li>If you are transferring files to or from your <code>/home</code> directory, log into your usual submit server (typically <code>submit1.chtc.wisc.edu</code> or <code>submit2.chtc.wisc.edu</code>).</li>
+      <li>If you are transferring files to or from your <code>/home</code> directory, log into your usual submit server (typically <code>ap2001.chtc.wisc.edu</code> or <code>ap2002.chtc.wisc.edu</code>).</li>
     </ol>
   </li>
   <li><strong>Choose a folder:</strong> Navigate to the folder in CHTC (<code>/staging</code> or <code>/home</code>), where you would like to put the files.</li>
@@ -337,7 +344,7 @@ after your jobs complete:</p>
   <li><strong>Log in:</strong>
     <ol>
       <li>If you are transferring files to or from a <code>/staging</code> directory, log in to <code>transfer.chtc.wisc.edu</code>.</li>
-      <li>If you are transferring files to or from your <code>/home</code> directory, log into your usual submit server (typically <code>submit1.chtc.wisc.edu</code> or <code>submit2.chtc.wisc.edu</code>).</li>
+      <li>If you are transferring files to or from your <code>/home</code> directory, log into your usual submit server (typically <code>ap2001.chtc.wisc.edu</code> or <code>ap2002.chtc.wisc.edu</code>).</li>
     </ol>
   </li>
   <li><strong>Choose a folder:</strong> Navigate to the folder in CHTC (<code>/staging</code> or <code>/home</code>) where your output files are located.</li>
@@ -402,17 +409,17 @@ your PI:
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/configure-ssh">Automating CHTC Log In</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/configure-ssh">Automate CHTC Log In</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-new-landing-page/uw-research-computing/transfer-data-researchdrive">Transferring Files Between CHTC and ResearchDrive</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-new-landing-page/uw-research-computing/transfer-data-researchdrive">Transfer Files Between CHTC and ResearchDrive</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/github-remote-access">Remotely Access a Private GitHub Repository</a>
+                                        <a class="" href="/web-preview/preview-new-landing-page/uw-research-computing/github-remote-access">Access a Private GitHub Repository Remotely</a>
                                     </div>
                                 
                             </div>
@@ -453,6 +460,7 @@ your PI:
                 <li class="uw-contact-item">Office Hours: <a href="/web-preview/preview-new-landing-page/uw-research-computing/get-help.html#office-hours">Tues: 10:30am-12pm; Thurs: 3-4:30pm</a></li>
                 <li class="uw-contact-item">Email: <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></li>
                 <li class="uw-contact-item">Newsletter: <a href="/newsletter.html">Subscribe Now</a></li>
+                <li class="uw-contact-item">LinkedIn: <a href="https://www.linkedin.com/company/center-for-high-throughput-computing/">Website</a></li>
                 <li>
                     <ul class="uw-social-icons">
                         <li id="uw-icon-twitter" class="uw-social-icon">
