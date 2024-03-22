@@ -259,8 +259,9 @@
 <p>HTCondor supports the use of Apptainer (formerly known as Singularity) environments for jobs on the High Throughput Computing system.</p>
 
 <p>Similar to Docker containers, Apptainer environments allow users to prepare portable software and computing environments that can be sent to many jobs. 
-This means your jobs will run in a more consistent environment that is easily reproducible by others. 
-Additionally, similar to Docker containers, Apptainer jobs are able to take advantage of more of CHTC’s High Throughput resources because Apptainer jobs do not require a specific operating system.</p>
+This means your jobs will run in a more consistent environment that is easily reproducible by others.</p>
+
+<p>Container jobs are able to take advantage of more of CHTC’s High Throughput resources because the operating system where the job is running does not need to match the operating system where the container was built.</p>
 
 <div class="d-flex flex-column mb-5">
 
@@ -269,9 +270,7 @@ Additionally, similar to Docker containers, Apptainer jobs are able to take adva
 <div class="uw-sidebar-box me-auto">
 <div class="uw-directory">
 
-      <ol>
-        <li><a href="#quickstart">Quickstart</a></li>
-      </ol>
+      <p><a href="#quickstart">Quickstart</a></p>
 
     </div>
 </div>
@@ -287,7 +286,7 @@ For more information on any particular step, see the corresponding section later
     <p><strong>Create a definition file</strong></p>
 
     <p>The definition (<code>.def</code>) file contains the instructions for what software to install while building the container.
- CHTC provides example definition files in the “software” folder of our <a href="https://github.com/CHTC/recipes">Recipes GitHub repository</a>.</p>
+ CHTC provides example definition files in the <code>software</code> folder of our <a href="https://github.com/CHTC/recipes">Recipes GitHub repository</a>. Choose from one of the existing examples, or create your own using the instructions later in this guide.</p>
   </li>
   <li>
     <p><strong>Start an interactive job</strong></p>
@@ -333,7 +332,41 @@ For more information on any particular step, see the corresponding section later
     <p>once to exit the container.</p>
   </li>
   <li>
-    <p><strong>Exit the interactive job</strong></p>
+    <p><strong>Copy the container .sif file to staging</strong></p>
+
+    <p>Once you are satisfied that your container is built correctly, copy your <code>.sif</code> file to your staging directory.</p>
+
+    <pre><code> cp CONTAINER.sif /staging/yourNetID
+</code></pre>
+
+    <p>where you need to replace <code>yourNetID</code> with your NetID.</p>
+
+    <blockquote>
+      <p>If you do not have a /staging directory, or if you need to request an increase in your quotas, please fill out the form here: <a href="quota-request.html">Request a Quota Change</a>.</p>
+    </blockquote>
+
+    <p>Once the file has transferred, exit the interactive job with</p>
+
+    <pre><code> exit
+</code></pre>
+  </li>
+  <li>
+    <p><strong>Add the container .sif file to your submit file</strong></p>
+
+    <p>In your submit file, add the line</p>
+
+    <pre><code> container_image = osdf:///staging/yourNetID/CONTAINER.sif
+</code></pre>
+
+    <p>where again you need to replace <code>yourNetID</code> with your NetID and <code>CONTAINER.sif</code> with the name of you actual <code>.sif</code> file.</p>
+
+    <p>That’s it!</p>
+  </li>
+  <li>
+    <p><strong>Test your container job</strong></p>
+
+    <p>Submit a test job that uses a container, and confirm that your job behaves as expected.
+ If there are issues with the job, you may need to modify your executable, or even rebuild your container.</p>
   </li>
 </ol>
 
@@ -589,154 +622,6 @@ The process looks roughly like</p>
         /bin/bash myExecutable.sh 1&gt; job.out 2&gt; job.err
 </code></pre>
 
-<h2 id="create-your-apptainer-build-file---advanced-example">Create Your Apptainer Build File - Advanced Example</h2>
-
-<p>Sometimes the program you want to use does not have a pre-existing container that you can build on top of.
-Then you will need to install the program and its dependencies inside of the container.
-In this example, you will install the program <a href="https://sumo.dlr.de/docs/index.html">SUMO</a> in a container.</p>
-
-<p>First, you will again need to choose a base image for the container.
-Consult the documentation for the program you want to install to make sure you select a compatible operating system.
-In this case, you can use the most recent LTS version of Ubuntu from Docker.
-The top of the <code>image.def</code> file should look like:</p>
-
-<pre><code>Bootstrap: docker
-From: ubuntu:22.04
-</code></pre>
-
-<h4 id="installing-dependencies">Installing dependencies</h4>
-<p>Again, you will need to specify the installation commands within the <code>%post</code> section of the definition file.
-Per the <a href="https://sumo.dlr.de/docs/Installing/Linux_Build.html">program’s instructions</a>, you will first need to install various dependencies.
-This can be done using the built-in package manager (<code>apt</code>) of Ubuntu, as shown below.</p>
-
-<pre><code>%post
-    apt-get update -y
-    apt-get install -y \
-            git \
-            cmake \
-            python3 \
-            g++ \
-            libxerces-c-dev \
-            libfox-1.6-dev \
-            libgdal-dev \
-            libproj-dev \
-            libgl2ps-dev \
-            python3-dev \
-            swig \
-            default-jdk \
-            maven \
-            libeigen3-dev
-</code></pre>
-
-<p>The first command is <code>apt-get update</code> and will update the list of available packages, which is necessary to get the latest versions of the packages in the following <code>apt-get install</code> command.
-The <code>apt-get install</code> command will install the dependencies required by the SUMO program.
-Note that these installation commands do not use <code>sudo</code>, as Apptainer already has permissions to install programs in the container.</p>
-
-<p>There can be issues with installing packages in a container that would not normally occur when installing manually in the terminal. 
-In the present case, the <code>apt</code> command needs access to the <code>tmp</code> folder in order to install the packages within the container.
-This can be done by adding the following line at the start of the <code>%post</code> section:</p>
-
-<pre><code>   chmod 777 /tmp
-</code></pre>
-
-<p>Similarly, some packages require that the user answer interactive prompts for selecting various options.
-Since the Apptainer build is non-interactive, this can cause the package installation to hang.
-While this isn’t an issue in the present example, the issue can be avoided by adding the following line near the start of the <code>%post</code> section:</p>
-
-<pre><code>   DEBIAN_FRONTEND=noninteractive
-</code></pre>
-<p>Note that this only applies to Debian-based container images, such as Ubuntu.</p>
-
-<h4 id="compile-the-program">Compile the program</h4>
-<p>The above commands will install the required dependencies, but you still need to include the commands for compiling the SUMO program itself. 
-Simply add the compiling commands after the installation commands for the dependencies, but still within the <code>%post</code> section:</p>
-
-<pre><code>%post
-    chmod 777 /tmp
-    apt-get update -y
-    apt-get install -y \
-            git \
-            cmake \
-            python3 \
-            g++ \
-            libxerces-c-dev \
-            libfox-1.6-dev \
-            libgdal-dev \
-            libproj-dev \
-            libgl2ps-dev \
-            python3-dev \
-            swig \
-            default-jdk \
-            maven \
-            libeigen3-dev
-
-    git clone --recursive https://github.com/eclipse/sumo
-    export SUMO_HOME=/sumo
-    mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
-    cmake ../..
-    make
-
-</code></pre>
-
-<p>The <code>%post</code> section is now complete and will install SUMO and its dependencies in the container at build time.</p>
-
-<h4 id="setting-environment-variables">Setting environment variables</h4>
-<p>Before building the image, you will want to update the environment for actually using the program.
-For example, in the <code>%post</code> section there is the command <code>export SUMO_HOME=/sumo</code>, which sets the environment variable <code>SUMO_HOME</code> to the location of the <code>sumo</code> directory.
-This environment variable, however, is only active during the installation phase of the container build, and will not be set when the container is actually run.</p>
-
-<p>To set environment variables automatically when your job runs, you need to add them in the <code>%environment</code> section.
-For the present example, you will need to set <code>SUMO_HOME</code> and update <code>PATH</code> with the location of the SUMO <code>bin</code> folder.
-To do so, add the following lines to the <code>image.def</code> file:</p>
-
-<pre><code>%environment
-    export SUMO_HOME=/sumo
-    export PATH=/sumo/bin:$PATH
-</code></pre>
-
-<p>These environment variables will be set when the container starts, allowing you to immediately use the <code>sumo</code> command in the container once it starts.</p>
-
-<h4 id="summary">Summary</h4>
-
-<p>The full <code>image.def</code> file for this advanced example is now:</p>
-
-<pre><code>Bootstrap: docker
-From: ubuntu:22.04
-
-%post
-    chmod 777 /tmp
-    apt-get update -y
-    apt-get install -y \
-            git \
-            cmake \
-            python3 \
-            g++ \
-            libxerces-c-dev \
-            libfox-1.6-dev \
-            libgdal-dev \
-            libproj-dev \
-            libgl2ps-dev \
-            python3-dev \
-            swig \
-            default-jdk \
-            maven \
-            libeigen3-dev
-
-    git clone --recursive https://github.com/eclipse/sumo
-    export SUMO_HOME=/sumo
-    mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
-    cmake ../..
-    make
-
-%environment
-    export SUMO_HOME=/sumo
-    export PATH=/sumo/bin:$PATH
-</code></pre>
-
-<p>See the <a href="https://apptainer.org/docs/user/latest/definition_files.html">Apptainer documentation</a> for a full reference on how to specify build specs.</p>
-<blockquote>
-  <p>Note that the <code>%runscript</code> section is ignored when the container is executed on the High Throughput system.</p>
-</blockquote>
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -960,6 +845,11 @@ From: ubuntu:22.04
 
                                     <div class="document-link-wrapper bg-light">
                                         <a class="fw-bolder" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-htc">Use Apptainer (Singularity) Environments</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-htc-advanced-example">Advanced Apptainer Example - SUMO</a>
                                     </div>
                                 
                             </div>
