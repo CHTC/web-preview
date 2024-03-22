@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HTC Data Storage Locations</title>
+<title>Use Apptainer (Singularity) Environments</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -251,72 +251,492 @@
             
 
             <h1 class="uw-mini-bar mb-4">
-    HTC Data Storage Locations
+    Use Apptainer (Singularity) Environments
 </h1>
 
-            <p>[toc]</p>
+            <h2 id="introduction">Introduction</h2>
 
-<h1 id="data-storage-locations">Data Storage Locations</h1>
-<p>The HTC system has two primary locations where users can store files: <code>/home</code> and <code>/staging</code>.</p>
+<p>HTCondor supports the use of Apptainer (formerly known as Singularity) environments for jobs on the High Throughput Computing system.</p>
 
-<p>The mechanisms behind <code>/home</code> and <code>/staging</code> that manage data are different and are optimized to handle different file sizes. <code>/home</code> is more efficient at managing small files, while <code>/staging</code> is more efficient at managing larger files. It’s important to place your files in the correct location, as it will improve the speed and efficiency at which your data is handled and will help maintain the stability of the HTC filesystem.</p>
+<p>Similar to Docker containers, Apptainer environments allow users to prepare portable software and computing environments that can be sent to many jobs. 
+This means your jobs will run in a more consistent environment that is easily reproducible by others. 
+Additionally, similar to Docker containers, Apptainer jobs are able to take advantage of more of CHTC’s High Throughput resources because Apptainer jobs do not require a specific operating system.</p>
 
-<h1 id="understand-your-file-sizes">Understand your file sizes</h1>
-<p>To know whether a file should be placed in <code>/home</code> or in <code>/staging</code>, you will need to know it’s file size (also known as the amount of “disk space” a file uses). There are many commands to print out your file sizes, but here are a few of our favorite:</p>
+<div class="d-flex flex-column mb-5">
 
-<h2 id="use-ls-with--lh-flags">Use <code>ls</code> with <code>-lh</code> flags</h2>
-<p>The command <code>ls</code> stands for “list” and, by default, lists the files in your current directory. The flag <code>-l</code> stands for “long” and <code>-h</code> stands for “human-readable”. When the flags are combined and passed to the <code>ls</code> command, it prints out the long metadata associated with the files and converts values such as file sizes into human-readable formats (instead of a computer readable format).</p>
+<h2>Table of Contents</h2>
 
-<pre><code>NetID@submit$ ls -lh
+<div class="uw-sidebar-box me-auto">
+<div class="uw-directory">
+
+      <ol>
+        <li><a href="#quickstart">Quickstart</a></li>
+      </ol>
+
+    </div>
+</div>
+</div>
+
+<h2 id="quickstart-">Quickstart <a name="quickstart"></a></h2>
+
+<p>Here is the general process for building and using an Apptainer container on the HTC system.
+For more information on any particular step, see the corresponding section later in this guide.</p>
+
+<ol>
+  <li>
+    <p><strong>Create a definition file</strong></p>
+
+    <p>The definition (<code>.def</code>) file contains the instructions for what software to install while building the container.
+ CHTC provides example definition files in the “software” folder of our <a href="https://github.com/CHTC/recipes">Recipes GitHub repository</a>.</p>
+  </li>
+  <li>
+    <p><strong>Start an interactive job</strong></p>
+
+    <p>Start an interactive build job (an example submit file is provided below).
+ Be sure to include your <code>.def</code> file in the <code>transfer_input_files</code> line, or else create the file once the interactive job starts using a command line editor.</p>
+  </li>
+  <li>
+    <p><strong>Build your container</strong></p>
+
+    <p>While in an interactive build job, run the command</p>
+
+    <pre><code> apptainer build CONTAINER.sif CONTAINER.def
 </code></pre>
 
-<h2 id="use-du--h">Use <code>du -h</code></h2>
-<p>Similar to <code>ls -lh</code>, <code>du -h</code> prints out the “disk usage” of directories in a human-readable format.</p>
+    <p>where you should replace <code>CONTAINER.def</code> with the name of your definition <code>.def</code> file, 
+ and replace <code>CONTAINER.sif</code> with your desired name of the <code>.sif</code> file.</p>
 
-<pre><code>NetID@submit$ du -h
+    <blockquote>
+      <p>The container build step is non-interactive: the commands in the <code>.def</code> file must be exactly correct, and cannot require user intervention.</p>
+    </blockquote>
+
+    <p>If the command finishes successfully, then the container image (<code>.sif</code>) file is created.
+ This file is used for actually executing the container.</p>
+  </li>
+  <li>
+    <p><strong>Test your container</strong></p>
+
+    <p>While still in the interactive build job, run the command</p>
+
+    <pre><code> apptainer shell CONTAINER.sif
 </code></pre>
 
-<h1 id="transferring-data-to-jobs">Transferring Data to Jobs</h1>
-<p>The HTCondor submit file <code>transfer_input_files =</code> line should always be used to tell HTCondor what files to transfer to each job, regardless of if that file is origionating from your <code>/home</code> or <code>/staging</code> directory. However, the syntax you use to tell HTCondor to fetch files from <code>/home</code> and <code>/staging</code> and transfer to your running job will change:</p>
+    <p>where you should replace <code>CONTAINER.sif</code> with the name of your actual <code>.sif</code> file.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Input Sizes</th>
-      <th>File Location</th>
-      <th>Submit File Syntax to Transfer to Jobs</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0-500 MB</td>
-      <td>/home</td>
-      <td>transfer_input_files = input.txt</td>
-    </tr>
-    <tr>
-      <td>500-10GB</td>
-      <td>/staging</td>
-      <td>transfer_input_files = **osdf:///chtc/staging/NetID/input.txt</td>
-    </tr>
-    <tr>
-      <td>10GB +</td>
-      <td>/staging</td>
-      <td>transfer_input_files = **file:///staging/NetID/input.txt</td>
-    </tr>
-  </tbody>
-</table>
+    <p>This command will start the container and log you into it, allowing you to test your software commands.</p>
 
-<h2 id="transfer-data-back-from-jobs-to-home-or-staging">Transfer Data Back from Jobs to <code>/home</code> or <code>/staging</code></h2>
+    <p>Once you are done testing the container, enter</p>
 
-<p>When a job completes, by default, HTCondor will return newly created or edited files on the top level directory back to your <code>/home</code> directory.</p>
+    <pre><code> exit
+</code></pre>
 
-<p>To transfer files or folders back to <code>/staging</code>, in your HTCondor submit file, use 
-transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt”, where <code>output1.txt</code> is the name of the output file or folder you would like transfered back to a /staging directory.</p>
+    <p>once to exit the container.</p>
+  </li>
+  <li>
+    <p><strong>Exit the interactive job</strong></p>
+  </li>
+</ol>
 
-<p>If you have more than one file or folder to transfer back to <code>/staging</code>, use a semicolon (;) to seperate multiple files for HTCondor to transfer back like so: 
-transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt; output2.txt = file:///staging/NetID/output2.txt”</p>
+<h2 id="1-choose-or-create-an-apptainer-image">1. Choose or create an Apptainer Image</h2>
+<p>To run an Apptainer job, it is necessary to first choose a pre-existing Apptainer image or create your own.</p>
 
-<p>Make sure to only include one set of quotation marks that wraps around the information you are feeding to <code>transfer_output_remaps =</code>.</p>
+<h3 id="a-pre-existing-images">A. Pre-existing Images</h3>
+<p>Like with Docker, the easiest way to use Apptainer in your jobs is to find a pre-existing image that contains your desired software and environment setup.</p>
+
+<p>Pre-existing images can be found in reputable sources such as the <a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/">OSG</a>. 
+It is also possible to convert a Docker container (e.g your own or from DockerHub) to a Apptainer image. 
+<strong>If your apptainer image does not require any additional packages or libraries, skip to <a href="#7-use-an-apptainer-container-in-htc-jobs">7. Use an Apptainer Container in HTC Jobs</a>.</strong></p>
+
+<h3 id="b-create-your-own-image">B. Create Your Own Image</h3>
+<p>To create your own image, it is still necessary to select a “base” image to add to. 
+Check the documentation of the software you are interested in to see if they maintain images for the software program or its dependencies.
+The majority of the guide that follows explains how to customize your base image by adding and preparing additional software packages/libraries.</p>
+
+<h2 id="2-submit-an-interactive-job">2. Submit an interactive job</h2>
+<p>In your <code>/home</code> directory, create a submit file for your Apptainer build job called something like <code>build.sub</code>:</p>
+
+<pre><code># Apptainer build file
+
+universe = vanilla
+log = interactive.log
+
+# In the latest version of HTCondor on CHTC, interactive jobs require an executable.
+# If you do not have an existing executable, use a generic linux command like hostname as shown below.
+executable = /usr/bin/hostname
+
+# If your build job needs access to any files in your /home directory, transfer them to your job using transfer_input_files
+# transfer_input_files = 
+
++IsBuildJob = true
+requirements = (OpSysMajorVer =?= 8)
+request_cpus = 4
+request_memory = 16GB
+request_disk = 16GB
+
+queue
+</code></pre>
+
+<p>Once your submit file is ready, queue an interactive job by running the following command:</p>
+
+<pre class="term"><code>condor_submit -i build.sub
+</code></pre>
+
+<p>It may take a few minutes for the build job to start.</p>
+
+<h2 id="3-create-your-apptainer-build-file">3. Create your Apptainer Build File</h2>
+
+<p>Inside your interactive job, create a blank text file called <code>image.def</code>. In this <code>.def</code> file, you will <em>def</em>ine what you want the Apptainer image to look like. You can name this file using an alternative name, but you should always use the <code>.def</code> file extension.
+The simple example below describes how to augment a pre-existing container that already contains most of what you need.
+An advanced example at the end of this guide describes how to build a container from a base operating system.</p>
+
+<p>For this simple example, you will augment a pre-existing Docker container called <code>rocker/geospatial:4.2.2</code>, which can be found on Docker Hub.
+This container contains several common R geospatial packages, which makes it convenient to use for geospatial code in R.
+This container does not have <em>all</em> R packages, however, and you will likely want to add additional packages particular to your work.</p>
+
+<p>To begin, the first lines of the <code>image.def</code> file should include where to get the base image from. 
+If using the <code>rocker/geospatial:4.2.2</code> Docker image as your starting point, your <code>image.def</code> file would look like this:</p>
+
+<pre><code>Bootstrap: docker
+From: rocker/geospatial:4.2.2
+</code></pre>
+
+<p>These lines tell Apptainer to pull the pre-existing image from Docker Hub, and to use it as the base for the container that will be built using this <code>image.def</code> file.</p>
+
+<p>Next, you will want to include instructions in the <code>image.def</code> file for installing the additional packages that you want R to have.
+In the <code>image.def</code> file, the installation instructions are placed in the <code>%post</code> section.
+Note that because the <code>rocker</code> container already contains R, there is no need to install R in the <code>%post</code> section.</p>
+
+<p>Let’s say that you want to install the R package <code>cowsay</code>, which does not come preinstalled in the <code>rocker</code> container.
+To do so, you will need to add an install command to the <code>%post</code> section:</p>
+
+<pre><code>%post
+    R -e "install.packages('cowsay', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+</code></pre>
+
+<p>The <code>R -e "install.packages('cowsay', dependencies=TRUE, repos='http://cran.rstudio.com/')" </code> command will execute the <code>install.packages</code> command inside the <code>R</code> terminal.
+Since the command was placed in the <code>%post</code> section, Apptainer will execute this command when you build the container.</p>
+
+<p>The full <code>image.def</code> file for this simple example is now:</p>
+
+<pre><code>Bootstrap: docker
+From: rocker/geospatial:4.2.2
+
+%post
+    R -e "install.packages('cowsay', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+</code></pre>
+
+<p>The <code>image.def</code> file is can now be used to build the container.</p>
+
+<h2 id="4-build-your-apptainer-container">4. Build your Apptainer Container</h2>
+
+<p>Once your image definition file is ready, you can “build” the container. 
+The process of building an apptainer image will convert your <code>.def</code> file to a <code>.sif</code> Apptainer/Singularity image, which you will use for future job submissions.</p>
+
+<p>To build your container, run this command:</p>
+
+<pre class="term"><code>apptainer build my-container.sif image.def
+</code></pre>
+
+<p>As the command runs, a variety of information will be printed to the terminal regarding the container build process.
+Unless something goes wrong, this information can be safely ignored.
+Once the command has finished running, you should see <code>INFO:    Build complete: my-container.sif</code>.
+Using the <code>ls</code> command, you should now see your executable Apptainer/Singularity file <code>my-container.sif</code>.</p>
+
+<p>If the build command fails, examine the output for error messages that may explain why the build was unsuccessful.
+Typically there is an issue with a package installation, such as a typo or a missing but required dependency. 
+To make it easier to troubleshoot, you can rerun the build command but redirect the output to a file.
+For example, the following command will save the build output to <code>build.log</code> instead of printing it to the screen.</p>
+
+<pre class="term"><code>apptainer build my-container.sif image.def &amp;&gt; build.log
+</code></pre>
+
+<p>You can then examine the <code>build.log</code> file for the relevant error messages.</p>
+
+<p>Sometimes there will be an error in a package installation that doesn’t cause the apptainer build command to fail.
+But, when you test the container, you may notice an issue with the package.
+In that case, edit the definition file and remove (or comment out) the installation commands that come after the package in question.
+Then rebuild the image, and now the relevant error messages should be near the end of the build output.</p>
+
+<p>Once the image is built, it is important to test it to make sure you have all software, packages, and libraries installed correctly.</p>
+
+<h2 id="5-testing-your-container">5. Testing Your Container</h2>
+
+<p>Just like it is important to test your codes and jobs at a small scale, you should make sure that your container is working correctly. To do this, start an interactive Apptainer session with the Apptainer/Singularity “shell” mode. The recommended command line, similar to how containers are started for jobs, is:</p>
+
+<pre class="term"><code>apptainer shell \
+            --home $PWD:/srv \
+            --pwd /srv \
+            --scratch /var/tmp \
+            --scratch /tmp \
+            --containall \
+            my-container.sif
+</code></pre>
+
+<p>This will give you an interactive shell running in your container, with your current working directory mounted under <code>/srv</code>. 
+Your prompt should change to:</p>
+
+<pre class="term"><code>Apptainer&gt;
+</code></pre>
+
+<p>You can explore the container and test your code in this mode. 
+For example,</p>
+
+<pre class="term"><code>Apptainer&gt; pwd
+/srv
+Apptainer&gt; ls
+image.def my-container.sif tmp/ var/
+Apptainer&gt; exit
+[alice@build ~]$ 
+</code></pre>
+
+<p>Once you are done exploring, exit the container by entering <code>exit</code> or by using the keyboard shortcut <code>CTRL+D</code>.</p>
+
+<h2 id="6-exit-your-htcondor-interactive-job">6. Exit your HTCondor Interactive Job</h2>
+
+<p>Once you have tested your container image and are ready to use it in regular jobs, there are a couple of things to do before you exit the interactive job.</p>
+
+<h3 id="a-decide-where-to-host-the-sif-file">A. Decide where to host the <code>.sif</code> file</h3>
+
+<p>By default, when you exit the interactive job the definition file and image file will return to same directory as your submit file on the submit file.
+If your <code>.sif</code> file is large (&gt; 100 MB), however, you should consider moving it to your staging directory instead (<code>mv my-container.sif /staging/yourNetID/</code>).
+See our <code>/staging</code> guide at <a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a> for more information.</p>
+
+<h3 id="b-clear-out-the-apptainer-cache">B. Clear out the Apptainer cache</h3>
+
+<p>When building the <code>.sif</code> file, Apptainer saves key parts of container image to a cache directory.
+This allows repeated build attempts to run more quickly by skipping the download step for these key parts.
+The cache, however, should be emptied out once you are done with the build and those files are no longer needed.
+To clear our the cache directory, run the command</p>
+
+<pre><code>apptainer cache clean -f
+</code></pre>
+
+<h3 id="c-exit-the-interactive-session">C. Exit the interactive session</h3>
+
+<p>To exit, simply enter <code>exit</code> to end the interactive session and return to the submit node.</p>
+
+<h2 id="7-use-an-apptainer-container-in-htc-jobs">7. Use an Apptainer Container in HTC Jobs</h2>
+
+<p>Now that you have the container image saved in the form of the <code>.sif</code> file, you can use it as the environment for running your HTCondor jobs.
+In your submit file, simply specify the image file using the <code>container_image</code> command and include the file in the <code>transfer_input_files</code> line, i.e.</p>
+
+<pre><code>container_image = my-container.sif
+transfer_input_files = my-container.sif
+</code></pre>
+
+<p>The full submit file otherwise looks like normal, for example:</p>
+
+<pre><code># apptainer.sub
+
+# Provide HTCondor with the name of your .sif file and universe information
+# (`universe = container` is optional as long as `container_image` is specified)
+container_image = my-container.sif
+universe = container
+
+executable = myExecutable.sh
+
+# Tell HTCondor to transfer the my-container.sif file to each job
+transfer_input_files = my-container.sif, other_job_files
+
+log = job.log
+error = job.err
+output = job.out
+
+# Make sure you request enough disk for the container image in addition to your other input files
+request_cpus = 1
+request_memory = 4GB
+request_disk = 2GB      
+
+queue
+</code></pre>
+
+<p>Then simply use <code>condor_submit</code> with the name of your submit file.</p>
+
+<blockquote>
+  <p><strong>Before running multiple jobs using your container, be sure to check the size of the <code>.sif</code> file.</strong>
+If greater than 100 MB, the <code>.sif</code> file should <strong>NOT</strong> be transferred using <code>transfer_input_files</code>.
+Instead, you should plan to use either CHTC’s web proxy (SQUID) or large data filesystem (<code>/staging</code>).
+For more information, see our guides on SQUID (<a href="file-avail-squid.html">Transfer Large Input Files Via Squid</a>) and <code>/staging</code> (<a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a>).</p>
+</blockquote>
+
+<h2 id="8-how-htcondor-runs-a-container-job">8. How HTCondor Runs a Container Job</h2>
+
+<p>From the user’s perspective, a container job is practically identical to a regular job.
+The main difference is that instead of running on the execute point’s default operation system, the job is run inside the container.</p>
+
+<p>When you submit a job to HTCondor using a submit file with <code>container_image</code> set, HTCondor automatically handles the process of obtaining and running the container.
+The process looks roughly like</p>
+
+<ul>
+  <li>Claim machine that satisifies submit file requirements</li>
+  <li>Pull (or transfer) the container image</li>
+  <li>Transfer input files, executable to working directory</li>
+  <li>Run the executable script inside the container, as the submit user, with key directories mounted inside (such as the working directory, /staging directories, etc.)</li>
+  <li>Transfer output files back to the submit server</li>
+</ul>
+
+<p>For testing purposes, you can replicate the behavior of a container job with the following command (remember to first start an interactive job if you are logged in to the submit server).</p>
+
+<pre class="term"><code>apptainer exec \
+        --scratch /tmp \
+        --scratch /var/tmp \
+        --workdir $(pwd) \
+        --pwd $(pwd) \
+        --bind $(pwd) \
+        --no-home \
+        --containall \
+        my-container.sif \
+        /bin/bash myExecutable.sh 1&gt; job.out 2&gt; job.err
+</code></pre>
+
+<h2 id="create-your-apptainer-build-file---advanced-example">Create Your Apptainer Build File - Advanced Example</h2>
+
+<p>Sometimes the program you want to use does not have a pre-existing container that you can build on top of.
+Then you will need to install the program and its dependencies inside of the container.
+In this example, you will install the program <a href="https://sumo.dlr.de/docs/index.html">SUMO</a> in a container.</p>
+
+<p>First, you will again need to choose a base image for the container.
+Consult the documentation for the program you want to install to make sure you select a compatible operating system.
+In this case, you can use the most recent LTS version of Ubuntu from Docker.
+The top of the <code>image.def</code> file should look like:</p>
+
+<pre><code>Bootstrap: docker
+From: ubuntu:22.04
+</code></pre>
+
+<h4 id="installing-dependencies">Installing dependencies</h4>
+<p>Again, you will need to specify the installation commands within the <code>%post</code> section of the definition file.
+Per the <a href="https://sumo.dlr.de/docs/Installing/Linux_Build.html">program’s instructions</a>, you will first need to install various dependencies.
+This can be done using the built-in package manager (<code>apt</code>) of Ubuntu, as shown below.</p>
+
+<pre><code>%post
+    apt-get update -y
+    apt-get install -y \
+            git \
+            cmake \
+            python3 \
+            g++ \
+            libxerces-c-dev \
+            libfox-1.6-dev \
+            libgdal-dev \
+            libproj-dev \
+            libgl2ps-dev \
+            python3-dev \
+            swig \
+            default-jdk \
+            maven \
+            libeigen3-dev
+</code></pre>
+
+<p>The first command is <code>apt-get update</code> and will update the list of available packages, which is necessary to get the latest versions of the packages in the following <code>apt-get install</code> command.
+The <code>apt-get install</code> command will install the dependencies required by the SUMO program.
+Note that these installation commands do not use <code>sudo</code>, as Apptainer already has permissions to install programs in the container.</p>
+
+<p>There can be issues with installing packages in a container that would not normally occur when installing manually in the terminal. 
+In the present case, the <code>apt</code> command needs access to the <code>tmp</code> folder in order to install the packages within the container.
+This can be done by adding the following line at the start of the <code>%post</code> section:</p>
+
+<pre><code>   chmod 777 /tmp
+</code></pre>
+
+<p>Similarly, some packages require that the user answer interactive prompts for selecting various options.
+Since the Apptainer build is non-interactive, this can cause the package installation to hang.
+While this isn’t an issue in the present example, the issue can be avoided by adding the following line near the start of the <code>%post</code> section:</p>
+
+<pre><code>   DEBIAN_FRONTEND=noninteractive
+</code></pre>
+<p>Note that this only applies to Debian-based container images, such as Ubuntu.</p>
+
+<h4 id="compile-the-program">Compile the program</h4>
+<p>The above commands will install the required dependencies, but you still need to include the commands for compiling the SUMO program itself. 
+Simply add the compiling commands after the installation commands for the dependencies, but still within the <code>%post</code> section:</p>
+
+<pre><code>%post
+    chmod 777 /tmp
+    apt-get update -y
+    apt-get install -y \
+            git \
+            cmake \
+            python3 \
+            g++ \
+            libxerces-c-dev \
+            libfox-1.6-dev \
+            libgdal-dev \
+            libproj-dev \
+            libgl2ps-dev \
+            python3-dev \
+            swig \
+            default-jdk \
+            maven \
+            libeigen3-dev
+
+    git clone --recursive https://github.com/eclipse/sumo
+    export SUMO_HOME=/sumo
+    mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
+    cmake ../..
+    make
+
+</code></pre>
+
+<p>The <code>%post</code> section is now complete and will install SUMO and its dependencies in the container at build time.</p>
+
+<h4 id="setting-environment-variables">Setting environment variables</h4>
+<p>Before building the image, you will want to update the environment for actually using the program.
+For example, in the <code>%post</code> section there is the command <code>export SUMO_HOME=/sumo</code>, which sets the environment variable <code>SUMO_HOME</code> to the location of the <code>sumo</code> directory.
+This environment variable, however, is only active during the installation phase of the container build, and will not be set when the container is actually run.</p>
+
+<p>To set environment variables automatically when your job runs, you need to add them in the <code>%environment</code> section.
+For the present example, you will need to set <code>SUMO_HOME</code> and update <code>PATH</code> with the location of the SUMO <code>bin</code> folder.
+To do so, add the following lines to the <code>image.def</code> file:</p>
+
+<pre><code>%environment
+    export SUMO_HOME=/sumo
+    export PATH=/sumo/bin:$PATH
+</code></pre>
+
+<p>These environment variables will be set when the container starts, allowing you to immediately use the <code>sumo</code> command in the container once it starts.</p>
+
+<h4 id="summary">Summary</h4>
+
+<p>The full <code>image.def</code> file for this advanced example is now:</p>
+
+<pre><code>Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+    chmod 777 /tmp
+    apt-get update -y
+    apt-get install -y \
+            git \
+            cmake \
+            python3 \
+            g++ \
+            libxerces-c-dev \
+            libfox-1.6-dev \
+            libgdal-dev \
+            libproj-dev \
+            libgl2ps-dev \
+            python3-dev \
+            swig \
+            default-jdk \
+            maven \
+            libeigen3-dev
+
+    git clone --recursive https://github.com/eclipse/sumo
+    export SUMO_HOME=/sumo
+    mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
+    cmake ../..
+    make
+
+%environment
+    export SUMO_HOME=/sumo
+    export PATH=/sumo/bin:$PATH
+</code></pre>
+
+<p>See the <a href="https://apptainer.org/docs/user/latest/definition_files.html">Apptainer documentation</a> for a full reference on how to specify build specs.</p>
+<blockquote>
+  <p>Note that the <code>%runscript</code> section is ignored when the container is executed on the High Throughput system.</p>
+</blockquote>
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -481,11 +901,11 @@ transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt; out
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="software-solutions">
-                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
                                     Software Solutions
                                 </button>
                             </h2>
-                            <div id="software-solutions-collapse" class="accordion-collapse collapse " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
@@ -539,7 +959,7 @@ transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt; out
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-htc">Use Apptainer (Singularity) Environments</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-htc">Use Apptainer (Singularity) Environments</a>
                                     </div>
                                 
                             </div>
