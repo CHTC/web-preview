@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Transfer Large Input Files Via Squid</title>
+<title>Building an Apptainer Container</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -251,80 +251,10 @@
             
 
             <h1 class="uw-mini-bar mb-4">
-    Transfer Large Input Files Via Squid
+    Building an Apptainer Container
 </h1>
 
-            <h2>Which Option is the Best for Your Files?</h2>
-<br>
-<table class="gtable">
-    <tr>
-        <th>Input Sizes</th>
-        <th>Output Sizes</th>
-        <th>Link to Guide</th>
-        <th>File Location</th>
-        <th>How to Transfer</th>
-        <th>Availability, Security</th>
-        <!--<th>Special Considerations</th>-->
-    </tr>
-
-    <tr>
-        <td>0 - 100 MB per file, up to 500 MB per job</td>
-        <td>0 - 5 GB per job</td>
-        <td><a href="file-availability.html">Small Input/Output File Transfer via <b>HTCondor</b></a></td>
-        <td><code>/home</code></td>
-        <td><b>submit file</b>; filename in <small><code>transfer_input_files</code></small></td>
-        <td>CHTC, UW Grid, and OSG; works for <i>your</i> jobs</td>
-        <!--<td><font color="red">DO NOT USE HTCondor transfer for files in <code>/staging</code> OR <code>/squid</code></font></td>-->
-    </tr>
-
-    <tr>
-        <td>100 MB - 1 GB per repeatedly-used file</td>
-        <td>Not available for output</td>
-        <td><a href="file-avail-squid.html">Large Input File Availability Via <b>Squid</b></a></td>
-        <td><code>/squid</code></td>
-        <td><b>submit file</b>; http link in <small><code>transfer_input_files</code></small></td>
-        <td>CHTC, UW Grid, and OSG; files are made *publicly-readable* via an HTTP address</i></td>
-        <!--<td>large files unique to individual jobs are better for large data staging</td>-->
-    </tr>
-
-    <tr>
-        <td>100 MB - TBs per job-specific file; repeatedly-used files > 1GB</td>
-        <td>4 GB - TBs per job</td>
-        <td><a href="file-avail-largedata.html">Large Input and Output File Availability Via <b>Staging</b></a></td>
-         <td><code>/staging</code></td>
-        <td><b>job executable</b>; copy or move within the job</td>
-        <td>a portion of CHTC; accessible only to <i>your</i> jobs</td>
-        <!--<td>special submit "Requirements"</td>-->
-    </tr>
-
-</table>
-
-<!--
-<h2>Best Practices for File Delivery</h2>
-
-<p>Remember to review best practices in our File Handling guide,
-including the following:</p>
-
-<ul>
-<li>Pre-split large input files when each of many jobs will only need a portion of the
-large input data.</li>
-<li>Remove ALL unwanted/temporary files in the working director of the job that have
-appeared since the job started.</li>
-<li>Use tar with compression (*.tar.gz) for any relevant input/output files and ALL
-desired output directories prior to their transfer/delivery.</li>
-</ul>
--->
-
-<style type="text/css">
-    ol { list-style-type: upper-alpha; }
-</style>
-
-<h1 id="squid-web-proxy">SQUID Web Proxy</h1>
-
-<p>CHTC maintains a SQUID web proxy from which pre-staged input files and
-executables can be downloaded into jobs using CHTC's proxy HTTP
-address.</p>
-
+            
 <div class="d-flex flex-column mb-5">
 
 <h2>Table of Contents</h2>
@@ -332,140 +262,411 @@ address.</p>
 <div class="uw-sidebar-box me-auto">
 <div class="uw-directory">
 
-      <ol>
-        <li><a href="#Appli">Applicability</a></li>
-        <li><a href="#use">Using SQUID to Deliver Input Files</a>
-          <ul>
-            <li><a href="#request">Request a directory in SQUID</a></li>
-            <li><a href="#place">Place files within your home directory</a></li>
-            <li><a href="#have">Have HTCondor download the file to the working job</a></li>
-          </ul>
-        </li>
-      </ol>
+      <p><a href="#the-apptainer-definition-file">The Apptainer Definition File</a></p>
+
+      <ul>
+        <li><a href="#header-section">Header section</a></li>
+        <li><a href="#files-section">Files section</a></li>
+        <li><a href="#post-section">Post section</a></li>
+        <li><a href="#environment-section">Environment section</a></li>
+        <li><a href="#labels-section">Labels section</a></li>
+        <li><a href="#help-section">Help section</a></li>
+      </ul>
+
+      <p><a href="#the-apptainer-container-image">The Apptainer Container Image</a></p>
+
+      <ul>
+        <li><a href="#building-the-container">Building the container</a></li>
+        <li><a href="#converting-a-docker-image-to-an-apptainer-container-image">Converting a Docker image to an Apptainer container image</a></li>
+        <li><a href="#testing-the-container-interactively">Testing the container interactively</a></li>
+        <li><a href="#running-the-container-on-chtc">Running the container on CHTC</a></li>
+      </ul>
+
+      <p><a href="#special-considerations-for-building-your-container">Special Considerations for Building Your Container</a></p>
 
     </div>
 </div>
 </div>
 
-<p><span name="Appli"></span></p>
+<h2 id="the-apptainer-definition-file">The Apptainer Definition File</h2>
 
-<h2 id="1-applicability"><strong>1. Applicability</strong></h2>
+<p>The instructions for how Apptainer should build a container are located in the definition file (typically suffixed with <code>.def</code>).
+The following table summarizes the sections that are routinely used when constructing a container:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>“Header”</td>
+      <td>Defines the base container to build on top of.</td>
+    </tr>
+    <tr>
+      <td><code>%files</code></td>
+      <td>Specifies files to copy into the container at build time from the host.</td>
+    </tr>
+    <tr>
+      <td><code>%post</code></td>
+      <td>Commands to execute during the container build.</td>
+    </tr>
+    <tr>
+      <td><code>%environment</code></td>
+      <td>Environment variables to set whenever the container is started.</td>
+    </tr>
+    <tr>
+      <td><code>%labels</code></td>
+      <td>Custom metadata for the container.</td>
+    </tr>
+    <tr>
+      <td><code>%help</code></td>
+      <td>Custom help text for the container.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>With the exception of the “Header”, sections in the definition file begin with a line starting with <code>%name_of_section</code> and all subsequent lines belong to that section until the end of the file or the next <code>%section</code> line is encountered.
+Typically the contents of a section are indented to help visually distinguish the different parts.</p>
+
+<p>Additional sections can be specified, though not all may be functional when using the container on CHTC systems.
+For additional information on Apptainer definition files, see the <a href="https://apptainer.org/docs/user/latest/definition_files.html">Apptainer documentation</a>.
+The manual page provides a full reference on the different sections of the definition file.</p>
+
+<blockquote>
+  <p>Note that the <code>%runscript</code> section is ignored when the container is executed on the High Throughput system.</p>
+</blockquote>
+
+<h3 id="header-section">Header section</h3>
+
+<p>This must be the first section of the definition file. 
+The header specifies the container image that Apptainer should start with.
+Apptainer will load this container image before attempting to execute the build commands.</p>
+
+<p>Most users will use</p>
+
+<pre><code>Bootstrap: docker
+From: user/repo:tag
+</code></pre>
+
+<p>where <code>user/repo:tag</code> is any valid address to a Docker-based container registry. 
+For example,</p>
+
+<pre><code>Bootstrap: docker
+From: rocker/tidyverse:4.1.3
+</code></pre>
+
+<p>would use the <a href="https://hub.docker.com/layers/rocker/tidyverse/4.1.3/images/sha256-666a64557c0edbeb785e41f352b6fdf5bda150f87d3faed112398aba1300d944?context=explore">Rocker tidyverse v4.1.3</a> container hosted on <a href="https://hub.docker.com">DockerHub</a> as the base for the current build.</p>
+
+<p>Alternatively,</p>
+
+<pre><code>Bootstrap: docker
+From: nvcr.io/nvidia/tensorflow:24.02-tf2-py3
+</code></pre>
+
+<p>would use the <a href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow/tags">NVIDIA TensorFlow 2 v24.02</a> container hosted on the <a href="https://catalog.ngc.nvidia.com/containers">NVIDIA Container Registry</a> (<code>nvcr</code>).</p>
+
+<h3 id="files-section">Files section</h3>
+
+<p>The <code>%files</code> section is used to copy files from the machine that is running Apptainer (the “host”) into the container that Apptainer is building. 
+This section is typically used when you have the source code saved on the host and want to extract/compile/install it inside of the container image.</p>
+
+<blockquote>
+  <p>While the container is being built on the host system, by default it does not have direct access to files located on the host system. 
+The <code>%files</code> section serves as the bridge between the host system and the container being built.</p>
+</blockquote>
+
+<p>The syntax for use is</p>
+
+<pre><code>%files
+    file_on_host file_in_container
+</code></pre>
+
+<p>where <code>file_on_host</code> is in the same directory as the <code>.def</code> definition file, and where <code>file_in_container</code> will be copied to the container’s root (<code>/</code>) by default.
+You can instead provide absolute paths to the files on the host or in the container, or both.
+For example:</p>
+
+<pre><code>%files
+    /home/username/my-source-code.tar.gz /opt/my-program-build/my-source-code.tar.gz
+</code></pre>
+
+<blockquote>
+  <p>If the directories in the path in the container do not already exist, they will be created.</p>
+</blockquote>
+
+<h3 id="post-section">Post section</h3>
+
+<p>The <code>%post</code> section contains any and all commands to be executed when building the container.
+Typically this involves first installing packages using the operating system’s package manager and then compiling/installing your custom programs.
+Environment variables can be set as well, but they will only be active during the build (use the <code>%environment</code> section if you need them active during run time).</p>
+
+<p>For example, if using an <code>ubuntu</code> based container, then you should be able to use the <code>apt</code> package manager to install your program’s dependencies.</p>
+
+<pre><code>%post
+    apt update -y
+    apt install -y gcc make wget
+</code></pre>
+
+<p>Note that we have used the <code>-y</code> option for <code>apt</code> to pre-emptively agree to update <code>apt</code> and to install the <code>gcc</code>, <code>make</code>, and <code>wget</code> packages. 
+Otherwise, the <code>apt</code> command will prompt you to confirm the executions via the command line. 
+But since the Apptainer build process is executed non-interactively, you will be unable to enter a response via the command line, and the commands will eventually time out and the build fail.</p>
+
+<p>Once you install the dependencies you need using the operating system’s package manager, you can use those packages to obtain and install your desired program. 
+For example, the following commands will install the <a href="https://www.gnu.org/software/units/">GNU Units</a> command <code>units</code>.</p>
+
+<pre><code>    mkdir -p /opt/units-source
+    cd /opt/units-source
+    wget https://ftp.gnu.org/gnu/units/units-2.23.tar.gz
+    tar -xzf units-2.23.tar.gz
+    cd units-2.23
+    ./configure
+    make 
+    make install
+</code></pre>
+
+<p>If using the default installation procedure, your program should be installed in and detectable by the operating system.
+If not, you may need to manually environment variables to recognize your program.</p>
+
+<h3 id="environment-section">Environment section</h3>
+
+<p>The <code>%environment</code> section can be used to automatically set environment variables when the container is actually started.</p>
+
+<p>For example, if you installed your program in a custom location <code>/opt/my-program</code> and the binaries are in the <code>bin/</code> folder, you could use this section to add that location to your <code>PATH</code> environment variable:</p>
+
+<pre><code>%environment
+    export PATH="/opt/my-program/bin:$PATH"
+</code></pre>
+
+<blockquote>
+  <p>Effectively, this section can be used like a <code>.bashrc</code> or <code>.bash_profile</code> file.</p>
+</blockquote>
+
+<h3 id="labels-section">Labels section</h3>
+
+<p>The <code>%labels</code> section can be used to provide custom metadata about the container, which can make it easier for yourself and others to identify the nature and provenance of a container.</p>
+
+<p>The syntax for this section is</p>
+
+<pre><code>%labels
+    LabelNameA LabelValueA
+    LableNameB LabelValueB
+</code></pre>
+
+<p>where <code>LabelName</code> is the name of the label, and <code>LabelValue</code> is the corresponding value.
+For example,</p>
+
+<pre><code>%labels
+    Author Bucky Badger
+    ContactEmail bbadger@wisc.edu
+    Name Bucky's First Container
+</code></pre>
+
+<p>will generate the metadata in the container showing the <code>Author</code> as <code>Bucky Badger</code>, the <code>ContactEmail</code> as <code>bbadger@wisc.edu</code>, and the container <code>Name</code> as <code>Bucky's First Container</code>.</p>
+
+<p>For an existing container, you can inspect the metadata with the command <code>apptainer inspect my_container.sif</code>.</p>
+
+<blockquote>
+  <p>For a container with the <code>%labels</code> in the above example, you should see the following output:</p>
+
+  <pre><code>$ apptainer inspect my_container.sif
+
+Author: Bucky Badger
+ContactEmail: bbadger@wisc.edu
+Name: Bucky's First Container
+</code></pre>
+
+  <p>along with some automatically generated labels.</p>
+</blockquote>
+
+<h3 id="help-section">Help section</h3>
+
+<p>The <code>%help</code> section can be used to provide custom help text about how to use the container.
+This can make it easier for yourself and others to interact and use the container.</p>
+
+<p>For example,</p>
+
+<pre><code>%help
+    This container is based on Ubuntu 22.04 and has the GNU Units command installed. 
+    You can use the command `units` inside this container to convert from one unit of measurement to another.
+    For example,
+        $ units '1 GB' 'MB'
+    returns
+                * 1000
+                / 0.001
+</code></pre>
+
+<p>For an existing container, you can inspect the help text with the command <code>apptainer run-help my-container.sif</code>.</p>
+
+<h2 id="the-apptainer-container-image">The Apptainer Container Image</h2>
+
+<p>The actual container image, which can be executed by Apptainer as a stand-alone operating system, is stored in a <code>.sif</code> file.* 
+The instructions for constructing the <code>.sif</code> file are provided by the <code>.def</code> definition file, as described above.
+Basically, the <code>.sif</code> file is a compression of all of the files in the stand-alone operating system that comprises a “container”.
+Apptainer can use this one file to reconstitute container at runtime.</p>
+
+<p><em>* <code>sif</code> stands for “Singularity Image File”; Apptainer is formerly an open-source fork of the original program called Singularity.</em></p>
+
+<h3 id="building-the-container">Building the container</h3>
+
+<p>To create the <code>.sif</code> file from the <code>.def</code> file, you need to run the command</p>
+
+<pre><code>apptainer build my-container.sif my-container.def
+</code></pre>
+
+<p>Here the syntax is to provide the name of the <code>.sif</code> file that you want to create and then provide the name of the existing <code>.def</code> definition file.</p>
+
+<blockquote>
+  <p><strong>Don’t run the <code>apptainer build</code> command on the login server!</strong> 
+Building the container image can be an intensive process and can consume the resources of the login server.</p>
+
+  <ul>
+    <li>On the High Throughput system, first start an interactive build job as described in our <a href="apptainer-htc.html">Use Apptainer (Singularity) Environments</a> guide.</li>
+    <li>On the High Performance system, first launch an interactive Slurm session as described <a href="hpc-job-submission.html#for-simple-testing-or-compiling">here</a>.</li>
+  </ul>
+</blockquote>
+
+<h3 id="converting-a-docker-image-to-an-apptainer-container-image">Converting a Docker image to an Apptainer container image</h3>
+
+<p>You can directly convert an existing Docker container into an Apptainer container image without having to provide a definition file.
+To do so, use the command</p>
+
+<pre><code>apptainer build my-container.sif docker://user/repo:tag
+</code></pre>
+
+<p>where <code>user/repo:tag</code> is any valid address to a Docker-based container registry. (For example, <code>rocker/tidyverse:4.1.3</code> from DockerHub or <code>nvcr.io/nvidia/tensorflow:24.02-tf2-py3</code> from NVIDIA Container Registry.)</p>
+
+<h3 id="testing-the-container-interactively">Testing the container interactively</h3>
+
+<p>After building your container, we strongly recommend that you start it up and check that your program has been installed correctly.
+Assuming that you are in an interactive session (i.e., not on the login server), then you can run</p>
+
+<pre><code>apptainer shell my-container.sif
+</code></pre>
+
+<p>This command should log you into a terminal that is backed by the container’s operating system.</p>
+
+<blockquote>
+  <p>On the High Throughput system, you can instead submit an interactive job that uses the <code>.sif</code> file as the <code>container_image</code>. 
+In this case, you do not need to run any <code>apptainer</code> commands, as HTCondor has automatically done so before you load into the interactive session.</p>
+</blockquote>
+
+<p>Then you can check that the files are in the right place, or that your program can be found.
+An easy way to check if your program is at least in recognized by the container is to try to print the help text for the program.</p>
+
+<p>For example,</p>
+
+<pre><code>[user@build4000 ~]$ apptainer shell units.sif
+Apptainer&gt; units --help
+
+Usage: units [options] ['from-unit' 'to-unit']
+
+&lt;additional output truncated&gt;
+</code></pre>
+
+<blockquote>
+  <p>By default, only your current directory will be mounted into the container, meaning the only files you can see from the host system are those in the directory where you ran the command.</p>
+
+  <p>Furthermore, the interactive container session may inherit environment variables from your terminal session on the host system, which may conflict with the container environment.
+In this case, use the <code>-e</code> option to use a “clean” environment for the interactive session: <code>apptainer shell -e my-container.sif</code>.</p>
+</blockquote>
+
+<h3 id="running-the-container-on-chtc">Running the container on CHTC</h3>
+
+<h4 id="using-the-high-throughput-system">Using the High Throughput system</h4>
+
+<p>To use your <code>.sif</code> container image on the High Throughput system, see our <a href="apptainer-htc.html">Use Apptainer (Singularity) Environments</a> guide.
+HTCondor is designed to automatically execute jobs inside of a container image, provided the <code>.sif</code> file is provided in the HTCondor submit file.</p>
+
+<h4 id="using-the-high-performance-system">Using the High Performance system</h4>
+
+<h5 id="on-a-single-node">On a single node</h5>
+
+<p>For execution on a single node, we recommend adding the following commands to your sbatch script:</p>
+
+<pre><code>export TMPDIR=/scratch/$USER/apptainer_tmp/${SLURM_JOB_ID}
+mkdir -p $TMPDIR
+
+srun apptainer exec -e \
+    --bind /home/$USER \
+    --bind /scratch/$USER \
+    --bind $TMPDIR \
+    my-container.sif my-job-script
+
+rm -rf $TMPDIR
+</code></pre>
+
+<h5 id="on-multiple-nodes">On multiple nodes</h5>
+
+<p>We are still in the early stages of deploying containers on the High Performance system.
+A complicating factor is the construction of the <code>.def</code> file to deploy MPI on the system to allow for execution across multiple nodes.
+If you are interested in mutli-node execution using containers, contact a facilitator for more information.</p>
+
+<h2 id="special-considerations-for-building-your-container">Special Considerations for Building Your Container</h2>
+
+<!-- I would like to turn this into a drop-down section. Not sure if that is implemented in CHTC webpages yet. -->
 
 <ul>
   <li>
-    <p>Intended Use:<br />
-  The SQUID web proxy is best for cases where many jobs will use the
-  same large file (or few files), including large software. It is not
-  good for cases when each of many jobs needs a <em>different</em> large
-  input file, in which case <a href="file-avail-largedata.html">our large data staging
-  location</a> should be used. Remember that
-  you're always better off by pre-splitting a large input file into
-  smaller job-specific files if each job only needs some of the large
-  files's data. If each job needs a large set of many files, you
-  should create a <code>.tar.gz</code> file containing all the files, and this
-  file will still need to be less than 1 GB.</p>
+    <p><strong>Non-interactive</strong></p>
+
+    <p>Because the container build is a non-interactive process, all commands within the <code>.def</code> file must be able to execute without user intervention.</p>
   </li>
   <li>
-    <p>Access to SQUID:<br />
-  is granted upon request to <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a>. A user on CHTC submit
-  servers may will be granted a user directory within <code>/squid</code>, which
-  users should transfer data into via the CHTC transfer server
-  (transfer.chtc.wisc.edu). As for all CHTC file space, users should
-  minimize the amount of data on the SQUID web proxy, and should clean
-  files from the <code>/squid</code> location regularly. CHTC staff reserve the
-  right to remove any file from <code>/squid</code> when needed to preserve
-  availability and performance for all users.</p>
+    <p><strong>Be prepared to troubleshoot</strong></p>
+
+    <p>A consequence of the non-interactive build is that when something goes wrong, the build process will fail without creating a <code>.sif</code> file.
+That in turn means that when the build is restarted, it does so from completely from scratch.</p>
+
+    <p><em>It is rare to correctly write your <code>.def</code> file such that the container builds successfully on your first try!</em> 
+Do not be discouraged - examine the build messages to determine what went wrong and use the information to correct your <code>.def</code> file, then try again.</p>
   </li>
   <li>
-    <p>Advantages:<br />
-  Files placed on the SQUID web proxy can be downloaded by jobs
-  running anywhere, because the files are world-readable.</p>
+    <p><strong>Multi-stage build</strong></p>
+
+    <p>It is possible to have a multi-stage build.
+In this scenario, you have two <code>.def</code> files.
+You use the first one to construct an intermediary <code>.sif</code> file, which you can then use as the base for the second <code>.def</code> file.
+In the second <code>.def</code> file, you can specify</p>
+
+    <pre><code>Bootstrap: localimage
+From: path/to/first.sif
+</code></pre>
   </li>
-  <li><strong>Limitations and Policies</strong>:
-    <ul>
-      <li>SQUID cannot be used for job output, as there is no way to
-change files in SQUID from within a job.</li>
-      <li>SQUID is also only capable of delivering individual files up to
-1 GB in size.</li>
-      <li>A change you make to a file within your <code>/squid</code> directory may
-not take effect immediately on the SQUID web proxy if you use
-the same filename. Therefore, it is important to use a <strong>new
-filename</strong> when replacing a file in your <code>/squid</code> directory.</li>
-      <li>Jobs should still ALWAYS and ONLY be submitted from within the
-user's <code>/home</code> location.</li>
-      <li>Only the "http" address should be listed in the
-"<code>transfer_input_files</code>" line of the submit file. File
-locations starting with "<code>/squid</code>" should NEVER be listed in
-the submit file.</li>
-      <li>Users should only have data in /squid that is being use for
-currently-queued jobs; CHTC provides no back ups of any data in
-CHTC systems, and our staff reserve the right to remove any data
-causing issues. It is the responsibility of users to keep copies
-of all essential data in preparation for potential data loss or
-file system corruption.<br />
-<br /></li>
-    </ul>
+  <li>
+    <p><strong><code>.sif</code> files can be large</strong></p>
+
+    <p>If you are installing a lot of programs, the final <code>.sif</code> image can be large, on the order of 10s of gigabytes. 
+Keep that in mind when requesting disk space.
+On the High Throughput system, we encourage you to place your container image on the <code>/staging</code> system.</p>
   </li>
-  <li>Data Security:<br />
-  Files placed in SQUID can only be edited by the owner of the user
-  directory within <code>/squid</code>, but will end up being world-readable on
-  the SQUID web proxy in order to be readily downloadable by jobs
-  (with the proper HTTP address); thus, large files that should be
-  "private" should not be placed in your user directory in <code>/squid</code>,
-  and should instead use CHTC's <a href="file-avail-largedata.html">large data staging
-  space</a> for large-file staging.</li>
+  <li>
+    <p><strong>Files cannot be created or modified after the container has been built</strong></p>
+
+    <p>While you can read and execute any file within the container, you will not be able to create or modify files in the container once it has been built.
+The exception is if the location is “mounted” into the container, which means that there is a corresponding location on the host system where the files will be stored.
+Even then, you will only be allowed to create/modify files in that location if you would be able to normally without a container.</p>
+
+    <p>This behavior is intentional as otherwise it would be possible for users to modify files on the host machine’s operating system, which would be a signicant security, operations, and privacy risk.</p>
+  </li>
+  <li>
+    <p><strong>Manually set a HOME directory</strong></p>
+
+    <p>Some programs create <code>.cache</code> directories and may attempt to do so in the user’s “HOME” directory.
+When executing in a container, however, the user typically does NOT have a “HOME” directory.
+In this case, some programs default to creating the directory in the root <code>/</code> directory.
+This will not work for reasons in the previous item.</p>
+
+    <p>One workaround may be to manually set the <code>HOME</code> environment variable after the container has started. 
+On CHTC systems, the following should address this issue:</p>
+
+    <pre><code>export HOME=$(pwd)
+</code></pre>
+
+    <p>If this does not address the issue, examine the error messages and consult the program documentation for how configure the program to use an alternate location for cache or temporary directories.</p>
+  </li>
 </ul>
-
-<p><span name="use"></span></p>
-
-<h2 id="2-using-squid-to-deliver-input-files"><strong>2. Using SQUID to Deliver Input Files</strong></h2>
-<p><span name="request"></span></p>
-<ol>
-  <li>
-    <p><strong>Request a directory in SQUID</strong>. Write to <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a> describing the data you'd like to place in SQUID, and indicating your username and submit server hostname (i.e. submit-5.chtc.wisc.edu).<span name="place"></span></p>
-  </li>
-  <li>
-    <p><strong>Place files within your <code>/squid/username</code> directory</strong> via a CHTC
-transfer server (if from your laptop/desktop) or on the submit
-server.</p>
-
-    <p>From your laptop/desktop:</p>
-    <pre class="term"><code>[username@computer]$ scp large_file.tar.gz username@transfer.chtc.wisc.edu:/squid/username/
-</code></pre>
-
-    <p>If the file already exists within your /home directory on a submit
-server:</p>
-
-    <pre class="term"><code>[username@submit]$ cp large_file.tar.gz /squid/username/
-</code></pre>
-
-    <p>Check the file from the submit server:</p>
-
-    <pre class="term"><code>[username@submit]$ ls /squid/username/
-</code></pre>
-  </li>
-  <li>
-    <p><strong>Have HTCondor download the file to the working job</strong> using the
-<code>http://proxy.chtc.wisc.edu/SQUID</code> address in the <span name="have"></span>
-transfer_input_files line of your submit file:</p>
-
-    <pre><code class="language-{.sub}">transfer_input_files = other_file1,other_file2,http://proxy.chtc.wisc.edu/SQUID/username/large_file.txt
-</code></pre>
-
-    <p><strong>Important:</strong>Make sure to replace "username" with your username
-in the above address. All other files should be staged before job
-submission.<br />
-<br />
-If your large file is a <code>.tar.gz</code> file that untars to include other
-<em>files</em>, remember to remove such files before the end of the job;
-otherwise, HTCondor will think that such files are new output that
-needs to be transferred back to the submit server. (HTCondor will
-not automatically transfer back <em>directories</em>.)</p>
-  </li>
-</ol>
-
-
-
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -597,11 +798,11 @@ not automatically transfer back <em>directories</em>.)</p>
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="handling-data-in-jobs">
-                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#handling-data-in-jobs-collapse" aria-expanded="false" aria-controls="handling-data-in-jobs">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#handling-data-in-jobs-collapse" aria-expanded="false" aria-controls="handling-data-in-jobs">
                                     Handling Data in Jobs
                                 </button>
                             </h2>
-                            <div id="handling-data-in-jobs-collapse" class="accordion-collapse collapse show " aria-labelledby="handling-data-in-jobs" data-bs-parent="#guide-sidebar">
+                            <div id="handling-data-in-jobs-collapse" class="accordion-collapse collapse " aria-labelledby="handling-data-in-jobs" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
@@ -610,7 +811,7 @@ not automatically transfer back <em>directories</em>.)</p>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/file-avail-squid">Transfer Large Input Files Via Squid</a>
+                                        <a class="" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/file-avail-squid">Transfer Large Input Files Via Squid</a>
                                     </div>
                                 
 
@@ -630,11 +831,11 @@ not automatically transfer back <em>directories</em>.)</p>
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="software-solutions">
-                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
                                     Software Solutions
                                 </button>
                             </h2>
-                            <div id="software-solutions-collapse" class="accordion-collapse collapse " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
@@ -693,7 +894,7 @@ not automatically transfer back <em>directories</em>.)</p>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-build">Building an Apptainer Container</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-build">Building an Apptainer Container</a>
                                     </div>
                                 
 

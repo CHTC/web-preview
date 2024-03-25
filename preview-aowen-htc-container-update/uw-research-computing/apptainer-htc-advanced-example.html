@@ -258,7 +258,28 @@
 Then you will need to install the program and its dependencies inside of the container.
 In this example, you will install the program <a href="https://sumo.dlr.de/docs/index.html">SUMO</a> in a container.</p>
 
-<h2 id="choose-the-base-container-image">Choose the Base Container Image</h2>
+<ul>
+  <li>For an introduction to the Apptainer definition (<code>.def</code>) file, see our <a href="apptainer-build.html">Building an Apptainer Container</a> guide.</li>
+  <li>For information on building and using the container on the HTC system, see our <a href="apptainer-htc.html">Use Apptainer (Singularity) Environments</a> guide.</li>
+</ul>
+
+<div class="d-flex flex-column mb-5">
+
+<h2>Table of Contents</h2>
+
+<div class="uw-sidebar-box me-auto">
+<div class="uw-directory">
+
+      <p><a href="#1-choose-the-base-container-image">1. Choose the Base Container Image</a>
+<a href="#2-add-the-installation-commands">2. Add the Installation Commands</a>
+<a href="#3-add-environment-variables">3. Add the Environment Variables</a>
+<a href="#summary">Summary</a></p>
+
+    </div>
+</div>
+</div>
+
+<h2 id="1-choose-the-base-container-image">1. Choose the Base Container Image</h2>
 
 <p>First, you will need to choose a base image for the container.
 Consult the documentation for the program you want to install to make sure you select a compatible operating system.</p>
@@ -270,7 +291,7 @@ The beginning of the <code>image.def</code> file should look like this:</p>
 From: ubuntu:22.04
 </code></pre>
 
-<h2 id="add-the-installation-commands">Add the installation commands</h2>
+<h2 id="2-add-the-installation-commands">2. Add the Installation Commands</h2>
 
 <p>All of the installation commands that you want Apptainer to execute during the container build step are provided in the <code>%post</code> section of the definition file.</p>
 
@@ -413,7 +434,7 @@ From: ubuntu:22.04
     make
 </code></pre>
 
-<h2 id="add-environment-variables">Add environment variables</h2>
+<h2 id="3-add-environment-variables">3. Add Environment Variables</h2>
 
 <p>While the <code>%post</code> section now contains all of the instructions for installing and compiling your desired program, 
 you likely need to add commands for setting up the environment so that the shell recognizes your program.
@@ -474,13 +495,6 @@ From: ubuntu:22.04
 </code></pre>
 
 <p>We can now build the container using this definition file.</p>
-
-<p>For additional information on Apptainer definition files, see the <a href="https://apptainer.org/docs/user/latest/definition_files.html">Apptainer documentation</a>.
-The manual page provides a full reference on the different sections of the definition file.</p>
-
-<blockquote>
-  <p>Note that the <code>%runscript</code> section is ignored when the container is executed on the High Throughput system.</p>
-</blockquote>
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -704,6 +718,11 @@ The manual page provides a full reference on the different sections of the defin
 
                                     <div class="document-link-wrapper bg-light">
                                         <a class="" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-htc">Use Apptainer (Singularity) Environments</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-build">Building an Apptainer Container</a>
                                     </div>
                                 
 
