@@ -277,6 +277,13 @@ This means your jobs will run in a more consistent environment that is easily re
         <li><a href="#build-your-own-container">Build your own container</a></li>
       </ul>
 
+      <p><a href="#create-a-definition-file">Create a Definition File</a>
+<a href="#start-an-interactive-build-job">Start an Interactive Build Job</a>
+<a href="#build-your-container">Build Your Container</a>
+<a href="#test-your-container">Test Your Container</a>
+<a href="#move-the-container-sif-file-to-staging">Move the Container .sif File to Staging</a>
+<a href="#use-an-apptainer-container-in-htc-jobs">Use an Apptainer Container in HTC Jobs</a></p>
+
     </div>
 </div>
 </div>
@@ -399,7 +406,7 @@ Need help from Cannon; default approach does not render well on the website.
 
 <p>Once you’ve built the container, use the instructions <a href="#use-an-existing-container">above</a> to use the container in your HTCondor job.</p>
 
-<h2 id="create-a-definition-file">Create a definition file</h2>
+<h2 id="create-a-definition-file">Create a Definition File</h2>
 
 <p>To create your own container using Apptainer, you will need to create a definition (<code>.def</code>) file. 
 For the purposes of this guide, we will call the definition file <code>image.def</code>.</p>
@@ -420,7 +427,7 @@ For the purposes of this guide, we will call the definition file <code>image.def
 
 <p><a href="#quickstart-build-definition-file">Jump back to Quickstart</a></p>
 
-<h2 id="start-an-interactive-build-job">Start an interactive build job</h2>
+<h2 id="start-an-interactive-build-job">Start an Interactive Build Job</h2>
 
 <p>Building a container can be a computationally intense process. 
 As such, we require that you only build containers while in an interactive build job.
@@ -462,7 +469,7 @@ In this case, the <code>.log</code> file should have a message about the reason 
 
 <p><a href="#quickstart-build-interactive">Jump back to Quickstart</a></p>
 
-<h2 id="build-your-container">Build your container</h2>
+<h2 id="build-your-container">Build Your Container</h2>
 
 <p>Once the interactive build job starts, confirm that your <code>image.def</code> was transferred to the current directory.</p>
 
@@ -494,7 +501,7 @@ Then rebuild the image, and now the relevant error messages should be near the e
 
 <p><a href="#quickstart-build-build">Jump back to Quickstart</a></p>
 
-<h2 id="test-your-container">Test your container</h2>
+<h2 id="test-your-container">Test Your Container</h2>
 
 <p>Once your container builds successfully, we highly encourage you to immediately test the container while still in the interactive build session.</p>
 
@@ -526,7 +533,7 @@ Your prompt should change back to something like <code>[username@build4000 ~]$</
 
 <p><a href="#quickstart-build-test">Jump back to Quickstart</a></p>
 
-<h2 id="move-the-container-sif-file-to-staging">Move the container .sif file to staging</h2>
+<h2 id="move-the-container-sif-file-to-staging">Move the Container .sif File to Staging</h2>
 
 <p>Since Apptainer <code>.sif</code> files are routinely more than 1GB in size, we recommend that you transfer <code>my-container.sif</code> to your <code>/staging</code> directory.
 It is usually easiest to move the container file directly to staging while still in the interactive build job:</p>
