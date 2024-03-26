@@ -258,11 +258,6 @@
 Then you will need to install the program and its dependencies inside of the container.
 In this example, you will install the program <a href="https://sumo.dlr.de/docs/index.html">SUMO</a> in a container.</p>
 
-<ul>
-  <li>For an introduction to the Apptainer definition (<code>.def</code>) file, see our <a href="apptainer-build.html">Building an Apptainer Container</a> guide.</li>
-  <li>For information on building and using the container on the HTC system, see our <a href="apptainer-htc.html">Use Apptainer (Singularity) Environments</a> guide.</li>
-</ul>
-
 <div class="d-flex flex-column mb-5">
 
 <h2>Table of Contents</h2>
@@ -300,7 +295,7 @@ From: ubuntu:22.04
 <p>First, you may need to instruct programs that you are executing commands in a non-interactive environment.
 There can be issues with installing packages in a container that would not normally occur when installing manually in the terminal.</p>
 
-<p>Most commonly, the <code>/tmp</code> directory inside of the container needs to be given global read/write permissions.
+<p>On the HTC system in particular, the <code>/tmp</code> directory inside of the container needs to be given global read/write permissions.
 This can be done by adding the following line at the start of the <code>%post</code> section:</p>
 
 <pre><code>   chmod 777 /tmp
@@ -369,6 +364,7 @@ From: ubuntu:22.04
 %post
     chmod 777 /tmp
     DEBIAN_FRONTEND=noninteractive
+
     apt-get update -y
     apt-get install -y \
         git \
@@ -410,6 +406,7 @@ From: ubuntu:22.04
 %post
     chmod 777 /tmp
     DEBIAN_FRONTEND=noninteractive
+
     apt-get update -y
     apt-get install -y \
         git \
@@ -465,7 +462,7 @@ From: ubuntu:22.04
 %post
     chmod 777 /tmp
     DEBIAN_FRONTEND=noninteractive
-    chmod 777 /tmp
+
     apt-get update -y
     apt-get install -y \
         git \
@@ -495,6 +492,11 @@ From: ubuntu:22.04
 </code></pre>
 
 <p>We can now build the container using this definition file.</p>
+
+<ul>
+  <li>For more information on the components of an Apptainer definition (<code>.def</code>) file and container image file (<code>.sif</code>), see our <a href="apptainer-build.html">Building an Apptainer Container</a> guide.</li>
+  <li>For information on building and using the container on the HTC system, see our <a href="apptainer-htc.html">Use Apptainer Containers</a> guide.</li>
+</ul>
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -717,7 +719,7 @@ From: ubuntu:22.04
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-htc">Use Apptainer (Singularity) Environments</a>
+                                        <a class="" href="/web-preview/preview-aowen-htc-container-update/uw-research-computing/apptainer-htc">Use Apptainer Containers</a>
                                     </div>
                                 
 
