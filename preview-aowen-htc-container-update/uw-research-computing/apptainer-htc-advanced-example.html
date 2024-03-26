@@ -389,11 +389,11 @@ From: ubuntu:22.04
 
 <p>We now add the commands for compiling the SUMO program itself:</p>
 
-<pre><code>git clone --recursive https://github.com/eclipse/sumo
-export SUMO_HOME=/sumo
-mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
-cmake ../..
-make
+<pre><code>    git clone --recursive https://github.com/eclipse/sumo
+    export SUMO_HOME=/sumo
+    mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
+    cmake ../..
+    make
 </code></pre>
 
 <p>The <code>%post</code> section is now complete and will install SUMO and its dependencies in the container at build time.</p>

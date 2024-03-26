@@ -343,7 +343,7 @@ Need help from Cannon; default approach does not render well on the website.
 
     <p>Then submit the interactive build job with</p>
 
-    <pre><code> condor_submit -i build.sub
+    <pre class="term"><code> condor_submit -i build.sub
 </code></pre>
 
     <p><a href="#start-an-interactive-build-job">Jump to more information</a></p>
@@ -353,7 +353,7 @@ Need help from Cannon; default approach does not render well on the website.
 
     <p>While in an interactive build job, run the command</p>
 
-    <pre><code> apptainer build my-container.sif image.def
+    <pre class="term"><code> apptainer build my-container.sif image.def
 </code></pre>
 
     <p>If the container build finishes successfully, then the container image (<code>.sif</code>) file is created.
@@ -366,14 +366,14 @@ Need help from Cannon; default approach does not render well on the website.
 
     <p>While still in the interactive build job, run the command</p>
 
-    <pre><code> apptainer shell my-container.sif
+    <pre class="term"><code> apptainer shell my-container.sif
 </code></pre>
 
     <p>This command will start the container and log you into it, allowing you to test your software commands.</p>
 
     <p>Once you are done testing the container, enter</p>
 
-    <pre><code>exit
+    <pre class="term"><code> exit
 </code></pre>
 
     <p><strong>once</strong> to exit the container.</p>
@@ -385,12 +385,12 @@ Need help from Cannon; default approach does not render well on the website.
 
     <p>Once you are satisfied that your container is built correctly, copy your <code>.sif</code> file to your staging directory.</p>
 
-    <pre><code> mv my-container.sif /staging/$USER
+    <pre class="term"><code> mv my-container.sif /staging/$USER
 </code></pre>
 
     <p>Once the file has transferred, exit the interactive job with</p>
 
-    <pre><code> exit
+    <pre class="term"><code> exit
 </code></pre>
 
     <p><a href="">Jump to more information</a></p>
@@ -451,7 +451,7 @@ queue
 
 <p>Once you’ve created the submit file, you can submit an interactive job with the command</p>
 
-<pre><code>condor_submit -i build.sub
+<pre class="term"><code>condor_submit -i build.sub
 </code></pre>
 
 <blockquote>
@@ -470,10 +470,10 @@ In this case, the <code>.log</code> file should have a message about the reason 
 
 <p>To build your container, run this command:</p>
 
-<pre><code>apptainer build my-container.sif image.def
+<pre class="term"><code>apptainer build my-container.sif image.def
 </code></pre>
 
-<p class="term">Feel free to rename the <code>.sif</code> file as you desire; for the purposes of this guide we are using <code>my-container.sif</code>.</p>
+<p>Feel free to rename the <code>.sif</code> file as you desire; for the purposes of this guide we are using <code>my-container.sif</code>.</p>
 
 <p>As the command runs, a variety of information will be printed to the terminal regarding the container build process.
 Unless something goes wrong, this information can be safely ignored.
@@ -500,7 +500,7 @@ Then rebuild the image, and now the relevant error messages should be near the e
 
 <p>To test your container, use the command</p>
 
-<pre><code>apptainer shell -e my-container.sif
+<pre class="term"><code>apptainer shell -e my-container.sif
 </code></pre>
 
 <p>You should see your command prompt change to <code>Apptainer&gt;</code>.</p>
@@ -516,7 +516,7 @@ If using a programming language such as <code>python3</code> or <code>R</code>, 
 You may need to manually set the <code>PATH</code> environment variable to point to the location of your program’s executable binaries.
 For example,</p>
 
-<pre><code>export PATH=/opt/my-program/bin:$PATH
+<pre class="term"><code>export PATH=/opt/my-program/bin:$PATH
 </code></pre>
 
 <p>Consult the “Special Considerations” section of our <a href="apptainer-build.html#special-considerations-for-building-your-container">Building an Apptainer Container</a> guide for additional information on setting up and testing your container.</p>
@@ -531,7 +531,7 @@ Your prompt should change back to something like <code>[username@build4000 ~]$</
 <p>Since Apptainer <code>.sif</code> files are routinely more than 1GB in size, we recommend that you transfer <code>my-container.sif</code> to your <code>/staging</code> directory.
 It is usually easiest to move the container file directly to staging while still in the interactive build job:</p>
 
-<pre><code>mv my-container.sif /staging/$USER
+<pre class="term"><code>mv my-container.sif /staging/$USER
 </code></pre>
 
 <p>If you do not have a <code>/staging</code> directory, you can skip this step and the <code>.sif</code> file will be automatically transferred back to the login server when you exit the interactive job.
@@ -584,7 +584,7 @@ queue
 
 <p>Then use <code>condor_submit</code> with the name of your submit file:</p>
 
-<pre><code>condor_submit apptainer.sub
+<pre class="term"><code>condor_submit apptainer.sub
 </code></pre>
 
 <p>If you are using <code>+WantFlocking</code> or <code>+WantGliding</code> as described in our <a href="scale-htc.html">Scale Beyond Local HTC Capacity</a> guide, then you should instead use</p>

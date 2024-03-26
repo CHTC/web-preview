@@ -470,7 +470,7 @@ For example,</p>
 <blockquote>
   <p>For a container with the <code>%labels</code> in the above example, you should see the following output:</p>
 
-  <pre><code>$ apptainer inspect my_container.sif
+  <pre class="term"><code>$ apptainer inspect my_container.sif
 
 Author: Bucky Badger
 ContactEmail: bbadger@wisc.edu
@@ -512,7 +512,7 @@ Apptainer can use this one file to reconstitute the container at runtime.</p>
 
 <p>To create the <code>.sif</code> file from the <code>.def</code> file, you need to run the command</p>
 
-<pre><code>apptainer build my-container.sif my-container.def
+<pre class="term"><code>apptainer build my-container.sif my-container.def
 </code></pre>
 
 <p>Here the syntax is to provide the name of the <code>.sif</code> file that you want to create and then provide the name of the existing <code>.def</code> definition file.</p>
@@ -532,7 +532,7 @@ Building the container image can be an intensive process and can consume the res
 <p>You can directly convert an existing Docker container into an Apptainer container image without having to provide a definition file.
 To do so, use the command</p>
 
-<pre><code>apptainer build my-container.sif docker://user/repo:tag
+<pre class="term"><code>apptainer build my-container.sif docker://user/repo:tag
 </code></pre>
 
 <p>where <code>user/repo:tag</code> is any valid address to a Docker-based container registry. (For example, <code>rocker/tidyverse:4.1.3</code> from DockerHub or <code>nvcr.io/nvidia/tensorflow:24.02-tf2-py3</code> from NVIDIA Container Registry.)</p>
@@ -542,7 +542,7 @@ To do so, use the command</p>
 <p>After building your container, we strongly recommend that you start it up and check that your program has been installed correctly.
 Assuming that you are in an interactive session (i.e., not on the login server), then you can run</p>
 
-<pre><code>apptainer shell my-container.sif
+<pre class="term"><code>apptainer shell my-container.sif
 </code></pre>
 
 <p>This command should log you into a terminal that is backed by the container’s operating system.</p>
@@ -557,7 +557,7 @@ An easy way to check if your program is at least in recognized by the container 
 
 <p>For example,</p>
 
-<pre><code>[user@build4000 ~]$ apptainer shell units.sif
+<pre class="term"><code>[user@build4000 ~]$ apptainer shell units.sif
 Apptainer&gt; units --help
 
 Usage: units [options] ['from-unit' 'to-unit']
@@ -661,7 +661,7 @@ This will not work for reasons in the previous item.</p>
     <p>One workaround may be to manually set the <code>HOME</code> environment variable after the container has started. 
 On CHTC systems, the following should address this issue:</p>
 
-    <pre><code>export HOME=$(pwd)
+    <pre class="term"><code>export HOME=$(pwd)
 </code></pre>
 
     <p>If this does not address the issue, examine the error messages and consult the program documentation for how configure the program to use an alternate location for cache or temporary directories.</p>
