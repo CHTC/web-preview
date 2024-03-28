@@ -301,32 +301,27 @@ This means your jobs will run in a more consistent environment that is easily re
 
 <h4 id="1-add-the-container-sif-file-to-your-submit-file-">1. Add the container <code>.sif</code> file to your submit file <a name="quickstart-use-submit"></a></h4>
 
-<pre><code>If the `.sif` file is **on the submit server**:
+<p>If the <code>.sif</code> file is <strong>on the submit server</strong>:</p>
 
-```
-container_image = path/to/my-container.sif
-```
-
-If the `.sif` file is **on the `/staging` server**:
-
-```
-container_image = file:///staging/path/to/my-container.sif
-```
-
-If the `.sif` file is **on the `/staging` server AND you are using `+WantFlocking` or `+WantGliding`**:
-
-```
-container_image = osdf:///chtc/staging/path/to/my-container.sif
-```
-
-[Jump to more information](#use-an-apptainer-container-in-htc-jobs)
+<pre><code>container_image = path/to/my-container.sif
 </code></pre>
+
+<p>If the <code>.sif</code> file is <strong>on the <code>/staging</code> server</strong>:</p>
+
+<pre><code>container_image = file:///staging/path/to/my-container.sif
+</code></pre>
+
+<p>If the <code>.sif</code> file is <strong>on the <code>/staging</code> server AND you are using <code>+WantFlocking</code> or <code>+WantGliding</code></strong>:</p>
+
+<pre><code>container_image = osdf:///chtc/staging/path/to/my-container.sif
+</code></pre>
+
+<p><a href="#use-an-apptainer-container-in-htc-jobs">Jump to more information</a></p>
 
 <h4 id="2-test-your-container-job-">2. Test your container job <a name="quickstart-use-test"></a></h4>
 
-<pre><code>As always with the High Throughput system, submit a single test job and confirm that your job behaves as expected.
-If there are issues with the job, you may need to modify your executable, or even (re)build your own container.
-</code></pre>
+<p>As always with the High Throughput system, submit a single test job and confirm that your job behaves as expected.
+If there are issues with the job, you may need to modify your executable, or even (re)build your own container.</p>
 
 <h3 id="build-your-own-container">Build your own container</h3>
 
@@ -347,7 +342,7 @@ CHTC provides example definition files in the <code>software</code> folder of ou
 
 <h4 id="2-start-an-interactive-build-job-">2. Start an interactive build job <a name="quickstart-build-interactive"></a></h4>
 
-<p>Start an interactive build job (an example submit file  <code>build.sub</code> is provided below).
+<p>Start an interactive build job (<a href="#build-submit-file">an example submit file  <code>build.sub</code> is provided below</a>).
 Be sure to include your <code>.def</code> file in the <code>transfer_input_files</code> line, or else create the file once the interactive job starts using a command line editor.</p>
 
 <p>Then submit the interactive build job with</p>
@@ -442,6 +437,7 @@ An advanced example of a definition file is provided in our <a href="apptainer-h
 As such, we require that you only build containers while in an interactive build job.
 On the High Throughput system, you can use the following submit file <code>build.sub</code>:</p>
 
+<p><a name="build-submit-file"></a></p>
 <pre><code># build.sub
 # For building an Apptainer container
 
