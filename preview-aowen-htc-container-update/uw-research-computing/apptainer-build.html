@@ -367,6 +367,11 @@ From: nvcr.io/nvidia/tensorflow:24.02-tf2-py3
 
 <p>would use the <a href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow/tags">NVIDIA TensorFlow 2 v24.02</a> container hosted on the <a href="https://catalog.ngc.nvidia.com/containers">NVIDIA Container Registry</a> (<code>nvcr</code>).</p>
 
+<blockquote>
+  <p>If you just want to convert an existing Docker container into an Apptainer container, you do not need to use a definition file.
+Instead, you can directly run the <code>apptainer build</code> command using the Docker address, as described <a href="#converting-a-docker-image-to-an-apptainer-container-image">below</a>.</p>
+</blockquote>
+
 <h3 id="files-section">Files section</h3>
 
 <p>The <code>%files</code> section is used to copy files from the machine that is running Apptainer (the “host”) into the container that Apptainer is building. 
