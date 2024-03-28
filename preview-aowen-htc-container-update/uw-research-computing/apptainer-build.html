@@ -311,27 +311,27 @@ The following table summarizes the sections that are routinely used when constru
   <tbody>
     <tr>
       <td>“Header”</td>
-      <td>Defines the base container to build on top of.</td>
+      <td>Choose an existing container to start from.</td>
     </tr>
     <tr>
       <td><code>%files</code></td>
-      <td>Specifies files to copy into the container at build time from the host.</td>
+      <td>Add existing files (e.g., pre-downloaded source code) to use in the container.</td>
     </tr>
     <tr>
       <td><code>%post</code></td>
-      <td>Commands to execute during the container build.</td>
+      <td>Installation commands for adding libraries/programs to the container.</td>
     </tr>
     <tr>
       <td><code>%environment</code></td>
-      <td>Environment variables to set whenever the container is started.</td>
+      <td>Automatically set environment variables when the container is started to help find installed programs.</td>
     </tr>
     <tr>
       <td><code>%labels</code></td>
-      <td>Custom metadata for the container.</td>
+      <td>Add information or metadata to help identify the container and its contents.</td>
     </tr>
     <tr>
       <td><code>%help</code></td>
-      <td>Custom help text for the container.</td>
+      <td>Add text to help others use the container and its contents.</td>
     </tr>
   </tbody>
 </table>
