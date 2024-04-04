@@ -137,6 +137,10 @@
 
     
         <li>
+            <a href="/web-preview/preview-update-submodules/uw-research-computing/account-details.html">Get an Account</a>
+        </li>
+    
+        <li>
             <a href="/web-preview/preview-update-submodules/uw-research-computing/user-expectations.html">User Expectations</a>
         </li>
     
@@ -161,6 +165,15 @@
 
 <li id="get-help">
     <a href="/web-preview/preview-update-submodules/uw-research-computing/get-help.html" aria-current="page">Get Help</a>
+</li>
+
+
+                
+                    
+
+
+<li id="status-page">
+    <a href="https://status.chtc.wisc.edu/" aria-current="page">System Status</a>
 </li>
 
 
@@ -298,12 +311,11 @@
 			
  # Specify the name of the log, standard error, and standard output (or "screen output") files. Wherever you see $(Cluster), HTCondor will insert the 
  #  queue number assigned to this set of jobs at the time of submission.
-	
  log = hello-world_$(Cluster)_$(Process).log
  error = hello-world_$(Cluster)_$(Process).err
  output = hello-world_$(Cluster)_$(Process).out
 	
- # This lines *would* be used if there were any other files
+ # This line *would* be used if there were any other files
  # needed for the executable to use.
  # transfer_input_files = file1,/absolute/pathto/file2,etc
 	
@@ -326,7 +338,8 @@
   <li>
     <p>Now, submit your job to HTCondor’s queue using <code>condor_submit</code>:</p>
 
-    <p><code>[alice@submit2]$ condor_submit hello-world.sub</code></p>
+    <pre><code> [alice@ap2002]$ condor_submit hello-world.sub
+</code></pre>
 
     <p>The <code>condor_submit</code> command actually submits your jobs to HTCondor. If all goes well, you will see output from the <code>condor_submit</code> command that appears as:</p>
     <pre><code> Submitting job(s)...
@@ -336,12 +349,12 @@
   <li>
     <p>To check on the status of your jobs in the queue, run the following command:</p>
 
-    <pre><code> [alice@submit2]$ condor_q
+    <pre><code> [alice@ap2002]$ condor_q
 	
  The output of `condor_q` should look like this:
- -- Schedd: submit2.chtc.wisc.edu : &lt;128.104.101.92:9618?... @ 04/14/23 15:35:17
+ -- Schedd: ap2002.chtc.wisc.edu : &lt;128.104.101.92:9618?... @ 04/14/23 15:35:17
  OWNER     BATCH_NAME     SUBMITTED   DONE   RUN    IDLE  TOTAL JOB_IDS
- Alice ID: 3606214   4/14 12:31      2     1      _      3 36062145.0-2
+ Alice ID: 3606214       4/14 12:31      2     1       _      3 36062145.0-2
 	
  3 jobs; 2 completed, 0 removed, 0 idle, 1 running, 0 held, 0 suspended
 </code></pre>
@@ -400,7 +413,8 @@
 <p><strong>A. Removing Jobs</strong> 
 To remove a specific job, use <code>condor_rm &lt;JobID, ClusterID, Username&gt;</code>. Example:</p>
 
-<p><code>[alice@submit2]$ condor_rm 845638.0</code></p>
+<pre><code>[alice@ap2002]$ condor_rm 845638.0
+</code></pre>
 
 <p><strong>B. Importance of Testing &amp; Resource Optimization</strong></p>
 <ol>
@@ -661,7 +675,17 @@ When you request too much, your jobs may not match to as many available “slots
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/singularity-htc">Use Apptainer (Singularity) Environments</a>
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/apptainer-htc">Use Apptainer Containers</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/apptainer-build">Building an Apptainer Container</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/apptainer-htc-advanced-example">Advanced Apptainer Example - SUMO</a>
                                     </div>
                                 
                             </div>
