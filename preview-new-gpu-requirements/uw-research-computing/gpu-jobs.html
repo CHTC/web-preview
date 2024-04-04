@@ -432,32 +432,28 @@ the attribute <code>Capability</code>, your <code>require_gpus</code> statement 
     <pre class="sub"><code>require_gpus = (Capability &gt;= 7.5) &amp;&amp; (GlobalMemoryMb &gt;= 11000)
 </code></pre>
     <p>Ensure all specified requirements match the attributes of the GPU/Server of interest. HTCondor matches jobs to GPUs that match all specified requirements. Otherwise, the jobs will sit idle indefinitely.</p>
-  </li>
-</ul>
 
- 	&gt; We are testing a new set of submit commands for specifying the requirements of the GPU:
-  	&gt;
-  	&gt; ```
-   	&gt; gpus_minimum_capability = <version>
-</version><pre><code>	&gt; gpus_maximum_capability = &lt;version&gt;
- 	&gt; gpus_minimum_memory = &lt;quantity&gt;
-	&gt; ```{:.sub}
- 	&gt;
-  	&gt; More information on these commands can be found in the [HTCondor manual](https://htcondor.readthedocs.io/en/latest/man-pages/condor_submit.html#gpus_minimum_capability).
+    <blockquote>
+      <p>We are testing a new set of submit commands for specifying the requirements of the GPU:</p>
+
+      <pre class="sub"><code>gpus_minimum_capability = &lt;version&gt;
+gpus_maximum_capability = &lt;version&gt;
+gpus_minimum_memory = &lt;quantity&gt;
 </code></pre>
 
-<ul>
+      <p>More information on these commands can be found in the <a href="https://htcondor.readthedocs.io/en/latest/man-pages/condor_submit.html#gpus_minimum_capability">HTCondor manual</a>.</p>
+    </blockquote>
+  </li>
   <li>
     <p><strong>Indicate Software or Data Requirements Using <code>requirements</code></strong>: If your data is large enough to 
   use our <code>/staging</code> data system (see more information <a href="file-avail-largedata.html">here</a>), 
   or you are using modules or other software in our shared <code>/software</code> system, include 
   the needed requirements.</p>
   </li>
-  <li>
-    <p><strong>Indicate Shorter/Resumable Jobs</strong>: if your jobs are shorter than 4-6 hours, or have 
+  <li><strong>Indicate Shorter/Resumable Jobs</strong>: if your jobs are shorter than 4-6 hours, or have 
   the ability to checkpoint at least that frequently, we highly recommend taking 
   advantage of the additional GPU servers in CHTC that can run these kind of jobs 
-  as backfill! Simply add the following option to your submit file:</p>
+  as backfill! Simply add the following option to your submit file:
     <pre class="sub"><code>+is_resumable = true
 </code></pre>
 
