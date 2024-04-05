@@ -315,15 +315,39 @@ In this section, we provide a brief introduction into how to use containers for 
 
 <h2 id="java">Java</h2>
 
+<h3 id="quickstart-1">Quickstart<a name="java-quickstart"></a></h3>
+
+<p><a href="#top">Back to Top</a></p>
+
+<h3 id="more-information">More information<a name="java-info"></a></h3>
+
 <h2 id="julia">Julia</h2>
+
+<h3 id="quickstart-2">Quickstart<a name="julia-quickstart"></a></h3>
+
+<p><a href="#top">Back to Top</a></p>
+
+<h3 id="more-information-1">More information<a name="julia-info"></a></h3>
 
 <h2 id="matlab">Matlab</h2>
 
+<h3 id="quickstart-3">Quickstart<a name="matlab-quickstart"></a></h3>
+
+<p><a href="#top">Back to Top</a></p>
+
+<h3 id="more-information-2">More information<a name="matlab-info"></a></h3>
+
 <h2 id="miniconda">Miniconda</h2>
+
+<h3 id="quickstart-4">Quickstart<a name="miniconda-quickstart"></a></h3>
+
+<p><a href="#top">Back to Top</a></p>
+
+<h3 id="more-information-3">More information<a name="miniconda-info"></a></h3>
 
 <h2 id="python">Python</h2>
 
-<h3 id="quickstart-1">Quickstart<a name="python-quickstart"></a></h3>
+<h3 id="quickstart-5">Quickstart<a name="python-quickstart"></a></h3>
 
 <p>To use Python 3 on the HTC system, we recommend that you use an existing container, or build your own with the version and packages that you want to use.</p>
 
@@ -334,7 +358,7 @@ In this section, we provide a brief introduction into how to use containers for 
   <li><a href="https://hub.docker.com/_/python">DockerHub Python Containers</a></li>
 </ul>
 
-<p>To build your own container with the version and packages that you want, follow the <a href="#build-your-own-container">instructions above</a> and use one of the following example <a href="#chtc-recipes-repository">Recipes</a>:</p>
+<p>To build your own container with the version and packages that you want, follow the <a href="#build-your-own-container">instructions above</a> and use one of the example <a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Python Recipes</a> in our <a href="#chtc-recipes-repository">recipes repository</a>:</p>
 
 <ul>
   <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/base-python">Base python</a></li>
@@ -346,7 +370,7 @@ In this section, we provide a brief introduction into how to use containers for 
 
 <p><a href="#top">Back to Top</a></p>
 
-<h3 id="more-information">More information<a name="python-info"></a></h3>
+<h3 id="more-information-4">More information<a name="python-info"></a></h3>
 
 <p>All CHTC machines have a base installation of Python 3.
 The exact versions and packages installed, however, can vary from machine to machine.
@@ -359,8 +383,69 @@ Additional software can be installed when building your own container.</p>
 
 <p>For packages that need to be installed with <code>conda install</code>, see the section on <a href="#miniconda">Miniconda</a>.</p>
 
+<h4 id="executable">Executable</h4>
+
+<p>When using a container, you can use a python <code>.py</code> script as the submit file <code>executable</code>, provided that the first line (the “shebang”) in the <code>.py</code> file is</p>
+
+<pre><code>#!/usr/bin/env python3
+</code></pre>
+
+<p>with the rest of the file containing the commands that you want to run using Python.</p>
+
+<p>Alternatively, you can use a bash <code>.sh</code> script as the submit file <code>executable</code>, and in that file you can use the <code>python3</code> command:</p>
+
+<pre><code>#!/bin/bash
+
+python3 my-script.py
+</code></pre>
+
+<p>In this case, remember to include your <code>.py</code> file in the <code>transfer_input_files</code> line of your submit file.</p>
+
 <h2 id="r">R</h2>
 
+<h3 id="quickstart-6">Quickstart<a name="r-quickstart"></a></h3>
+
+<p>To use R on the HTC system, we recommend that you use an existing container, or build your own with the version and packages that you want to use.</p>
+
+<p>To use an existing container with a base installation of R, follow the <a href="#use-an-existing-container">instructions above</a> and choose from one of these sources:</p>
+
+<ul>
+  <li><a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#:~:text=R%20(opensciencegrid/osgvo%2Dr)">OSG R containers</a></li>
+  <li><a href="https://rocker-project.org/images/">Rocker R containers</a></li>
+</ul>
+
+<p>To build your own container with the version and packages that you want, follow the <a href="#build-your-own-container">instructions above</a> and use one of the following example <a href="https://github.com/CHTC/recipes/tree/main/software/R/">R Recipes</a> in our <a href="#chtc-recipes-repository">recipes repository</a>:</p>
+
+<ul>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/base-r">Base R</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/tidyverse">R with tidyverse</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/geospatial">R with geospatial packages</a></li>
+</ul>
+
+<p><a href="#top">Back to Top</a></p>
+
+<h3 id="more-information-5">More information<a name="r-info"></a></h3>
+
+<p>No CHTC machine has R pre-installed, so you <strong>must</strong> configure a portable copy of R to work on the HTC system.
+Using a container as described above is the easiest way to accomplish this.</p>
+
+<h4 id="executable-1">Executable</h4>
+
+<p>When using a container, you can use a <code>.R</code> script as the submit file <code>executable</code>, provided that the first line (the “shebang”) in the <code>.R</code> file is</p>
+
+<pre><code>#!/usr/bin/env Rscript
+</code></pre>
+
+<p>with the rest of the file containing the commands that you want to run using R.</p>
+
+<p>Alternatively, you can use a bash <code>.sh</code> script as the submit file <code>executable</code>, and in that file you can use the <code>Rscript</code> command:</p>
+
+<pre><code>#!/bin/bash
+
+Rscript my-script.R
+</code></pre>
+
+<p>In this case, remember to include your <code>.R</code> file in the <code>transfer_input_files</code> line of your submit file.</p>
 
         </div>
         <div class="col-3 d-none d-lg-block">
