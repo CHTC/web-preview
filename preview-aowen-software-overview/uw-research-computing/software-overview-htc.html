@@ -333,9 +333,95 @@ In this section, we provide a brief introduction into how to use containers for 
 
 <h3 id="quickstart-3">Quickstart<a name="matlab-quickstart"></a></h3>
 
+<p>To use Matlab on the HTC system, we recommend that you build your own container with the version and packages that you want to use.
+Follow the <a href="#build-your-own-container">instructions above</a> and use one of the example <a href="https://github.com/CHTC/recipes/tree/main/software/Matlab">Matlab Recipes</a> in our <a href="#chtc-recipes-repository">recipes repository</a>:</p>
+
+<ul>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab/base-matlab">Base Matlab</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab/symbolic-math">Matlab with Symbolic Math Toolbox</a></li>
+</ul>
+
+<p>Once you’ve built your container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: Because Matlab is a licensed software, you <strong>must</strong> add the following line to your submit file:</p>
+
+  <pre class="sub"><code>concurrency_limits = MATLAB:1
+</code></pre>
+
+  <p>Failure to do so may cause your or other users’ jobs to fail to obtain a license from the license server.</p>
+</blockquote>
+
 <p><a href="#top">Back to Top</a></p>
 
 <h3 id="more-information-2">More information<a name="matlab-info"></a></h3>
+
+<p>CHTC has a site license for Matlab that allows for up to 10,000 jobs to run at any given time across <em>all CHTC users</em>. 
+Hence the requirement for adding the line <code>concurrency_limits = MATLAB:1</code> to your submit files, so that HTCondor can keep track of which jobs are using or will use a license.</p>
+
+<p>Following the instructions above, you are able to install a variety of Matlab Toolboxes when building the container.
+The Toolboxes available for each supported version of Matlab are described here: https://github.com/mathworks-ref-arch/matlab-dockerfile/blob/main/mpm-input-files/.
+Navigate to the text file for the version of interest, and look at the section named “INSTALL PRODUCTS”.
+The example recipes linked above provide instructions on how to specify the packages you want to install when building the container.</p>
+
+<h4 id="executable">Executable</h4>
+
+<p>When using the Matlab container, we recommend the following process for executing your Matlab commands in an HTCondor job:</p>
+
+<ol>
+  <li>
+    <p>Put your Matlab commands in a <code>.m</code> script. For this example, we’ll call it <code>my-script.m</code>.</p>
+  </li>
+  <li>
+    <p>Create the file <code>run-matlab.sh</code> with the following contents:</p>
+
+    <pre><code>#!/bin/bash
+   
+matlab -batch "my-script"
+</code></pre>
+
+    <p>Note that in the script, the <code>.m</code> extension has been dropped from the file name (uses <code>"my-script"</code> instead of <code>"my-script.m"</code>).</p>
+  </li>
+  <li>
+    <p>In your submit file, set the <code>.sh</code> script as the executable and list the <code>.m</code> file to be transferred:</p>
+
+    <pre class="sub"><code>executable = run-matlab.sh
+transfer_input_files = my-script.m
+</code></pre>
+  </li>
+</ol>
+
+<h4 id="arguments">Arguments</h4>
+
+<p>To pass arguments from the submit file to your <code>.m</code> script, you need to set up your executable <code>.sh</code> file to create an additional <code>.m</code> file with the desired variable definitions.
+For example, to use an argument to define a different value of <code>data_file</code> for each job, you would use the following executable:</p>
+
+<pre><code>#!/bin/bash
+
+cat &lt;&lt; EOF &gt; variables.m
+data_file = '${1}'
+EOF
+
+matlab -batch "variables;my-script"
+
+rm variables.m
+</code></pre>
+
+<p>The <code>variables.m</code> file is created with <code>data_file</code> defined as the value passed from the submit file <code>arguments</code> line.
+Then when matlab is started, it first loads the definitions from the <code>variables.m</code> line before executing your main <code>my-script.m</code>.
+(Of course, for this to be useful, the code in <code>my-script.m</code> needs to use the variable <code>data_file</code> to do something.)
+Finally, the temporary <code>variables.m</code> file is removed so that it is not brought back to the submit server when the job completes.</p>
+
+<p>More than one variable can be defined.
+For example, if we wanted to add the variable <code>x</code>, we would use this:</p>
+
+<pre><code>cat &lt;&lt; EOF &gt; variables.m
+data_file = '${1}'
+x = ${2}
+EOF
+</code></pre>
+
+<p>where the values of <code>data_file</code> and <code>x</code> will correspond to the first and second values of the submit file <code>arguments</code> line, respectively.</p>
 
 <h2 id="miniconda">Miniconda</h2>
 
@@ -347,6 +433,8 @@ and use our example <a href="https://github.com/CHTC/recipes/tree/main/software/
 <ul>
   <li><a href="https://github.com/CHTC/recipes/tree/main/software/Miniconda/miniconda">Miniconda</a></li>
 </ul>
+
+<p>Once you’ve built your container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
 
 <p>Alternatively, you could follow our old process for creating a portable copy of a conda environment, as described in our guide 
 <a href="conda-installation.html">Use Conda Environments to Run Python Jobs</a>. Note, however, that this process may be sensitive to the 
@@ -367,7 +455,7 @@ you should see our instructions for setting up <a href="#python">Python</a> or <
 For the build process, you skip directly to the <code>conda install</code> commands you want to run.
 Similarly, when executing a script in a Miniconda container, the packages are loaded when the container starts.</p>
 
-<h4 id="executable">Executable</h4>
+<h4 id="executable-1">Executable</h4>
 
 <p>If you are planning to execute a python <code>.py</code> script using your Miniconda container, you can follow the instructions in the <a href="#python-executable">Python Executable</a> section.</p>
 
@@ -405,6 +493,8 @@ and use one of the example <a href="https://github.com/CHTC/recipes/tree/main/so
   <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/scipy">Python with scipy</a></li>
 </ul>
 
+<p>Once you’ve built your container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
+
 <p>See also: <a href="#miniconda">Miniconda</a></p>
 
 <p><a href="#top">Back to Top</a></p>
@@ -422,7 +512,7 @@ Additional software can be installed when building your own container.</p>
 
 <p>For packages that need to be installed with <code>conda install</code>, see the section on <a href="#miniconda">Miniconda</a>.</p>
 
-<h4 id="executable-1">Executable<a name="python-executable"></a></h4>
+<h4 id="executable-2">Executable<a name="python-executable"></a></h4>
 
 <p>When using a container, you can use a python <code>.py</code> script as the submit file <code>executable</code>, provided that the first line (the “shebang”) in the <code>.py</code> file is</p>
 
@@ -462,6 +552,8 @@ and use one of the following example <a href="https://github.com/CHTC/recipes/tr
   <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/geospatial">R with geospatial packages</a></li>
 </ul>
 
+<p>Once you’ve built your container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
+
 <p><a href="#top">Back to Top</a></p>
 
 <h3 id="more-information-5">More information<a name="r-info"></a></h3>
@@ -469,7 +561,7 @@ and use one of the following example <a href="https://github.com/CHTC/recipes/tr
 <p>No CHTC machine has R pre-installed, so you <strong>must</strong> configure a portable copy of R to work on the HTC system.
 Using a container as described above is the easiest way to accomplish this.</p>
 
-<h4 id="executable-2">Executable<a name="r-executable"></a></h4>
+<h4 id="executable-3">Executable<a name="r-executable"></a></h4>
 
 <p>When using a container, you can use a <code>.R</code> script as the submit file <code>executable</code>, provided that the first line (the “shebang”) in the <code>.R</code> file is</p>
 
