@@ -348,22 +348,16 @@ This requires that you have Docker installed on your computer so that you can bu
 <p><a href="https://apptainer.org/">https://apptainer.org/</a></p>
 
 <p>Apptainer is an open-source container technology for building containers. 
-Apptainer creates a single, stand-alone file that is the container image (<a href="#what-is-container-image">?</a>).
+Apptainer creates a single, stand-alone file that is the (<a href="#what-is-container-image">container image</a>).
 As long as you have the container image file, you can use Apptainer to run your container.</p>
 
 <p>On the HTC system, you can provide the name of your Apptainer file in your submit file,
 and HTCondor will use a copy of it to create the software environment for executing your job.
-You can use Apptainer to build the container image file on CHTC servers, so there is no need to install the container software on your own computer.
-You do, however, have to manage the location of the file and since the file can also be large (100s MB - 10s GB), it is not easily shared outside of CHTC.</p>
+You can use Apptainer to build the container image file on CHTC servers, so there is no need to install the container software on your own computer.</p>
 
 <h3 id="use-an-existing-container">Use an Existing Container</h3>
 
-<p>If you or a colleague have already built a container for use on CHTC, it is fairly straightforward to modify your jobs to use the container environment.</p>
-
-<blockquote>
-  <p><strong>Note</strong>: When using a container on CHTC, you are unable to modify the contents of the container. 
-If you want to make permanent changes to the container, you should build your own as discussed below.</p>
-</blockquote>
+<p>If you or a colleague have already built a container for use on CHTC, it is fairly straightforward to modify your jobs to use the container environment as discussed below.</p>
 
 <h4 id="use-a-docker-container">Use a Docker container</h4>
 
@@ -394,17 +388,17 @@ you would have <code>docker://nvcr.io/nvidia/repository:tag</code>.</p>
 <p>For historical reasons, the Apptainer container file has the file extension <code>.sif</code>. 
 The syntax for giving HTCondor the name of the container file depends on where it is located on the CHTC system.</p>
 
-<p>If the <code>.sif</code> file is <strong>on the submit server</strong>:</p>
+<p>If the <code>.sif</code> file is in a ** /home directory**:</p>
 
 <pre class="sub"><code>container_image = path/to/my-container.sif
 </code></pre>
 
-<p>If the <code>.sif</code> file is <strong>on the <code>/staging</code> server</strong>:</p>
+<p>If the <code>.sif</code> file is in a ** <code>/staging</code> directory**:</p>
 
 <pre class="sub"><code>container_image = file:///staging/path/to/my-container.sif
 </code></pre>
 
-<p>If the <code>.sif</code> file is <strong>on the <code>/staging</code> server AND you are using <code>+WantFlocking</code> or <code>+WantGliding</code></strong>:</p>
+<p>If the <code>.sif</code> file is <strong>in a <code>/staging</code> directory AND you are using <code>+WantFlocking</code> or <code>+WantGliding</code></strong>:</p>
 
 <pre class="sub"><code>container_image = osdf:///chtc/staging/path/to/my-container.sif
 </code></pre>
@@ -447,7 +441,7 @@ but will save the results into the container file(s) for later use.</p>
 
     <p>To use the container on CHTC servers, you’ll need to distribute the container to right location.
 For Docker containers, this means “pushing” the container to Docker Hub or similar container registry.
-For Apptainer containers, this typically means copying the container <code>.sif</code> file to the <a href="file-avail-largedata.html">staging system</a>.</p>
+For Apptainer containers, this typically means copying the container <code>.sif</code> file to the <a href="file-avail-largedata.html">/staging system</a>.</p>
   </li>
 </ol>
 
