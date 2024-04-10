@@ -388,12 +388,12 @@ you would have <code>docker://nvcr.io/nvidia/repository:tag</code>.</p>
 <p>For historical reasons, the Apptainer container file has the file extension <code>.sif</code>. 
 The syntax for giving HTCondor the name of the container file depends on where it is located on the CHTC system.</p>
 
-<p>If the <code>.sif</code> file is in a ** /home directory**:</p>
+<p>If the <code>.sif</code> file is in a <strong><code>/home</code> directory</strong>:</p>
 
 <pre class="sub"><code>container_image = path/to/my-container.sif
 </code></pre>
 
-<p>If the <code>.sif</code> file is in a ** <code>/staging</code> directory**:</p>
+<p>If the <code>.sif</code> file is in a <strong><code>/staging</code> directory</strong>:</p>
 
 <pre class="sub"><code>container_image = file:///staging/path/to/my-container.sif
 </code></pre>
