@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Create a Portable Python Installation with Miniconda</title>
+<title>Advanced Apptainer Example - SUMO</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -251,350 +251,255 @@
             
 
             <h1 class="uw-mini-bar mb-4">
-    Create a Portable Python Installation with Miniconda
+    Advanced Apptainer Example - SUMO
 </h1>
 
-            <p>The Anaconda/Miniconda distribution of Python is a common tool for 
-installing and managing Python-based software and other tools. This guide 
-describes how to use Miniconda to create a Python 
-environment for use in CHTC jobs.</p>
+            <p>Sometimes the program you want to use does not have a pre-existing container that you can build on top of.
+Then you will need to install the program and its dependencies inside of the container.
+In this example, we will show how to install the program <a href="https://sumo.dlr.de/docs/index.html">SUMO</a> in a container, as an illustration of how to build a container more-or-less from scratch.</p>
 
-<h1 id="overview">Overview</h1>
+<div class="d-flex flex-column mb-5">
 
-<p>When should you use Miniconda as an installation method in CHTC?</p>
-<ul>
-  <li>Your software has specific conda-centric installation instructions.</li>
-  <li>The above is true <em>and</em> the software has a lot of dependencies.</li>
-  <li>You mainly use Python to do your work.</li>
-</ul>
+<h2>Table of Contents</h2>
 
-<p>Notes on terminology:</p>
-<ul>
-  <li><strong>conda</strong> is a Python package manager and package ecosystem that exists in
-parallel with <code>pip</code> and <a href="https://pypi.org/">PyPI</a>.</li>
-  <li><strong>Miniconda</strong> is a slim Python distribution, containing the minimum amount
-of packages necessary for a Python installation that can use conda.</li>
-  <li><strong>Anaconda</strong> is a pre-built scientific Python distribution based on 
-Miniconda that has many useful scientific packages pre-installed.</li>
-</ul>
+<div class="uw-sidebar-box me-auto">
+<div class="uw-directory">
 
-<p>To create the smallest, most portable Python installation possible, 
-we recommend starting with Miniconda and installing only the packages you 
-actually require.</p>
+      <p><a href="#1-choose-the-base-container-image">1. Choose the Base Container Image</a></p>
 
-<p>There are two ways to create a Miniconda installation on CHTC’s HTC system. 
-The first is to create your 
-installation environment on the submit server and send a zipped version to 
-your jobs. The other option is to install Miniconda inside each job. 
-The first option is more efficient, especially for complex installations, 
-but there may be rare situations where installing with each job is better. 
-We recommend trying the pre-installation option first.
-If it doesn’t work, discuss the second option with a facilitator.</p>
+      <p><a href="#2-add-the-installation-commands">2. Add the Installation Commands</a></p>
 
-<ul>
-  <li>Recommended: <a href="#option-1-pre-install-miniconda-and-transfer-to-jobs">Option 1: Pre-Install Miniconda and Transfer to Jobs</a></li>
-  <li>Alternative: <a href="#option-2-install-miniconda-inside-each-job">Option 2: Install Miniconda Inside Each Job</a></li>
-</ul>
+      <p><a href="#3-add-environment-variables">3. Add the Environment Variables</a></p>
 
-<p>This guide also discusses how to 
-<a href="#specifying-exact-dependency-versions">“pin” your conda environment</a>
-to create a more consistent and reproducible environment with specified versions of 
-packages.</p>
+      <p><a href="#summary">Summary</a></p>
 
-<h1 id="option-1-pre-install-miniconda-and-transfer-to-jobs">Option 1: Pre-Install Miniconda and Transfer to Jobs</h1>
+    </div>
+</div>
+</div>
 
-<p>In this approach, we will create an entire software installation inside Miniconda 
-and then use a tool called <code>conda pack</code> to package it up for running jobs.</p>
+<h2 id="1-choose-the-base-container-image">1. Choose the Base Container Image</h2>
 
-<h2 id="1-create-a-miniconda-installation">1. Create a Miniconda installation</h2>
+<p>First, you will need to choose a base image for the container.
+Consult the documentation for the program you want to install to make sure you select a compatible operating system.</p>
 
-<p>On the submit server, 
-download the latest Linux <a href="https://docs.conda.io/en/latest/miniconda.html">miniconda installer</a> and run it.</p>
+<p>For this example, we will use the most recent LTS version of Ubuntu from Docker.
+The beginning of the <code>image.def</code> file should look like this:</p>
 
-<pre class="term"><code>[alice@submit]$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-[alice@submit]$ sh Miniconda3-latest-Linux-x86_64.sh
+<pre><code>Bootstrap: docker
+From: ubuntu:22.04
 </code></pre>
 
-<p>Accept the license agreement and default options. At the end, you can choose whether or 
-not to “initialize Miniconda3 by running conda init?” The default is no; you would 
-then run the <code>eval</code> command listed by the installer to “activate” Miniconda. If you
-choose “no” you’ll want to save this command so that you can reactivate the 
-Miniconda installation when needed in the future.</p>
+<h2 id="2-add-the-installation-commands">2. Add the Installation Commands</h2>
 
-<h2 id="2-create-a-conda-environment-with-your-software">2. Create a conda “environment” with your software</h2>
+<p>All of the installation commands that you want Apptainer to execute during the container build step are provided in the <code>%post</code> section of the definition file.</p>
+
+<h3 id="setting-up-non-interactive-installation">Setting up non-interactive installation</h3>
+
+<p>First, you may need to instruct programs that you are executing commands in a non-interactive environment.
+There can be issues with installing packages in a container that would not normally occur when installing manually in the terminal.</p>
+
+<p>On the HTC system in particular, the <code>/tmp</code> directory inside of the container needs to be given global read/write permissions.
+This can be done by adding the following line at the start of the <code>%post</code> section:</p>
+
+<pre><code>   chmod 777 /tmp
+</code></pre>
+
+<p>Similarly, some packages require that the user answer interactive prompts for selecting various options.
+Since the Apptainer build is non-interactive, this can cause the package installation to hang.
+While this isn’t an issue in the present example, the issue can be avoided by adding the following line near the start of the <code>%post</code> section:</p>
+
+<pre><code>   DEBIAN_FRONTEND=noninteractive
+</code></pre>
+
+<p>Note that this particular command only applies to Debian-based container images, such as Ubuntu.</p>
+
+<p>The <code>image.def</code> so far looks like this:</p>
+
+<pre><code>Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+    chmod 777 /tmp
+    DEBIAN_FRONTEND=noninteractive
+</code></pre>
+
+<h3 id="install-dependencies">Install dependencies</h3>
+
+<p>First, you should install the dependencies that your program requires.</p>
+
+<p>Following the <a href="https://sumo.dlr.de/docs/Installing/Linux_Build.html">program’s instructions</a>, we can do install the dependencies with the following set of commands.</p>
+
+<pre><code>apt-get update -y
+apt-get install -y \
+    git \
+    cmake \
+    python3 \
+    g++ \
+    libxerces-c-dev \
+    libfox-1.6-dev \
+    libgdal-dev \
+    libproj-dev \
+    libgl2ps-dev \
+    python3-dev \
+    swig \
+    default-jdk \
+    maven \
+    libeigen3-dev
+</code></pre>
+
+<p>Note that we are using the built-in package manager (<code>apt</code>) of Ubuntu, since that is the base operating system we chose to build on top of.
+If you choose a different operating system, you may need to use a different package manager.</p>
+
+<p>In this case, the first command is <code>apt-get update</code> which will update the list of available packages.
+This is necessary to get the latest versions of the packages in the following <code>apt-get install</code> command.</p>
+
+<p>The <code>apt-get install</code> command will install the dependencies required by the SUMO program.</p>
 
 <blockquote>
-  <p>(If you are using an <code>environment.yml</code> file as described 
-<a href="#specifying-exact-dependency-versions">later</a>, you should instead create
-the environment from your <code>environment.yml</code> file. If you don’t have an 
-<code>environment.yml</code> file to work with, follow the install instructions in this
-section. We recommend switching to the <code>environment.yml</code> method of creating 
-environments once you understand the “manual” method presented here.)</p>
+  <p>Note that these installation commands do not use <code>sudo</code>, as Apptainer already has permissions to install programs in the container.</p>
 </blockquote>
 
-<p>Make sure that you’ve activated the base Miniconda environment if you haven’t 
-already. Your prompt should look like this:</p>
+<p>The <code>image.def</code> file now looks like this:</p>
 
-<pre class="term"><code>(base)[alice@submit]$ 
+<pre><code>Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+    chmod 777 /tmp
+    DEBIAN_FRONTEND=noninteractive
+
+    apt-get update -y
+    apt-get install -y \
+        git \
+        cmake \
+        python3 \
+        g++ \
+        libxerces-c-dev \
+        libfox-1.6-dev \
+        libgdal-dev \
+        libproj-dev \
+        libgl2ps-dev \
+        python3-dev \
+        swig \
+        default-jdk \
+        maven \
+        libeigen3-dev
 </code></pre>
 
-<p>To create an environment, use the <code>conda create</code> command and then activate the 
-environment:</p>
+<h4 id="compile-the-program">Compile the program</h4>
 
-<pre class="term"><code>(base)[alice@submit]$ conda create -n env-name
-(base)[alice@submit]$ conda activate env-name
+<p>After installing the dependencies, you can provide the commands for actually compiling your program.</p>
+
+<p>We now add the commands for compiling the SUMO program itself:</p>
+
+<pre><code>    git clone --recursive https://github.com/eclipse/sumo
+    export SUMO_HOME=/sumo
+    mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
+    cmake ../..
+    make
 </code></pre>
 
-<p>Then, run the <code>conda install</code> command to install the different packages and 
-software you want to include in the installation. How this should look is often 
-listed in the installation examples for software 
-(e.g. <a href="https://docs.qiime2.org/2020.2/install/native/#install-qiime-2-within-a-conda-environment">Qiime2</a>, 
-<a href="https://pytorch.org/get-started/locally/">Pytorch</a>).</p>
+<p>The <code>%post</code> section is now complete and will install SUMO and its dependencies in the container at build time.</p>
 
-<pre class="term"><code>(env-name)[alice@submit]$ conda install pkg1 pkg2
+<p>The <code>image.def</code> file now looks like this:</p>
+
+<pre><code>Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+    chmod 777 /tmp
+    DEBIAN_FRONTEND=noninteractive
+
+    apt-get update -y
+    apt-get install -y \
+        git \
+        cmake \
+        python3 \
+        g++ \
+        libxerces-c-dev \
+        libfox-1.6-dev \
+        libgdal-dev \
+        libproj-dev \
+        libgl2ps-dev \
+        python3-dev \
+        swig \
+        default-jdk \
+        maven \
+        libeigen3-dev
+    
+    git clone --recursive https://github.com/eclipse/sumo
+    export SUMO_HOME=/sumo
+    mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
+    cmake ../..
+    make
 </code></pre>
 
-<p>Some Conda packages are only available via specific Conda channels 
-which serve as repositories for hosting and managing packages. If Conda is 
-unable to locate the requested packages using the example above, you may 
-need to have Conda search other channels. More detail are available at
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/channels.html">https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/channels.html</a>.</p>
+<h2 id="3-add-environment-variables">3. Add Environment Variables</h2>
 
-<p>Packages may also be installed via <code>pip</code>, but you should only do this
-when there is no <code>conda</code> package available.</p>
+<p>While the <code>%post</code> section now contains all of the instructions for installing and compiling your desired program, 
+you likely need to add commands for setting up the environment so that the shell recognizes your program.
+This is typically the case if your program compiled successfully but you still get a “command not found” error when you try to execute it.</p>
 
-<p>Once everything is installed, deactivate the environment to go back to the 
-Miniconda “base” environment.</p>
+<p>To set environment variables automatically when your container runs, you need to add them to the <code>%environment</code> section before you build the container.</p>
 
-<pre class="term"><code>(env-name)[alice@submit]$ conda deactivate
+<p>For example, in the <code>%post</code> section there is the command <code>export SUMO_HOME=/sumo</code>, which sets the environment variable <code>SUMO_HOME</code> to the location of the <code>sumo</code> directory.
+This environment variable, however, is only active during the installation phase of the container build, and will not be set when the container is actually run.
+Thus, we need to set <code>SUMO_HOME</code> and update <code>PATH</code> with the location of the SUMO <code>bin</code> folder by using the <code>%environment</code> section.</p>
+
+<p>We therefore add the following lines to the <code>image.def</code> file:</p>
+
+<pre><code>%environment
+    export SUMO_HOME=/sumo
+    export PATH=/sumo/bin:$PATH
 </code></pre>
 
-<p>For example, if you wanted to create an installation with <code>pandas</code> and 
-<code>matplotlib</code> and call the environment <code>py-data-sci</code>, you would use this sequence 
-of commands:</p>
+<p>These environment variables will be set when the container starts, so that the <code>sumo</code> command is automatically found when we try to execute it.</p>
 
-<pre class="term"><code>(base)[alice@submit]$ conda create -n py-data-sci
-(base)[alice@submit]$ conda activate py-data-sci
-(py-data-sci)[alice@submit]$ conda install pandas matplotlib
-(py-data-sci)[alice@submit]$ conda deactivate
-(base)[alice@submit]$ 
+<h2 id="summary">Summary</h2>
+
+<p>The full <code>image.def</code> file for this advanced example is now:</p>
+
+<pre><code>Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+    chmod 777 /tmp
+    DEBIAN_FRONTEND=noninteractive
+
+    apt-get update -y
+    apt-get install -y \
+        git \
+        cmake \
+        python3 \
+        g++ \
+        libxerces-c-dev \
+        libfox-1.6-dev \
+        libgdal-dev \
+        libproj-dev \
+        libgl2ps-dev \
+        python3-dev \
+        swig \
+        default-jdk \
+        maven \
+        libeigen3-dev
+
+    git clone --recursive https://github.com/eclipse/sumo
+    export SUMO_HOME=/sumo
+    mkdir sumo/build/cmake-build &amp;&amp; cd sumo/build/cmake-build
+    cmake ../..
+    make
+
+%environment
+    export SUMO_HOME=/sumo
+    export PATH=/sumo/bin:$PATH
 </code></pre>
 
-<blockquote>
-  <h2 id="more-about-miniconda">More about Miniconda</h2>
-
-  <p>See the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">official conda documentation</a> for 
-more information on creating and managing environments with <code>conda</code>.</p>
-</blockquote>
-
-<h2 id="3-create-software-package">3. Create Software Package</h2>
-
-<p>Make sure that your job’s Miniconda environment is created, but deactivated, so 
-that you’re in the “base” Miniconda environment:</p>
-
-<pre class="term"><code>(base)[alice@submit]$ 
-</code></pre>
-
-<p>Then, run this command to install the <code>conda pack</code> tool:</p>
-
-<pre class="term"><code>(base)[alice@submit]$ conda install -c conda-forge conda-pack
-</code></pre>
-
-<p>Enter <code>y</code> when it asks you to install.</p>
-
-<p>Finally, use <code>conda pack</code> to create a zipped tar.gz file of your environment
-(substitute the name of your conda environment where you see <code>env-name</code>), 
-set the proper permissions for this file using <code>chmod</code>, and check the size of 
-the final tarball:</p>
-
-<pre class="term"><code>(base)[alice@submit]$ conda pack -n env-name --dest-prefix='$ENVDIR'
-(base)[alice@submit]$ chmod 644 env-name.tar.gz
-(base)[alice@submit]$ ls -sh env-name.tar.gz
-</code></pre>
-
-<p>When this step finishes, you should see a file in your current directory named
-<code>env-name.tar.gz</code></p>
-
-<h2 id="4-check-size-of-conda-environment-tar-archive">4. Check Size of Conda Environment Tar Archive</h2>
-
-<p>The tar archive, <code>env-name.tar.gz</code>, created in the previous step will be used as input for 
-subsequent job submission. As with all job input files, you should check the size of this 
-Conda environment file. <strong>If &gt;100MB in size, you should NOT transfer the tar ball using 
-<code>transfer_input_files</code></strong>. Instead, you should plan to use either CHTC’s web proxy, SQUID or 
-large data filesystem Staging. Please contact a research computing facilitators at 
-chtc@cs.wisc.edu to determine the best option for your jobs.</p>
-
-<p>More information is available at <a href="file-avail-squid.html">File Availability with Squid Web Proxy</a> 
-and <a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a>.</p>
-
-<h2 id="5-create-a-job-executable">5. Create a Job Executable</h2>
-
-<p>The job will need to go through a few steps to use this “packed” conda environment; 
-first, setting the <code>PATH</code>, then unzipping the environment, then activating it, 
-and finally running whatever program you like. The script below is an example 
-of what is needed (customize as indicated to match your choices above).</p>
-
-<pre class="file"><code>#!/bin/bash
-
-# have job exit if any command returns with non-zero exit status (aka failure)
-set -e
-
-# replace env-name on the right hand side of this line with the name of your conda environment
-ENVNAME=env-name
-# if you need the environment directory to be named something other than the environment name, change this line
-export ENVDIR=$ENVNAME
-
-# these lines handle setting up the environment; you shouldn't have to modify them
-export PATH
-mkdir $ENVDIR
-tar -xzf $ENVNAME.tar.gz -C $ENVDIR
-. $ENVDIR/bin/activate
-
-# modify this line to run your desired Python script and any other work you need to do
-python3 hello.py
-</code></pre>
-
-<h2 id="6-submit-jobs">6. Submit Jobs</h2>
-
-<p>In your submit file, make sure to have the following:</p>
+<p>We can now build the container using this definition file.</p>
 
 <ul>
-  <li>Your executable should be the the bash script you created in <a href="#5-create-a-job-executable">step 5</a>.</li>
-  <li>Remember to transfer your Python script and the environment <code>tar.gz</code> file via
- <code>transfer_input_files</code>. 
-<strong>Since the <code>tar.gz</code> file will almost certainly be larger than 100MB, 
-please <a href="mailto:chtc@cs.wisc.edu">email</a> us about different tools for 
-delivering the installation to your jobs, 
-likely our <a href="file-avail-squid.html">SQUID web proxy</a>.</strong></li>
+  <li>For more information on the components of an Apptainer definition (<code>.def</code>) file and container image file (<code>.sif</code>), see our <a href="apptainer-build.html">Building an Apptainer Container</a> guide.</li>
+  <li>For information on building and using the container on the HTC system, see our <a href="apptainer-htc.html">Use Apptainer Containers</a> guide.</li>
 </ul>
-
-<h1 id="option-2-install-miniconda-inside-each-job">Option 2: Install Miniconda Inside Each Job</h1>
-
-<p>In this approach, rather than copying the Miniconda installation with each job, 
-we will copy the Miniconda <em>installer</em> and install a new copy of Miniconda with 
-each job.</p>
-
-<p><strong>Do not use this installation method unless directed to do by a facilitator!</strong></p>
-
-<h2 id="1-download-the-miniconda-installer-and-test-installation">1. Download the Miniconda Installer and Test Installation</h2>
-
-<p>If you haven’t already, download the latest Miniconda installer for Linux from the 
-<a href="https://docs.conda.io/en/latest/miniconda.html#linux-installers">Miniconda website</a> 
-and place it in your home directory on a CHTC submit server.</p>
-
-<p>We strongly recommend testing the installation steps for your particular program 
-or packages - either on your own computer or similar to the 
-<a href="#option-1-pre-install-miniconda-and-transfer-to-jobs">directions above</a> - 
-before trying to submit the installation as part of a job to CHTC.</p>
-
-<h2 id="2-create-an-executable-script">2. Create an Executable Script</h2>
-
-<p>Our plan here is to run the Miniconda installer inside the job, build an environment 
-with needed packages, and then run our desired script or program. The following 
-script should work verbatim except for changing the <code>conda install</code> step to the packages 
-you need or the instructions for your program. See <a href="#specifying-exact-dependency-versions">below</a>
-for instructions on using an <code>environment.yml</code> environment specification instead
-of “manually” listing packages in your job script.</p>
-
-<pre class="file"><code>#!/bin/bash
-
-set -e
-
-# installation steps for Miniconda
-export HOME=$PWD
-export PATH
-sh [installer] -b -p $PWD/miniconda3
-export PATH=$PWD/miniconda3/bin:$PATH
-
-# install packages
-conda install numpy matplotlib
-
-# modify this line to run your desired Python script
-python3 hello.py
-</code></pre>
-
-<h2 id="3-submit-file">3. Submit File</h2>
-
-<p>In your submit file, include the executable you wrote (as described above)
-and in <code>transfer_input_files</code> include the Miniconda installer and any other scripts 
-or data files you want to include with the job:</p>
-
-<pre class="sub"><code>executable = run_with_conda.sh
-arguments = myscript.py
-
-transfer_input_files = Miniconda3-latest-Linux-x86_64.sh, script.py, other_input.file
-</code></pre>
-
-<h1 id="specifying-exact-dependency-versions">Specifying Exact Dependency Versions</h1>
-
-<p>An important part of improving reproducibility and consistency between runs
-is to ensure that you use the correct/expected versions of your dependencies.</p>
-
-<p>When you run a command like <code>conda install numpy</code>, <code>conda</code> tries to install
-<strong>the most recent version of <code>numpy</code></strong>. For example, <code>numpy</code> version <code>1.18.2</code>
-was released on March 17, 2020. To install exactly this version of <code>numpy</code>, you
-would run <code>conda install numpy=1.18.2</code> 
-(the same works for <code>pip</code>, if you replace <code>=</code> with <code>==</code>). We
-recommend installing with an explicit version to make sure you have exactly 
-the version of a package that you want. This is often called 
-“pinning” or “locking” the version of the package.</p>
-
-<p>If you want a record of what is installed in your environment, or want to 
-reproduce your environment on another computer, conda can create a file, usually
-called <code>environment.yml</code>, that describes the exact versions of all of the 
-packages you have installed in an environment.
-This file can be re-used by a different conda command to recreate that 
-exact environment on another computer.</p>
-
-<p>To create an <code>environment.yml</code> file from your currently-activated environment, run</p>
-<pre class="term"><code>[alice@submit]$ conda env export &gt; environment.yml
-</code></pre>
-
-<p>This <code>environment.yml</code> will pin the exact version of <em>every dependency in your
-environment</em>. This can sometimes be problematic if you are moving between
-platforms because a package version may not be available on some other platform,
-causing an “unsatisfiable dependency” or “inconsistent environment” error.
-A much less strict pinning is</p>
-<pre class="term"><code>[alice@submit]$ conda env export --from-history &gt; environment.yml
-</code></pre>
-<p>which only lists packages that you installed manually, and <strong>does not pin their
-versions unless you yourself pinned them during installation</strong>. 
-If you need an intermediate solution, it is also possible to manually edit 
-<code>environment.yml</code> files; see the 
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#">conda environment documentation</a>
-for more details about the format and what is possible.
-In general, exact environment specifications are simply not guaranteed to be
-transferable between platforms (e.g., between Windows and Linux).
-<strong>We strongly recommend using the strictest possible pinning available to you.</strong></p>
-
-<p>To create an environment from an <code>environment.yml</code> file, run</p>
-<pre class="term"><code>[alice@submit]$ conda env create -f environment.yml
-</code></pre>
-<p>By default, the name of the environment will be whatever the name of the source
-environment was; you can change the name by adding a <code>-n &lt;name&gt;</code> option to the
-<code>conda env create</code> command.</p>
-
-<p>If you use a source control system like <code>git</code>, we recommend checking your
-<code>environment.yml</code> file into source control and making sure to recreate it 
-when you make changes to your environment.
-Putting your environment under source control gives you a way to track how it
-changes along with your own code.</p>
-
-<p>If you are developing software on your local computer for eventual use on 
-the CHTC pool, your workflow might look like this:</p>
-<ol>
-  <li>Set up a conda environment for local development and install packages as desired
-(e.g., <code>conda create -n science; conda activate science; conda install numpy</code>).</li>
-  <li>Once you are ready to run on the CHTC pool, create an <code>environment.yml</code> file
-from your local environment (e.g., <code>conda env export &gt; environment.yml</code>).</li>
-  <li>Move your <code>environment.yml</code> file from your local computer to the submit machine
-and create an environment from it (e.g., <code>conda env create -f environment.yml</code>),
-then pack it for use in your jobs, as per 
-<a href="#3-create-software-package">Create Software Package</a>.</li>
-</ol>
-
-<p>More information on conda environments can be found in 
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#">their documentation</a>.</p>
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -782,7 +687,7 @@ then pack it for use in your jobs, as per
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-staff-submodule/uw-research-computing/conda-installation">Create a Portable Python Installation with Miniconda</a>
+                                        <a class="" href="/web-preview/preview-staff-submodule/uw-research-computing/conda-installation">Create a Portable Python Installation with Miniconda</a>
                                     </div>
                                 
 
@@ -827,7 +732,7 @@ then pack it for use in your jobs, as per
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-staff-submodule/uw-research-computing/apptainer-htc-advanced-example">Advanced Apptainer Example - SUMO</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-staff-submodule/uw-research-computing/apptainer-htc-advanced-example">Advanced Apptainer Example - SUMO</a>
                                     </div>
                                 
                             </div>
