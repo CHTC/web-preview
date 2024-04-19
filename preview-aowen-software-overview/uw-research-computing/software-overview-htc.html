@@ -267,9 +267,9 @@ This guide introduces how to build software in a container (our recommended stra
 
       <p><a href="#quickstart">Quickstart</a></p>
 
-      <p><a href="#containers">Containers</a></p>
-
       <p><a href="#recipes">Recipes</a></p>
+
+      <p><a href="#containers">Containers</a></p>
 
       <p><a href="#software">Software</a></p>
 
@@ -568,19 +568,28 @@ java -jar program.jar
 
 <h3 id="quickstart-2">Quickstart<a name="julia-quickstart"></a></h3>
 
-<p>To use Julia on the HTC system, we recommend that you build your own container following the <a href="#build-your-own-container">instructions above</a>
-and use our example <a href="https://github.com/CHTC/recipes/tree/main/software/Julia">Julia Recipe</a> in our <a href="#recipes">recipes repository</a>:</p>
+<h4 id="option-a-recommended">Option A (recommended)<a name="julia-quickstart-a"></a></h4>
 
-<ul>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Julia/base-julia">Julia</a></li>
-</ul>
+<p>Build a container with Julia &amp; packages installed inside:</p>
 
-<p>Once you’ve built the container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
+<ol>
+  <li><a href="#build-your-own-container">How to build your own container</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Julia">Example container recipes for Julia</a></li>
+  <li><a href="#use-an-existing-container">Use your container in your HTC jobs</a></li>
+</ol>
 
-<p>Alternatively, you could follow our old process for using a portable copy of Julia and creating a portable copy of your packages, 
-as described in our guide <a href="julia-jobs.html">Run Julia Jobs</a>. 
-Note that this process may be sensitive to the operating system of the execution point.
-If you run into issues, we recommend using a container instead.</p>
+<h4 id="option-b">Option B<a name="julia-quickstart-b"></a></h4>
+
+<p>Use a portable copy of Julia and create your own portable copy of your Julia packages:</p>
+
+<ol>
+  <li>Follow the instructions in our guide <a href="julia-jobs.html">Run Julia Jobs</a>.</li>
+</ol>
+
+<blockquote>
+  <p>Option B may be sensitive to the operating system of the execution point.
+If you run into issues, we recommend using Option A instead.</p>
+</blockquote>
 
 <p><a href="#top">Back to Top</a></p>
 
@@ -616,15 +625,13 @@ julia my-script.jl
 
 <h3 id="quickstart-3">Quickstart<a name="matlab-quickstart"></a></h3>
 
-<p>To use Matlab on the HTC system, we recommend that you build your own container with the version and packages that you want to use.
-Follow the <a href="#build-your-own-container">instructions above</a> and use one of the example <a href="https://github.com/CHTC/recipes/tree/main/software/Matlab">Matlab Recipes</a> in our <a href="#recipes">recipes repository</a>:</p>
+<p>Build a container with Matlab &amp; toolboxes installed inside:</p>
 
-<ul>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab/base-matlab">Base Matlab</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab/symbolic-math">Matlab with Symbolic Math Toolbox</a></li>
-</ul>
-
-<p>Once you’ve built your container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
+<ol>
+  <li><a href="#build-your-own-container">How to build your own container</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab">Example container recipes for Julia</a></li>
+  <li><a href="#use-an-existing-container">Use your container in your HTC jobs</a></li>
+</ol>
 
 <blockquote>
   <p><strong>Note</strong>: Because Matlab is a licensed software, you <strong>must</strong> add the following line to your submit file:</p>
@@ -710,20 +717,28 @@ EOF
 
 <h3 id="quickstart-4">Quickstart<a name="miniconda-quickstart"></a></h3>
 
-<p>To use Miniconda environments on the HTC system, we recommend that you build your own container following the <a href="#build-your-own-container">instructions above</a> 
-and use our example <a href="https://github.com/CHTC/recipes/tree/main/software/Conda">Conda Recipe</a> in our <a href="#recipes">recipes repository</a>:</p>
+<h4 id="option-a-recommended-1">Option A (recommended)<a name="miniconda-quickstart-a"></a></h4>
 
-<ul>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Conda/base-conda">Conda</a></li>
-</ul>
+<p>Build a container with Conda packages installed inside:</p>
 
-<p>Once you’ve built your container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
+<ol>
+  <li><a href="#build-your-own-container">How to build your own container</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Conda">Example container recipes for Conda</a></li>
+  <li><a href="#use-an-existing-container">Use your container in your HTC jobs</a></li>
+</ol>
 
-<p>Alternatively, you could follow our old process for creating a portable copy of a conda environment, as described in our guide 
-<a href="conda-installation.html">Use Conda Environments to Run Python Jobs</a>. Note, however, that this process may be sensitive to the 
-operating system of the execution point, and not all conda packages can be made portable using this process.</p>
+<h4 id="option-b-1">Option B<a name="miniconda-quickstart-b"></a></h4>
 
-<p>See also: <a href="#python">Python</a>, <a href="#r">R</a></p>
+<p>Create your own portable copy of your Conda packages:</p>
+
+<ol>
+  <li>Follow the instructions in our guide <a href="conda-installation.html">Use Conda Environments to Run Python Jobs</a></li>
+</ol>
+
+<blockquote>
+  <p>Option B may be sensitive to the operating system of the execution point, and not all conda packages can be made portable using this process.
+If you run into issues, we recommend using Option A instead.</p>
+</blockquote>
 
 <p><a href="#top">Back to Top</a></p>
 
@@ -758,27 +773,27 @@ You do not and should not try to activate the conda environment in the executabl
 
 <h3 id="quickstart-5">Quickstart<a name="python-quickstart"></a></h3>
 
-<p>To use Python 3 on the HTC system, we recommend that you use an existing container, or build your own with the version and packages that you want to use.</p>
+<h4 id="option-a-recommended-2">Option A (recommended)<a name="python-quickstart-a"></a></h4>
 
-<p>To use an existing container with a base installation of python, follow the <a href="#use-an-existing-container">instructions above</a> and choose from one of these sources:</p>
+<p>Build a container with Python &amp; packages installed inside:</p>
 
-<ul>
-  <li><a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#base">OSG Base Containers</a></li>
-  <li><a href="https://hub.docker.com/_/python">DockerHub Python Containers</a></li>
-</ul>
+<ol>
+  <li><a href="#build-your-own-container">How to build your own container</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Example container recipes for Python</a></li>
+  <li><a href="#use-an-existing-container">Use your container in your HTC jobs</a></li>
+</ol>
 
-<p>To build your own container with the version and packages that you want, follow the <a href="#build-your-own-container">instructions above</a> 
-and use one of the example <a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Python Recipes</a> in our <a href="#recipes">recipes repository</a>:</p>
+<h4 id="option-b-2">Option B<a name="python-quickstart-b"></a></h4>
 
-<ul>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/base-python">Base python</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/numpy">Python with numpy</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/scipy">Python with scipy</a></li>
-</ul>
+<p>Use an existing container with a base installation of Python:</p>
 
-<p>Once you’ve built your container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
-
-<p>See also: <a href="#miniconda">Miniconda</a></p>
+<ol>
+  <li>Choose an existing container. See 
+<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#base">OSG Base Containers</a>
+or
+<a href="https://hub.docker.com/_/python">DockerHub Python Containers</a>.</li>
+  <li><a href="#use-an-existing-container">Use the container in your HTC jobs</a></li>
+</ol>
 
 <p><a href="#top">Back to Top</a></p>
 
@@ -817,25 +832,27 @@ python3 my-script.py
 
 <h3 id="quickstart-6">Quickstart<a name="r-quickstart"></a></h3>
 
-<p>To use R on the HTC system, we recommend that you use an existing container, or build your own with the version and packages that you want to use.</p>
+<h4 id="option-a-recommended-3">Option A (recommended)<a name="r-quickstart-a"></a></h4>
 
-<p>To use an existing container with a base installation of R, follow the <a href="#use-an-existing-container">instructions above</a> and choose from one of these sources:</p>
+<p>Build a container with Python &amp; packages installed inside:</p>
 
-<ul>
-  <li><a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#:~:text=R%20(opensciencegrid/osgvo%2Dr)">OSG R containers</a></li>
-  <li><a href="https://rocker-project.org/images/">Rocker R containers</a></li>
-</ul>
+<ol>
+  <li><a href="#build-your-own-container">How to build your own container</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/">Example container recipes for R</a></li>
+  <li><a href="#use-an-existing-container">Use your container in your HTC jobs</a></li>
+</ol>
 
-<p>To build your own container with the version and packages that you want, follow the <a href="#build-your-own-container">instructions above</a> 
-and use one of the following example <a href="https://github.com/CHTC/recipes/tree/main/software/R/">R Recipes</a> in our <a href="#recipes">recipes repository</a>:</p>
+<h4 id="option-b-3">Option B<a name="r-quickstart-b"></a></h4>
 
-<ul>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/base-r">Base R</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/tidyverse">R with tidyverse</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/geospatial">R with geospatial packages</a></li>
-</ul>
+<p>Use an existing container with a base installation of R:</p>
 
-<p>Once you’ve built your container, follow the <a href="#use-an-existing-container">instructions above</a> to use the container in your jobs.</p>
+<ol>
+  <li>Choose an existing container. See 
+<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#:~:text=R%20(opensciencegrid/osgvo%2Dr)">OSG R containers</a>
+or 
+<a href="https://rocker-project.org/images/">Rocker R containers</a>.</li>
+  <li><a href="#use-an-existing-container">Use the container in your HTC jobs</a></li>
+</ol>
 
 <p><a href="#top">Back to Top</a></p>
 
