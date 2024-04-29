@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HTC Data Storage Locations</title>
+<title>Use Custom Linux Versions in CHTC</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -251,72 +251,91 @@
             
 
             <h1 class="uw-mini-bar mb-4">
-    HTC Data Storage Locations
+    Use Custom Linux Versions in CHTC
 </h1>
 
-            <p>[toc]</p>
+            <p>By default, CHTC-managed submit servers automatically add a job 
+requirement that requires jobs to run on servers running our primary operating system unless otherwise specified by the user. There are two options to override this
+default:</p>
 
-<h1 id="data-storage-locations">Data Storage Locations</h1>
-<p>The HTC system has two primary locations where users can store files: <code>/home</code> and <code>/staging</code>.</p>
+<ol>
+  <li><a href="#option-1-using-a-container-recommended">Using a Container (recommended)</a></li>
+  <li><a href="#option-2-requesting-a-specific-operating-system">Requesting a Specific
+Operating System</a>.</li>
+</ol>
 
-<p>The mechanisms behind <code>/home</code> and <code>/staging</code> that manage data are different and are optimized to handle different file sizes. <code>/home</code> is more efficient at managing small files, while <code>/staging</code> is more efficient at managing larger files. It’s important to place your files in the correct location, as it will improve the speed and efficiency at which your data is handled and will help maintain the stability of the HTC filesystem.</p>
+<h2 id="option-1-using-a-container-recommended">Option 1: Using a Container (Recommended)</h2>
 
-<h1 id="understand-your-file-sizes">Understand your file sizes</h1>
-<p>To know whether a file should be placed in <code>/home</code> or in <code>/staging</code>, you will need to know it’s file size (also known as the amount of “disk space” a file uses). There are many commands to print out your file sizes, but here are a few of our favorite:</p>
+<p>Using a container to provide a base version of Linux will allow you to 
+run on any nodes in the HTC system, and not limit you to a subset of nodes.</p>
 
-<h2 id="use-ls-with--lh-flags">Use <code>ls</code> with <code>-lh</code> flags</h2>
-<p>The command <code>ls</code> stands for “list” and, by default, lists the files in your current directory. The flag <code>-l</code> stands for “long” and <code>-h</code> stands for “human-readable”. When the flags are combined and passed to the <code>ls</code> command, it prints out the long metadata associated with the files and converts values such as file sizes into human-readable formats (instead of a computer readable format).</p>
+<p>After finding a container with the desired version of Linux, just follow our instructions 
+for <a href="docker-jobs.html">Docker</a> or <a href="apptainer-htc.html">Singularity/Apptainer</a> jobs.</p>
 
-<pre><code>NetID@submit$ ls -lh
+<p>Note that the default Linux containers on Docker Hub are often missing commonly installed 
+packages. Our collaborators in OSG Services maintain a few curated containers with a 
+greater selection of installed tools that 
+can be seen here: <a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#base">Base Linux Containers</a></p>
+
+<h2 id="option-2-requesting-a-specific-operating-system">Option 2: Requesting a Specific Operating System</h2>
+
+<p>At any time, you can require a specific operating system 
+version (or versions) for your jobs. This option is more limiting because 
+you are restricted to operating systems used by CHTC, and the number of nodes 
+running that operating system.</p>
+
+<h3 id="require-centos-stream-8-previous-default-or-centos-stream-9">Require CentOS Stream 8 (previous default) or CentOS Stream 9</h3>
+
+<p>To request that your jobs run on servers with CentOS 8 <strong>only</strong>, add the
+following line to your submit file:</p>
+
+<pre><code class="language-{.sub}">chtc_want_el8 = true
 </code></pre>
 
-<h2 id="use-du--h">Use <code>du -h</code></h2>
-<p>Similar to <code>ls -lh</code>, <code>du -h</code> prints out the “disk usage” of directories in a human-readable format.</p>
+<p>To request that your jobs run on servers with CentOS 9 <strong>only</strong>, add 
+the following line to your submit file:</p>
 
-<pre><code>NetID@submit$ du -h
+<pre><code class="language-{.sub}">chtc_want_el9 = true 
 </code></pre>
 
-<h1 id="transferring-data-to-jobs">Transferring Data to Jobs</h1>
-<p>The HTCondor submit file <code>transfer_input_files =</code> line should always be used to tell HTCondor what files to transfer to each job, regardless of if that file is origionating from your <code>/home</code> or <code>/staging</code> directory. However, the syntax you use to tell HTCondor to fetch files from <code>/home</code> and <code>/staging</code> and transfer to your running job will change:</p>
+<blockquote>
+  <p>Note that after May 1, 2024, CentOS9 will be the default and CentOS8 will be phased out 
+by the middle of summer 2024. If you think your code relies on CentOS8, make sure to 
+see our <a href="htc-el8-to-el9-transition.html">transition guide</a> or talk to the facilitation 
+team about a long-term strategy for running your work.</p>
+</blockquote>
 
-<table>
-  <thead>
-    <tr>
-      <th>Input Sizes</th>
-      <th>File Location</th>
-      <th>Submit File Syntax to Transfer to Jobs</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0-500 MB</td>
-      <td>/home</td>
-      <td>transfer_input_files = input.txt</td>
-    </tr>
-    <tr>
-      <td>500-10GB</td>
-      <td>/staging</td>
-      <td>transfer_input_files = **osdf:///chtc/staging/NetID/input.txt</td>
-    </tr>
-    <tr>
-      <td>10GB +</td>
-      <td>/staging</td>
-      <td>transfer_input_files = **file:///staging/NetID/input.txt</td>
-    </tr>
-  </tbody>
-</table>
+<h3 id="use-both-centos-stream-8-previous-default-and-centos-stream-9-current-default">Use Both CentOS Stream 8 (previous default) and CentOS Stream 9 (current default)</h3>
 
-<h2 id="transfer-data-back-from-jobs-to-home-or-staging">Transfer Data Back from Jobs to <code>/home</code> or <code>/staging</code></h2>
+<p>To request that your jobs run on computers running <strong>either</strong> version of 
+CentOS Linux, add the following requirements line to your submit file:</p>
 
-<p>When a job completes, by default, HTCondor will return newly created or edited files on the top level directory back to your <code>/home</code> directory.</p>
+<pre><code class="language-{.sub}">requirements = (OpSysMajorVer == 8) || (OpSysMajorVer == 9)
+</code></pre>
+<blockquote>
+  <p>Note: these requirements are not necessary for jobs that use Docker containers; 
+these jobs will run on servers with any operating system automatically.</p>
+</blockquote>
 
-<p>To transfer files or folders back to <code>/staging</code>, in your HTCondor submit file, use 
-transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt”, where <code>output1.txt</code> is the name of the output file or folder you would like transfered back to a /staging directory.</p>
+<p>The advantage of this option is that you may be able to access a
+larger number of computers in CHTC. Note that code compiled on a
+newer version of Linux may not run older versions of Linux. Make
+sure to test your jobs specifically on both CentOS Stream 8 and CentOS Stream 9
+before using the option above.</p>
 
-<p>If you have more than one file or folder to transfer back to <code>/staging</code>, use a semicolon (;) to seperate multiple files for HTCondor to transfer back like so: 
-transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt; output2.txt = file:///staging/NetID/output2.txt”</p>
+<p>Does your job already have a requirements statement? If so, you can
+add the requirements above to the pre-existing requirements by using
+the characters <code>&amp;&amp;</code>. For example, if your jobs already require large
+data staging:</p>
 
-<p>Make sure to only include one set of quotation marks that wraps around the information you are feeding to <code>transfer_output_remaps =</code>.</p>
+<pre><code class="language-{.submit}">requirements = (Target.HasCHTCStaging == true) 
+</code></pre>
+
+<p>You can add the requirements for using both operating system versions like so:</p>
+
+<pre><code class="language-{.sub}">requirements = (Target.HasCHTCStaging == true) &amp;&amp; ((OpSysMajorVer == 8) || (OpSysMajorVer == 9))
+</code></pre>
+
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -569,11 +588,11 @@ transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt; out
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="special-use-cases">
-                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#special-use-cases-collapse" aria-expanded="false" aria-controls="special-use-cases">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#special-use-cases-collapse" aria-expanded="false" aria-controls="special-use-cases">
                                     Special Use Cases
                                 </button>
                             </h2>
-                            <div id="special-use-cases-collapse" class="accordion-collapse collapse " aria-labelledby="special-use-cases" data-bs-parent="#guide-sidebar">
+                            <div id="special-use-cases-collapse" class="accordion-collapse collapse show " aria-labelledby="special-use-cases" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
@@ -607,7 +626,7 @@ transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt; out
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/os-request-htc">Use Custom Linux Versions in CHTC</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-update-submodules/uw-research-computing/os-request-htc">Use Custom Linux Versions in CHTC</a>
                                     </div>
                                 
                             </div>

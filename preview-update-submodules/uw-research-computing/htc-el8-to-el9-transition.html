@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HTC Data Storage Locations</title>
+<title>HTC System Transition to a New Linux Version (CentOS Stream 9)</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -251,72 +251,105 @@
             
 
             <h1 class="uw-mini-bar mb-4">
-    HTC Data Storage Locations
+    HTC System Transition to a New Linux Version (CentOS Stream 9)
 </h1>
 
-            <p>[toc]</p>
+            <p>Starting in March 2024, CHTC’s high throughput computing (HTC) system began upgrading
+the Linux distribution and version we use on our servers to <strong>CentOS Stream 9</strong>. This transition is expected to complete in May 2024.</p>
 
-<h1 id="data-storage-locations">Data Storage Locations</h1>
-<p>The HTC system has two primary locations where users can store files: <code>/home</code> and <code>/staging</code>.</p>
+<p>Note that this page only applies to a transition on the HTC system (submitting jobs 
+with HTCondor). The high performance computing (HPC) cluster will be upgraded in 
+the near future as well and have a separate transition 
+page.</p>
 
-<p>The mechanisms behind <code>/home</code> and <code>/staging</code> that manage data are different and are optimized to handle different file sizes. <code>/home</code> is more efficient at managing small files, while <code>/staging</code> is more efficient at managing larger files. It’s important to place your files in the correct location, as it will improve the speed and efficiency at which your data is handled and will help maintain the stability of the HTC filesystem.</p>
+<p>All updates to the HTC system will be reflected on this page; significant changes may 
+also include a notification to the <code>chtc-users</code> mailing list.</p>
 
-<h1 id="understand-your-file-sizes">Understand your file sizes</h1>
-<p>To know whether a file should be placed in <code>/home</code> or in <code>/staging</code>, you will need to know it’s file size (also known as the amount of “disk space” a file uses). There are many commands to print out your file sizes, but here are a few of our favorite:</p>
+<h2 id="important-dates">Important Dates</h2>
 
-<h2 id="use-ls-with--lh-flags">Use <code>ls</code> with <code>-lh</code> flags</h2>
-<p>The command <code>ls</code> stands for “list” and, by default, lists the files in your current directory. The flag <code>-l</code> stands for “long” and <code>-h</code> stands for “human-readable”. When the flags are combined and passed to the <code>ls</code> command, it prints out the long metadata associated with the files and converts values such as file sizes into human-readable formats (instead of a computer readable format).</p>
+<p><em>Note: By default, CHTC-managed submit servers automatically add a job 
+requirement that requires jobs to run on servers running our primary operating system unless otherwise specified by the user.</em></p>
 
-<pre><code>NetID@submit$ ls -lh
-</code></pre>
+<ul>
+  <li><strong>April 2024</strong>: HTC system will support CentOS 7, CentOS Stream 8, and CentOS Stream 9. By default, 
+all jobs not using a software container will continue to match to servers running CentOS 8, however,
+<strong>users should begin using software containers or testing jobs on servers running CentOS Stream 9</strong>.</li>
+  <li><strong>May 1, 2024</strong>: Default operating system requirements for jobs will change from CentOS 8 to CentOS Stream 9.</li>
+  <li><strong>May 31, 2024</strong>: No more CentOS8 servers remain in the HTC system.</li>
+</ul>
 
-<h2 id="use-du--h">Use <code>du -h</code></h2>
-<p>Similar to <code>ls -lh</code>, <code>du -h</code> prints out the “disk usage” of directories in a human-readable format.</p>
+<h2 id="what-you-need-to-do">What You Need to Do</h2>
 
-<pre><code>NetID@submit$ du -h
-</code></pre>
+<h3 id="if-your-jobs-use-containers-docker-singularityapptainer">If your jobs use containers (Docker, Singularity/Apptainer)</h3>
 
-<h1 id="transferring-data-to-jobs">Transferring Data to Jobs</h1>
-<p>The HTCondor submit file <code>transfer_input_files =</code> line should always be used to tell HTCondor what files to transfer to each job, regardless of if that file is origionating from your <code>/home</code> or <code>/staging</code> directory. However, the syntax you use to tell HTCondor to fetch files from <code>/home</code> and <code>/staging</code> and transfer to your running job will change:</p>
+<p><strong>No action is needed for researchers already using a Docker or Singularity/Apptainer software containers in their jobs.</strong> Because software containers have a small operating system installed inside of them, these jobs carry everything they need with them and do not rely signifcantly on the host operating system. By default, your jobs will match to any operating system in the HTC pool, including the new CentOS Stream 9 hosts.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Input Sizes</th>
-      <th>File Location</th>
-      <th>Submit File Syntax to Transfer to Jobs</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0-500 MB</td>
-      <td>/home</td>
-      <td>transfer_input_files = input.txt</td>
-    </tr>
-    <tr>
-      <td>500-10GB</td>
-      <td>/staging</td>
-      <td>transfer_input_files = **osdf:///chtc/staging/NetID/input.txt</td>
-    </tr>
-    <tr>
-      <td>10GB +</td>
-      <td>/staging</td>
-      <td>transfer_input_files = **file:///staging/NetID/input.txt</td>
-    </tr>
-  </tbody>
-</table>
+<h3 id="all-other-jobs-not-using-containers">All other jobs (not using containers)</h3>
 
-<h2 id="transfer-data-back-from-jobs-to-home-or-staging">Transfer Data Back from Jobs to <code>/home</code> or <code>/staging</code></h2>
+<p><strong>Researchers not already using a Docker or Apptainer software container</strong> will need to either</p>
 
-<p>When a job completes, by default, HTCondor will return newly created or edited files on the top level directory back to your <code>/home</code> directory.</p>
+<ul>
+  <li>(a) test their software/code on a CentOS Stream 9 machine to see their software needs to be reinstalled. See <a href="#option-2-transition-to-a-new-operating-system">Transition to New Operating System</a>.</li>
+  <li><strong>or</strong></li>
+  <li>(b) switch to using a software container (recommended). See  <a href="#option-1-use-a-software-container-recommended">below</a> for additional information.</li>
+</ul>
 
-<p>To transfer files or folders back to <code>/staging</code>, in your HTCondor submit file, use 
-transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt”, where <code>output1.txt</code> is the name of the output file or folder you would like transfered back to a /staging directory.</p>
+<p>If you would like to access as much computing capacity as possible, consider using a Docker or Apptainer software container for your jobs so that your jobs can match to a variety of operating systems. See the <a href="#option-1-use-a-software-container-recommended">information below</a> for detailed instructions on creating and using software containers.</p>
 
-<p>If you have more than one file or folder to transfer back to <code>/staging</code>, use a semicolon (;) to seperate multiple files for HTCondor to transfer back like so: 
-transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt; output2.txt = file:///staging/NetID/output2.txt”</p>
+<p>If you are unable to test or transition your jobs to CentOS Stream 9 before May 1st, there is an option to opt into CentOS Stream 8 for the short term. See <a href="#option-2-transition-to-a-new-operating-system">Transition to New Operating System</a>.</p>
 
-<p>Make sure to only include one set of quotation marks that wraps around the information you are feeding to <code>transfer_output_remaps =</code>.</p>
+<h2 id="options-for-transitioning-your-jobs">Options For Transitioning Your Jobs</h2>
+
+<ol>
+  <li><a href="#option-1-use-a-software-container-recommended">Use a Container (recommended)</a></li>
+  <li><a href="#option-2-transition-to-a-new-operating-system">Transition to  New Operating System</a></li>
+</ol>
+
+<h3 id="option-1-use-a-software-container-recommended">Option 1: Use a Software Container (Recommended)</h3>
+
+<p>Using a software container to provide a base version of Linux will allow you to 
+run on any nodes in the HTC system regardless of the operating system it is running, and not limit you to a subset of nodes.</p>
+
+<p>CHTC provides helpful information for learning about creating and using Docker and Apptainer software commands:</p>
+
+<p><strong>Apptainer</strong></p>
+<ul>
+  <li><a href="apptainer-htc.html">Use Apptainer Containers</a></li>
+  <li><a href="apptainer-build.html">Build an Apptainer Container</a></li>
+  <li><a href="apptainer-htc-advanced-example.html">Advanced Apptainer Example - SUMO</a></li>
+</ul>
+
+<p><strong>Docker</strong></p>
+<ul>
+  <li><a href="docker-test.html">Explore and Test Docker Containers</a></li>
+  <li><a href="docker-build.html">Build a Docker Container Image</a></li>
+  <li><a href="docker-jobs.html">Running HTC Jobs Using Docker Containers</a></li>
+</ul>
+
+<p><strong>CHTC users are welcome to reach out to the Facilitation team via email or in office hours for help installing their software into a container.</strong></p>
+
+<h3 id="option-2-transition-to-a-new-operating-system">Option 2: Transition to a New Operating System</h3>
+
+<p>This option is more limiting because 
+you are restricted to operating systems used by CHTC, and the number of nodes 
+running that operating system.</p>
+
+<p>Researchers that do not wish to use containers for their job should test their jobs on the CentOS Stream 9 machines as soon as possible so that jobs are not significantly disrupted by this transition. We recommend:</p>
+
+<ul>
+  <li>Test your jobs by requesting the new operating system  (<code>chtc_want_el9 = true</code>, see
+more details below) for 1-2 test jobs. (Note that after May 1, this option will not be required as CentOS Stream 9 will be the default.)</li>
+  <li>If needed, recompile your code.</li>
+</ul>
+
+<p>Note that if you have not tested your code by May 1, you may want to opt into CentOS Stream 8 temporarily until you have tested and transitioned your code. Instructions for requesting a specific operating system(s) are outlined here:</p>
+
+<ul>
+  <li><a href="os-request-htc.html#option-2-requesting-a-specific-operating-system">Use Custom Linux Versions in CHTC</a></li>
+</ul>
+
+<p><strong>If you are having trouble getting your jobs to run successfully on the new operating system</strong>, 
+please contact the facilitation team at chtc@cs.wisc.edu or <a href="/uw-research-computing/get-help.html">come to office hours</a></p>
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -342,15 +375,15 @@ transfer_output_remaps = “output1.txt = file:///staging/NetID/output1.txt; out
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="basics-and-policies">
-                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#basics-and-policies-collapse" aria-expanded="false" aria-controls="basics-and-policies">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#basics-and-policies-collapse" aria-expanded="false" aria-controls="basics-and-policies">
                                     Basics and Policies
                                 </button>
                             </h2>
-                            <div id="basics-and-policies-collapse" class="accordion-collapse collapse " aria-labelledby="basics-and-policies" data-bs-parent="#guide-sidebar">
+                            <div id="basics-and-policies-collapse" class="accordion-collapse collapse show " aria-labelledby="basics-and-policies" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htc-el8-to-el9-transition">HTC System Transition to a New Linux Version (CentOS Stream 9)</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-update-submodules/uw-research-computing/htc-el8-to-el9-transition">HTC System Transition to a New Linux Version (CentOS Stream 9)</a>
                                     </div>
                                 
 
