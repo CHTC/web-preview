@@ -416,12 +416,11 @@ the final tarball:</p>
 <p>The tar archive, <code>env-name.tar.gz</code>, created in the previous step will be used as input for 
 subsequent job submission. As with all job input files, you should check the size of this 
 Conda environment file. <strong>If &gt;100MB in size, you should NOT transfer the tar ball using 
-<code>transfer_input_files</code></strong>. Instead, you should plan to use either CHTC’s web proxy, SQUID or 
+<code>transfer_input_files</code></strong>. Instead, you should plan to use the 
 large data filesystem Staging. Please contact a research computing facilitators at 
 chtc@cs.wisc.edu to determine the best option for your jobs.</p>
 
-<p>More information is available at <a href="file-avail-squid.html">File Availability with Squid Web Proxy</a> 
-and <a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a>.</p>
+<p>More information is available at <a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a>.</p>
 
 <h2 id="5-create-a-job-executable">5. Create a Job Executable</h2>
 
@@ -459,9 +458,8 @@ python3 hello.py
   <li>Remember to transfer your Python script and the environment <code>tar.gz</code> file via
  <code>transfer_input_files</code>. 
 <strong>Since the <code>tar.gz</code> file will almost certainly be larger than 100MB, 
-please <a href="mailto:chtc@cs.wisc.edu">email</a> us about different tools for 
-delivering the installation to your jobs, 
-likely our <a href="file-avail-squid.html">SQUID web proxy</a>.</strong></li>
+please place it in your <code>/staging</code> directory and use the instructions in 
+(file-avail-largedata.html) to transfer the <code>tar.gz</code> file instead.</strong></li>
 </ul>
 
 <!--
