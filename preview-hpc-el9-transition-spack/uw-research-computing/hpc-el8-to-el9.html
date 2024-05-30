@@ -473,6 +473,102 @@ CHTC also uses Spack to install the software underlying the system-wide modules 
   <p>If you have not used Spack before, you can skip this section and go directly to the <a href="hpc-spack-setup.html">Set Up Spack on HPC</a> guide.</p>
 </blockquote>
 
+<p>Here is the general process for setting up your software on the upgraded EL9 system:</p>
+
+<ol>
+  <li>
+    <p>Identify the environments you currently have and which you want to reproduce on the upgraded system.</p>
+  </li>
+  <li>
+    <p>Remove your existing Spack folders.</p>
+  </li>
+  <li>
+    <p>Do a clean installation of Spack.</p>
+  </li>
+  <li>
+    <p>In an interactive job, create your Spack environment(s) and install the packages as you did previously.</p>
+  </li>
+  <li>
+    <p>Update your job submission scripts and/or recompile programs as needed to use the new Spack environment(s).</p>
+  </li>
+</ol>
+
+<p><em>The following instructions assume that you installed Spack in your home (<code>~/</code>) directory for individual use.</em></p>
+
+<h4 id="1-identify-your-environments">1. Identify your environments</h4>
+
+<p>You can see your Spack environments with</p>
+
+<pre><code>spack env list
+</code></pre>
+
+<p>Activate an environment that you want to replicate with</p>
+
+<pre><code>spack env activate environment_name
+</code></pre>
+
+<p>Then list your package “specs” with the command</p>
+
+<pre><code>spack find
+</code></pre>
+
+<p>There is a section <code>==&gt; Root specs</code> that lists the package specs you explicity added when you created your environment.
+Save a copy of these specs somewhere safe, so that you can use them to replicate the environment later on.
+You can ignore <code>installed packages</code> section, as that will certainly change on the new system.</p>
+
+<p>Repeat the above steps for each environment you want to replicate on the upgraded system.</p>
+
+<h4 id="2-remove-your-existing-spack-folders">2. Remove your existing Spack folders</h4>
+
+<p>The easiest way to update Spack for the upgraded system is to remove the current Spack installation and reinstall from scratch.</p>
+
+<blockquote>
+  <p>Before proceeding, you may want to make a backup of each folder using</p>
+
+  <pre><code>tar -czf folder_name.tar.gz ~/folder_name
+</code></pre>
+</blockquote>
+
+<p>For most users, the following commands should work:</p>
+
+<pre><code>cd ~/
+rm -rf spack spack_programs spack_modules .spack
+</code></pre>
+
+<p>The command may take a while to run.</p>
+
+<h4 id="3-fresh-install-of-spack">3. Fresh install of Spack</h4>
+
+<p>Next, follow the instructions in our guide <a href="hpc-spack-setup.html">Set Up Spack on HPC</a> to do a fresh installation of Spack.
+The commands in the guide have been updated for setting up Spack on the new operating system.</p>
+
+<h4 id="4-recreate-your-environments">4. Recreate your environments</h4>
+
+<p>Follow the instructions in our guide <a href="hpc-spack-install.html">Install Software Using Spack</a> to create your desired environments
+using the “root specs” that you saved earlier.</p>
+
+<p><strong>NOTE</strong>: We’ve made small but important change to this guide: <strong>you should always start an interactive Slurm job before creating or modifying a Spack environment</strong>.
+The login server uses different hardware than the execute servers, and the mismatch leads to Spack using the wrong settings for installing packages.
+Of course, as before, you should only install packages while in interactive Slurm job.</p>
+
+<p>Behind the scenes, we’ve made a few changes to the configuration that will hopefully make the package installation much smoother.</p>
+
+<h4 id="5-update-your-workflow">5. Update your workflow</h4>
+
+<p>Finally, remember to update your workflow to use the new Spack environments and the packages installed therein.</p>
+
+<ul>
+  <li>
+    <p>If you explicitly provid paths to packages installed using Spack, be sure to update those paths in your compiler configuration or in your job submission script.</p>
+  </li>
+  <li>
+    <p>If you used Spack to provide dependencies for manually compiling a program, remember to recompile the program.</p>
+  </li>
+  <li>
+    <p>If you changed the name of your environment, be sure to update the name in your job submission script.</p>
+  </li>
+</ul>
+
     </main>
     <footer id="colophon" class="uw-footer">
     <div class="uw-footer-content">
