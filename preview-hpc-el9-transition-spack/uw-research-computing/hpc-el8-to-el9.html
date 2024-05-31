@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title></title>
+<title>HPC System Transition to a New Linux Version (CentOS Stream 9)</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -232,7 +232,14 @@
 
 
     <main id="main" style="min-height: 60vh;">
-        <p>Starting in May 2024, CHTC’s high performance computing (HPC) cluster began upgrading
+        <div class="container-xxl mb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-9 mw-1000">
+            <h1 class="uw-mini-bar mb-4">
+    HPC System Transition to a New Linux Version (CentOS Stream 9)
+</h1>
+
+            <p>Starting in May 2024, CHTC’s high performance computing (HPC) cluster began upgrading
 the Linux distribution and version we use on our servers to <strong>CentOS Stream 9</strong> (EL9). This transition is expected to complete in June 2024.</p>
 
 <p>Note that this page only applies to a transition on the HPC cluster. For information 
@@ -244,10 +251,10 @@ also include a notification to the <code>chtc-users</code> mailing list.</p>
 <h2 id="important-dates">Important Dates</h2>
 
 <ul>
-  <li><strong>May 15</strong>: Worker nodes start transitioning from the existing cluster to upgraded cluster partitions.</li>
-  <li><strong>May 22</strong>: Log in to upgraded cluster login node is available.</li>
-  <li><strong>May 22 - May 31</strong>: Users should rebuild their code and test jobs on</li>
-  <li><strong>June 1, 2024</strong>: The old cluster partitions are closed.</li>
+  <li><strong>May 31</strong>: Log in to upgraded cluster login node is available. Worker nodes start transitioning from the existing cluster to upgraded cluster partitions.</li>
+  <li><strong>May 31 - June 17</strong>: Users should rebuild their code and test jobs on the upgraded cluster. Users should be running primarily on the upgraded cluster.</li>
+  <li><strong>June 17</strong>: Most nodes will have been upgraded and transitioned.</li>
+  <li><strong>June 24</strong>: The old cluster partitions are closed.</li>
 </ul>
 
 <h2 id="what-is-changing">What is Changing</h2>
@@ -568,6 +575,162 @@ Of course, as before, you should only install packages while in interactive Slur
     <p>If you changed the name of your environment, be sure to update the name in your job submission script.</p>
   </li>
 </ul>
+
+        </div>
+        <div class="col-3 d-none d-lg-block">
+            
+
+
+
+    <div id="guide-sidebar">
+        
+            
+
+            
+            
+
+            <h6 class="mt-5">HPC Guides</h6>
+            <div class="accordion accordion-flush">
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="basics-and-policies">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#basics-and-policies-collapse" aria-expanded="false" aria-controls="basics-and-policies">
+                                    Basics and Policies
+                                </button>
+                            </h2>
+                            <div id="basics-and-policies-collapse" class="accordion-collapse collapse show " aria-labelledby="basics-and-policies" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="fw-bolder" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/hpc-el8-to-el9">HPC System Transition to a New Linux Version (CentOS Stream 9)</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/hpc-overview">HPC Cluster Overview</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/connecting">Log In to CHTC Resources</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/transfer-files-computer">Transfer Files between CHTC and your Computer</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/configure-ssh">Automate CHTC Log In</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/transfer-data-researchdrive">Transfer Files Between CHTC and ResearchDrive</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/github-remote-access">Access a Private GitHub Repository Remotely</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="job-submission">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#job-submission-collapse" aria-expanded="false" aria-controls="job-submission">
+                                    Job Submission
+                                </button>
+                            </h2>
+                            <div id="job-submission-collapse" class="accordion-collapse collapse " aria-labelledby="job-submission" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/hpc-job-submission">Submitting and Managing Jobs Using SLURM</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+                
+                    
+
+                        
+
+                        
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header mt-0" id="software-solutions">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                    Software Solutions
+                                </button>
+                            </h2>
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/hpc-software">Use Software on the HPC Cluster</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/hpc-spack-setup">Set Up Spack on HPC</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/hpc-spack-install">Install Software Using Spack</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/hpc-spack-modules">Create Custom Modules Using Spack</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/apptainer-hpc">Using Apptainer Containers on HPC</a>
+                                    </div>
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-hpc-el9-transition-spack/uw-research-computing/apptainer-build">Building an Apptainer Container</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    
+                
+                    
+                
+                    
+                
+            </div>
+        
+    </div>
+
+
+
+        </div>
+    </div>
+</div>
 
     </main>
     <footer id="colophon" class="uw-footer">
