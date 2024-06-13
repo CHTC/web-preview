@@ -432,6 +432,17 @@ the attribute <code>Capability</code>, your <code>require_gpus</code> statement 
     <pre class="sub"><code>require_gpus = (Capability &gt;= 7.5) &amp;&amp; (GlobalMemoryMb &gt;= 11000)
 </code></pre>
     <p>Ensure all specified requirements match the attributes of the GPU/Server of interest. HTCondor matches jobs to GPUs that match all specified requirements. Otherwise, the jobs will sit idle indefinitely.</p>
+
+    <blockquote>
+      <p>We are testing a new set of submit commands for specifying the requirements of the GPU:</p>
+
+      <pre class="sub"><code>gpus_minimum_capability = &lt;version&gt;
+gpus_maximum_capability = &lt;version&gt;
+gpus_minimum_memory = &lt;quantity in MB&gt;
+</code></pre>
+
+      <p>More information on these commands can be found in the <a href="https://htcondor.readthedocs.io/en/latest/man-pages/condor_submit.html#gpus_minimum_capability">HTCondor manual</a>.</p>
+    </blockquote>
   </li>
   <li>
     <p><strong>Indicate Software or Data Requirements Using <code>requirements</code></strong>: If your data is large enough to 

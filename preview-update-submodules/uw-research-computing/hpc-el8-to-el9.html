@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Using Apptainer Containers on HPC</title>
+<title>HPC System Transition to a New Linux Version (CentOS Stream 9)</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -232,157 +232,349 @@
 
 
     <main id="main" style="min-height: 60vh;">
-        <main id="main" style="min-height: 60vh;">
-    <div class="container-xxl mb-5">
+        <div class="container-xxl mb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
-            
-
             <h1 class="uw-mini-bar mb-4">
-    Using Apptainer Containers on HPC
+    HPC System Transition to a New Linux Version (CentOS Stream 9)
 </h1>
 
-            <h2 id="introduction">Introduction</h2>
+            <p>Starting in May 2024, CHTC’s high performance computing (HPC) cluster began upgrading
+the Linux distribution and version we use on our servers to <strong>CentOS Stream 9</strong> (EL9). This transition is expected to complete in June 2024.</p>
 
-<p>Similar to Docker containers, Apptainer environments allow users to prepare portable software and computing environments that can be sent to many jobs. 
-This means your jobs will run in a more consistent environment that is easily reproducible by others.</p>
+<p>Note that this page only applies to a transition on the HPC cluster. For information 
+on the HTC system transition, see <a href="htc-el8-to-el9-transition.html">HTC System Transition to a New Linux Version (CentOS Stream 9)</a></p>
 
-<div class="d-flex flex-column mb-5">
+<p>All updates to the HPC Cluster will be reflected on this page; significant changes may 
+also include a notification to the <code>chtc-users</code> mailing list.</p>
 
-<h2>Table of Contents</h2>
+<h2 id="important-dates">Important Dates</h2>
 
-<div class="uw-sidebar-box me-auto">
-<div class="uw-directory">
+<ul>
+  <li><strong>May 31</strong>: Log in to upgraded cluster login node is available. Worker nodes start transitioning from the existing cluster to upgraded cluster partitions.</li>
+  <li><strong>May 31 - June 17</strong>: Users should rebuild their code and test jobs on the upgraded cluster. Users should be running primarily on the upgraded cluster.</li>
+  <li><strong>June 17</strong>: Most nodes will have been upgraded and transitioned.</li>
+  <li><strong>June 24</strong>: The old cluster partitions are closed.</li>
+</ul>
 
-      <p><a href="#create-a-definition-file">Create a Definition File</a></p>
+<h2 id="what-is-changing">What is Changing</h2>
 
-      <p><a href="#start-an-interactive-session">Start an Interactive Session</a></p>
+<p>As part of this transition, there will be a new login node for 
+the HPC cluster: <code>spark-login.chtc.wisc.edu</code>.</p>
 
-      <p><a href="#build-your-container">Build Your Container</a></p>
+<p>If you log into <code>spark-login</code>, you will have access to a new 
+module stack, compiled on CentOS Stream 9, and the partitions available will 
+have worker nodes that are running CentOS Stream 9.</p>
 
-      <p><a href="#test-your-container">Test Your Container</a></p>
+<p>The files in your <code>/home</code> and <code>/scratch</code> directories will be unchanged.</p>
 
-      <p><a href="#use-an-apptainer-container-in-hpc-jobs">Use an Apptainer Container in HPC Jobs</a></p>
+<h2 id="what-you-need-to-do">What You Need to Do</h2>
 
-    </div>
-</div>
-</div>
+<p><strong>As soon as possible</strong>, do the following:</p>
 
-<h2 id="create-a-definition-file">Create a Definition File</h2>
+<ol>
+  <li>
+    <p>Log into the new login node <code>spark-login.chtc.wisc.edu</code>.</p>
+  </li>
+  <li>
+    <p>Run a typical job as a test. It is highly likely that certain codes will 
+fail on the new worker nodes, as the underlying dependencies of your code, including 
+the operating system, and any modules used, have changed.</p>
+  </li>
+  <li>
+    <p>If your jobs no longer run, archive your previous software installation(s) and 
+rebuild your software. The <a href="#software-changes">Software Changes</a> section below has 
+more specific information about how to do this.</p>
+  </li>
+  <li>
+    <p>If you recompiled your code, run a few small test jobs to confirm that the 
+code is working correctly.</p>
+  </li>
+</ol>
 
-<p>The definition (<code>.def</code>) file contains the instructions for what software to install while building the container.
-CHTC provides example definition files in the <code>software</code> folder of our <a href="https://github.com/CHTC/recipes">Recipes GitHub repository</a>. We strongly recommend that you use one of the existing examples as the starting point for creating your own container.</p>
+<p><strong>If you are having trouble getting your jobs to run successfully on the new operating system</strong>, 
+please contact the facilitation team at chtc@cs.wisc.edu or <a href="/uw-research-computing/get-help.html">come to office hours</a></p>
 
-<p>To create your own container using Apptainer, you will need to create a definition (<code>.def</code>) file. 
-We encourage you to read our <a href="apptainer-build.html">Building an Apptainer Container</a> guide to learn more about the components of the Apptainer definition file.</p>
+<h2 id="software-changes">Software Changes</h2>
 
-<h3 id="regarding-mpi">Regarding MPI</h3>
+<p>Almost all packages and libraries have been upgraded as part of the operating system transition. 
+Unless your code is fairly simple, you will likely need to recompile it.</p>
 
-<p><strong>We are still in the process of developing guidance for deploying MPI-based software in containers on the High Performance system.</strong>
-The instructions in this guide should work for <em>single</em>-node jobs.
-<em>Multi</em>-node jobs require the MPI installed in the container to integrate with Slurm and/or the cluster installation of MPI, and we are still exploring how to do so.</p>
+<p><strong>Remember to always compile your code/programs in a (interactive) Slurm job! <a href="hpc-job-submission.html#for-simple-testing-or-compiling">How To</a></strong></p>
 
-<h2 id="start-an-interactive-session">Start an Interactive Session</h2>
+<blockquote>
+  <p>Not only does this help avoid stressing the resources of the login server, but the upgraded login server uses a newer CPU architecture than the worker nodes in the cluster.
+Most compilers auto-detect the CPU architecture and adapt the compilation to use that architecture.
+Attempting to use such compiled code on a different/older CPU architecture can lead to “Illegal instruction” errors, among others.</p>
+</blockquote>
 
-<p>Building a container can be a computationally intense process. 
-As such, we require that you only build containers while in an interactive session.
-On the High Performance system, you can use the following command to start the interactive session:</p>
+<h3 id="modules">Modules</h3>
 
-<pre class="term"><code>srun --mpi=pmix -n4 -N1 -t 240 -p int --pty bash
+<p>Most of the modules on the upgraded cluster have been kept, but with upgraded versions.
+The following table is a comparison of the modules on the old operating system (EL8) versus the new operating system (EL9).
+(Adapted from the output of <code>module avail</code> on the respective servers.)</p>
+
+<p>You will likely need to recompile your code to use the new module versions.
+Remember to also update any <code>module load</code> commands that specify a particular version of the module,
+otherwise you may encounter “module(s) are unknown” errors.</p>
+
+<h4 id="module-comparison">Module comparison</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Module name</th>
+      <th style="text-align: left">Old version (EL8)</th>
+      <th style="text-align: left">New version (EL9)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">abaqus</td>
+      <td style="text-align: left">2018-hotfix-1904</td>
+      <td style="text-align: left"><em>TBD</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ansys</td>
+      <td style="text-align: left">2022r24</td>
+      <td style="text-align: left">2024r1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">aocc</td>
+      <td style="text-align: left">3.2.0</td>
+      <td style="text-align: left">4.2.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cmake</td>
+      <td style="text-align: left">3.27.7</td>
+      <td style="text-align: left">3.27.9</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">comsol</td>
+      <td style="text-align: left">6.0, 6.1, 6.2</td>
+      <td style="text-align: left">6.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">gcc</td>
+      <td style="text-align: left">11.3.0</td>
+      <td style="text-align: left">13.2.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">hdf5 (intel-oneapi-mpi)</td>
+      <td style="text-align: left">1.12.2</td>
+      <td style="text-align: left"><em>dropped</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">hdf5 (openmpi)</td>
+      <td style="text-align: left">1.12.2</td>
+      <td style="text-align: left">1.14.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">intel-oneapi-compilers</td>
+      <td style="text-align: left">2023.2.1</td>
+      <td style="text-align: left">2024.1.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">intel-oneapi-mkl</td>
+      <td style="text-align: left">2023.2.0</td>
+      <td style="text-align: left">2024.0.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">intel-oneapi-mpi</td>
+      <td style="text-align: left">2021.10.0</td>
+      <td style="text-align: left">2021.12.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">intel-tbb</td>
+      <td style="text-align: left">2021.9.0</td>
+      <td style="text-align: left"><em>deprecated</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lmstat.comsol</td>
+      <td style="text-align: left">6.0</td>
+      <td style="text-align: left"><em>TBD</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">lumerical-fdtd</td>
+      <td style="text-align: left">2022-r2.4</td>
+      <td style="text-align: left">2024-R1.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">matlab</td>
+      <td style="text-align: left">R2021b, R2022b</td>
+      <td style="text-align: left">R2024a</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mvapich2</td>
+      <td style="text-align: left">2.3.7-1</td>
+      <td style="text-align: left"><em>deprecated</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mvapich</td>
+      <td style="text-align: left"><em>n/a</em></td>
+      <td style="text-align: left">3.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">netcdf-c</td>
+      <td style="text-align: left">4.8.1</td>
+      <td style="text-align: left">4.9.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">netcdf-cxx4</td>
+      <td style="text-align: left">4.3.1</td>
+      <td style="text-align: left">4.3.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">netcdf-fortran</td>
+      <td style="text-align: left">4.5.4</td>
+      <td style="text-align: left">4.6.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">openmpi (aocc)</td>
+      <td style="text-align: left">4.1.3</td>
+      <td style="text-align: left"><em>dropped</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">openmpi (gcc)</td>
+      <td style="text-align: left">4.1.3</td>
+      <td style="text-align: left">5.0.3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">patchelf (gcc)</td>
+      <td style="text-align: left">0.17.2</td>
+      <td style="text-align: left">0.17.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">patchelf (intel)</td>
+      <td style="text-align: left">0.18.0</td>
+      <td style="text-align: left"><em>dropped</em></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">patchelf (oneapi)</td>
+      <td style="text-align: left">0.18.0</td>
+      <td style="text-align: left">0.17.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">petsc</td>
+      <td style="text-align: left">3.18.1</td>
+      <td style="text-align: left">3.21.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">pmix</td>
+      <td style="text-align: left"><em>n/a</em></td>
+      <td style="text-align: left">5.0.1</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Different versions of module packages, or packages that are “dropped” or “deprecated” may be manually installed by the user using <a href="#spack">Spack</a>.</p>
+</blockquote>
+
+<h3 id="spack">Spack</h3>
+
+<p>Spack is a package manager platform that allows users to install software without admin privileges.
+CHTC also uses Spack to install the software underlying the system-wide modules discussed above.</p>
+
+<blockquote>
+  <p>If you have not used Spack before, you can skip this section and go directly to the <a href="hpc-spack-setup.html">Set Up Spack on HPC</a> guide.</p>
+</blockquote>
+
+<p>Here is the general process for setting up your software on the upgraded EL9 system; detailed instructions are provided after the general process:</p>
+
+<ol>
+  <li>
+    <p>Identify the environments you currently have and which you want to reproduce on the upgraded system.</p>
+  </li>
+  <li>
+    <p>Remove your existing Spack folders.</p>
+  </li>
+  <li>
+    <p>Do a clean installation of Spack.</p>
+  </li>
+  <li>
+    <p>In an interactive job, create your Spack environment(s) and install the packages as you did previously.</p>
+  </li>
+  <li>
+    <p>Update your job submission scripts and/or recompile programs as needed to use the new Spack environment(s).</p>
+  </li>
+</ol>
+
+<p><em>The following instructions assume that you previously installed Spack in your home (<code>~/</code>) directory for individual use.</em></p>
+
+<h4 id="1-identify-your-environments">1. Identify your environments</h4>
+
+<p>You can see your Spack environments with</p>
+
+<pre class="term"><code>spack env list
 </code></pre>
 
-<h2 id="build-your-container">Build Your Container</h2>
+<p>Activate an environment that you want to replicate with</p>
 
-<p>We recommend working from your <code>/scratch</code> directory when first building your container.</p>
-
-<p>Once the interactive session starts, set the Apptainer temporary directory:</p>
-
-<pre class="term"><code>export APPTAINER_TMPDIR=/scratch/$USER/apptainer/tmp
-mkdir -p $APPTAINER_TMPDIR
+<pre class="term"><code>spack env activate environment_name
 </code></pre>
 
-<p>To build a container, Apptainer uses the instructions in the <code>.def</code> file to create a <code>.sif</code> file. The <code>.sif</code> file is the compressed collection of all the files that comprise the container.</p>
+<p>Then list your package “specs” with the command</p>
 
-<p>To build your container, run this command:</p>
-
-<pre class="term"><code>apptainer build my-container.sif image.def
+<pre class="term"><code>spack find
 </code></pre>
 
-<p>Feel free to rename the <code>.sif</code> file as you desire; for the purposes of this guide we are using <code>my-container.sif</code>.</p>
+<p>There is a section “<code>==&gt; Root specs</code>” that lists the package specs you explicity added when you created your environment.
+Save a copy of these specs somewhere safe, so that you can use them to replicate the environment later on.
+You can ignore the “<code>installed packages</code>” section, as that will certainly change on the new system.</p>
 
-<p>As the command runs, a variety of information will be printed to the terminal regarding the container build process.
-Unless something goes wrong, this information can be safely ignored.
-Once the command has finished running, you should see <code>INFO:    Build complete: my-container.sif</code>.
-Using the <code>ls</code> command, you should now see the container file <code>my-container.sif</code>.</p>
+<p>Repeat the above steps for each environment you want to replicate on the upgraded system.</p>
 
-<p>If the build command fails, examine the output for error messages that may explain why the build was unsuccessful.
-Typically there is an issue with a package installation, such as a typo or a missing but required dependency.
-Sometimes there will be an error during an earlier package installation that doesn’t immediately cause the container build to fail.
-But, when you test the container, you may notice an issue with the package.</p>
+<h4 id="2-remove-your-existing-spack-folders">2. Remove your existing Spack folders</h4>
 
-<p>If you are having trouble finding the error message, edit the definition file and remove (or comment out) the installation commands that come after the package in question.
-Then rebuild the image, and now the relevant error messages should be near the end of the build output.</p>
+<p>The easiest way to update Spack for the upgraded system is to remove the current Spack installation and reinstall from scratch.</p>
 
-<p>For more information on building Apptainer containers, see our <a href="apptainer-build.html">Building an Apptainer Container</a> guide.</p>
+<blockquote>
+  <p>Before proceeding, you may want to make a backup of each folder using</p>
 
-<h2 id="test-your-container">Test Your Container</h2>
+  <pre class="term"><code>tar -czf folder_name.tar.gz ~/folder_name
+</code></pre>
+</blockquote>
 
-<p>Once your container builds successfully, it is important to test it to make sure you have all software, packages, and libraries installed correctly.</p>
+<p>For most users, the following commands should work:</p>
 
-<p>To test your container, use the command</p>
-
-<pre class="term"><code>apptainer shell -e my-container.sif
+<pre class="term"><code>cd ~/
+rm -rf spack spack_programs spack_modules .spack
 </code></pre>
 
-<p>You should see your command prompt change to <code>Apptainer&gt;</code>.</p>
+<p>The command may take a while to run.</p>
 
-<p>The <code>shell</code> command logs you into a terminal “inside” the container, with access to the libraries, packages, and programs that were installed in the container following the instructions in your <code>image.def</code> file.
-(The <code>-e</code> option is used to prevent this terminal from trying to use the host system’s programs.)</p>
+<h4 id="3-fresh-install-of-spack">3. Fresh install of Spack</h4>
 
-<p>While “inside” the container, try to run your program(s) that you installed in the container. 
-Typically it is easiest to try to print your program’s “help” text, e.g., <code>my-program --help</code>. 
-If using a programming language such as <code>python3</code> or <code>R</code>, try to start an interactive code session and load the packages that you installed.</p>
+<p>Next, follow the instructions in our guide <a href="hpc-spack-setup.html">Set Up Spack on HPC</a> to do a fresh installation of Spack.
+The commands in the guide have been updated for setting up Spack on the new operating system.</p>
 
-<p>If you installed your program in a custom location, consider using <code>ls</code> to verify the files are in the right location. 
-You may need to manually set the <code>PATH</code> environment variable to point to the location of your program’s executable binaries.
-For example,</p>
+<h4 id="4-recreate-your-environments">4. Recreate your environments</h4>
 
-<pre class="term"><code>export PATH=/opt/my-program/bin:$PATH
-</code></pre>
+<p>Follow the instructions in our guide <a href="hpc-spack-install.html">Install Software Using Spack</a> to create your desired environments
+using the “root specs” that you saved earlier.</p>
 
-<p>Consult the “Special Considerations” section of our <a href="apptainer-build.html#special-considerations-for-building-your-container">Building an Apptainer Container</a> guide for additional information on setting up and testing your container.</p>
+<p><strong>NOTE</strong>: We’ve made small but important change to this guide: <strong>you should always start an interactive Slurm job before creating or modifying a Spack environment</strong>.
+The login server uses different hardware than the execute servers, and the mismatch leads to Spack using the wrong settings for installing packages.
+Of course, as before, you should only install packages while in interactive Slurm job.</p>
 
-<p>When you are finished running commands inside the container, run the command <code>exit</code> to exit the container. 
-Your prompt should change back to something like <code>[username@spark-a006 directory]$</code>.
-If you are satisfied with the container that you built, run the <code>exit</code> command again to exit the interactive Slurm session.</p>
+<p>Behind the scenes, we’ve made a few changes to the configuration that will hopefully make the package installation much smoother.</p>
 
-<h2 id="use-an-apptainer-container-in-hpc-jobs">Use an Apptainer Container in HPC Jobs</h2>
+<h4 id="5-update-your-workflow">5. Update your workflow</h4>
 
-<p>Now that you have the container image saved in the form of the <code>.sif</code> file, you can use it as the environment for running your HPC jobs.</p>
+<p>Finally, remember to update your workflow to use the new Spack environments and the packages installed therein.</p>
 
-<p>For execution on a <strong>single node</strong>, we recommend adding the following commands to your sbatch script:</p>
-
-<pre><code>export TMPDIR=/scratch/$USER/apptainer_tmp/${SLURM_JOB_ID}
-mkdir -p $TMPDIR
-
-srun apptainer exec -e \
-    --bind /home/$USER \
-    --bind /scratch/$USER \
-    --bind $TMPDIR \
-    my-container.sif my-job-script.sh
-
-rm -rf $TMPDIR
-</code></pre>
-
-<p>All of the commands that you want to execute using the container should go into <code>my-job-script.sh</code>.</p>
-
-<p>Then submit your job to Slurm as usual, as described in our <a href="hpc-job-submission.html">Submitting and Managing Jobs Using SLURM</a> guide.</p>
-
-<h3 id="on-multiple-nodes">On multiple nodes</h3>
-
-<p>We are still in the early stages of deploying containers on the High Performance system.
-A complicating factor is the construction of the <code>.def</code> file to deploy MPI on the system to allow for execution across multiple nodes.
-If you are interested in mutli-node execution using containers, contact a facilitator for more information.</p>
+<ul>
+  <li>
+    <p>If you explicitly provide paths to packages installed using Spack, be sure to update those paths in your compiler configuration or in your job submission script.</p>
+  </li>
+  <li>
+    <p>If you used Spack to provide dependencies for manually compiling a program, remember to recompile the program.</p>
+  </li>
+  <li>
+    <p>If you changed the name of your environment, be sure to update the name in your job submission script.</p>
+  </li>
+</ul>
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -408,15 +600,15 @@ If you are interested in mutli-node execution using containers, contact a facili
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="basics-and-policies">
-                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#basics-and-policies-collapse" aria-expanded="false" aria-controls="basics-and-policies">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#basics-and-policies-collapse" aria-expanded="false" aria-controls="basics-and-policies">
                                     Basics and Policies
                                 </button>
                             </h2>
-                            <div id="basics-and-policies-collapse" class="accordion-collapse collapse " aria-labelledby="basics-and-policies" data-bs-parent="#guide-sidebar">
+                            <div id="basics-and-policies-collapse" class="accordion-collapse collapse show " aria-labelledby="basics-and-policies" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/hpc-el8-to-el9">HPC System Transition to a New Linux Version (CentOS Stream 9)</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-update-submodules/uw-research-computing/hpc-el8-to-el9">HPC System Transition to a New Linux Version (CentOS Stream 9)</a>
                                     </div>
                                 
 
@@ -486,11 +678,11 @@ If you are interested in mutli-node execution using containers, contact a facili
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="software-solutions">
-                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
                                     Software Solutions
                                 </button>
                             </h2>
-                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
@@ -514,7 +706,7 @@ If you are interested in mutli-node execution using containers, contact a facili
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-update-submodules/uw-research-computing/apptainer-hpc">Using Apptainer Containers on HPC</a>
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/apptainer-hpc">Using Apptainer Containers on HPC</a>
                                     </div>
                                 
 
@@ -539,7 +731,7 @@ If you are interested in mutli-node execution using containers, contact a facili
         </div>
     </div>
 </div>
-</main>
+
     </main>
     <footer id="colophon" class="uw-footer">
     <div class="uw-footer-content">
