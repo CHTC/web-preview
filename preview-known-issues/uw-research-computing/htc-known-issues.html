@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Known Issues</title>
+<title>Known Issues on the HTC</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -237,29 +237,34 @@
             
 
             <h1 class="uw-mini-bar mb-4">
-    Known Issues
+    Known Issues on the HTC
 </h1>
 
-            
+            <p>This page documents some common and known issues encountered on the HTC system. While this page can be beneficial in troubleshooting, it does not contain a comprehensive list of errors.</p>
+
+<p>Visit our <a href="get-help">Get Help</a> page to find more resources for troubleshooting.</p>
+
 <div class="d-flex flex-column mb-5">
 
-<h2>Sections</h2>
+<h2>Table of Contents</h2>
 
 <div class="uw-sidebar-box me-auto">
 <div class="uw-directory">
 
       <ol>
-        <li><a href="#general">General</a></li>
-        <li><a href="#containers">Containers</a></li>
-        <li><a href="#gpus">GPUs</a></li>
+        <li><a href="#general-when-submitting-a-job-it-doesnt-run-goes-on-hold-and-shows-the-error-job-credentials-are-not-available">[General] When submitting a job, it doesn’t run / goes on hold and shows the error “Job credentials are not available”.</a></li>
+        <li><a href="#containers-when-building-an-apptainer-apt-commands-in-the-post-block-fail-to-run">[Containers] When building an Apptainer, “apt” commands in the %post block fail to run.</a></li>
+        <li><a href="#containers-when-attempting-to-run-a-docker-container-it-fails-with-the-error-message-fatal-tini-7-exec-myexecutablesh-failed-exec-format-error">[Containers] When attempting to run a Docker container, it fails with the error message “[FATAL tini (7)] exec ./myExecutable.sh failed: Exec format error”.</a></li>
+        <li><a href="#gpus-my-gpu-job-has-been-in-the-queue-for-a-long-period-of-time-and-is-not-starting">[GPUs] My GPU job has been in the queue for a long period of time and is not starting.</a></li>
       </ol>
 
     </div>
 </div>
 </div>
 
-<h2 id="general">General</h2>
-<h3 id="when-submitting-a-job-it-doesnt-run--goes-on-hold-and-shows-the-error-job-credentials-are-not-available">When submitting a job, it doesn’t run / goes on hold and shows the error “Job credentials are not available”.</h3>
+<hr width="100%" size="2" />
+
+<h3 style="color:#c5050c">[General] When submitting a job, it doesn't run / goes on hold and shows the error "Job credentials are not available".</h3>
 <h4 id="cause">Cause:</h4>
 <p>This is a complicated bug that can strike randomly. We’re working on a fix.</p>
 <h4 id="solution">Solution:</h4>
@@ -267,10 +272,10 @@
 <pre class="term"><code>echo | condor_store_cred add-oauth -s scitokens -i -
 </code></pre>
 
-<p><br /></p>
+<hr width="100%" size="2" />
 
-<h2 id="containers">Containers</h2>
-<h3 id="when-building-an-apptainer-apt-commands-in-the-post-block-fail-to-run">When building an Apptainer, “apt” commands in the %post block fail to run.</h3>
+<h3 style="color:#c5050c">[Container] When building an Apptainer, "apt" commands in the %post block fail to run.</h3>
+
 <h4 id="example-error-message">Example error message:</h4>
 <pre class="term"><code>Couldn't create temporary file /tmp/apt.conf.9vQdLs for passing config to apt-key
 </code></pre>
@@ -287,7 +292,10 @@ From: ubuntu:22.04
 </code></pre>
 <p>We also recommend using the <code>-y</code> option to prevent installation from hanging due to interactive prompts.</p>
 
-<h3 id="when-attempting-to-run-a-docker-container-it-fails-with-the-error-message-fatal-tini-7-exec-myexecutablesh-failed-exec-format-error">When attempting to run a Docker container, it fails with the error message “[FATAL tini (7)] exec ./myExecutable.sh failed: Exec format error”.</h3>
+<hr width="100%" size="2" />
+
+<h3 style="color:#c5050c">[Container] When attempting to run a Docker container, it fails with the error message "[FATAL tini (7)] exec ./myExecutable.sh failed: Exec format error".</h3>
+
 <h4 id="cause-2">Cause:</h4>
 <p>The Docker container is likely built on an Apple computer using an ARM processor, which is incompatible with Linux machines.</p>
 <h4 id="solution-2">Solution:</h4>
@@ -295,10 +303,10 @@ From: ubuntu:22.04
 <pre class="term"><code>docker build --platform linux/amd64 .
 </code></pre>
 
-<p><br /></p>
+<hr width="100%" size="2" />
 
-<h2 id="gpus">GPUs</h2>
-<h3 id="my-gpu-job-has-been-in-the-queue-for-a-long-period-of-time-and-is-not-starting">My GPU job has been in the queue for a long period of time and is not starting.</h3>
+<h3 style="color:#c5050c"> [GPU] My GPU job has been in the queue for a long period of time and is not starting. </h3>
+
 <h4 id="cause-3">Cause:</h4>
 <p>Jobs default to using CentOS9, but most GPU nodes are currently running CentOS8.</p>
 <h4 id="solution-3">Solution:</h4>
@@ -307,6 +315,7 @@ From: ubuntu:22.04
 </code></pre>
 
 <p><br /></p>
+<hr width="100%" size="2" />
 
 <h2 id="cant-find-your-issue">Can’t find your issue?</h2>
 <p>Visit our <a href="get-help">Get Help</a> page.</p>
@@ -608,7 +617,7 @@ From: ubuntu:22.04
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-known-issues/uw-research-computing/htc-known-issues">Known Issues</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-known-issues/uw-research-computing/htc-known-issues">Known Issues on the HTC</a>
                                     </div>
                                 
                             </div>
