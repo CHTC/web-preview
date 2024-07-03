@@ -258,7 +258,7 @@
 </div>
 </div>
 
-<h1 id="general">General</h1>
+<h2 id="general">General</h2>
 <h3 id="when-submitting-a-job-it-doesnt-run--goes-on-hold-and-shows-the-error-job-credentials-are-not-available">When submitting a job, it doesn’t run / goes on hold and shows the error “Job credentials are not available”.</h3>
 <h4 id="cause">Cause:</h4>
 <p>This is a complicated bug that can strike randomly. We’re working on a fix.</p>
@@ -267,7 +267,9 @@
 <pre class="term"><code>echo | condor_store_cred add-oauth -s scitokens -i -
 </code></pre>
 
-<h1 id="containers">Containers</h1>
+<p><br /></p>
+
+<h2 id="containers">Containers</h2>
 <h3 id="when-building-an-apptainer-apt-commands-in-the-post-block-fail-to-run">When building an Apptainer, “apt” commands in the %post block fail to run.</h3>
 <h4 id="example-error-message">Example error message:</h4>
 <pre class="term"><code>Couldn't create temporary file /tmp/apt.conf.9vQdLs for passing config to apt-key
@@ -293,7 +295,9 @@ From: ubuntu:22.04
 <pre class="term"><code>docker build --platform linux/amd64 .
 </code></pre>
 
-<h1 id="gpus">GPUs</h1>
+<p><br /></p>
+
+<h2 id="gpus">GPUs</h2>
 <h3 id="my-gpu-job-has-been-in-the-queue-for-a-long-period-of-time-and-is-not-starting">My GPU job has been in the queue for a long period of time and is not starting.</h3>
 <h4 id="cause-3">Cause:</h4>
 <p>Jobs default to using CentOS9, but most GPU nodes are currently running CentOS8.</p>
@@ -301,6 +305,11 @@ From: ubuntu:22.04
 <p>To your submit file, add the following line and resubmit:</p>
 <pre><code>requirements = (OpSysMajorVer &gt; 7)
 </code></pre>
+
+<p><br /></p>
+
+<h2 id="cant-find-your-issue">Can’t find your issue?</h2>
+<p>Visit our <a href="get-help">Get Help</a> page.</p>
 
         </div>
         <div class="col-3 d-none d-lg-block">
