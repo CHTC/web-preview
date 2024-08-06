@@ -240,7 +240,8 @@
         <li><a href="#sample-calculation-a-linear-least-squares-regression-on-life-expectancy-data">Sample calculation: A linear least squares regression on life expectancy data</a></li>
         <li><a href="#writing-a-submit-file-for-a-single-sample-calculation">Writing a submit file for a single sample calculation</a></li>
         <li><a href="#leveraging-processprocid-as-arguments">Leveraging $(Process)/$(ProcID) as arguments</a></li>
-        <li><a href="#filenames-as-arguments-using-queue-from-">Filenames as arguments using queue &lt;variable&gt; from &lt;list&gt;</a></li>
+        <li><a href="#filenames-as-arguments-using-queue-variable-from-list">Filenames as arguments using queue &lt;variable&gt; from &lt;list&gt;</a></li>
+        <li><a href="#writing-wrapper-scripts-for-passing-arguments">Writing wrapper scripts for passing arguments</a></li>
         <li><a href="#summary">Summary</a></li>
       </ul>
 
@@ -258,9 +259,9 @@
 
 <ol>
   <li>
-    <p>In your working directory on the access point, download <code>gapminder-life-expectancy.csv data</code>.</p>
+    <p>In your working directory on the access point, download <code>gapminder-life-expectancy.csv</code>.</p>
 
-    <pre class="term"><code>[user@ap2002]$ wget [insert link here]
+    <pre class="term"><code>[user@ap2002]$ wget https://chtc.cs.wisc.edu/uw-research-computing/files/gapminder-life-expectancy.csv
 </code></pre>
   </li>
   <li>
@@ -560,6 +561,102 @@ queue country from countries.txt
   </li>
 </ol>
 
+<h2 id="writing-wrapper-scripts-for-passing-arguments">Writing wrapper scripts for passing arguments</h2>
+<p>A wrapper script can be useful in jobs, enabling more complex operations and simple pre- and post- calculation commands. Wrapper scripts can also take and pass on arguments. Let’s see how to write a simple wrapper script for our calculation.</p>
+
+<p>In this exercise, we will obtain data for multiple countries between the years 2024 and 2033 and return them in tarballs organized by country.</p>
+
+<ol>
+  <li>
+    <p>Create <code>least_squares_range.sh</code>.</p>
+
+    <pre><code>#!/bin/bash
+
+# This wrapper script takes in four arguments:
+# Usage: ./least_squares_range.sh [CSV] [Country] [Start Year] [End Year]
+
+# Assign variables for readability
+CSV=$1
+Country=$2
+StartY=$3
+EndY=$4
+
+# Loop least_squares.py over start and end years
+for i in $(seq $StartY $EndY);
+do
+    ./least_squares.py ${CSV} $Country $i &gt; ${Country}_${i}.txt
+done
+
+# Create tarball
+tar -czf ${Country}.tar.gz ${Country}*.txt
+
+# Delete text files
+rm *.txt
+</code></pre>
+
+    <p>In a shell script, arguments are assigned integers according to their order. The executable script itself, <code>least_squares_range.sh</code>, is assigned <code>$0</code>.</p>
+
+    <p>While not necessary, it’s useful to assign descriptive variables to input arguments to keep track of what’s happening in the wrapper script. <code>Country=$2</code> assigns the variable <code>$Country</code> with the same value as the second argument. Note that there must be no spaces around the <code>=</code> sign.</p>
+
+    <p>The script then uses a simple <code>for</code> loop to run <code>least_squares.py</code> over a range of years and writes them to text files.</p>
+
+    <p>Once the loop is complete, the text files are consolidated into a tarball. Since this object is in the top-level directory of the job, it will automatically be transferred back to the submit server.</p>
+  </li>
+  <li>
+    <p>Create a new submit script, <code>least_squares_range.sub</code>.</p>
+
+    <pre><code># least_squares_range.sub - an example HTCondor submit file for passing arguments
+
+# Custom variables can be specified
+country = Brazil
+
+# Specify your executable and your arguments
+# Usage: ./least_squares_range.sh [CSV] [Country] [Start Year] [End Year]
+executable = least_squares_range.sh
+arguments = gapminder-life-expectancy.csv $(country) 2024 2033
+
+# Specify the log, standard error, and standard output (or screen output) files
+log = $(country)_24_33.log
+error = $(country)_24_33.err
+output = $(country)_24_33.out
+
+# We need to also transfer the csv file for the calculation
+transfer_input_files = gapminder-life-expectancy.csv, least_squares.py
+
+# Requirements for our calculation
+request_cpus = 1
+request_memory = 1GB
+request_disk = 1GB
+
+# Tell HTCondor to run instances of our calculation from a list
+queue
+</code></pre>
+
+    <p>Key highlights:</p>
+    <ul>
+      <li>The <code>executable</code> is now our wrapper script, <code>least_squares_range.sh</code></li>
+      <li>We edit the <code>arguments</code> line according to the usage of the wrapper script we wrote.</li>
+      <li><code>transfer_input_files</code> now includes <code>least_squares.py</code>. We now need to specify this file to be transferred over, since it is no longer our executable.</li>
+    </ul>
+  </li>
+  <li>Submit the job.
+    <pre class="term"><code> [user@ap2002]$ condor_submit least_squares_process.sub
+</code></pre>
+
+    <p>Monitor the job with <code>condor_q</code>.</p>
+  </li>
+  <li>If your job executed correctly, you should now have <code>Brazil.tar.gz</code>.
+    <pre class="term"><code> [user@ap2002]$ ls
+ Brazil_24_33.err
+ Brazil_24_33.log
+ Brazil_24_33.out
+ Brazil.tar.gz
+ least_squares_range.sh
+ least_squares_range.sub
+</code></pre>
+  </li>
+</ol>
+
 <h2 id="summary">Summary</h2>
 
 <ul>
@@ -567,6 +664,7 @@ queue country from countries.txt
   <li>Custom variables can be created within the submit script and utilized in arguments with the <code>$(variable)</code> syntax.</li>
   <li>HTCondor’s default variables, such as <code>$(Process)</code> can be leveraged in arguments.</li>
   <li>The <code>queue</code> attribute can be used to submit multiple jobs from one submit file that pass various arguments.</li>
+  <li>Wrapper scripts are useful for performing pre-/post- calculation commands or complex operations and can take and pass arguments.</li>
 </ul>
 
 <h2 id="see-also">See also</h2>
