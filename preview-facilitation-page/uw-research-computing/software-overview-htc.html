@@ -72,23 +72,6 @@
 
 
     
-
-
-
-
-
-
-
-<header id="branding-sub" class="uw-header circuit-background">
-    <div class="uw-header-container mt-2 mb-2">
-        <div class="uw-header-crest-title">
-            <div class="uw-header-crest">
-                <a href="/web-preview/preview-facilitation-page/"><img class="uw-crest-svg" src="/web-preview/preview-facilitation-page/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
-            </div>
-            
-        </div>
-    </div>
-</header>
     
 
 
@@ -102,6 +85,9 @@
     <div class="uw-main-nav">
         <nav class="uw-nav-menu uw-nav-menu-reverse" aria-label="Main Menu">
             <ul id="uw-main-nav">
+                <div class="uw-header-crest">
+                    <a href="/web-preview/preview-facilitation-page/"><img class="uw-crest-svg py-2" src="/web-preview/preview-facilitation-page/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
+                </div>
                 
                     
 
@@ -236,19 +222,6 @@
     <div class="container-xxl mb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
-            
-            
-                
-                
-                <br>
-                <div class="p-3 mb-2 bg-danger text-white fw-bold">
-                    Logins have changed for users with accounts on submit1 and submit2: please see the
-                    <a href="https://chtc.cs.wisc.edu/uw-research-computing/connecting" class="link-light"><u>login guide</u></a>
-                    for details on your new login information.
-                </div>
-                
-
-            
 
             <h1 class="uw-mini-bar mb-4">
     Overview: How to Use Software
@@ -689,35 +662,37 @@ transfer_input_files = my-script.m
 
 <h4 id="arguments-1">Arguments<a name="matlab-arguments"></a></h4>
 
-<p>To pass arguments from the submit file to your <code>.m</code> script, you need to set up your executable <code>.sh</code> file to create an additional <code>.m</code> file with the desired variable definitions.
-For example, to use an argument to define a different value of <code>data_file</code> for each job, you would use the following executable:</p>
+<p>You can pass arguments from your submit file to your Matlab code via your executable <code>.sh</code> and the <code>matlab -batch</code> command. 
+Arguments in your submit file are accessible inside your executable <code>.sh</code> script with the syntax <code>${n}</code>, where <code>n</code> is the nth value passed in the arguments line.
+You can use this syntax inside of the <code>matlab -batch</code> command.</p>
+
+<p>For example, if your Matlab script (<code>my-script.m</code>) is expecting a variable <code>foo</code>, you can add <code>foo=${1}</code> before calling <code>my-script</code>:</p>
 
 <pre><code>#!/bin/bash
 
-cat &lt;&lt; EOF &gt; variables.m
-data_file = '${1}'
-EOF
-
-matlab -batch "variables;my-script"
-
-rm variables.m
+matlab -batch "foo=${1};my-script"
 </code></pre>
 
-<p>The <code>variables.m</code> file is created with <code>data_file</code> defined as the value passed from the submit file <code>arguments</code> line.
-Then when matlab is started, it first loads the definitions from the <code>variables.m</code> line before executing your main <code>my-script.m</code>.
-(Of course, for this to be useful, the code in <code>my-script.m</code> needs to use the variable <code>data_file</code> to do something.)
-Finally, the temporary <code>variables.m</code> file is removed so that it is not brought back to the submit server when the job completes.</p>
+<p>This will use the first argument from the submit file to define the Matlab variable <code>foo</code>.
+By default, such values are read in by Matlab as numeric values (or as a Matlab function/variable that evaluates to a numeric function).
+If you want Matlab to read in the argument as a string, you need to add apostrophes around the value, like this:</p>
 
-<p>More than one variable can be defined.
-For example, if we wanted to add the variable <code>x</code>, we would use this:</p>
+<pre><code>#!/bin/bash
 
-<pre><code>cat &lt;&lt; EOF &gt; variables.m
-data_file = '${1}'
-x = ${2}
-EOF
+matlab -batch "foo=${1};bar='${2}';my-script"
 </code></pre>
 
-<p>where the values of <code>data_file</code> and <code>x</code> will correspond to the first and second values of the submit file <code>arguments</code> line, respectively.</p>
+<p>Here, the value of <code>bar</code> is defined as the second argument from the submit file, and will be identified by Matlab as a string because it’s wrapped in apostrophes (<code>'${2}'</code>).</p>
+
+<p>If you have defined your script to act as a function, you can call the function directly and pass the arguments directly as well.
+For example, if you have constructed your <code>my-script.m</code> as a function, then you can do</p>
+
+<pre><code>#!/bin/bash
+
+matlab -batch "my-script(${1}, ${2})"
+</code></pre>
+
+<p>Again, by default Matlab will interpret these value of these variables as numeric values, unless you wrap the argument in apostrophes as described above.</p>
 
 <hr />
 
@@ -846,7 +821,7 @@ python3 my-script.py
 
 <h4 id="option-a-recommended-3">Option A (recommended)<a name="r-quickstart-a"></a></h4>
 
-<p>Build a container with Python &amp; packages installed inside:</p>
+<p>Build a container with R &amp; packages installed inside:</p>
 
 <ol>
   <li><a href="#build-your-own-container">How to build your own container</a></li>
@@ -920,6 +895,11 @@ Rscript my-script.R
                                 </button>
                             </h2>
                             <div id="basics-and-policies-collapse" class="accordion-collapse collapse " aria-labelledby="basics-and-policies" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-facilitation-page/uw-research-computing/htc-el8-to-el9-transition">HTC System Transition to a New Linux Version (CentOS Stream 9)</a>
+                                    </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
@@ -1181,6 +1161,11 @@ Rscript my-script.R
                                         <a class="" href="/web-preview/preview-facilitation-page/uw-research-computing/docker-test">Explore and Test Docker Containers</a>
                                     </div>
                                 
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-facilitation-page/uw-research-computing/htc-known-issues">Known Issues on the HTC</a>
+                                    </div>
+                                
                             </div>
                         </div>
                     
@@ -1194,6 +1179,7 @@ Rscript my-script.R
         </div>
     </div>
 </div>
+
 </main>
     </main>
     <footer id="colophon" class="uw-footer">
