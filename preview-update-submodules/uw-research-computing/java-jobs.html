@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Run Java Jobs</title>
+<title>Running Java Jobs</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -72,23 +72,6 @@
 
 
     
-
-
-
-
-
-
-
-<header id="branding-sub" class="uw-header circuit-background">
-    <div class="uw-header-container mt-2 mb-2">
-        <div class="uw-header-crest-title">
-            <div class="uw-header-crest">
-                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
-            </div>
-            
-        </div>
-    </div>
-</header>
     
 
 
@@ -102,6 +85,9 @@
     <div class="uw-main-nav">
         <nav class="uw-nav-menu uw-nav-menu-reverse" aria-label="Main Menu">
             <ul id="uw-main-nav">
+                <div class="uw-header-crest">
+                    <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg py-2" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
+                </div>
                 
                     
 
@@ -236,108 +222,141 @@
     <div class="container-xxl mb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
-            
-            
-                
-                
-                <br>
-                <div class="p-3 mb-2 bg-danger text-white fw-bold">
-                    Logins have changed for users with accounts on submit1 and submit2: please see the
-                    <a href="https://chtc.cs.wisc.edu/uw-research-computing/connecting" class="link-light"><u>login guide</u></a>
-                    for details on your new login information.
-                </div>
-                
-
-            
 
             <h1 class="uw-mini-bar mb-4">
-    Run Java Jobs
+    Running Java Jobs
 </h1>
 
-            <h1 id="overview">Overview</h1>
+            <h2 id="quickstart-java">Quickstart: Java</h2>
 
-<p>If your code uses Java via a <code>.jar</code> file, it is easy to run on CHTC and
-beyond. There are two ways to run Java code from a CHTC submit server:</p>
-
-<ul>
-  <li><a href="#portable">Use a newer version of Java, running jobs anywhere in CHTC and beyond (on the UW
-Grid or OSG) (recommended)</a></li>
-  <li><a href="#default">Run jobs in CHTC only, using the default Java version
-(1.8)</a></li>
-</ul>
-
-<p>You should only use *one* of these options to run Java code, not both.</p>
-
-<p><span name="portable"></span></p>
-
-<h1 id="portable-java-recommended">Portable Java (recommended)</h1>
-
-<p>To use a newer version of Java and/or to run outside of CHTC on the UW
-Grid and/or OS Pool:</p>
+<p>To use Java on the HTC system, we recommend that you use the Java Development Kit (JDK).</p>
 
 <ol>
   <li>
-    <p><strong>Get a copy of Java/JDK.</strong> Access the the Java Development Kit (JDK) from 
-the <a href="https://jdk.java.net/">JDK website</a>. First select the link to the 
-JDK that’s listed as “Ready for Use” and then download the Linux/x64 
-version of the tar.gz file. The downloaded file should end up in your 
-home directory on a CHTC submit server.</p>
+    <p>Obtain a copy of the pre-compiled JDK for “Linux/x64” from <a href="https://jdk.java.net/">https://jdk.java.net/</a>.</p>
   </li>
   <li>
-    <p><strong>Include Java in Input Files.</strong>  Add the downloaded tar file to the <code>transfer_input_files</code> line of your
-submit file, along with the <code>.jar</code> file and any other input files the job needs:</p>
+    <p>Include the JDK <code>.tar.gz</code> file in your submit file with the list of files to be transferred:</p>
 
-    <pre><code class="language-{.sub}">transfer_input_files = openjdk-17.0.1_linux-x64_bin.tar.gz, program.jar, other_input
+    <pre class="sub"><code>transfer_input_files = openjdk-22_linux-x64_bin.tar.gz, program.jar
 </code></pre>
   </li>
   <li>
-    <p><strong>Setup Java inside the job.</strong> Write a script that unpacks the JDK tar file, sets 
-the environment to
-find the java software, and then runs your program. This script will be
-your job's executable. See this example for what the script should look
-like:</p>
-    <pre><code class="language-{.sub}"> #!/bin/bash
-    
- # unzip the JDK
- tar -xzf openjdk-17.0.1_linux-x64_bin.tar.gz
- # Add the unzipped JDK folder to the environment
- export PATH=$PWD/jdk-17.0.1/bin:$PATH
- export JAVA_HOME=$PWD/jdk-17.0.1
-    
- # run your .jar file
- java -jar program.jar
-</code></pre>
+    <p>Include instructions for using the JDK in your <code>executable</code> file:</p>
 
-    <p>Note that the exact name of the unzipped JDK folder and the JDK tar.gz file will 
- vary depending on the version you downloaded. You should unzip the JDK tar.gz 
- file in your home directory to find out the correct directory name to add to 
-     the script.</p>
-  </li>
-</ol>
+    <pre><code>#!/bin/bash
 
-<p><span name="default"></span></p>
-
-<h1 id="pre-installed-java">Pre-installed Java</h1>
-
-<p>To run in CHTC only, using the default version of java (1.8):</p>
-
-<ol>
-  <li>
-    <p>Add this line to your submit file:</p>
-
-    <pre><code class="language-{.sub}">requirements = (Target.HasJava == true) 
-</code></pre>
-  </li>
-  <li>
-    <p>Your executable should be a wrapper script that executes your
-program.</p>
-
-    <pre class="file"><code>#!/bin/bash
+tar -xzf openjdk-22_linux-x64_bin.tar.gz
+export JAVA_HOME=$PWD/jdk-22
+export PATH=$JAVA_HOME/bin:$PATH
 
 java -jar program.jar
 </code></pre>
   </li>
 </ol>
+
+<!--more-->
+
+<h2 id="more-information">More information</h2>
+
+<p>To obtain your copy of the Java Development Kit (JDK), go to <a href="https://jdk.java.net/">https://jdk.java.net/</a>.
+Click the link for the JDK that is “Ready for use”.
+There will be a download link “tar.gz” under the “Builds” section for “Linux/x64”.
+You can then either (a) right-click the download link and copy the link address, sign in to the submit server, and use the <code>wget</code> command with that link, 
+or (b) click the link to download to your computer, then manually upload the file from your computer to the submit server.</p>
+
+<p>The example above uses file names for JDK 22 as of 2024-04.
+Be sure to change the file names for the version that you actually use.
+We recommend that you test and explore your setup using an <a href="inter-submit.html">interactive job</a>.</p>
+
+<h2 id="executable">Executable</h2>
+
+<p>A bash <code>.sh</code> file is used as the <code>executable</code> file in order to unpack and set up the JDK environment for use by your script.
+Here is the executable from the section with comments:</p>
+
+<pre><code>#!/bin/bash
+
+# Decompress the JDK
+tar -xzf openjdk-22_linux-x64_bin.tar.gz
+
+# Add the new JDK folder to the bash environment
+export JAVA_HOME=$PWD/jdk-22
+export PATH=$JAVA_HOME/bin:$PATH
+
+# Run your program
+java -jar program.jar
+</code></pre>
+
+<!-- Archived 2024-05 
+
+<span name="portable"></span>
+
+Portable Java (recommended)
+=============
+
+To use a newer version of Java and/or to run outside of CHTC on the UW
+Grid and/or OS Pool:
+
+1. **Get a copy of Java/JDK.** Access the the Java Development Kit (JDK) from 
+the [JDK website](https://jdk.java.net/). First select the link to the 
+JDK that's listed as "Ready for Use" and then download the Linux/x64 
+version of the tar.gz file. The downloaded file should end up in your 
+home directory on a CHTC submit server. 
+
+2. **Include Java in Input Files.**  Add the downloaded tar file to the `transfer_input_files` line of your
+submit file, along with the `.jar` file and any other input files the job needs:
+
+    ``` {.sub}
+transfer_input_files = openjdk-17.0.1_linux-x64_bin.tar.gz, program.jar, other_input
+    ```
+
+
+3. **Setup Java inside the job.** Write a script that unpacks the JDK tar file, sets 
+the environment to
+find the java software, and then runs your program. This script will be
+your job\'s executable. See this example for what the script should look
+like:
+    ``` {.sub}
+    #!/bin/bash
+    
+    # unzip the JDK
+    tar -xzf openjdk-17.0.1_linux-x64_bin.tar.gz
+    # Add the unzipped JDK folder to the environment
+    export PATH=$PWD/jdk-17.0.1/bin:$PATH
+    export JAVA_HOME=$PWD/jdk-17.0.1
+    
+    # run your .jar file
+    java -jar program.jar
+    ```
+
+    Note that the exact name of the unzipped JDK folder and the JDK tar.gz file will 
+    vary depending on the version you downloaded. You should unzip the JDK tar.gz 
+    file in your home directory to find out the correct directory name to add to 
+        the script. 
+	
+<span name="default"></span>
+
+Pre-installed Java
+==================
+
+To run in CHTC only, using the default version of java (1.8):
+
+1.  Add this line to your submit file:
+
+    ``` {.sub}
+    requirements = (Target.HasJava == true) 
+    ```
+
+2.  Your executable should be a wrapper script that executes your
+    program.
+
+    ``` 
+    #!/bin/bash
+
+    java -jar program.jar
+    ```
+    {:.file}
+-->
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -439,12 +458,12 @@ java -jar program.jar
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/condor_q">Learn About Your Jobs Using condor_q</a>
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htcondor-job-submission">Practice: Submit HTC Jobs using HTCondor</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htcondor-job-submission">Practice: Submit HTC Jobs using HTCondor</a>
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/condor_q">Learn About Your Jobs Using condor_q</a>
                                     </div>
                                 
 
@@ -507,45 +526,20 @@ java -jar program.jar
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="software-solutions">
-                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
                                     Software Solutions
                                 </button>
                             </h2>
-                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/software-overview-htc">Overview: How to Use Software</a>
+                                    </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
                                         <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/inter-submit">Compiling or Testing Code with an Interactive Job</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/matlab-jobs">Running Matlab Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/python-jobs">Run Python Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/conda-installation">Create a Portable Python Installation with Miniconda</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/r-jobs">Run R Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-update-submodules/uw-research-computing/java-jobs">Run Java Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/julia-jobs">Run Julia Jobs</a>
                                     </div>
                                 
 
@@ -659,6 +653,11 @@ java -jar program.jar
                                         <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/docker-test">Explore and Test Docker Containers</a>
                                     </div>
                                 
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htc-known-issues">Known Issues on the HTC</a>
+                                    </div>
+                                
                             </div>
                         </div>
                     
@@ -672,6 +671,7 @@ java -jar program.jar
         </div>
     </div>
 </div>
+
 </main>
     </main>
     <footer id="colophon" class="uw-footer">

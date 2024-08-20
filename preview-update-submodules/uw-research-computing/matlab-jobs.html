@@ -72,23 +72,6 @@
 
 
     
-
-
-
-
-
-
-
-<header id="branding-sub" class="uw-header circuit-background">
-    <div class="uw-header-container mt-2 mb-2">
-        <div class="uw-header-crest-title">
-            <div class="uw-header-crest">
-                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
-            </div>
-            
-        </div>
-    </div>
-</header>
     
 
 
@@ -102,6 +85,9 @@
     <div class="uw-main-nav">
         <nav class="uw-nav-menu uw-nav-menu-reverse" aria-label="Main Menu">
             <ul id="uw-main-nav">
+                <div class="uw-header-crest">
+                    <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg py-2" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
+                </div>
                 
                     
 
@@ -236,104 +222,172 @@
     <div class="container-xxl mb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
-            
-            
-                
-                
-                <br>
-                <div class="p-3 mb-2 bg-danger text-white fw-bold">
-                    Logins have changed for users with accounts on submit1 and submit2: please see the
-                    <a href="https://chtc.cs.wisc.edu/uw-research-computing/connecting" class="link-light"><u>login guide</u></a>
-                    for details on your new login information.
-                </div>
-                
-
-            
 
             <h1 class="uw-mini-bar mb-4">
     Running Matlab Jobs
 </h1>
 
-            <p><strong>To best understand the below information, users should already have an understanding of:</strong></p>
+            <h2 id="quickstart-matlab">Quickstart: Matlab</h2>
 
-<ul>
-  <li>Using the command line to: navigate within directories, create/copy/move/delete files and directories, and run their intended programs (aka "executables").</li>
-  <li><a href="helloworld.html">The CHTC’s Intro to Running HTCondor Jobs</a></li>
-</ul>
+<p>Build a container with Matlab &amp; toolboxes installed inside:</p>
 
-<h1 id="overview">Overview</h1>
+<ol>
+  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab">Example container recipes for Matlab</a></li>
+  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
+</ol>
 
-<p>Like most programs, Matlab is not installed on CHTC's high throughput
-compute system. One way to run Matlab where it isn't installed is to
-compile Matlab <code>.m</code> files into a binary file and run the binary by using
+<blockquote>
+  <p><strong>Note</strong>: Because Matlab is a licensed software, you <strong>must</strong> add the following line to your submit file:</p>
+
+  <pre class="sub"><code>concurrency_limits = MATLAB:1
+</code></pre>
+
+  <p>Failure to do so may cause your or other users’ jobs to fail to obtain a license from the license server.</p>
+</blockquote>
+
+<!--more-->
+
+<h2 id="more-information">More information</h2>
+
+<p>CHTC has a site license for Matlab that allows for up to 10,000 jobs to run at any given time across <em>all CHTC users</em>. 
+Hence the requirement for adding the line <code>concurrency_limits = MATLAB:1</code> to your submit files, so that HTCondor can keep track of which jobs are using or will use a license.</p>
+
+<p>Following the instructions above, you are able to install a variety of Matlab Toolboxes when building the container.
+The Toolboxes available for each supported version of Matlab are described here: https://github.com/mathworks-ref-arch/matlab-dockerfile/blob/main/mpm-input-files/.
+Navigate to the text file for the version of interest, and look at the section named “INSTALL PRODUCTS”.
+The example recipes linked above provide instructions on how to specify the packages you want to install when building the container.</p>
+
+<h3 id="executable">Executable<a name="matlab-executable"></a></h3>
+
+<p>When using the Matlab container, we recommend the following process for executing your Matlab commands in an HTCondor job:</p>
+
+<ol>
+  <li>
+    <p>Put your Matlab commands in a <code>.m</code> script. For this example, we’ll call it <code>my-script.m</code>.</p>
+  </li>
+  <li>
+    <p>Create the file <code>run-matlab.sh</code> with the following contents:</p>
+
+    <pre><code>#!/bin/bash
+   
+matlab -batch "my-script"
+</code></pre>
+
+    <p>Note that in the script, the <code>.m</code> extension has been dropped from the file name (uses <code>"my-script"</code> instead of <code>"my-script.m"</code>).</p>
+  </li>
+  <li>
+    <p>In your submit file, set the <code>.sh</code> script as the executable and list the <code>.m</code> file to be transferred:</p>
+
+    <pre class="sub"><code>executable = run-matlab.sh
+transfer_input_files = my-script.m
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="arguments">Arguments<a name="matlab-arguments"></a></h3>
+
+<p>You can pass arguments from your submit file to your Matlab code via your executable <code>.sh</code> and the <code>matlab -batch</code> command. 
+Arguments in your submit file are accessible inside your executable <code>.sh</code> script with the syntax <code>${n}</code>, where <code>n</code> is the nth value passed in the arguments line.
+You can use this syntax inside of the <code>matlab -batch</code> command.</p>
+
+<p>For example, if your Matlab script (<code>my-script.m</code>) is expecting a variable <code>foo</code>, you can add <code>foo=${1}</code> before calling <code>my-script</code>:</p>
+
+<pre><code>#!/bin/bash
+
+matlab -batch "foo=${1};my-script"
+</code></pre>
+
+<p>This will use the first argument from the submit file to define the Matlab variable <code>foo</code>.
+By default, such values are read in by Matlab as numeric values (or as a Matlab function/variable that evaluates to a numeric function).
+If you want Matlab to read in the argument as a string, you need to add apostrophes around the value, like this:</p>
+
+<pre><code>#!/bin/bash
+
+matlab -batch "foo=${1};bar='${2}';my-script"
+</code></pre>
+
+<p>Here, the value of <code>bar</code> is defined as the second argument from the submit file, and will be identified by Matlab as a string because it’s wrapped in apostrophes (<code>'${2}'</code>).</p>
+
+<p>If you have defined your script to act as a function, you can call the function directly and pass the arguments directly as well.
+For example, if you have constructed your <code>my-script.m</code> as a function, then you can do</p>
+
+<pre><code>#!/bin/bash
+
+matlab -batch "my-script(${1}, ${2})"
+</code></pre>
+
+<p>Again, by default Matlab will interpret these value of these variables as numeric values, unless you wrap the argument in apostrophes as described above.</p>
+
+<!-- Archived 2024-05
+
+**To best understand the below information, users should already have an understanding of:**
+
+-   Using the command line to: navigate within directories, create/copy/move/delete files and directories, and run their intended programs (aka \"executables\").
+-   [The CHTC's Intro to Running HTCondor Jobs](helloworld.html)
+
+Overview
+========
+
+Like most programs, Matlab is not installed on CHTC\'s high throughput
+compute system. One way to run Matlab where it isn\'t installed is to
+compile Matlab `.m` files into a binary file and run the binary by using
 a set of files called the Matlab runtime. In order to run Matlab in
 CHTC, it is therefore necessary to perform the following steps which
 will be detailed in the guide below (click on the links to go to the
-relevant section):</p>
+relevant section):
 
-<ol>
-  <li><a href="#prepare">Prepare your Matlab program</a>
-    <ul>
-      <li><a href="#compile">Compile your Matlab code</a></li>
-      <li><a href="#script">Edit the script that runs Matlab</a></li>
-    </ul>
-  </li>
-  <li><a href="#submit">Write a submit file that uses the compiled code and script</a></li>
-</ol>
+1.  [Prepare your Matlab program](#prepare)
+    -   [Compile your Matlab code](#compile)
+    -   [Edit the script that runs Matlab](#script)
+2.  [Write a submit file that uses the compiled code and script](#submit)
 
-<p>If your Matlab code depends on random number generation, using a
-function like <code>rand</code> or <code>randperm</code>, please see the section on <a href="#random">ensuring
-randomness</a> below.</p>
+If your Matlab code depends on random number generation, using a
+function like `rand` or `randperm`, please see the section on [ensuring
+randomness](#random) below.
 
-<p><span name="supported"></span></p>
 
-<h1 id="supported-versions-of-matlab">Supported Versions of Matlab</h1>
+<span name="supported"></span>
 
-<table class="gtable">
-  <thead>
-    <tr>
-      <th>Matlab version</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Matlab 2015b</td>
-    </tr>
-    <tr>
-      <td>Matlab 2018b</td>
-    </tr>
-    <tr>
-      <td>Matlab 2022b</td>
-    </tr>
-  </tbody>
-</table>
+Supported Versions of Matlab
+============================
 
-<h1 id="a-preparing-your-matlab-program"><strong>A. Preparing Your Matlab Program</strong></h1>
-<p><span name="prepare"></span>
-You can compile <code>.m</code> files into a Matlab binary yourself by requesting
+{:.gtable}
+  | Matlab version  |
+  | --- |
+  | Matlab 2015b | 
+  | Matlab 2018b |
+  | Matlab 2022b | 
+
+
+**A. Preparing Your Matlab Program** 
+============================
+<span name="prepare"></span>
+You can compile `.m` files into a Matlab binary yourself by requesting
 an interactive session on one of our build machines. The session is
-essentially a job without an executable; <strong>you</strong> are the one running the
-commands instead (in this case, to compile the code).</p>
+essentially a job without an executable; **you** are the one running the
+commands instead (in this case, to compile the code).
 
-<p><span name="compile"></span></p>
 
-<h2 id="1-start-an-interactive-build-job"><strong>1. Start an Interactive Build Job</strong></h2>
+<span name="compile"></span>
 
-<p>Start by uploading all of the Matlab code files (usually <code>.m</code>, <em>not</em>,
-<code>.mat</code> files) that you need to run your code to the submit server.</p>
+**1. Start an Interactive Build Job**
+---------------------------------
 
-<blockquote>
-  <p>If you have many of Matlab code files (more than 1-5), it's a good
-idea to combine them into a <code>.tar.gz</code> file (like a zip file), so that
-you can simply transfer the single <code>.tar.gz</code> file for compiling the
-code. You can create a tar file by running this command:
-<code>tar -czf code.tar.gz files and folders</code></p>
-</blockquote>
+Start by uploading all of the Matlab code files (usually `.m`, *not*,
+`.mat` files) that you need to run your code to the submit server.
 
-<p>Create the following special submit file on the submit server, calling
-it something like <code>build.sub</code>.</p>
+> If you have many of Matlab code files (more than 1-5), it\'s a good
+> idea to combine them into a `.tar.gz` file (like a zip file), so that
+> you can simply transfer the single `.tar.gz` file for compiling the
+> code. You can create a tar file by running this command:
+> `tar -czf code.tar.gz files and folders`
 
-<pre><code class="language-{.sub}"># Matlab build file
+Create the following special submit file on the submit server, calling
+it something like `build.sub`.
+
+``` {.sub}
+# Matlab build file
 
 universe = vanilla
 log = interactive.log
@@ -352,82 +406,91 @@ request_memory = 4GB
 request_disk = 2GB
 
 queue
-</code></pre>
+```
 
-<p>Fill in the "transfer_input_files" line with <em>your</em> Matlab .m files,
-or a tar.gz file with all of the Matlab files your code uses.</p>
+Fill in the \"transfer\_input\_files\" line with *your* Matlab .m files,
+or a tar.gz file with all of the Matlab files your code uses.
 
-<p>Once this submit file is created, you will start the interactive job by
-running the following command:</p>
+Once this submit file is created, you will start the interactive job by
+running the following command:
 
-<pre class="term"><code>[alice@submit]$ condor_submit -i build.sub
-</code></pre>
+```
+[alice@submit]$ condor_submit -i build.sub
+```
+{:.term}
 
-<p>It may take a few minutes for the build job to start.</p>
+It may take a few minutes for the build job to start.
 
-<p><span name="compile"></span></p>
+<span name="compile"></span>
 
-<h2 id="2-compile-matlab-code-and-exit-interactive-job"><strong>2. Compile Matlab Code and Exit Interactive Job</strong></h2>
 
-<p>Once the interactive job has started, you can compile your code. In this
-example, <code>script.m</code> represents the name of the primary Matlab script;
-you should replace <code>script.m</code> with the name of your own primary script.
-Note that if your main script references other <code>.m</code> files, as long as
+**2. Compile Matlab Code and Exit Interactive Job**
+-----------------------------------------------
+
+Once the interactive job has started, you can compile your code. In this
+example, `script.m` represents the name of the primary Matlab script;
+you should replace `script.m` with the name of your own primary script.
+Note that if your main script references other `.m` files, as long as
 they are present in the working directory, they will all be compiled
-together with the main script into one binary.</p>
+together with the main script into one binary.
 
-<blockquote>
-  <p>If you combined your Matlab <code>.m</code> files into one <code>.tar.gz</code> file, make
-sure to "un-tar" that file before running the compiling steps below.</p>
-</blockquote>
+> If you combined your Matlab `.m` files into one `.tar.gz` file, make
+> sure to \"un-tar\" that file before running the compiling steps below.
 
-<p>To access the Matlab compiler on the build node, you'll need to load a
+To access the Matlab compiler on the build node, you\'ll need to load a
 the appropriate Matlab module. For Matlab 2015b, the module load command
-will look like this:</p>
+will look like this:
 
-<pre class="term"><code>[alice@build]$ module load MATLAB/R2015b
-</code></pre>
+``` 
+[alice@build]$ module load MATLAB/R2015b
+```
+{:.term}
 
-<p>If you want to use a different version of Matlab, change the name after the <code>load</code> command. Once the
-module is loaded, run the compilation command:</p>
+If you want to use a different version of Matlab, change the name after the `load` command. Once the
+module is loaded, run the compilation command:
 
-<pre class="term"><code>[alice@build]$ mcc -m -R -singleCompThread -R -nodisplay -R -nojvm script.m
-</code></pre>
+``` 
+[alice@build]$ mcc -m -R -singleCompThread -R -nodisplay -R -nojvm script.m
+```
+{:.term}
 
-<blockquote>
-  <p><strong>Compilation Options</strong></p>
+> **Compilation Options**
+>
+> There are other options for the `mcc` Matlab compiler that might be
+> necessary for specific compiling situations. For example, if your main
+> .m script uses a set of Matlab functions or .m files that are
+> contained in a subdirectory (called, say, `functions`), then your
+> compiling command will need to use the `-a` flag at the end of the
+> command like so:
+>
+> ``` 
+> [alice@build]$ mcc -m \
+>                 -R -singleCompThread -R -nodisplay -R -nojvm \
+>                 script.m -a functions/
+> ```
+> {:.term}
+>
+> (The backslashes, \\, are there just to break up the full command.)
+>
+> If you have questions about compiling your particular code, [contact a
+> facilitator](mailto:chtc@cs.wisc.edu) or see the [Matlab
+> documentation](http://www.mathworks.com/help/compiler/mcc.html) for
+> more information about using `mcc`.
 
-  <p>There are other options for the <code>mcc</code> Matlab compiler that might be
-necessary for specific compiling situations. For example, if your main
-.m script uses a set of Matlab functions or .m files that are
-contained in a subdirectory (called, say, <code>functions</code>), then your
-compiling command will need to use the <code>-a</code> flag at the end of the
-command like so:</p>
+Exit the interactive session after you have compiled your code:
 
-  <pre class="term"><code>[alice@build]$ mcc -m \
-                -R -singleCompThread -R -nodisplay -R -nojvm \
-                script.m -a functions/
-</code></pre>
+``` 
+[alice@build]$ exit
+```
+{:.term}
 
-  <p>(The backslashes, \, are there just to break up the full command.)</p>
+Condor will transfer your compiled code and its scripts back
+automatically.
 
-  <p>If you have questions about compiling your particular code, <a href="mailto:chtc@cs.wisc.edu">contact a
-facilitator</a> or see the <a href="http://www.mathworks.com/help/compiler/mcc.html">Matlab
-documentation</a> for
-more information about using <code>mcc</code>.</p>
-</blockquote>
+Back on the submit node, you should now have the following files:
 
-<p>Exit the interactive session after you have compiled your code:</p>
-
-<pre class="term"><code>[alice@build]$ exit
-</code></pre>
-
-<p>Condor will transfer your compiled code and its scripts back
-automatically.</p>
-
-<p>Back on the submit node, you should now have the following files:</p>
-
-<pre class="term"><code>[alice@submit]$ ls -l 
+``` 
+[alice@submit]$ ls -l 
 
 -rw-rw-r-- 1 user user 581724 Feb 19 14:21 mccExcludedFiles.log
 -rwxrw-r-- 1 user user  94858 Feb 19 14:21 script
@@ -435,31 +498,34 @@ automatically.</p>
 -rw-rw-r-- 1 user user   3092 Feb 19 14:21 readme.txt
 -rw-rw-r-- 1 user user 581724 Feb 19 14:21 requiredMCRProducts.txt
 -rwxrw-r-- 1 user user   1195 Feb 19 14:21 run_script.sh
-</code></pre>
+```
+{:.term}
 
-<p>The file <code>script</code> is the compiled Matlab binary. You will not need the
-<code>mccExcludedFiles.log</code>, <code>requiredMCRProducts.txt</code> or <code>readme.txt</code> to run
-your jobs.</p>
+The file `script` is the compiled Matlab binary. You will not need the
+`mccExcludedFiles.log`, `requiredMCRProducts.txt` or `readme.txt` to run
+your jobs.
 
-<p><span name="script"></span></p>
+<span name="script"></span>
 
-<h2 id="3-modifying-the-executable"><strong>3. Modifying the Executable</strong></h2>
+**3. Modifying the Executable**
+---------------------------
 
-<p>The <code>mcc</code> command should have created a script called <code>run_*.sh</code> (where
-* is the name of your Matlab script; our example uses the name
-<code>script</code>). This <code>run_*.sh</code> script will be the executable for your Matlab
+The `mcc` command should have created a script called `run_*.sh` (where
+\* is the name of your Matlab script; our example uses the name
+`script`). This `run_*.sh` script will be the executable for your Matlab
 jobs and already has almost all the necessary commands for running your
-Matlab code.</p>
+Matlab code.
 
-<p>You'll need to add one line at the beginning of the <code>run_*.sh</code> script
-that unpacks the Matlab runtime. We'll also add some extra options to
-ensure Matlab runs smoothly on any Linux system.</p>
+You\'ll need to add one line at the beginning of the `run_*.sh` script
+that unpacks the Matlab runtime. We\'ll also add some extra options to
+ensure Matlab runs smoothly on any Linux system.
 
-<p>The commands that need to be added, and their location looks like this
-(<strong>replace <code>r2015b.tar.gz</code> with the appropriate version of Matlab, if
-you used something different to compile</strong>):</p>
+The commands that need to be added, and their location looks like this
+(**replace `r2015b.tar.gz` with the appropriate version of Matlab, if
+you used something different to compile**):
 
-<pre class="file"><code>#!/bin/sh
+``` 
+#!/bin/sh
 # script for execution of deployed applications
 #
 # Sets up the MATLAB Runtime environment for the current $ARCH and executes 
@@ -471,108 +537,96 @@ mkdir cache
 export MCR_CACHE_ROOT=$PWD/cache
 
 # Rest of script follows
-</code></pre>
+```
+{:.file}
 
-<h1 id="b-running-matlab-jobs"><strong>B. Running Matlab Jobs</strong></h1>
-<p><span name="submit"></span>
+
+
+
+**B. Running Matlab Jobs**
+======================
+<span name="submit"></span>
 This section shows the important elements of creating a submit file for
 Matlab jobs. The submit file for your job will be different than the one
 used to compile your code. As a starting point for a submit file, see
-our "hello world" example:
-<a href="helloworld.html">http://chtc.cs.wisc.edu/helloworld</a>. In what
-follows, replace our example <code>script</code> and <code>run_script.sh</code> with the name
-of your binary and scripts.</p>
+our \"hello world\" example:
+[http://chtc.cs.wisc.edu/helloworld](helloworld.html). In what
+follows, replace our example `script` and `run_script.sh` with the name
+of your binary and scripts.
 
-<ol>
-  <li>Use <code>run_script.sh</code> as the executable:
-    <pre><code class="language-{.sub}">executable = run_script.sh
-</code></pre>
-  </li>
-  <li>
-    <p>In order for your Matlab code to run, you will need to use a Matlab
-runtime package. This package is easily downloaded from CHTC's web
-proxy; the version <strong>must</strong> match the version you used to compile
-your code. Options available on our proxy include:</p>
+1. Use `run_script.sh` as the executable:
+```{.sub}
+executable = run_script.sh
+```
+2.  In order for your Matlab code to run, you will need to use a Matlab
+    runtime package. This package is easily downloaded from CHTC\'s web
+    proxy; the version **must** match the version you used to compile
+    your code. Options available on our proxy include:
+    
+    -   `r2015b.tar.gz`
+    -   `r2018b.tar.gz`
+    -   `r2022b.tar.gz`<br>
+    
+    To send the runtime package to your jobs, list a link to the
+    appropriate version in your `transfer_input_files` line, as well as
+    your compiled binary and any necessary input files:
+    ``` {.sub}
+    transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/r2015b.tar.gz,script,input_data
+    ```
+3.  The `run_script.sh` will expect the runtime directory name to be
+    provided as an argument specified in the submit file (as described
+    in `readme.txt`).
 
-    <ul>
-      <li><code>r2015b.tar.gz</code></li>
-      <li><code>r2018b.tar.gz</code></li>
-      <li><code>r2022b.tar.gz</code><br /></li>
-    </ul>
 
-    <p>To send the runtime package to your jobs, list a link to the
-appropriate version in your <code>transfer_input_files</code> line, as well as
-your compiled binary and any necessary input files:</p>
-    <pre><code class="language-{.sub}">transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/r2015b.tar.gz,script,input_data
-</code></pre>
-  </li>
-  <li>
-    <p>The <code>run_script.sh</code> will expect the runtime directory name to be
-provided as an argument specified in the submit file (as described
-in <code>readme.txt</code>).</p>
+    {:.gtable}
+      | Matlab version | Runtime directory name |
+      | --- | --- |
+      | `r2015b.tar.gz` | `v90` |
+      | `r2018b.tar.gz` | `v95` |
+      | `r2022b.tar.gz` | `R2022b` | 
+ 
+    So to run a Matlab job using `r2015b` and no additional arguments, the arguments line in the submit file should read:
+    ```{:.sub}
+    arguments = v90
+    ```
+    If you *are* passing additional arguments to the script, they can go after the first \"runtime\" argument:
 
-    <table class="gtable">
-      <thead>
-        <tr>
-          <th>Matlab version</th>
-          <th>Runtime directory name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>r2015b.tar.gz</code></td>
-          <td><code>v90</code></td>
-        </tr>
-        <tr>
-          <td><code>r2018b.tar.gz</code></td>
-          <td><code>v95</code></td>
-        </tr>
-        <tr>
-          <td><code>r2022b.tar.gz</code></td>
-          <td><code>R2022b</code></td>
-        </tr>
-      </tbody>
-    </table>
+    ``` {.sub}
+    arguments = v90 $(Cluster) $(Process) 
+    ```
+    **If you are passing numerical values as arguments to your Matlab binary, you will need to revise your Matlab 
+    code so that the values are interpreted as numbers instead of as characters (the default).** To do this, you can use that Matlab 
+    `str2num` function, more information is available at [Matlab Str2num](https://www.mathworks.com/help/matlab/ref/str2num.html).
+    
+4.  As always, test a few jobs for disk space/memory usage in order to
+    make sure your requests for a large batch are accurate! Disk space
+    and memory usage can be found in the log file after the job
+    completes. **If you are using Matlab 2018b or 2022b, request at least 8-10GB
+    of DISK** as the runtime is very large for this version of Matlab.
 
-    <p>So to run a Matlab job using <code>r2015b</code> and no additional arguments, the arguments line in the submit file should read:</p>
-    <pre><code class="language-{:.sub}">arguments = v90
-</code></pre>
-    <p>If you <em>are</em> passing additional arguments to the script, they can go after the first "runtime" argument:</p>
+<span name="random"></span>
 
-    <pre><code class="language-{.sub}">arguments = v90 $(Cluster) $(Process) 
-</code></pre>
-    <p><strong>If you are passing numerical values as arguments to your Matlab binary, you will need to revise your Matlab 
-code so that the values are interpreted as numbers instead of as characters (the default).</strong> To do this, you can use that Matlab 
-<code>str2num</code> function, more information is available at <a href="https://www.mathworks.com/help/matlab/ref/str2num.html">Matlab Str2num</a>.</p>
-  </li>
-  <li>As always, test a few jobs for disk space/memory usage in order to
-make sure your requests for a large batch are accurate! Disk space
-and memory usage can be found in the log file after the job
-completes. <strong>If you are using Matlab 2018b or 2022b, request at least 8-10GB
-of DISK</strong> as the runtime is very large for this version of Matlab.</li>
-</ol>
+Ensuring Randomness
+===================
 
-<p><span name="random"></span></p>
+This section is only relevant for Matlab scripts that use Matlab\'s
+random number functions like `rand`.
 
-<h1 id="ensuring-randomness">Ensuring Randomness</h1>
-
-<p>This section is only relevant for Matlab scripts that use Matlab's
-random number functions like <code>rand</code>.</p>
-
-<p>Whenever Matlab is started for the first time on a new computer, the
+Whenever Matlab is started for the first time on a new computer, the
 random number generator begins from the same state. When you run
 multiple Matlab jobs, each job is using a copy of Matlab that is being
-used for the first time -- thus, every job will start with the same
-random number generator and produce identical results.</p>
+used for the first time \-- thus, every job will start with the same
+random number generator and produce identical results.
 
-<p>There are different ways to ensure that each job is using different
-randomly generated numbers. <a href="http://www.mathworks.com/help/matlab/math/why-do-random-numbers-repeat-after-startup.html?refresh=true">This Mathworks
-page</a>
-describes one way to "reset" the random number generator so that it
+There are different ways to ensure that each job is using different
+randomly generated numbers. [This Mathworks
+page](http://www.mathworks.com/help/matlab/math/why-do-random-numbers-repeat-after-startup.html?refresh=true)
+describes one way to \"reset\" the random number generator so that it
 produces different random values when Matlab runs for the first time.
 Deliberately choosing your own different random seed values for each job
-can be another way to ensure different results.</p>
+can be another way to ensure different results.
 
+ -->
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -674,12 +728,12 @@ can be another way to ensure different results.</p>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/condor_q">Learn About Your Jobs Using condor_q</a>
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htcondor-job-submission">Practice: Submit HTC Jobs using HTCondor</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htcondor-job-submission">Practice: Submit HTC Jobs using HTCondor</a>
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/condor_q">Learn About Your Jobs Using condor_q</a>
                                     </div>
                                 
 
@@ -742,45 +796,20 @@ can be another way to ensure different results.</p>
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="software-solutions">
-                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
                                     Software Solutions
                                 </button>
                             </h2>
-                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/software-overview-htc">Overview: How to Use Software</a>
+                                    </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
                                         <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/inter-submit">Compiling or Testing Code with an Interactive Job</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-update-submodules/uw-research-computing/matlab-jobs">Running Matlab Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/python-jobs">Run Python Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/conda-installation">Create a Portable Python Installation with Miniconda</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/r-jobs">Run R Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/java-jobs">Run Java Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/julia-jobs">Run Julia Jobs</a>
                                     </div>
                                 
 
@@ -894,6 +923,11 @@ can be another way to ensure different results.</p>
                                         <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/docker-test">Explore and Test Docker Containers</a>
                                     </div>
                                 
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htc-known-issues">Known Issues on the HTC</a>
+                                    </div>
+                                
                             </div>
                         </div>
                     
@@ -907,6 +941,7 @@ can be another way to ensure different results.</p>
         </div>
     </div>
 </div>
+
 </main>
     </main>
     <footer id="colophon" class="uw-footer">

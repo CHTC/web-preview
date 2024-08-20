@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Run R Jobs</title>
+<title>Running R Jobs</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -72,23 +72,6 @@
 
 
     
-
-
-
-
-
-
-
-<header id="branding-sub" class="uw-header circuit-background">
-    <div class="uw-header-container mt-2 mb-2">
-        <div class="uw-header-crest-title">
-            <div class="uw-header-crest">
-                <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
-            </div>
-            
-        </div>
-    </div>
-</header>
     
 
 
@@ -102,6 +85,9 @@
     <div class="uw-main-nav">
         <nav class="uw-nav-menu uw-nav-menu-reverse" aria-label="Main Menu">
             <ul id="uw-main-nav">
+                <div class="uw-header-crest">
+                    <a href="/web-preview/preview-update-submodules/"><img class="uw-crest-svg py-2" src="/web-preview/preview-update-submodules/images/logos/CHTC_Logo_Full_Color.svg" alt="Link to CHTC Home Page"></a>
+                </div>
                 
                     
 
@@ -236,132 +222,151 @@
     <div class="container-xxl mb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-9 mw-1000">
-            
-            
-                
-                
-                <br>
-                <div class="p-3 mb-2 bg-danger text-white fw-bold">
-                    Logins have changed for users with accounts on submit1 and submit2: please see the
-                    <a href="https://chtc.cs.wisc.edu/uw-research-computing/connecting" class="link-light"><u>login guide</u></a>
-                    for details on your new login information.
-                </div>
-                
-
-            
 
             <h1 class="uw-mini-bar mb-4">
-    Run R Jobs
+    Running R Jobs
 </h1>
 
-            <p><em>ACTION REQUIRED: As of September 29th, the HTC system’s default operating system will transition to CentOS Stream 8. This guide has been updated to reflect this change. However, this transition may impact users were running R jobs before September 29th. For more information, see the <a href="/uw-research-computing/os-transition-htc.html">HTC Operating System Transition</a> guide.</em></p>
+            <h2 id="quickstart-r">Quickstart: R</h2>
 
-<p><strong>To best understand the below information, users should already have an
-understanding of:</strong></p>
+<h4 id="option-a-recommended">Option A (recommended)</h4>
 
-<ul>
-  <li>Using the command line to: navigate within directories,
-create/copy/move/delete files and directories, and run their
-intended programs (aka "executables").</li>
-  <li><a href="helloworld.html">The CHTC's Intro to Running HTCondor
-Jobs</a></li>
-</ul>
-
-<h1 id="overview">Overview</h1>
-
-<p>CHTC provides several copies of R that can be used to run R code in
-jobs. See our list of supported versions here: <a href="#supported">CHTC Supported
-R</a></p>
-
-<p>This guide details the steps needed to:</p>
+<p>Build a container with R &amp; packages installed inside:</p>
 
 <ol>
-  <li><a href="#build">Create a portable copy of your R packages</a></li>
-  <li><a href="#script">Write a script that uses R and your packages</a></li>
-  <li><a href="#submit">Submit jobs</a></li>
+  <li><a href="#build-your-own-container">How to build your own container</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/">Example container recipes for R</a></li>
+  <li><a href="#use-an-existing-container">Use your container in your HTC jobs</a></li>
 </ol>
 
-<p>If you want to build your own copy of base R, see this archived page:</p>
+<h4 id="option-b">Option B</h4>
 
-<ul>
-  <li><a href="r-build.html">Building a R installation</a></li>
-</ul>
+<p>Use an existing container with a base installation of R:</p>
 
-<p><span name="supported"></span></p>
+<ol>
+  <li>Choose an existing container. See 
+<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#:~:text=R%20(opensciencegrid/osgvo%2Dr)">OSG R containers</a>
+or 
+<a href="https://rocker-project.org/images/">Rocker R containers</a>.</li>
+  <li><a href="#use-an-existing-container">Use the container in your HTC jobs</a></li>
+</ol>
 
-<h1 id="chtc-provided-r-installations">CHTC-Provided R Installations</h1>
+<!--more-->
 
-<p>CHTC provides a pre-built copy of the following versions of R:</p>
+<h2 id="more-information">More information</h2>
 
-<h3 id="building-on-centos-stream-8-linux">Building on CentOS Stream 8 Linux</h3>
+<p>No CHTC machine has R pre-installed, so you <strong>must</strong> configure a portable copy of R to work on the HTC system.
+Using a container as described above is the easiest way to accomplish this.</p>
 
-<table class="gtable">
-  <thead>
-    <tr>
-      <th>R version</th>
-      <th>Name of R installation file</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>R 3.5.1</td>
-      <td>R351.tar.gz</td>
-    </tr>
-    <tr>
-      <td>R 3.6.3</td>
-      <td>R363.tar.gz</td>
-    </tr>
-    <tr>
-      <td>R 4.0.5</td>
-      <td>R405.tar.gz</td>
-    </tr>
-    <tr>
-      <td>R 4.1.3</td>
-      <td>R413.tar.gz</td>
-    </tr>
-  </tbody>
-</table>
+<h3 id="executable">Executable<a name="r-executable"></a></h3>
 
-<p>If you need a newer version of R than is shown here, 
-<a href="mailto:chtc@cs.wisc.edu">please contact us!</a> We want to continuously 
+<p>When using a container, you can use a <code>.R</code> script as the submit file <code>executable</code>, provided that the first line (the “shebang”) in the <code>.R</code> file is</p>
+
+<pre><code>#!/usr/bin/env Rscript
+</code></pre>
+
+<p>with the rest of the file containing the commands that you want to run using R.</p>
+
+<p>Alternatively, you can use a bash <code>.sh</code> script as the submit file <code>executable</code>, and in that file you can use the <code>Rscript</code> command:</p>
+
+<pre><code>#!/bin/bash
+
+Rscript my-script.R
+</code></pre>
+
+<p>In this case, remember to include your <code>.R</code> file in the <code>transfer_input_files</code> line of your submit file.</p>
+
+<!-- Archived 2024-05 
+
+_ACTION REQUIRED: As of September 29th, the HTC system's default operating system will transition to CentOS Stream 8. This guide has been updated to reflect this change. However, this transition may impact users were running R jobs before September 29th. For more information, see the [HTC Operating System Transition](/uw-research-computing/os-transition-htc.html) guide._ 
+
+**This guide is deprecated and will be removed May 15th, 2024.**
+**For developing new workflows, you should instead follow the instructions [here](../software-overview-htc.html#r-quickstart).**
+
+*To best understand the below information, users should already have an
+understanding of:*
+
+-   Using the command line to: navigate within directories,
+    create/copy/move/delete files and directories, and run their
+    intended programs (aka \"executables\").
+-   [The CHTC\'s Intro to Running HTCondor
+    Jobs](helloworld.html)
+
+Overview
+========
+
+CHTC provides several copies of R that can be used to run R code in
+jobs. See our list of supported versions here: [CHTC Supported
+R](#supported)
+
+This guide details the steps needed to:
+
+1.  [Create a portable copy of your R packages](#build)
+2.  [Write a script that uses R and your packages](#script)
+3.  [Submit jobs](#submit)
+
+If you want to build your own copy of base R, see this archived page:
+
+-   [Building a R installation](r-build.html)
+
+<span name="supported"></span>
+
+CHTC-Provided R Installations
+=========================
+
+CHTC provides a pre-built copy of the following versions of R: 
+
+### Building on CentOS Stream 8 Linux
+
+{:.gtable}
+  | R version | Name of R installation file |
+  | --- | --- |
+  | R 3.5.1 | R351.tar.gz |
+  | R 3.6.3 | R363.tar.gz |
+  | R 4.0.5 | R405.tar.gz |
+  | R 4.1.3 | R413.tar.gz | 
+
+If you need a newer version of R than is shown here, 
+[please contact us!](mailto:chtc@cs.wisc.edu) We want to continuously 
 add new versions of R to this list and rely on your needs to know what 
-we should add.</p>
+we should add. 
 
-<p>If you need a specific version of R not shown in this list, especially 
+If you need a specific version of R not shown in this list, especially 
 if it is am older R version, we recommend using a Docker container with R installed 
 to run your jobs 
-(see CHTC’s <a href="docker-jobs.html">Docker Jobs guide</a>). The 
-<a href="https://hub.docker.com/u/rocker">Rocker organization on Docker Hub</a> 
+(see CHTC's [Docker Jobs guide](docker-jobs.html)). The 
+[Rocker organization on Docker Hub](https://hub.docker.com/u/rocker) 
 has an excellent selection of containers with many different versions of R. Contact 
-us with any questions about this.</p>
+us with any questions about this. 
 
-<p><span name="build"></span></p>
+<span name="build"></span>
 
-<h1 id="1-adding-r-packages"><strong>1. Adding R Packages</strong></h1>
+**1. Adding R Packages**
+====================
 
-<p>If your code uses specific R packages (like <code>dplyr</code>, <code>rjags</code>, etc)
+If your code uses specific R packages (like `dplyr`, `rjags`, etc)
 follow the directions below to download and prepare the packages you
-need for job submission. <strong>If your job does not require any extra R
-packages, skip to parts 2 and 3</strong>.</p>
+need for job submission. **If your job does not require any extra R
+packages, skip to parts 2 and 3**.
 
-<p>You are going to start an interactive job that runs on the HTC build
+You are going to start an interactive job that runs on the HTC build
 servers and that downloads a copy of R. You will then install your
-packages to a folder and zip those files to return to the submit server.</p>
+packages to a folder and zip those files to return to the submit server.
 
-<blockquote>
-  <p>These instructions are primarily about adding packages to a fresh
-install of R; if you want to add packages to a pre-existing package
-folder, there will be notes below in boxes like this one.</p>
-</blockquote>
+> These instructions are primarily about adding packages to a fresh
+> install of R; if you want to add packages to a pre-existing package
+> folder, there will be notes below in boxes like this one.
 
-<p><span name="version"></span></p>
+<span name="version"></span>
 
-<h2 id="a-submit-an-interactive-job">A. Submit an Interactive Job</h2>
+A. Submit an Interactive Job
+----------------------------
 
-<p>Create the following special submit file on the submit server, calling
-it something like <code>build.sub</code>.</p>
+Create the following special submit file on the submit server, calling
+it something like `build.sub`.
 
-<pre><code class="language-{.sub}"># R build file
+``` {.sub}
+# R build file
 
 universe = vanilla
 log = interactive.log
@@ -380,159 +385,186 @@ request_memory = 4GB
 request_disk = 2GB
 
 queue
-</code></pre>
+```
 
-<p>The only thing you should need to change in the above file is the name
-of the <code>R###.tar.gz</code> file - in the "transfer_input_files" line. We
-have four versions of R available to build from -- see the table above.</p>
+The only thing you should need to change in the above file is the name
+of the `R###.tar.gz` file - in the \"transfer\_input\_files\" line. We
+have four versions of R available to build from \-- see the table above.
 
-<blockquote>
-  <p>If you want to add packages to a pre-existing package directory, add
-the <code>tar.gz</code> file with the packages to the <code>transfer_input_files</code>
-line:</p>
+> If you want to add packages to a pre-existing package directory, add
+> the `tar.gz` file with the packages to the `transfer_input_files`
+> line:
+>
+> ``` {.sub}
+> transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/el8/R###.tar.gz, packages.tar.gz
+> ```
 
-  <pre><code class="language-{.sub}">transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/el8/R###.tar.gz, packages.tar.gz
-</code></pre>
-</blockquote>
+Once this submit file is created, you will start the interactive job by
+running the following command:
 
-<p>Once this submit file is created, you will start the interactive job by
-running the following command:</p>
+``` 
+[alice@submit]$ condor_submit -i build.sub
+```
+{:.term}
 
-<pre class="term"><code>[alice@submit]$ condor_submit -i build.sub
-</code></pre>
+It may take a few minutes for the build job to start.
 
-<p>It may take a few minutes for the build job to start.</p>
+B. Install the Packages
+-----------------------
 
-<h2 id="b-install-the-packages">B. Install the Packages</h2>
+**1. Set up R**
 
-<p><strong>1. Set up R</strong></p>
+Once the interactive build job starts, you should see the R installation
+that you specified inside the working directory:
 
-<p>Once the interactive build job starts, you should see the R installation
-that you specified inside the working directory:</p>
-
-<pre class="term"><code>[alice@build]$ ls -l
+``` 
+[alice@build]$ ls -l
 -rw-r--r-- 1 alice alice  78M Mar 26 12:24 R###.tar.gz
 drwx------ 2 alice alice 4.0K Mar 26 12:24 tmp
 drwx------ 3 alice alice 4.0K Mar 26 12:24 var
-</code></pre>
+```
+{:.term}
 
-<p>We'll now unzip the copy of R and set the <code>PATH</code> variable to reference
-that version of R:</p>
+We\'ll now unzip the copy of R and set the `PATH` variable to reference
+that version of R:
 
-<pre class="term"><code>[alice@build]$ tar -xzf R###.tar.gz
+``` 
+[alice@build]$ tar -xzf R###.tar.gz
 [alice@build]$ export PATH=$PWD/R/bin:$PATH
 [alice@build]$ export RHOME=$PWD/R
-</code></pre>
+```
+{:.term}
 
-<p>To make sure that your setup worked, try running:</p>
+To make sure that your setup worked, try running:
 
-<pre class="term"><code>[alice@build]$ R --version
-</code></pre>
+``` 
+[alice@build]$ R --version
+```
+{:.term}
 
-<p>The output should match the version number that you want to be using!</p>
+The output should match the version number that you want to be using!
 
-<blockquote>
-  <p>If you brought along your own package directory that you previously created by following this tutorial, un-tar it here and
-skip the directory creation step below (i.e. you do not need to run <code>mkdir packages</code> because this directory already exists and should have been brought along in your submit file).</p>
-</blockquote>
+> If you brought along your own package directory that you previously created by following this tutorial, un-tar it here and
+> skip the directory creation step below (i.e. you do not need to run `mkdir packages` because this directory already exists and should have been brought along in your submit file).
 
-<p><strong>2. Install packages</strong></p>
+**2. Install packages**
 
-<p>First, create, a directory to put your packages into:</p>
+First, create, a directory to put your packages into:
 
-<pre class="term"><code>[alice@build]$ mkdir packages
-</code></pre>
+``` 
+[alice@build]$ mkdir packages
+```
+{:.term}
 
-<p>Then, tell R to use that directory for the packages you're going to
-install:</p>
+Then, tell R to use that directory for the packages you\'re going to
+install:
 
-<pre class="term"><code>[alice@build]$ export R_LIBS=$PWD/packages
-</code></pre>
+``` 
+[alice@build]$ export R_LIBS=$PWD/packages
+```
+{:.term}
 
-<p>You can choose what name to use for this directory -- if you have
+You can choose what name to use for this directory \-- if you have
 different sets of packages that you use for different jobs, you could
-use a more descriptive name than "packages".</p>
+use a more descriptive name than \"packages\".
 
-<p>Then start the R console:</p>
+Then start the R console:
 
-<pre class="term"><code>[alice@build]$ R
-</code></pre>
+``` 
+[alice@build]$ R
+```
+{:.term}
 
-<p>In the R terminal, install your packages using <code>install.packages</code>.</p>
+In the R terminal, install your packages using `install.packages`.
 
-<pre class="term"><code>&gt; install.packages("package_name")
-</code></pre>
+``` 
+> install.packages("package_name")
+```
+{:.term}
 
-<p>Replace “package_name” with the name of the package you wish to install.</p>
+Replace "package_name" with the name of the package you wish to install. 
 
-<p>The first time you will be prompted to choose a "CRAN mirror" - this
-is where R is downloading the package. Choose any US-based location to download.</p>
+The first time you will be prompted to choose a \"CRAN mirror\" - this
+is where R is downloading the package. Choose any US-based location to download.  
 
-<p>If you need a Bioconductor package you will first need to install the
+If you need a Bioconductor package you will first need to install the
 Bioconductor installation manager, then use Bioconductor to install your
-package:</p>
+package:
 
-<pre class="term"><code>&gt; if (!requireNamespace("BiocManager", quietly = TRUE))
+``` 
+> if (!requireNamespace("BiocManager", quietly = TRUE))
       install.packages("BiocManager")
-&gt; BiocManager::install("package_name") 
-</code></pre>
+> BiocManager::install("package_name") 
+```
+{:.term}
 
-<p>After you've installed all your packages, we recommend loading each
-library to confirm that they installed successfully:</p>
+After you\'ve installed all your packages, we recommend loading each
+library to confirm that they installed successfully:
 
-<pre class="term"><code>&gt; library(package_name)
-</code></pre>
+``` 
+> library(package_name)
+```
+{:.term}
 
-<p>Repeat this step as needed to load all packages installed during your
-interactive session.</p>
+Repeat this step as needed to load all packages installed during your
+interactive session.
 
-<p>Then exit the R console:</p>
+Then exit the R console:
 
-<pre class="term"><code>&gt; quit()
-</code></pre>
+``` 
+> quit()
+```
+{:.term}
 
-<h2 id="c-finish-up">C. Finish Up</h2>
+C. Finish Up
+------------
 
-<p><strong>1. Create a <code>tar.gz</code> file of your packages</strong></p>
+**1. Create a `tar.gz` file of your packages**
 
-<p>Right now, if we exit the interactive job, nothing will be transferred
-back because we haven't created any new <strong>files</strong> in the working
-directory, just <strong>sub-directories</strong>. In order to transfer back our
+Right now, if we exit the interactive job, nothing will be transferred
+back because we haven\'t created any new **files** in the working
+directory, just **sub-directories**. In order to transfer back our
 installation, we will need to compress it into a tarball file - not only
 will HTCondor then transfer back the file, it is generally easier to
 transfer a single, compressed tarball file than an uncompressed set of
-directories.</p>
+directories.
 
-<p>Run the following command to create your own tarball of your packages:</p>
+Run the following command to create your own tarball of your packages:
 
-<pre class="term"><code>[alice@build]$ tar -czf packages.tar.gz packages/
-</code></pre>
+``` 
+[alice@build]$ tar -czf packages.tar.gz packages/
+```
+{:.term}
 
-<p>Again, you can use a different name for the <code>tar.gz</code> file, if you want.</p>
+Again, you can use a different name for the `tar.gz` file, if you want.
 
-<p><strong>2. Finish the interactive build job</strong></p>
+**2. Finish the interactive build job**
 
-<p>We now have our packages bundled and ready for CHTC! You can now exit
+We now have our packages bundled and ready for CHTC! You can now exit
 the interactive job and the tar.gz file with your R packages will return
-to the submit server with you.</p>
+to the submit server with you.
 
-<pre class="term"><code>[alice@build]$ exit 
-</code></pre>
+``` 
+[alice@build]$ exit 
+```
+{:.term}
 
-<p><span name="script"></span></p>
+<span name="script"></span>
 
-<h1 id="2-creating-a-script"><strong>2. Creating a Script</strong></h1>
+**2. Creating a Script**
+====================
 
-<p>In order to use CHTC's copy of R and the packages you have prepared in
+In order to use CHTC\'s copy of R and the packages you have prepared in
 an HTCondor job, we will need to write a script that unpacks both R and
 the packages and then runs our R code. We will use this script as as the
-<code>executable</code> of our HTCondor submit file.</p>
+`executable` of our HTCondor submit file.
 
-<p>A sample script appears below. After the first line, the lines starting
-with hash marks are comments . You should replace "my_script.R" with
-the name of the script you would like to run.</p>
+A sample script appears below. After the first line, the lines starting
+with hash marks are comments . You should replace \"my\_script.R\" with
+the name of the script you would like to run.
 
-<pre><code class="language-{.file}">#!/bin/bash
+``` {.file}
+#!/bin/bash
 
 # untar your R installation. Make sure you are using the right version!
 tar -xzf R###.tar.gz
@@ -547,87 +579,86 @@ export R_LIBS=$PWD/packages
 
 # run your script
 Rscript my_script.R
-</code></pre>
+```
 
-<p>If you have additional commands you would like to be run within the job,
+If you have additional commands you would like to be run within the job,
 you can add them to this base script. Once your script does what you
-would like, give it executable permissions by running:</p>
+would like, give it executable permissions by running:
 
-<pre class="term"><code>[alice@submit] chmod +x run_R.sh
-</code></pre>
+``` 
+[alice@submit] chmod +x run_R.sh
+```
+{:.term}
 
-<blockquote>
-  <h2 id="arguments-in-r">Arguments in R</h2>
+> Arguments in R
+> --------------
+>
+> To pass arguments to an R script within a job, you\'ll need to use the
+> following syntax in your main executable script, in place of the
+> generic command above:
+>
+> ``` {.file}
+> Rscript myscript.R $1 $2
+> ```
+>
+> Here, `$1` and `$2` are the first and second arguments passed to the
+> bash script from the submit file (see below), which are then sent on
+> to the R script. For more (or fewer) arguments, simply add more (or
+> fewer) arguments and numbers.
+>
+> In addition, your R script will need to be able to accept arguments
+> from the command line. There is sample code for doing this on [this
+> r-bloggers.com
+> page](https://www.r-bloggers.com/passing-arguments-to-an-r-script-from-command-lines/)
+> and about a quarter of the way into this [Software Carpentry
+> lesson](https://swcarpentry.github.io/r-novice-inflammation/05-cmdline.html)
+> (look for `print-args-trailing.R`).
 
-  <p>To pass arguments to an R script within a job, you'll need to use the
-following syntax in your main executable script, in place of the
-generic command above:</p>
+<span name="submit"></span>
 
-  <pre><code class="language-{.file}">Rscript myscript.R $1 $2
-</code></pre>
+**3. Submitting Jobs**
+==================
 
-  <p>Here, <code>$1</code> and <code>$2</code> are the first and second arguments passed to the
-bash script from the submit file (see below), which are then sent on
-to the R script. For more (or fewer) arguments, simply add more (or
-fewer) arguments and numbers.</p>
+A sample submit file can be found in our [hello
+world](helloworld.html) example page. You should make the following
+changes in order to run R jobs:
 
-  <p>In addition, your R script will need to be able to accept arguments
-from the command line. There is sample code for doing this on <a href="https://www.r-bloggers.com/passing-arguments-to-an-r-script-from-command-lines/">this
-r-bloggers.com
-page</a>
-and about a quarter of the way into this <a href="https://swcarpentry.github.io/r-novice-inflammation/05-cmdline.html">Software Carpentry
-lesson</a>
-(look for <code>print-args-trailing.R</code>).</p>
-</blockquote>
+-   Your `executable` should be the script that you wrote
+    [above](#script).
 
-<p><span name="submit"></span></p>
+    ``` {.sub}
+    executable = run_R.sh
+    ```
 
-<h1 id="3-submitting-jobs"><strong>3. Submitting Jobs</strong></h1>
+-   Modify the CPU/memory request lines. Test a few jobs for disk
+    space/memory usage in order to make sure your requests for a large
+    batch are accurate! Disk space and memory usage can be found in the
+    log file after the job completes.
+-   Change `transfer_input_files` to include:
 
-<p>A sample submit file can be found in our <a href="helloworld.html">hello
-world</a> example page. You should make the following
-changes in order to run R jobs:</p>
+    ``` {.sub}
+    transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/el8/R###.tar.gz, packages.tar.gz, my_script.R
+    ```
 
-<ul>
-  <li>
-    <p>Your <code>executable</code> should be the script that you wrote
-<a href="#script">above</a>.</p>
+-   If your script takes arguments (see the box from the previous
+    section), include those in the arguments line:
 
-    <pre><code class="language-{.sub}">executable = run_R.sh
-</code></pre>
-  </li>
-  <li>Modify the CPU/memory request lines. Test a few jobs for disk
-space/memory usage in order to make sure your requests for a large
-batch are accurate! Disk space and memory usage can be found in the
-log file after the job completes.</li>
-  <li>
-    <p>Change <code>transfer_input_files</code> to include:</p>
+    ``` {.sub}
+    arguments = value1 value2
+    ```
 
-    <pre><code class="language-{.sub}">transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/el8/R###.tar.gz, packages.tar.gz, my_script.R
-</code></pre>
-  </li>
-  <li>
-    <p>If your script takes arguments (see the box from the previous
-section), include those in the arguments line:</p>
+<span name="squid"></span>
 
-    <pre><code class="language-{.sub}">arguments = value1 value2
-</code></pre>
-  </li>
-</ul>
-
-<p><span name="squid"></span></p>
-
-<blockquote>
-  <h3 id="how-big-is-your-package-tarball">How big is your package tarball?</h3>
-
-  <p>If your package tarball is larger than 100 MB, you should NOT transfer
-the tarball using <code>transfer_input_files</code>. Instead, you should use
-CHTC's web proxy, <code>squid</code>. To learn more about <code>squid</code> please see our
-user guide <a href="file-avail-squid.html">File Availability with Squid Web
-Proxy</a>. To request
-space on <code>squid</code>, email the research computing facilitators at
-<a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a>.</p>
-</blockquote>
+> ### How big is your package tarball?
+>
+> If your package tarball is larger than 100 MB, you should NOT transfer
+> the tarball using `transfer_input_files`. Instead, you should use
+> CHTC\'s web proxy, `squid`. To learn more about `squid` please see our
+> user guide [File Availability with Squid Web
+> Proxy](file-avail-squid.html). To request
+> space on `squid`, email the research computing facilitators at
+> <chtc@cs.wisc.edu>.
+-->
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -729,12 +760,12 @@ space on <code>squid</code>, email the research computing facilitators at
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/condor_q">Learn About Your Jobs Using condor_q</a>
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htcondor-job-submission">Practice: Submit HTC Jobs using HTCondor</a>
                                     </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htcondor-job-submission">Practice: Submit HTC Jobs using HTCondor</a>
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/condor_q">Learn About Your Jobs Using condor_q</a>
                                     </div>
                                 
 
@@ -797,45 +828,20 @@ space on <code>squid</code>, email the research computing facilitators at
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="software-solutions">
-                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
                                     Software Solutions
                                 </button>
                             </h2>
-                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                                
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/software-overview-htc">Overview: How to Use Software</a>
+                                    </div>
                                 
 
                                     <div class="document-link-wrapper bg-light">
                                         <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/inter-submit">Compiling or Testing Code with an Interactive Job</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/matlab-jobs">Running Matlab Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/python-jobs">Run Python Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/conda-installation">Create a Portable Python Installation with Miniconda</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-update-submodules/uw-research-computing/r-jobs">Run R Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/java-jobs">Run Java Jobs</a>
-                                    </div>
-                                
-
-                                    <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/julia-jobs">Run Julia Jobs</a>
                                     </div>
                                 
 
@@ -949,6 +955,11 @@ space on <code>squid</code>, email the research computing facilitators at
                                         <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/docker-test">Explore and Test Docker Containers</a>
                                     </div>
                                 
+
+                                    <div class="document-link-wrapper bg-light">
+                                        <a class="" href="/web-preview/preview-update-submodules/uw-research-computing/htc-known-issues">Known Issues on the HTC</a>
+                                    </div>
+                                
                             </div>
                         </div>
                     
@@ -962,6 +973,7 @@ space on <code>squid</code>, email the research computing facilitators at
         </div>
     </div>
 </div>
+
 </main>
     </main>
     <footer id="colophon" class="uw-footer">
