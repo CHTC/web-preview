@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Create a Portable Python Installation with Miniconda</title>
+<title>Running Python Jobs</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -224,411 +224,461 @@
         <div class="col-12 col-lg-9 mw-1000">
 
             <h1 class="uw-mini-bar mb-4">
-    Create a Portable Python Installation with Miniconda
+    Running Python Jobs
 </h1>
 
-            <h2 id="quickstart-conda">Quickstart: Conda</h2>
+            <h2 id="quickstart-python">Quickstart: Python</h2>
 
 <h3 id="option-a-recommended">Option A (recommended)</h3>
 
-<p>Build a container with Conda packages installed inside:</p>
+<p>Build a container with Python &amp; packages installed inside:</p>
 
 <ol>
   <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Conda">Example container recipes for Conda</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Example container recipes for Python</a></li>
   <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
 </ol>
 
-<h3 id="option-b">Option B</h3>
+<h4 id="option-b">Option B</h4>
 
-<p>Create your own portable copy of your Conda packages:</p>
+<p>Use an existing container with a base installation of Python:</p>
 
 <ol>
-  <li>Follow the instructions in <a href="conda-installation.html#option-b-create-your-own-portable-copy">our guide</a></li>
+  <li>Choose an existing container. See 
+<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#base">OSG Base Containers</a>
+or
+<a href="https://hub.docker.com/_/python">DockerHub Python Containers</a>.</li>
+  <li><a href="software-overview-htc.html#use-an-existing-container">Use the container in your HTC jobs</a></li>
 </ol>
-
-<blockquote>
-  <p>This approach may be sensitive to the operating system of the execution point. 
-We recommend building a container instead, but are keeping these instructions as a backup.</p>
-</blockquote>
 
 <!--more-->
 
 <h2 id="more-information">More information</h2>
 
-<p>The above instructions are intended for if you have package(s) that need to be installed using <code>conda install</code>. 
-Miniconda can be used to install Python and R and corresponding packages. 
-But if you only need to install Python or R, and do not otherwise need to use a <code>conda install</code> command to set up the packages, 
-you should see the instructions specifically for setting up <a href="software-overview-htc.html#quickstart">Python or R</a> because there is less chance of obscure errors when building your container.</p>
+<p>All CHTC machines have a base installation of Python 3.
+The exact versions and packages installed, however, can vary from machine to machine.
+You should be able to include simple python commands in your calculations, i.e., <code>python3 simple-script.py</code>.</p>
 
-<p>When building or using a Miniconda container, you do not need to create or activate a conda environment.
-For the build process, you skip directly to the <code>conda install</code> commands you want to run.
-Similarly, when executing a script in a Miniconda container, the packages are loaded when the container starts.</p>
+<p>If you need a specific version of Python 3 or would like to install your own packages, we recommend that you use a container as described above.</p>
+
+<p>The example recipes provided above for building your own container are intended for python packages that can be installed using <code>python3 -m pip install</code>. 
+Additional software can be installed when building your own container.</p>
+
+<p>For packages that need to be installed with <code>conda install</code>, see the guide on <a href="software-overview-htc.html#quickstart">Conda</a>.</p>
 
 <h3 id="executable">Executable</h3>
 
-<p>If you are planning to execute a python <code>.py</code> script using your Miniconda container, you can follow the instructions in the <a href="python-jobs.html#executable">Python guide</a>.</p>
+<p>When using a container, you can use a python <code>.py</code> script as the submit file <code>executable</code>, provided that the first line (the “shebang”) in the <code>.py</code> file is</p>
 
-<p>If you are planning to execute a <code>.R</code> script using your Miniconda container, you can follow the instructions in the <a href="r-jobs.html#executable">R guide</a>.</p>
+<pre><code>#!/usr/bin/env python3
+</code></pre>
 
-<p>Otherwise, you can use a bash <code>.sh</code> script as the submit file <code>executable</code>:</p>
+<p>with the rest of the file containing the commands that you want to run using Python.</p>
+
+<p>Alternatively, you can use a bash <code>.sh</code> script as the submit file <code>executable</code>, and in that file you can use the <code>python3</code> command:</p>
 
 <pre><code>#!/bin/bash
 
-&lt;your commands go here&gt;
+python3 my-script.py
 </code></pre>
 
-<p>where the contents of the file are the commands that you want to execute using your conda environment.
-You do not and should not try to activate the conda environment in the executable if you are using a container.</p>
-
-<h3 id="specifying-exact-dependency-versions">Specifying Exact Dependency Versions</h3>
-
-<p>An important part of improving reproducibility and consistency between runs
-is to ensure that you use the correct/expected versions of your dependencies.</p>
-
-<p>When you run a command like <code>conda install numpy</code>, <code>conda</code> tries to install
-<strong>the most recent version of <code>numpy</code></strong>. For example, <code>numpy</code> version <code>1.18.2</code>
-was released on March 17, 2020. To install exactly this version of <code>numpy</code>, you
-would run <code>conda install numpy=1.18.2</code> 
-(the same works for <code>pip</code>, if you replace <code>=</code> with <code>==</code>). We
-recommend installing with an explicit version to make sure you have exactly 
-the version of a package that you want. This is often called 
-“pinning” or “locking” the version of the package.</p>
-
-<p>If you want a record of what is installed in your environment, or want to 
-reproduce your environment on another computer, conda can create a file, usually
-called <code>environment.yml</code>, that describes the exact versions of all of the 
-packages you have installed in an environment.
-This file can be re-used by a different conda command to recreate that 
-exact environment on another computer.</p>
-
-<p>To create an <code>environment.yml</code> file from your currently-activated environment, run</p>
-
-<pre class="term"><code>[alice@submit]$ conda env export &gt; environment.yml
-</code></pre>
-
-<p>This <code>environment.yml</code> will pin the exact version of <em>every dependency in your
-environment</em>. This can sometimes be problematic if you are moving between
-platforms because a package version may not be available on some other platform,
-causing an “unsatisfiable dependency” or “inconsistent environment” error.
-A much less strict pinning is</p>
-
-<pre class="term"><code>[alice@submit]$ conda env export --from-history &gt; environment.yml
-</code></pre>
-
-<p>which only lists packages that you installed manually, and <strong>does not pin their
-versions unless you yourself pinned them during installation</strong>. 
-If you need an intermediate solution, it is also possible to manually edit 
-<code>environment.yml</code> files; see the 
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#">conda environment documentation</a>
-for more details about the format and what is possible.
-In general, exact environment specifications are simply not guaranteed to be
-transferable between platforms (e.g., between Windows and Linux).
-<strong>We strongly recommend using the strictest possible pinning available to you.</strong></p>
-
-<p>To create an environment from an <code>environment.yml</code> file, run</p>
-
-<pre class="term"><code>[alice@submit]$ conda env create -f environment.yml
-</code></pre>
-
-<p>By default, the name of the environment will be whatever the name of the source
-environment was; you can change the name by adding a <code>-n &lt;name&gt;</code> option to the
-<code>conda env create</code> command.</p>
-
-<p>If you use a source control system like <code>git</code>, we recommend checking your
-<code>environment.yml</code> file into source control and making sure to recreate it 
-when you make changes to your environment.
-Putting your environment under source control gives you a way to track how it
-changes along with your own code.</p>
-
-<p>If you are developing software on your local computer for eventual use on 
-the CHTC pool, your workflow might look like this:</p>
-<ol>
-  <li>Set up a conda environment for local development and install packages as desired
-(e.g., <code>conda create -n science; conda activate science; conda install numpy</code>).</li>
-  <li>Once you are ready to run on the CHTC pool, create an <code>environment.yml</code> file
-from your local environment (e.g., <code>conda env export &gt; environment.yml</code>).</li>
-  <li>Move your <code>environment.yml</code> file from your local computer to the submit machine
-and create an environment from it (e.g., <code>conda env create -f environment.yml</code>),
-then pack it for use in your jobs, as per 
-<a href="#3-create-software-package">Create Software Package</a>.</li>
-</ol>
-
-<p>More information on conda environments can be found in 
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#">their documentation</a>.</p>
-
-<!--
-# Overview
-
-When should you use Miniconda as an installation method in CHTC? 
-- Your software has specific conda-centric installation instructions.
-- The above is true *and* the software has a lot of dependencies.
-- You mainly use Python to do your work. 
-
-Notes on terminology:
-- **conda** is a Python package manager and package ecosystem that exists in
-  parallel with `pip` and [PyPI](https://pypi.org/).
-- **Miniconda** is a slim Python distribution, containing the minimum amount
-  of packages necessary for a Python installation that can use conda.
-- **Anaconda** is a pre-built scientific Python distribution based on 
-  Miniconda that has many useful scientific packages pre-installed.
-
-To create the smallest, most portable Python installation possible, 
-we recommend starting with Miniconda and installing only the packages you 
-actually require.
-
-There are two ways to create a Miniconda installation on CHTC's HTC system. 
-The first is to create your 
-installation environment on the submit server and send a zipped version to 
-your jobs. The other option is to install Miniconda inside each job. 
-The first option is more efficient, especially for complex installations, 
-but there may be rare situations where installing with each job is better. 
-We recommend trying the pre-installation option first.
-If it doesn't work, discuss the second option with a facilitator.
-
-- Recommended: [Option 1: Pre-Install Miniconda and Transfer to Jobs](#option-1-pre-install-miniconda-and-transfer-to-jobs)
-- Alternative: [Option 2: Install Miniconda Inside Each Job](#option-2-install-miniconda-inside-each-job)
-
-This guide also discusses how to 
-["pin" your conda environment](#specifying-exact-dependency-versions)
-to create a more consistent and reproducible environment with specified versions of 
-packages.
+<p>In this case, remember to include your <code>.py</code> file in the <code>transfer_input_files</code> line of your submit file.</p>
 
-# Option 1: Pre-Install Miniconda and Transfer to Jobs
--->
+<!-- Archived 2024-05
 
-<h2 id="option-b-create-your-own-portable-copy">Option B: Create your own portable copy</h2>
+**To best understand the below information, you should already have an
+understanding of:**
 
-<h3 id="1-create-a-miniconda-installation">1. Create a Miniconda installation</h3>
+-   Using the command line to: navigate within directories,
+    create/copy/move/delete files and directories, and run their
+    intended programs (aka \"executables\").
+-   [The CHTC\'s Intro to Running HTCondor
+    Jobs](helloworld.html)
 
-<p>On the submit server, 
-download the latest Linux <a href="https://docs.conda.io/en/latest/miniconda.html">miniconda installer</a> and run it.</p>
+Overview
+========
 
-<pre class="term"><code>[alice@submit]$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-[alice@submit]$ sh Miniconda3-latest-Linux-x86_64.sh
-</code></pre>
+CHTC provides several copies of Python that can be used to run Python
+code in jobs. See our list of supported versions here: [CHTC Supported
+Python](#supported)
 
-<p>Accept the license agreement and default options. At the end, you can choose whether or 
-not to “initialize Miniconda3 by running conda init?” 
-We recommend that you enter “yes”.
-Once you’ve completed the installer, you’ll be prompted to restart your terminal. 
-Log out and log back in, and conda will be ready to use to set up your software.</p>
+This guide details the steps needed to:
 
-<blockquote>
-  <p>If you choose “no” you’ll want to save the <code>eval</code> command shown by the installer so that you can reactivate the 
-Miniconda installation when needed in the future.</p>
-</blockquote>
+1.  [Create a portable copy of your Python packages](#build)
+2.  [Write a script that uses Python and your packages](#script)
+3.  [Submit jobs](#submit)
 
-<h3 id="2-create-a-conda-environment-with-your-software">2. Create a conda “environment” with your software</h3>
+If you want to use conda to manage your Python package dependencies, 
+read this guide as background material,
+then read [our guide on using conda](conda-installation.html).
 
-<blockquote>
-  <p>(If you are using an <code>environment.yml</code> file as described 
-<a href="#specifying-exact-dependency-versions">later</a>, you should instead create
-the environment from your <code>environment.yml</code> file. If you don’t have an 
-<code>environment.yml</code> file to work with, follow the install instructions in this
-section. We recommend switching to the <code>environment.yml</code> method of creating 
-environments once you understand the “manual” method presented here.)</p>
-</blockquote>
+<span name="supported"></span>
 
-<p>Make sure that you’ve activated the base Miniconda environment if you haven’t 
-already. Your prompt should look like this:</p>
+CHTC-Provided Python Installations
+==============================
 
-<pre class="term"><code>(base)[alice@submit]$ 
-</code></pre>
+CHTC provides a pre-built copy of the following versions of Python: 
 
-<p>To create an environment, use the <code>conda create</code> command and then activate the 
-environment:</p>
+### Building on CentOS 7 Linux _(Soon to be Phased Out)_
 
-<pre class="term"><code>(base)[alice@submit]$ conda create -n env-name
-(base)[alice@submit]$ conda activate env-name
-</code></pre>
+{:.gtable}
+  | Python version  | Name of Python installation file |
+  | --- | --- |
+  | Python 2.7 | python27.tar.gz |
+  | Python 3.6 | python36.tar.gz |
+  | Python 3.7 | python37.tar.gz |
+  | Python 3.8 | python38.tar.gz |
+  | Python 3.9 | python39.tar.gz |
 
-<p>Then, run the <code>conda install</code> command to install the different packages and 
-software you want to include in the installation. How this should look is often 
-listed in the installation examples for software 
-(e.g. <a href="https://docs.qiime2.org/2020.2/install/native/#install-qiime-2-within-a-conda-environment">Qiime2</a>, 
-<a href="https://pytorch.org/get-started/locally/">Pytorch</a>).</p>
+### Building on CentOS Stream 8 Linux _(RECOMMENDED)_
 
-<pre class="term"><code>(env-name)[alice@submit]$ conda install pkg1 pkg2
-</code></pre>
+{:.gtable}
+  | Python version  | Name of Python installation file |
+  | --- | --- |
+  | Python 3.7 | python37.tar.gz |
+  | Python 3.8 | python38.tar.gz |
+  | Python 3.9 | python39.tar.gz |
+  | Python 3.10 | python310.tar.gz |
 
-<p>Some Conda packages are only available via specific Conda channels 
-which serve as repositories for hosting and managing packages. If Conda is 
-unable to locate the requested packages using the example above, you may 
-need to have Conda search other channels. More detail are available at
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/channels.html">https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/channels.html</a>.</p>
+If you need a specific version of Python not shown 
+above, [contact the Research Computing Facilitators](mailto:chtc@cs.wisc.edu) to 
+see if we can build it for you; if 
+we can't, we can send you instructions for how to build your own copy of Python 
+or use a Docker container for running your jobs. 
 
-<p>Packages may also be installed via <code>pip</code>, but you should only do this
-when there is no <code>conda</code> package available.</p>
+**1. Adding Python Packages**
+=========================
+<span name="build"></span>
 
-<p>Once everything is installed, deactivate the environment to go back to the 
-Miniconda “base” environment.</p>
+If your code uses specific Python packages (like `numpy`, `matplotlib`,
+`sci-kit learn`, etc) follow the directions below to download and
+prepare the packages you need for job submission. **If your job does not
+require any extra Python packages, skip to parts 2 and 3.**
 
-<pre class="term"><code>(env-name)[alice@submit]$ conda deactivate
-</code></pre>
+You are going to start an interactive job that runs on the HTC build
+servers and that downloads a copy of Python. You will then install your
+packages to a folder and zip those files to return to the submit server.
 
-<p>For example, if you wanted to create an installation with <code>pandas</code> and 
-<code>matplotlib</code> and call the environment <code>py-data-sci</code>, you would use this sequence 
-of commands:</p>
+> These instructions are primarily about adding packages to a fresh
+> install of Python; if you want to add packages to a pre-existing
+> package folder, there will be notes below in boxes like this one.
 
-<pre class="term"><code>(base)[alice@submit]$ conda create -n py-data-sci
-(base)[alice@submit]$ conda activate py-data-sci
-(py-data-sci)[alice@submit]$ conda install pandas matplotlib
-(py-data-sci)[alice@submit]$ conda deactivate
-(base)[alice@submit]$ 
-</code></pre>
+Preliminary Step: Choose a Linux Version to Build On
+----------------------------------
 
-<blockquote>
-  <h3 id="more-about-miniconda">More about Miniconda</h3>
+As of August 2022, the newest hardware in the HTC system is running a newer version of Linux, 
+CentOS Stream 8. A limited amount of our older hardware is still running CentOS 7 but these machines will be upgraded to the new operating system in the near future. More information about this transition can be found in the [HTC Operating System Transition](/uw-research-computing/os-transition-htc.html) guide. 
 
-  <p>See the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">official conda documentation</a> for 
-more information on creating and managing environments with <code>conda</code>.</p>
-</blockquote>
+There are two approaches to running on our pool: 
 
-<h3 id="3-create-software-package">3. Create Software Package</h3>
+- **compile on CentOS 8, run on CentOS8**: This is the recommended option for (1) all new users and for (2) existing users who have tested their CentOS 7 builds and determined they are not compatabile with CentOS 8 machines. By choosing this option, you will have access to the vast majority of the HTC system's capacity.
 
-<p>Make sure that your job’s Miniconda environment is created, but deactivated, so 
-that you’re in the “base” Miniconda environment:</p>
+- **compile on CentOS 7, run on both versions of CentOS**: This is a **temporary** option available to users who previously compiled their software on CHTC's CentOS 7 machines. In _some_ cases, it is possible to use the same software, library, and packages on both CentOS 7 and CentOS Stream 8 machines. Existing users who compiled their software on CentOS 7 machines will need to (1) test their jobs to ensure they run successfully on CentOS Stream 8 machines and (2) plan for the phasing out of CentOS 7 machines (expected Fall 2022). 
 
-<pre class="term"><code>(base)[alice@submit]$ 
-</code></pre>
 
-<p>Then, run this command to install the <code>conda pack</code> tool:</p>
-
-<pre class="term"><code>(base)[alice@submit]$ conda install -c conda-forge conda-pack
-</code></pre>
-
-<p>Enter <code>y</code> when it asks you to install.</p>
-
-<p>Finally, use <code>conda pack</code> to create a zipped tar.gz file of your environment
-(substitute the name of your conda environment where you see <code>env-name</code>), 
-set the proper permissions for this file using <code>chmod</code>, and check the size of 
-the final tarball:</p>
-
-<pre class="term"><code>(base)[alice@submit]$ conda pack -n env-name --dest-prefix='$ENVDIR'
-(base)[alice@submit]$ chmod 644 env-name.tar.gz
-(base)[alice@submit]$ ls -sh env-name.tar.gz
-</code></pre>
-
-<p>When this step finishes, you should see a file in your current directory named
-<code>env-name.tar.gz</code></p>
-
-<h3 id="4-check-size-of-conda-environment-tar-archive">4. Check Size of Conda Environment Tar Archive</h3>
-
-<p>The tar archive, <code>env-name.tar.gz</code>, created in the previous step will be used as input for 
-subsequent job submission. As with all job input files, you should check the size of this 
-Conda environment file. <strong>If &gt;100MB in size, you should NOT transfer the tar ball using 
-<code>transfer_input_files</code></strong>. Instead, you should plan to use either CHTC’s web proxy, SQUID or 
-large data filesystem Staging. Please contact a research computing facilitators at 
-chtc@cs.wisc.edu to determine the best option for your jobs.</p>
-
-<p>More information is available at <a href="file-avail-squid.html">File Availability with Squid Web Proxy</a> 
-and <a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a>.</p>
-
-<h3 id="5-create-a-job-executable">5. Create a Job Executable</h3>
-
-<p>The job will need to go through a few steps to use this “packed” conda environment; 
-first, setting the <code>PATH</code>, then unzipping the environment, then activating it, 
-and finally running whatever program you like. The script below is an example 
-of what is needed (customize as indicated to match your choices above).</p>
-
-<pre class="file"><code>#!/bin/bash
-
-# have job exit if any command returns with non-zero exit status (aka failure)
-set -e
-
-# replace env-name on the right hand side of this line with the name of your conda environment
-ENVNAME=env-name
-# if you need the environment directory to be named something other than the environment name, change this line
-export ENVDIR=$ENVNAME
-
-# these lines handle setting up the environment; you shouldn't have to modify them
-export PATH
-mkdir $ENVDIR
-tar -xzf $ENVNAME.tar.gz -C $ENVDIR
-. $ENVDIR/bin/activate
-
-# modify this line to run your desired Python script and any other work you need to do
-python3 hello.py
-</code></pre>
-
-<h3 id="6-submit-jobs">6. Submit Jobs</h3>
-
-<p>In your submit file, make sure to have the following:</p>
-
-<ul>
-  <li>Your executable should be the the bash script you created in <a href="#5-create-a-job-executable">step 5</a>.</li>
-  <li>Remember to transfer your Python script and the environment <code>tar.gz</code> file via
- <code>transfer_input_files</code>. 
-<strong>Since the <code>tar.gz</code> file will almost certainly be larger than 100MB, 
-please <a href="mailto:chtc@cs.wisc.edu">email</a> us about different tools for 
-delivering the installation to your jobs, 
-likely our <a href="file-avail-squid.html">SQUID web proxy</a>.</strong></li>
-</ul>
-
-<!--
-# Option 2: Install Miniconda Inside Each Job
-
-In this approach, rather than copying the Miniconda installation with each job, 
-we will copy the Miniconda *installer* and install a new copy of Miniconda with 
-each job.
-
-**Do not use this installation method unless directed to do by a facilitator!**
-
-## 1. Download the Miniconda Installer and Test Installation
-
-If you haven't already, download the latest Miniconda installer for Linux from the 
-[Miniconda website](https://docs.conda.io/en/latest/miniconda.html#linux-installers) 
-and place it in your home directory on a CHTC submit server. 
-
-We strongly recommend testing the installation steps for your particular program 
-or packages - either on your own computer or similar to the 
-[directions above](#option-1-pre-install-miniconda-and-transfer-to-jobs) - 
-before trying to submit the installation as part of a job to CHTC. 
-
-## 2. Create an Executable Script
-
-Our plan here is to run the Miniconda installer inside the job, build an environment 
-with needed packages, and then run our desired script or program. The following 
-script should work verbatim except for changing the `conda install` step to the packages 
-you need or the instructions for your program. See [below](#specifying-exact-dependency-versions)
-for instructions on using an `environment.yml` environment specification instead
-of "manually" listing packages in your job script.
+A. Submit an Interactive Job
+----------------------------
+<span name="version"></span>
+Create the following special submit file on the submit server, calling
+it something like `build.sub`. **Make sure that you choose the appropriate 
+Python tar.gz file and requirements if you want to build on CentOS 7 versus 
+CentOS Stream 8. **
 
 ```
+# Python build file
+
+universe = vanilla
+log = interactive.log
+
+# In the latest version of HTCondor on CHTC, interactive jobs require an executable.
+# If you do not have an existing executable, use a generic linux command like hostname as shown below.
+executable = /usr/bin/hostname
+
+# Choose a version of Python from the tables above
+# If building on CentOS 7 (To be Phased Out)
+# transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/python##.tar.gz
+
+# If building on CentOS 8 (Recommended)
+transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/el8/python##.tar.gz
+
++IsBuildJob = true
+# Indicate which version of Linux (CentOS) you want to build your packages on
+requirements = (OpSysMajorVer =?= 8)
+request_cpus = 1
+request_memory = 4GB
+request_disk = 2GB
+
+queue
+```
+ {:.sub}
+
+> If you want to add packages to a pre-existing package directory, add
+> the `tar.gz` file with the packages to the `transfer_input_files`
+> line:
+>
+> ``` {.sub}
+> transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/el8/python##.tar.gz, packages.tar.gz
+> ```
+
+Once this submit file is created, you will start the interactive job by
+running the following command:
+
+``` 
+[alice@submit]$ condor_submit -i build.sub
+```
+{:.term}
+
+It may take a few minutes for the build job to start.
+
+B. Install the Packages
+-----------------------
+
+Once the interactive build job starts, you should see the Python that
+you specified inside the working directory:
+
+``` 
+[alice@build]$ ls -lh
+-rw-r--r-- 1 alice alice  78M Mar 26 12:24 python##.tar.gz
+drwx------ 2 alice alice 4.0K Mar 26 12:24 tmp
+drwx------ 3 alice alice 4.0K Mar 26 12:24 var
+```
+{:.term}
+
+We\'ll now unzip the copy of Python and set the `PATH` variable to
+reference that version of Python:
+
+``` 
+[alice@build]$ tar -xzf python##.tar.gz
+[alice@build]$ export PATH=$PWD/python/bin:$PATH
+```
+{:.term}
+
+To make sure that your setup worked, try running:
+
+``` 
+[alice@build]$ python3 --version
+```
+{:.term}
+
+You can also try running this command to make sure the copy of python
+that is now active is the one you just installed:
+
+``` 
+[alice@build]$ echo `which python3`
+```
+{:.term}
+
+The command above should return a path that includes the prefix
+`/var/lib/condor/`, indicating that it is installed in your job\'s
+working directory.
+
+If you\'re using Python 2, use `python2` instead of `python3` above (and
+in what follows). The output should match the version number that you
+want to be using!
+
+> If you brought along your own package directory, un-tar it here and
+> skip the directory creation step below.
+
+First, create a directory to put your packages into and then add that directory to our list of enviornmental variables that can be used by HTCondor to find the package directory: 
+
+``` 
+[alice@build]$ mkdir packages
+[alice@build]$ export PYTHONPATH=$PWD/packages
+```
+{:.term}
+
+You can choose what name to use for this directory \-- if you have
+different sets of packages that you use for different jobs, you could
+use a more descriptive name than \"packages\"
+
+To install the Python packages run the following command:
+
+``` 
+[alice@build]$ python3 -m pip install --target=$PWD/packages package1 package2 etc.
+```
+{:.term}
+
+Replace *package1* *package2* with the names of packages you want to
+install. `pip` should download all dependent packages and install them.
+Certain packages may take longer than others.
+
+> If a specific version of a package is required, you can provide the version number using the syntax `packagename==X.Y.Z`.
+> For example, `numpy==1.23.5` would install version `1.23.5` of `numpy`.  
+
+If you have difficulties installing a package, we recommend you upgrade `pip` and then try reinstalling your packages:
+
+``` 
+[alice@build]$ python3 -m pip install --upgrade pip
+[alice@build]$ python3 -m pip install --target=$PWD/packages package1 package2 etc.
+```
+{:.term}
+
+> The python packages (and versions) can instead be installed using the file `requirements.txt`, which contains one package name (and versions, if needed) per line.  
+> This file can be created manually or, if you have a working python installation that you want to duplicate, by running 
+>
+>  ```
+> python3 -m pip freeze > requirements.txt
+> ```
+> {:.term}
+> 
+> To install the packages contained within `requirements.txt`, run
+> 
+> ```
+> python3 -m pip install -r requirements.txt
+> ```
+> {:.term}
+
+
+C. Finish Up
+------------
+
+Right now, if we exit the interactive job, nothing will be transferred
+back because we haven\'t created any new **files** in the working
+directory, just **sub-directories**. In order to transfer back our
+installation, we will need to compress it into a tarball file - not only
+will HTCondor then transfer back the file, it is generally easier to
+transfer a single, compressed tarball file than an uncompressed set of
+directories.
+
+Run the following command to create your own tarball of your packages:
+
+``` 
+[alice@build]$ tar -czf packages.tar.gz packages/
+```
+{:.term}
+
+Again, you can use a different name for the `tar.gz` file, if you want.
+
+We now have our packages bundled and ready for CHTC! You can now exit
+the interactive job and the tar.gz file with your Python packages will
+return to the submit server with you (this sometimes takes a few extra
+seconds after exiting).
+
+``` 
+[alice@build]$ exit 
+```
+{:.term}
+
+
+**2. Creating a Script**
+====================
+<span name="script"></span>
+In order to use CHTC\'s copy of Python and the packages you have
+prepared in an HTCondor job, we will need to write a script that unpacks
+both Python and the packages and then runs our Python code. We will use
+this script as as the `executable` of our HTCondor submit file.
+
+A sample script (`run_python.sh`) appears below. After the first line, the lines starting
+with hash marks are comments . You should replace \"my\_script.py\" with
+the name of the script you would like to run, and modify the Python
+version numbers to be the same as what you used above to install your
+packages.
+
+``` 
 #!/bin/bash
 
-set -e
+# untar your Python installation. Make sure you are using the right version!
+tar -xzf python##.tar.gz
+# (optional) if you have a set of packages (created in Part 1), untar them also
+tar -xzf packages.tar.gz
 
-# installation steps for Miniconda
+# make sure the script will use your Python installation, 
+# and the working directory as its home location
+export PATH=$PWD/python/bin:$PATH
+export PYTHONPATH=$PWD/packages
 export HOME=$PWD
-export PATH
-sh [installer] -b -p $PWD/miniconda3
-export PATH=$PWD/miniconda3/bin:$PATH
 
-# install packages
-conda install numpy matplotlib
-
-# modify this line to run your desired Python script
-python3 hello.py
+# run your script
+python3 my_script.py
 ```
 {:.file}
 
-## 3. Submit File
+If you have additional commands you would like to be run within the job,
+you can add them to this base script. Once your script does what you
+would like, give it executable permissions by running:
 
-In your submit file, include the executable you wrote (as described above)
-and in `transfer_input_files` include the Miniconda installer and any other scripts 
-or data files you want to include with the job: 
-
+``` 
+[alice@submit] chmod +x run_python.sh
 ```
-executable = run_with_conda.sh
-arguments = myscript.py
+{:.term}
 
-transfer_input_files = Miniconda3-latest-Linux-x86_64.sh, script.py, other_input.file
-```
-{:.sub}
--->
+> Arguments in Python
+> -------------------
+>
+> To pass arguments to a Python script within a job, you\'ll need to use the
+> following syntax in your main executable script, in place of the
+> generic command above:
+>
+> ``` 
+> python3 my_script.py $1 $2
+> ```
+> {:.file}
+>
+> Here, `$1` and `$2` are the first and second arguments passed to the
+> bash script from the submit file (see below), which are then sent on
+> to the Python script. For more (or fewer) arguments, simply add more
+> (or fewer) arguments and numbers.
+>
+> In addition, your Python script will need to be able to accept
+> arguments from the command line. There is an explanation of how to do
+> this in [this Software Carpentry
+> lesson](https://swcarpentry.github.io/python-novice-inflammation/12-cmdline.html).
 
+
+**3. Submitting Jobs**
+==================
+<span name="submit"></span>
+A sample submit file can be found in our [hello
+world](helloworld.html) example page. You should make the following
+changes in order to run Python jobs:
+
+-   **What version of Linux can you run on?** 
+	- If you compiled your packages on CentOS7, 
+		you can try running your jobs on servers that have either version of Linux. This requires 
+		an additional requirement, shown 
+		in [this guide](/uw-research-computing/os-transition-htc.html). 
+	- If you compiled your packages on CentOS Stream 8, your jobs should ONLY run on 
+	servers using CentOS Stream 8. This will be the default as of September 29. Before 
+	then, make sure to opt into using that operating system, as described in the same 
+	guide linked above. 
+
+-   Your `executable` should be the script that you wrote
+    [above](#script).
+
+    ``` 
+    executable = run_python.sh
+    ```
+    {:.sub}
+-   Modify the CPU/memory request lines.  Test a few jobs for disk space/memory usage in 
+    order to make sure your requests for a large batch are accurate!  
+    Disk space and memory usage can be found in the log file after the job completes. 
+-   Change transfer_input_files to include the python tar file, packages, script, and any other 
+	needed files. **If you used our CentOS 7 version of Python**, this may look like: 
+    ```
+    transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/python##.tar.gz, packages.tar.gz, my_script.py
+    ```
+    {:.sub}
+	
+	**If you used our CentOS Stream 8 version of Python**, this may look like: 
+    ```
+    transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/chtc/el8/python##.tar.gz, packages.tar.gz, my_script.py
+    ```
+    {:.sub}
+
+-   If your script takes arguments (see the box from the previous
+    section), include those in the arguments line:
+
+    ``` {.sub}
+    arguments = value1 value2
+    ```
+
+> ### How big is your package tarball?
+>
+> If your package tarball is larger than 100 MB, you should NOT transfer
+> the tarball using `transfer_input_files`. Instead, you should use
+> CHTC\'s web proxy, `squid`. In order to request space on `squid`,
+> email the research computing facilitators at <chtc@cs.wisc.edu>.
+ -->
 
         </div>
         <div class="col-3 d-none d-lg-block">

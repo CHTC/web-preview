@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Create a Portable Python Installation with Miniconda</title>
+<title>Running Matlab Jobs</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -224,411 +224,409 @@
         <div class="col-12 col-lg-9 mw-1000">
 
             <h1 class="uw-mini-bar mb-4">
-    Create a Portable Python Installation with Miniconda
+    Running Matlab Jobs
 </h1>
 
-            <h2 id="quickstart-conda">Quickstart: Conda</h2>
+            <h2 id="quickstart-matlab">Quickstart: Matlab</h2>
 
-<h3 id="option-a-recommended">Option A (recommended)</h3>
-
-<p>Build a container with Conda packages installed inside:</p>
+<p>Build a container with Matlab &amp; toolboxes installed inside:</p>
 
 <ol>
   <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Conda">Example container recipes for Conda</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab">Example container recipes for Matlab</a></li>
   <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
 </ol>
 
-<h3 id="option-b">Option B</h3>
-
-<p>Create your own portable copy of your Conda packages:</p>
-
-<ol>
-  <li>Follow the instructions in <a href="conda-installation.html#option-b-create-your-own-portable-copy">our guide</a></li>
-</ol>
-
 <blockquote>
-  <p>This approach may be sensitive to the operating system of the execution point. 
-We recommend building a container instead, but are keeping these instructions as a backup.</p>
+  <p><strong>Note</strong>: Because Matlab is a licensed software, you <strong>must</strong> add the following line to your submit file:</p>
+
+  <pre class="sub"><code>concurrency_limits = MATLAB:1
+</code></pre>
+
+  <p>Failure to do so may cause your or other users’ jobs to fail to obtain a license from the license server.</p>
 </blockquote>
 
 <!--more-->
 
 <h2 id="more-information">More information</h2>
 
-<p>The above instructions are intended for if you have package(s) that need to be installed using <code>conda install</code>. 
-Miniconda can be used to install Python and R and corresponding packages. 
-But if you only need to install Python or R, and do not otherwise need to use a <code>conda install</code> command to set up the packages, 
-you should see the instructions specifically for setting up <a href="software-overview-htc.html#quickstart">Python or R</a> because there is less chance of obscure errors when building your container.</p>
+<p>CHTC has a site license for Matlab that allows for up to 10,000 jobs to run at any given time across <em>all CHTC users</em>. 
+Hence the requirement for adding the line <code>concurrency_limits = MATLAB:1</code> to your submit files, so that HTCondor can keep track of which jobs are using or will use a license.</p>
 
-<p>When building or using a Miniconda container, you do not need to create or activate a conda environment.
-For the build process, you skip directly to the <code>conda install</code> commands you want to run.
-Similarly, when executing a script in a Miniconda container, the packages are loaded when the container starts.</p>
+<p>Following the instructions above, you are able to install a variety of Matlab Toolboxes when building the container.
+The Toolboxes available for each supported version of Matlab are described here: https://github.com/mathworks-ref-arch/matlab-dockerfile/blob/main/mpm-input-files/.
+Navigate to the text file for the version of interest, and look at the section named “INSTALL PRODUCTS”.
+The example recipes linked above provide instructions on how to specify the packages you want to install when building the container.</p>
 
-<h3 id="executable">Executable</h3>
+<h3 id="executable">Executable<a name="matlab-executable"></a></h3>
 
-<p>If you are planning to execute a python <code>.py</code> script using your Miniconda container, you can follow the instructions in the <a href="python-jobs.html#executable">Python guide</a>.</p>
+<p>When using the Matlab container, we recommend the following process for executing your Matlab commands in an HTCondor job:</p>
 
-<p>If you are planning to execute a <code>.R</code> script using your Miniconda container, you can follow the instructions in the <a href="r-jobs.html#executable">R guide</a>.</p>
+<ol>
+  <li>
+    <p>Put your Matlab commands in a <code>.m</code> script. For this example, we’ll call it <code>my-script.m</code>.</p>
+  </li>
+  <li>
+    <p>Create the file <code>run-matlab.sh</code> with the following contents:</p>
 
-<p>Otherwise, you can use a bash <code>.sh</code> script as the submit file <code>executable</code>:</p>
+    <pre><code>#!/bin/bash
+   
+matlab -batch "my-script"
+</code></pre>
+
+    <p>Note that in the script, the <code>.m</code> extension has been dropped from the file name (uses <code>"my-script"</code> instead of <code>"my-script.m"</code>).</p>
+  </li>
+  <li>
+    <p>In your submit file, set the <code>.sh</code> script as the executable and list the <code>.m</code> file to be transferred:</p>
+
+    <pre class="sub"><code>executable = run-matlab.sh
+transfer_input_files = my-script.m
+</code></pre>
+  </li>
+</ol>
+
+<h3 id="arguments">Arguments<a name="matlab-arguments"></a></h3>
+
+<p>You can pass arguments from your submit file to your Matlab code via your executable <code>.sh</code> and the <code>matlab -batch</code> command. 
+Arguments in your submit file are accessible inside your executable <code>.sh</code> script with the syntax <code>${n}</code>, where <code>n</code> is the nth value passed in the arguments line.
+You can use this syntax inside of the <code>matlab -batch</code> command.</p>
+
+<p>For example, if your Matlab script (<code>my-script.m</code>) is expecting a variable <code>foo</code>, you can add <code>foo=${1}</code> before calling <code>my-script</code>:</p>
 
 <pre><code>#!/bin/bash
 
-&lt;your commands go here&gt;
+matlab -batch "foo=${1};my-script"
 </code></pre>
 
-<p>where the contents of the file are the commands that you want to execute using your conda environment.
-You do not and should not try to activate the conda environment in the executable if you are using a container.</p>
+<p>This will use the first argument from the submit file to define the Matlab variable <code>foo</code>.
+By default, such values are read in by Matlab as numeric values (or as a Matlab function/variable that evaluates to a numeric function).
+If you want Matlab to read in the argument as a string, you need to add apostrophes around the value, like this:</p>
 
-<h3 id="specifying-exact-dependency-versions">Specifying Exact Dependency Versions</h3>
+<pre><code>#!/bin/bash
 
-<p>An important part of improving reproducibility and consistency between runs
-is to ensure that you use the correct/expected versions of your dependencies.</p>
-
-<p>When you run a command like <code>conda install numpy</code>, <code>conda</code> tries to install
-<strong>the most recent version of <code>numpy</code></strong>. For example, <code>numpy</code> version <code>1.18.2</code>
-was released on March 17, 2020. To install exactly this version of <code>numpy</code>, you
-would run <code>conda install numpy=1.18.2</code> 
-(the same works for <code>pip</code>, if you replace <code>=</code> with <code>==</code>). We
-recommend installing with an explicit version to make sure you have exactly 
-the version of a package that you want. This is often called 
-“pinning” or “locking” the version of the package.</p>
-
-<p>If you want a record of what is installed in your environment, or want to 
-reproduce your environment on another computer, conda can create a file, usually
-called <code>environment.yml</code>, that describes the exact versions of all of the 
-packages you have installed in an environment.
-This file can be re-used by a different conda command to recreate that 
-exact environment on another computer.</p>
-
-<p>To create an <code>environment.yml</code> file from your currently-activated environment, run</p>
-
-<pre class="term"><code>[alice@submit]$ conda env export &gt; environment.yml
+matlab -batch "foo=${1};bar='${2}';my-script"
 </code></pre>
 
-<p>This <code>environment.yml</code> will pin the exact version of <em>every dependency in your
-environment</em>. This can sometimes be problematic if you are moving between
-platforms because a package version may not be available on some other platform,
-causing an “unsatisfiable dependency” or “inconsistent environment” error.
-A much less strict pinning is</p>
+<p>Here, the value of <code>bar</code> is defined as the second argument from the submit file, and will be identified by Matlab as a string because it’s wrapped in apostrophes (<code>'${2}'</code>).</p>
 
-<pre class="term"><code>[alice@submit]$ conda env export --from-history &gt; environment.yml
+<p>If you have defined your script to act as a function, you can call the function directly and pass the arguments directly as well.
+For example, if you have constructed your <code>my-script.m</code> as a function, then you can do</p>
+
+<pre><code>#!/bin/bash
+
+matlab -batch "my-script(${1}, ${2})"
 </code></pre>
 
-<p>which only lists packages that you installed manually, and <strong>does not pin their
-versions unless you yourself pinned them during installation</strong>. 
-If you need an intermediate solution, it is also possible to manually edit 
-<code>environment.yml</code> files; see the 
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#">conda environment documentation</a>
-for more details about the format and what is possible.
-In general, exact environment specifications are simply not guaranteed to be
-transferable between platforms (e.g., between Windows and Linux).
-<strong>We strongly recommend using the strictest possible pinning available to you.</strong></p>
-
-<p>To create an environment from an <code>environment.yml</code> file, run</p>
-
-<pre class="term"><code>[alice@submit]$ conda env create -f environment.yml
-</code></pre>
-
-<p>By default, the name of the environment will be whatever the name of the source
-environment was; you can change the name by adding a <code>-n &lt;name&gt;</code> option to the
-<code>conda env create</code> command.</p>
-
-<p>If you use a source control system like <code>git</code>, we recommend checking your
-<code>environment.yml</code> file into source control and making sure to recreate it 
-when you make changes to your environment.
-Putting your environment under source control gives you a way to track how it
-changes along with your own code.</p>
-
-<p>If you are developing software on your local computer for eventual use on 
-the CHTC pool, your workflow might look like this:</p>
-<ol>
-  <li>Set up a conda environment for local development and install packages as desired
-(e.g., <code>conda create -n science; conda activate science; conda install numpy</code>).</li>
-  <li>Once you are ready to run on the CHTC pool, create an <code>environment.yml</code> file
-from your local environment (e.g., <code>conda env export &gt; environment.yml</code>).</li>
-  <li>Move your <code>environment.yml</code> file from your local computer to the submit machine
-and create an environment from it (e.g., <code>conda env create -f environment.yml</code>),
-then pack it for use in your jobs, as per 
-<a href="#3-create-software-package">Create Software Package</a>.</li>
-</ol>
-
-<p>More information on conda environments can be found in 
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#">their documentation</a>.</p>
-
-<!--
-# Overview
-
-When should you use Miniconda as an installation method in CHTC? 
-- Your software has specific conda-centric installation instructions.
-- The above is true *and* the software has a lot of dependencies.
-- You mainly use Python to do your work. 
-
-Notes on terminology:
-- **conda** is a Python package manager and package ecosystem that exists in
-  parallel with `pip` and [PyPI](https://pypi.org/).
-- **Miniconda** is a slim Python distribution, containing the minimum amount
-  of packages necessary for a Python installation that can use conda.
-- **Anaconda** is a pre-built scientific Python distribution based on 
-  Miniconda that has many useful scientific packages pre-installed.
-
-To create the smallest, most portable Python installation possible, 
-we recommend starting with Miniconda and installing only the packages you 
-actually require.
-
-There are two ways to create a Miniconda installation on CHTC's HTC system. 
-The first is to create your 
-installation environment on the submit server and send a zipped version to 
-your jobs. The other option is to install Miniconda inside each job. 
-The first option is more efficient, especially for complex installations, 
-but there may be rare situations where installing with each job is better. 
-We recommend trying the pre-installation option first.
-If it doesn't work, discuss the second option with a facilitator.
-
-- Recommended: [Option 1: Pre-Install Miniconda and Transfer to Jobs](#option-1-pre-install-miniconda-and-transfer-to-jobs)
-- Alternative: [Option 2: Install Miniconda Inside Each Job](#option-2-install-miniconda-inside-each-job)
-
-This guide also discusses how to 
-["pin" your conda environment](#specifying-exact-dependency-versions)
-to create a more consistent and reproducible environment with specified versions of 
-packages.
-
-# Option 1: Pre-Install Miniconda and Transfer to Jobs
--->
-
-<h2 id="option-b-create-your-own-portable-copy">Option B: Create your own portable copy</h2>
-
-<h3 id="1-create-a-miniconda-installation">1. Create a Miniconda installation</h3>
-
-<p>On the submit server, 
-download the latest Linux <a href="https://docs.conda.io/en/latest/miniconda.html">miniconda installer</a> and run it.</p>
-
-<pre class="term"><code>[alice@submit]$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-[alice@submit]$ sh Miniconda3-latest-Linux-x86_64.sh
-</code></pre>
-
-<p>Accept the license agreement and default options. At the end, you can choose whether or 
-not to “initialize Miniconda3 by running conda init?” 
-We recommend that you enter “yes”.
-Once you’ve completed the installer, you’ll be prompted to restart your terminal. 
-Log out and log back in, and conda will be ready to use to set up your software.</p>
-
-<blockquote>
-  <p>If you choose “no” you’ll want to save the <code>eval</code> command shown by the installer so that you can reactivate the 
-Miniconda installation when needed in the future.</p>
-</blockquote>
+<p>Again, by default Matlab will interpret these value of these variables as numeric values, unless you wrap the argument in apostrophes as described above.</p>
 
-<h3 id="2-create-a-conda-environment-with-your-software">2. Create a conda “environment” with your software</h3>
+<!-- Archived 2024-05
 
-<blockquote>
-  <p>(If you are using an <code>environment.yml</code> file as described 
-<a href="#specifying-exact-dependency-versions">later</a>, you should instead create
-the environment from your <code>environment.yml</code> file. If you don’t have an 
-<code>environment.yml</code> file to work with, follow the install instructions in this
-section. We recommend switching to the <code>environment.yml</code> method of creating 
-environments once you understand the “manual” method presented here.)</p>
-</blockquote>
+**To best understand the below information, users should already have an understanding of:**
 
-<p>Make sure that you’ve activated the base Miniconda environment if you haven’t 
-already. Your prompt should look like this:</p>
+-   Using the command line to: navigate within directories, create/copy/move/delete files and directories, and run their intended programs (aka \"executables\").
+-   [The CHTC's Intro to Running HTCondor Jobs](helloworld.html)
 
-<pre class="term"><code>(base)[alice@submit]$ 
-</code></pre>
+Overview
+========
 
-<p>To create an environment, use the <code>conda create</code> command and then activate the 
-environment:</p>
+Like most programs, Matlab is not installed on CHTC\'s high throughput
+compute system. One way to run Matlab where it isn\'t installed is to
+compile Matlab `.m` files into a binary file and run the binary by using
+a set of files called the Matlab runtime. In order to run Matlab in
+CHTC, it is therefore necessary to perform the following steps which
+will be detailed in the guide below (click on the links to go to the
+relevant section):
 
-<pre class="term"><code>(base)[alice@submit]$ conda create -n env-name
-(base)[alice@submit]$ conda activate env-name
-</code></pre>
+1.  [Prepare your Matlab program](#prepare)
+    -   [Compile your Matlab code](#compile)
+    -   [Edit the script that runs Matlab](#script)
+2.  [Write a submit file that uses the compiled code and script](#submit)
 
-<p>Then, run the <code>conda install</code> command to install the different packages and 
-software you want to include in the installation. How this should look is often 
-listed in the installation examples for software 
-(e.g. <a href="https://docs.qiime2.org/2020.2/install/native/#install-qiime-2-within-a-conda-environment">Qiime2</a>, 
-<a href="https://pytorch.org/get-started/locally/">Pytorch</a>).</p>
+If your Matlab code depends on random number generation, using a
+function like `rand` or `randperm`, please see the section on [ensuring
+randomness](#random) below.
 
-<pre class="term"><code>(env-name)[alice@submit]$ conda install pkg1 pkg2
-</code></pre>
 
-<p>Some Conda packages are only available via specific Conda channels 
-which serve as repositories for hosting and managing packages. If Conda is 
-unable to locate the requested packages using the example above, you may 
-need to have Conda search other channels. More detail are available at
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/channels.html">https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/channels.html</a>.</p>
+<span name="supported"></span>
 
-<p>Packages may also be installed via <code>pip</code>, but you should only do this
-when there is no <code>conda</code> package available.</p>
+Supported Versions of Matlab
+============================
 
-<p>Once everything is installed, deactivate the environment to go back to the 
-Miniconda “base” environment.</p>
+{:.gtable}
+  | Matlab version  |
+  | --- |
+  | Matlab 2015b | 
+  | Matlab 2018b |
+  | Matlab 2022b | 
 
-<pre class="term"><code>(env-name)[alice@submit]$ conda deactivate
-</code></pre>
 
-<p>For example, if you wanted to create an installation with <code>pandas</code> and 
-<code>matplotlib</code> and call the environment <code>py-data-sci</code>, you would use this sequence 
-of commands:</p>
+**A. Preparing Your Matlab Program** 
+============================
+<span name="prepare"></span>
+You can compile `.m` files into a Matlab binary yourself by requesting
+an interactive session on one of our build machines. The session is
+essentially a job without an executable; **you** are the one running the
+commands instead (in this case, to compile the code).
 
-<pre class="term"><code>(base)[alice@submit]$ conda create -n py-data-sci
-(base)[alice@submit]$ conda activate py-data-sci
-(py-data-sci)[alice@submit]$ conda install pandas matplotlib
-(py-data-sci)[alice@submit]$ conda deactivate
-(base)[alice@submit]$ 
-</code></pre>
 
-<blockquote>
-  <h3 id="more-about-miniconda">More about Miniconda</h3>
+<span name="compile"></span>
 
-  <p>See the <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">official conda documentation</a> for 
-more information on creating and managing environments with <code>conda</code>.</p>
-</blockquote>
+**1. Start an Interactive Build Job**
+---------------------------------
 
-<h3 id="3-create-software-package">3. Create Software Package</h3>
+Start by uploading all of the Matlab code files (usually `.m`, *not*,
+`.mat` files) that you need to run your code to the submit server.
 
-<p>Make sure that your job’s Miniconda environment is created, but deactivated, so 
-that you’re in the “base” Miniconda environment:</p>
+> If you have many of Matlab code files (more than 1-5), it\'s a good
+> idea to combine them into a `.tar.gz` file (like a zip file), so that
+> you can simply transfer the single `.tar.gz` file for compiling the
+> code. You can create a tar file by running this command:
+> `tar -czf code.tar.gz files and folders`
 
-<pre class="term"><code>(base)[alice@submit]$ 
-</code></pre>
+Create the following special submit file on the submit server, calling
+it something like `build.sub`.
 
-<p>Then, run this command to install the <code>conda pack</code> tool:</p>
+``` {.sub}
+# Matlab build file
 
-<pre class="term"><code>(base)[alice@submit]$ conda install -c conda-forge conda-pack
-</code></pre>
+universe = vanilla
+log = interactive.log
 
-<p>Enter <code>y</code> when it asks you to install.</p>
+# In the latest version of HTCondor on CHTC, interactive jobs require an executable.
+# If you do not have an existing executable, use a generic linux command like hostname as shown below.
+executable = /usr/bin/hostname
 
-<p>Finally, use <code>conda pack</code> to create a zipped tar.gz file of your environment
-(substitute the name of your conda environment where you see <code>env-name</code>), 
-set the proper permissions for this file using <code>chmod</code>, and check the size of 
-the final tarball:</p>
+# List all of your .m files, or a tar.gz file if you've combined them.
+transfer_input_files = script.m, functions.tar.gz
 
-<pre class="term"><code>(base)[alice@submit]$ conda pack -n env-name --dest-prefix='$ENVDIR'
-(base)[alice@submit]$ chmod 644 env-name.tar.gz
-(base)[alice@submit]$ ls -sh env-name.tar.gz
-</code></pre>
++IsBuildJob = true
+requirements = (OpSysMajorVer =?= 8)
+request_cpus = 1
+request_memory = 4GB
+request_disk = 2GB
 
-<p>When this step finishes, you should see a file in your current directory named
-<code>env-name.tar.gz</code></p>
+queue
+```
 
-<h3 id="4-check-size-of-conda-environment-tar-archive">4. Check Size of Conda Environment Tar Archive</h3>
+Fill in the \"transfer\_input\_files\" line with *your* Matlab .m files,
+or a tar.gz file with all of the Matlab files your code uses.
 
-<p>The tar archive, <code>env-name.tar.gz</code>, created in the previous step will be used as input for 
-subsequent job submission. As with all job input files, you should check the size of this 
-Conda environment file. <strong>If &gt;100MB in size, you should NOT transfer the tar ball using 
-<code>transfer_input_files</code></strong>. Instead, you should plan to use either CHTC’s web proxy, SQUID or 
-large data filesystem Staging. Please contact a research computing facilitators at 
-chtc@cs.wisc.edu to determine the best option for your jobs.</p>
-
-<p>More information is available at <a href="file-avail-squid.html">File Availability with Squid Web Proxy</a> 
-and <a href="file-avail-largedata.html">Managing Large Data in HTC Jobs</a>.</p>
-
-<h3 id="5-create-a-job-executable">5. Create a Job Executable</h3>
-
-<p>The job will need to go through a few steps to use this “packed” conda environment; 
-first, setting the <code>PATH</code>, then unzipping the environment, then activating it, 
-and finally running whatever program you like. The script below is an example 
-of what is needed (customize as indicated to match your choices above).</p>
-
-<pre class="file"><code>#!/bin/bash
-
-# have job exit if any command returns with non-zero exit status (aka failure)
-set -e
-
-# replace env-name on the right hand side of this line with the name of your conda environment
-ENVNAME=env-name
-# if you need the environment directory to be named something other than the environment name, change this line
-export ENVDIR=$ENVNAME
-
-# these lines handle setting up the environment; you shouldn't have to modify them
-export PATH
-mkdir $ENVDIR
-tar -xzf $ENVNAME.tar.gz -C $ENVDIR
-. $ENVDIR/bin/activate
-
-# modify this line to run your desired Python script and any other work you need to do
-python3 hello.py
-</code></pre>
-
-<h3 id="6-submit-jobs">6. Submit Jobs</h3>
-
-<p>In your submit file, make sure to have the following:</p>
-
-<ul>
-  <li>Your executable should be the the bash script you created in <a href="#5-create-a-job-executable">step 5</a>.</li>
-  <li>Remember to transfer your Python script and the environment <code>tar.gz</code> file via
- <code>transfer_input_files</code>. 
-<strong>Since the <code>tar.gz</code> file will almost certainly be larger than 100MB, 
-please <a href="mailto:chtc@cs.wisc.edu">email</a> us about different tools for 
-delivering the installation to your jobs, 
-likely our <a href="file-avail-squid.html">SQUID web proxy</a>.</strong></li>
-</ul>
-
-<!--
-# Option 2: Install Miniconda Inside Each Job
-
-In this approach, rather than copying the Miniconda installation with each job, 
-we will copy the Miniconda *installer* and install a new copy of Miniconda with 
-each job.
-
-**Do not use this installation method unless directed to do by a facilitator!**
-
-## 1. Download the Miniconda Installer and Test Installation
-
-If you haven't already, download the latest Miniconda installer for Linux from the 
-[Miniconda website](https://docs.conda.io/en/latest/miniconda.html#linux-installers) 
-and place it in your home directory on a CHTC submit server. 
-
-We strongly recommend testing the installation steps for your particular program 
-or packages - either on your own computer or similar to the 
-[directions above](#option-1-pre-install-miniconda-and-transfer-to-jobs) - 
-before trying to submit the installation as part of a job to CHTC. 
-
-## 2. Create an Executable Script
-
-Our plan here is to run the Miniconda installer inside the job, build an environment 
-with needed packages, and then run our desired script or program. The following 
-script should work verbatim except for changing the `conda install` step to the packages 
-you need or the instructions for your program. See [below](#specifying-exact-dependency-versions)
-for instructions on using an `environment.yml` environment specification instead
-of "manually" listing packages in your job script.
+Once this submit file is created, you will start the interactive job by
+running the following command:
 
 ```
-#!/bin/bash
+[alice@submit]$ condor_submit -i build.sub
+```
+{:.term}
 
-set -e
+It may take a few minutes for the build job to start.
 
-# installation steps for Miniconda
-export HOME=$PWD
-export PATH
-sh [installer] -b -p $PWD/miniconda3
-export PATH=$PWD/miniconda3/bin:$PATH
+<span name="compile"></span>
 
-# install packages
-conda install numpy matplotlib
 
-# modify this line to run your desired Python script
-python3 hello.py
+**2. Compile Matlab Code and Exit Interactive Job**
+-----------------------------------------------
+
+Once the interactive job has started, you can compile your code. In this
+example, `script.m` represents the name of the primary Matlab script;
+you should replace `script.m` with the name of your own primary script.
+Note that if your main script references other `.m` files, as long as
+they are present in the working directory, they will all be compiled
+together with the main script into one binary.
+
+> If you combined your Matlab `.m` files into one `.tar.gz` file, make
+> sure to \"un-tar\" that file before running the compiling steps below.
+
+To access the Matlab compiler on the build node, you\'ll need to load a
+the appropriate Matlab module. For Matlab 2015b, the module load command
+will look like this:
+
+``` 
+[alice@build]$ module load MATLAB/R2015b
+```
+{:.term}
+
+If you want to use a different version of Matlab, change the name after the `load` command. Once the
+module is loaded, run the compilation command:
+
+``` 
+[alice@build]$ mcc -m -R -singleCompThread -R -nodisplay -R -nojvm script.m
+```
+{:.term}
+
+> **Compilation Options**
+>
+> There are other options for the `mcc` Matlab compiler that might be
+> necessary for specific compiling situations. For example, if your main
+> .m script uses a set of Matlab functions or .m files that are
+> contained in a subdirectory (called, say, `functions`), then your
+> compiling command will need to use the `-a` flag at the end of the
+> command like so:
+>
+> ``` 
+> [alice@build]$ mcc -m \
+>                 -R -singleCompThread -R -nodisplay -R -nojvm \
+>                 script.m -a functions/
+> ```
+> {:.term}
+>
+> (The backslashes, \\, are there just to break up the full command.)
+>
+> If you have questions about compiling your particular code, [contact a
+> facilitator](mailto:chtc@cs.wisc.edu) or see the [Matlab
+> documentation](http://www.mathworks.com/help/compiler/mcc.html) for
+> more information about using `mcc`.
+
+Exit the interactive session after you have compiled your code:
+
+``` 
+[alice@build]$ exit
+```
+{:.term}
+
+Condor will transfer your compiled code and its scripts back
+automatically.
+
+Back on the submit node, you should now have the following files:
+
+``` 
+[alice@submit]$ ls -l 
+
+-rw-rw-r-- 1 user user 581724 Feb 19 14:21 mccExcludedFiles.log
+-rwxrw-r-- 1 user user  94858 Feb 19 14:21 script
+-rwxrw-r-- 1 user user   1024 Feb 19 14:00 script.m
+-rw-rw-r-- 1 user user   3092 Feb 19 14:21 readme.txt
+-rw-rw-r-- 1 user user 581724 Feb 19 14:21 requiredMCRProducts.txt
+-rwxrw-r-- 1 user user   1195 Feb 19 14:21 run_script.sh
+```
+{:.term}
+
+The file `script` is the compiled Matlab binary. You will not need the
+`mccExcludedFiles.log`, `requiredMCRProducts.txt` or `readme.txt` to run
+your jobs.
+
+<span name="script"></span>
+
+**3. Modifying the Executable**
+---------------------------
+
+The `mcc` command should have created a script called `run_*.sh` (where
+\* is the name of your Matlab script; our example uses the name
+`script`). This `run_*.sh` script will be the executable for your Matlab
+jobs and already has almost all the necessary commands for running your
+Matlab code.
+
+You\'ll need to add one line at the beginning of the `run_*.sh` script
+that unpacks the Matlab runtime. We\'ll also add some extra options to
+ensure Matlab runs smoothly on any Linux system.
+
+The commands that need to be added, and their location looks like this
+(**replace `r2015b.tar.gz` with the appropriate version of Matlab, if
+you used something different to compile**):
+
+``` 
+#!/bin/sh
+# script for execution of deployed applications
+#
+# Sets up the MATLAB Runtime environment for the current $ARCH and executes 
+# the specified command.
+
+# Add these lines to run_script.sh
+tar -xzf r2015b.tar.gz
+mkdir cache
+export MCR_CACHE_ROOT=$PWD/cache
+
+# Rest of script follows
 ```
 {:.file}
 
-## 3. Submit File
 
-In your submit file, include the executable you wrote (as described above)
-and in `transfer_input_files` include the Miniconda installer and any other scripts 
-or data files you want to include with the job: 
 
+
+**B. Running Matlab Jobs**
+======================
+<span name="submit"></span>
+This section shows the important elements of creating a submit file for
+Matlab jobs. The submit file for your job will be different than the one
+used to compile your code. As a starting point for a submit file, see
+our \"hello world\" example:
+[http://chtc.cs.wisc.edu/helloworld](helloworld.html). In what
+follows, replace our example `script` and `run_script.sh` with the name
+of your binary and scripts.
+
+1. Use `run_script.sh` as the executable:
+```{.sub}
+executable = run_script.sh
 ```
-executable = run_with_conda.sh
-arguments = myscript.py
+2.  In order for your Matlab code to run, you will need to use a Matlab
+    runtime package. This package is easily downloaded from CHTC\'s web
+    proxy; the version **must** match the version you used to compile
+    your code. Options available on our proxy include:
+    
+    -   `r2015b.tar.gz`
+    -   `r2018b.tar.gz`
+    -   `r2022b.tar.gz`<br>
+    
+    To send the runtime package to your jobs, list a link to the
+    appropriate version in your `transfer_input_files` line, as well as
+    your compiled binary and any necessary input files:
+    ``` {.sub}
+    transfer_input_files = http://proxy.chtc.wisc.edu/SQUID/r2015b.tar.gz,script,input_data
+    ```
+3.  The `run_script.sh` will expect the runtime directory name to be
+    provided as an argument specified in the submit file (as described
+    in `readme.txt`).
 
-transfer_input_files = Miniconda3-latest-Linux-x86_64.sh, script.py, other_input.file
-```
-{:.sub}
--->
 
+    {:.gtable}
+      | Matlab version | Runtime directory name |
+      | --- | --- |
+      | `r2015b.tar.gz` | `v90` |
+      | `r2018b.tar.gz` | `v95` |
+      | `r2022b.tar.gz` | `R2022b` | 
+ 
+    So to run a Matlab job using `r2015b` and no additional arguments, the arguments line in the submit file should read:
+    ```{:.sub}
+    arguments = v90
+    ```
+    If you *are* passing additional arguments to the script, they can go after the first \"runtime\" argument:
+
+    ``` {.sub}
+    arguments = v90 $(Cluster) $(Process) 
+    ```
+    **If you are passing numerical values as arguments to your Matlab binary, you will need to revise your Matlab 
+    code so that the values are interpreted as numbers instead of as characters (the default).** To do this, you can use that Matlab 
+    `str2num` function, more information is available at [Matlab Str2num](https://www.mathworks.com/help/matlab/ref/str2num.html).
+    
+4.  As always, test a few jobs for disk space/memory usage in order to
+    make sure your requests for a large batch are accurate! Disk space
+    and memory usage can be found in the log file after the job
+    completes. **If you are using Matlab 2018b or 2022b, request at least 8-10GB
+    of DISK** as the runtime is very large for this version of Matlab.
+
+<span name="random"></span>
+
+Ensuring Randomness
+===================
+
+This section is only relevant for Matlab scripts that use Matlab\'s
+random number functions like `rand`.
+
+Whenever Matlab is started for the first time on a new computer, the
+random number generator begins from the same state. When you run
+multiple Matlab jobs, each job is using a copy of Matlab that is being
+used for the first time \-- thus, every job will start with the same
+random number generator and produce identical results.
+
+There are different ways to ensure that each job is using different
+randomly generated numbers. [This Mathworks
+page](http://www.mathworks.com/help/matlab/math/why-do-random-numbers-repeat-after-startup.html?refresh=true)
+describes one way to \"reset\" the random number generator so that it
+produces different random values when Matlab runs for the first time.
+Deliberately choosing your own different random seed values for each job
+can be another way to ensure different results.
+
+ -->
 
         </div>
         <div class="col-3 d-none d-lg-block">
