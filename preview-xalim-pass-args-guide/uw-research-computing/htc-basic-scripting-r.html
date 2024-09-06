@@ -275,54 +275,14 @@ Post-processing could go here.
 
 <h3 id="passing-arguments-with-the-htcondor-submit-file">Passing arguments with the HTCondor submit file</h3>
 
-<p>Now that we’ve understood how arguments work in R and how to write simple wrapper scripts that pass those arguments, we can pass arguments in HTCondor’s submit file by specifying the <code>arguments</code> attribute.</p>
+<p>Now that we’ve understood how arguments work in R and how to write simple wrapper scripts that pass those arguments, we can pass arguments in HTCondor’s submit file by specifying the <code>arguments</code> attribute, as shown in this excerpt:</p>
 
-<p>Our HTCondor submit file, <code>echo-next.sub</code>:</p>
-<pre><code># HTCondor submit file
-
-# Create custom variable called "data"
+<pre><code># Create custom variable called "data"
 data = data.csv
-
-# Use official R 4.4.0 container
-container_image = docker://r-base:4.4.0
 
 # Specify the executable &amp; arguments
 executable = wrapper.sh
 arguments = $(data)
-
-# Specify files to transfer
-# We want to transfer our R script and data
-# The R executable is already included in the container, so no need to transfer it
-transfer_input_files = echo-next.R, $(data)
-
-log = echo-next.log
-output = echo-next.out
-error = echo-next.err
-
-# Requirements
-request_cpus = 1
-request_memory = 1GB
-request_disk = 1GB
-
-queue
-</code></pre>
-
-<p>You can test this submit file!</p>
-
-<p>First, create an empty <code>data.csv</code> file with the <code>touch</code> command. We need to create this file as it is our “data” that will be transferred, as specified by <code>transfer_input_files</code> attribute.</p>
-<pre class="term"><code>[user@login]$ touch data.csv
-</code></pre>
-
-<p>Submit the job with the <code>condor_submit</code> command.</p>
-<pre class="term"><code>[user@login]$ condor_submit echo-next.sub
-Submitting job(s).
-1 job(s) submitted to cluster 1916134.
-</code></pre>
-
-<p>Check the job status with <code>condor_q</code>. Once it’s complete, check the out file to ensure it runs as expected! You should see:</p>
-<pre><code>Pre-processing could go here.
-data.csv
-Post-processing could go here.
 </code></pre>
 <!--more-->
 
