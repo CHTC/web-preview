@@ -290,7 +290,7 @@ To represent this relationship, we will define nodes <code>A</code> and <code>B<
 <p>Let’s call the input file <code>simple.dag</code>.
 At minimum, the contents of the <code>simple.dag</code> input file are</p>
 
-<pre><code># simple.dag
+<pre class="file"><code># simple.dag
 
 # Define the DAG jobs
 JOB A A.sub
@@ -318,7 +318,7 @@ Note that we do not need to define <em>why</em> node <code>B</code> is dependent
 <p>First, the submit file <code>A.sub</code> uses the executable <code>A.sh</code>, which will generate the file called <code>output.txt</code>.
 We have explicitly told HTCondor to transfer back this file by using the <code>transfer_output_files</code> command.</p>
 
-<pre><code># A.sub
+<pre class="sub"><code># A.sub
 
 executable = A.sh
 
@@ -337,7 +337,7 @@ queue
 
 <p>The executable file simply saves the hostname of the machine running the script:</p>
 
-<pre><code>#!/bin/bash
+<pre class="file"><code>#!/bin/bash
 
 # A.sh
 hostname &gt; output.txt
@@ -351,7 +351,7 @@ sleep 1m  # so we can see the job in "running" status
 We have explicitly told HTCondor to transfer <code>output.txt</code> as an <em>input</em> file for this job, using the <code>transfer_input_files</code> command. 
 Thus we have finally defined the “edge” that connects nodes <code>A</code> and <code>B</code>: the use of <code>output.txt</code>.</p>
 
-<pre><code># B.sub
+<pre class="sub"><code># B.sub
 
 executable = B.sh
 
@@ -370,7 +370,7 @@ queue
 
 <p>The executable file contains the command for printing the desired message, which will be printed to <code>B.out</code>.</p>
 
-<pre><code>#!/bin/bash
+<pre class="file"><code>#!/bin/bash
 
 # B.sh
 echo "The previous job was executed on the following machine:"
@@ -385,7 +385,7 @@ sleep 1m  # so we can see the job in "running" status
 The submit files in turn are expecting <code>A.sh</code> and <code>B.sh</code> be in the same directory as <code>A.sub</code> and <code>B.sub</code>.
 Thus, we have the following directory structure:</p>
 
-<pre><code>DAG_simple/
+<pre class="term"><code>DAG_simple/
 |-- A.sh
 |-- A.sub
 |-- B.sh
@@ -399,13 +399,13 @@ Thus, we have the following directory structure:</p>
 
 <p>To run the DAG workflow described by <code>simple.dag</code>, we use the HTCondor command <code>condor_submit_dag</code>:</p>
 
-<pre><code>condor_submit_dag simple.dag
+<pre class="term"><code>condor_submit_dag simple.dag
 </code></pre>
 
 <p>The DAGMan utility will then parse the input file and generate an assortment of related files that it will use for monitoring and managing your workflow.
 Here is the output of running the above command:</p>
 
-<pre><code>[user@login DAG_simple]$ condor_submit_dag simple.dag
+<pre class="term"><code>[user@login DAG_simple]$ condor_submit_dag simple.dag
 
 Loading classad userMap 'checkpoint_destination_map' ts=1699037029 from /etc/condor/checkpoint-destination-mapfile
 -----------------------------------------------------------------------
@@ -427,7 +427,7 @@ A couple of additional files, some of them temporary, will be created during the
 
 <p>You can see the status of the DAG in your queue just like with any other HTCondor job submission.</p>
 
-<pre><code>[user@login DAG_simple]$ condor_q
+<pre class="term"><code>[user@login DAG_simple]$ condor_q
 
 -- Schedd: ap2002.chtc.wisc.edu : &lt;128.105.68.92:9618?... @ 12/14/23 11:26:51
 OWNER       BATCH_NAME           SUBMITTED   DONE   RUN    IDLE  TOTAL JOB_IDS
@@ -449,7 +449,7 @@ user        simple.dag+562265  12/14 11:26      _      _      1      2 562279.0
 <p>To see more detailed information about the DAG workflow, use <code>condor_q -nob -dag</code>.
 For example,</p>
 
-<pre><code>[user@login DAG_simple]$ condor_q -dag -nob
+<pre class="term"><code>[user@login DAG_simple]$ condor_q -dag -nob
 
 -- Schedd: ap2002.chtc.wisc.edu : &lt;128.105.68.92:9618?... @ 12/14/23 11:27:03
  ID        OWNER/NODENAME      SUBMITTED     RUN_TIME ST PRI SIZE CMD

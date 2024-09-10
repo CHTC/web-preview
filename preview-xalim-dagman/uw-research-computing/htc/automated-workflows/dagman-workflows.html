@@ -296,7 +296,7 @@ or to run pre- or post-processing scripts.</p>
 
 <p>To define a DAG job, we begin a new line with <code>JOB</code> then provide the name, the submit file, and any additional options. The syntax is</p>
 
-<pre><code>JOB JobName JobSubmitFile [additional options]
+<pre class="file"><code>JOB JobName JobSubmitFile [additional options]
 </code></pre>
 
 <p>where you need to replace <code>JobName</code> with the name you would like the DAG job to have, and <code>JobSubmitFile</code> with the name or path of the corresponding submit file. Both <code>JobName</code> and <code>JobSubmitFile</code> need to be specified.</p>
@@ -307,7 +307,7 @@ or to run pre- or post-processing scripts.</p>
 
 <p>To define the relationship between DAG jobs in a workflow, we begin a new line with <code>PARENT</code> then the name of the first DAG job, followed by <code>CHILD</code> and the name of the second DAG job. That is, the <code>PARENT</code> DAG job must complete successfully before DAGMan will submit the <code>CHILD</code> DAG job. In fact, you can define such relationship for many DAG jobs (nodes) at the same time. Thus, the syntax is</p>
 
-<pre><code>PARENT p1 [p2 ...] CHILD c1 [c2 ...]
+<pre class="file"><code>PARENT p1 [p2 ...] CHILD c1 [c2 ...]
 </code></pre>
 
 <p>where you replace <code>p#</code> with the <code>JobName</code> for each parent DAG job, and <code>c#</code> with the <code>JobName</code> for each child DAG job. The child DAG jobs will only be submitted if all of the parent DAG jobs are completed successfully. Each <code>JobName</code> you provide must have a corresponding <code>JOB</code> entry elsewhere in the <code>.dag</code> input file.</p>
@@ -331,7 +331,7 @@ In the <a href="#dagman-features">DAGMan Features</a> section, we will discuss t
 
 <p>Because the DAG workflow represents a special type of job, a special command is used to submit it. To submit the DAG workflow, use</p>
 
-<pre><code>condor_submit_dag example.dag
+<pre class="term"><code>condor_submit_dag example.dag
 </code></pre>
 
 <p>where <code>example.dag</code> is the name of your DAG input file containing the <code>JOB</code> and <code>PARENT</code>-<code>CHILD</code> definitions for your workflow.
@@ -340,7 +340,7 @@ This will create and submit a “DAGMan job” that will in turn be responsible 
 <p>A set of files is created for every DAG submission, and the output of the <code>condor_submit_dag</code> lists the files with a brief description.
 For the above submit command, the output will look like:</p>
 
-<pre><code>------------------------------------------------------------------------
+<pre class="term"><code>------------------------------------------------------------------------
 File for submitting this DAG to HTCondor           : example.dag.condor.sub
 Log of DAGMan debugging messages                   : example.dag.dagman.out
 Log of HTCondor library output                     : example.dag.lib.out
@@ -360,12 +360,12 @@ Each job submitted by DAGMan, however, will be assigned a separate Cluster ID.</
 
 <p>For a more detailed status display, you can use</p>
 
-<pre><code>condor_q -dag -nobatch
+<pre class="term"><code>condor_q -dag -nobatch
 </code></pre>
 
 <p>If you want to see the status of just the DAGMan job proper, use</p>
 
-<pre><code>condor_q -dag -nobatch -constr 'JobUniverse == 7'
+<pre class="term"><code>condor_q -dag -nobatch -constr 'JobUniverse == 7'
 </code></pre>
 
 <p>(Technically, this shows all “scheduler” type HTCondor jobs, but for most users this will only include DAGMan jobs.)</p>
@@ -376,7 +376,7 @@ As the DAG progresses, it will also create the files <code>example.dag.metrics</
 
 <p>If you want to see the status of a specific node, use</p>
 
-<pre><code>condor_q -dag -nobatch -constr 'DAGNodeName == "YourNodeName"'
+<pre class="term"><code>condor_q -dag -nobatch -constr 'DAGNodeName == "YourNodeName"'
 </code></pre>
 
 <p>where <code>YourNodeName</code> should be replaced with the name of the node you want to know the status of. 
@@ -384,13 +384,13 @@ Note that this works only for jobs that are currently in the queue; if the node 
 To see if the node has completed, you should examine the contents of the <code>.dagman.out</code> file. 
 A simple way to see the relevant log messages is to use a command like</p>
 
-<pre><code>grep "Node YourNodeName" example.dag.dagman.out
+<pre class="term"><code>grep "Node YourNodeName" example.dag.dagman.out
 </code></pre>
 
 <p>If you’d like to monitor the status of the individual nodes in your DAG workflow using <code>condor_watch_q</code>, then wait long enough for the <code>.nodes.log</code> file to be generated.
 Then run</p>
 
-<pre><code>condor_watch_q -file example.dag.nodes.log
+<pre class="term"><code>condor_watch_q -file example.dag.nodes.log
 </code></pre>
 
 <p>Now <code>condor_watch_q</code> will update when DAGMan submits another job.</p>
@@ -412,7 +412,7 @@ Such a script will be executed on the submit server itself and can be used to se
 You must specify the name of the node the script is attached to and whether the script is to be executed before (<code>PRE</code>) or after (<code>POST</code>) the HTCondor job. 
 Here is a simple example:</p>
 
-<pre><code># Define the node (required) (example node named "my_node")
+<pre class="file"><code># Define the node (required) (example node named "my_node")
 JOB my_node run.sub
 
 # Define the script for executing before submitting run.sub (optional)
@@ -442,7 +442,7 @@ This way you don’t have to manually restart the DAG if the job failed due to a
 You must specify the node and the maximum number of times that DAGMan should attempt to retry that node.
 Here is a simple example:</p>
 
-<pre><code># Define the node (required) (example node named "my_node")
+<pre class="file"><code># Define the node (required) (example node named "my_node")
 JOB my_node run.sub
 
 # Define the number of times to retry "my_node"
@@ -454,7 +454,7 @@ RETRY my_node 2
 <p>You can also apply the retry for statement to all nodes in the DAG by specifying <code>ALL_NODES</code> instead of a specific node name.
 For example,</p>
 
-<pre><code>RETRY ALL_NODES 2
+<pre class="file"><code>RETRY ALL_NODES 2
 </code></pre>
 
 <p>As a general rule, you should not set the number of retry attempts to more than 1 or 2 times. 
@@ -488,20 +488,17 @@ The power of this feature is that DAGMan will not duplicate the work of already 
 If more than one Rescue DAG exists for a given <code>.dag</code> input file, then DAGMan will use the most recent Rescue DAG 
 (the one with the highest number at the end of <code>.rescue###</code>).</p>
 
-<pre><code># Automatically use the Rescue DAG if it exists
+<pre class="term"><code># Automatically use the Rescue DAG if it exists
 condor_submit_dag example.dag
 </code></pre>
 
 <blockquote>
-  
-If you do NOT want DAGMan to use an existing Rescue DAG, then you can use the `-force` option to start the DAG completely from scratch:
-
-```
-# Do NOT use the Rescue DAG if it exists
-condor_submit_dag -force example.dag
-```
-
+  <p>If you do NOT want DAGMan to use an existing Rescue DAG, then you can use the <code>-force</code> option to start the DAG completely from scratch:</p>
 </blockquote>
+
+<pre class="term"><code># Do NOT use the Rescue DAG if it exists
+condor_submit_dag -force example.dag
+</code></pre>
 
 <p>For more information on Rescue DAGs and how to explicitly control them, see the <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-resubmit-failed.html">HTCondor documentation</a>.</p>
 
