@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Overview: How to Use Software</title>
+<title>Intermediate DAGMan: Uses and Features</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -224,447 +224,198 @@
         <div class="col-12 col-lg-9 mw-1000">
 
             <h1 class="uw-mini-bar mb-4">
-    Overview: How to Use Software
+    Intermediate DAGMan: Uses and Features
 </h1>
 
-            <script type="text/javascript" src="/web-preview/preview-xalim-dagman/assets/js/pages/software-overview.js" defer=""></script>
+            <p>This tutorial helps you explore HTCondor’s DAGMan and its many features. Download the tutorial files from <a href="https://github.com/OSGConnect/tutorial-dagman-intermediate/tree/main">Github</a>.</p>
 
-<p><a name="top"></a>
-In order to run jobs on the High Throughput Computing (HTC) system, researchers need to set up their software on the system. 
-This guide introduces how to build software in a container (our recommended strategy), links to a repository with a selection of software installation “recipes”, and quick links to common software packages and their installation recommendations.</p>
+<p>Alternatively, you can download the tutorial materials on the command line with the following command:</p>
 
-<div class="d-flex flex-column mb-5">
+<pre class="term"><code>$ git clone https://github.com/OSGConnect/tutorial-dagman-intermediate</code></pre>
 
-<h2>Table of Contents</h2>
+<p>Now move into the new directory to see the contents of the tutorial:</p>
 
-<div class="uw-sidebar-box me-auto">
-<div class="uw-directory">
+<pre class="term"><code>$ cd tutorial-dagman-intermediate</code></pre>
 
-      <p><a href="#quickstart">Quickstart</a></p>
+<p>At the top level is a worked example of a “Diamond DAG” that summarizes the basic components of a creating, submitting, and managing DAGMan workflows.
+In the lower level <code>additional_examples</code> directory are more worked examples with their own <code>README</code>s highlighting specific features that can be used with DAGMan.
+Brief descriptions of these examples are provided in the <a href="#additional-examples">Additional Examples</a> section at the end of this tutorial.</p>
 
-      <p><a href="#recipes">Recipes</a></p>
+<p>Before working on this tutorial, we recommend that you read through our other DAGMan guides:</p>
 
-      <p><a href="#containers">Containers</a></p>
+<ul>
+  <li><a href="dagman-workflows">Overview: Submit Workflows with HTCondor’s DAGMan</a></li>
+  <li><a href="dagman-simple-example">Simple Example of a DAGMan Workflow</a></li>
+</ul>
 
-    </div>
-</div>
-</div>
+<p>The definitive guide to DAGMan is <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/index.html">HTCondor’s DAGMan Documentation</a>.</p>
 
-<h2 id="quickstart">Quickstart</h2>
+<h2 id="types-of-dags">Types of DAGs</h2>
 
-<p>Click the link in the table below to jump to the instructions for the language/program/software that you want to use.
-More information is provided in the <a href="#chtc-recipes-repository">CHTC Recipes Repository</a> and <a href="#containers">Containers</a> sections.</p>
+<p>While any workflow that satisfies the definition of a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">“Directed Acyclic Graph” (DAG)</a> can be executed using DAGMan, there are certain types that are the most commonly used:</p>
 
-<div class="shadow p-3 border rounded">
-    <div class="row gx-1">
-        
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column btn-guide-highlighted" href="#quickstart" onclick="showExcerpt('create-a-portable-python-installation-with-miniconda', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/conda-icon.png" alt="Create a Portable Python Installation with Miniconda" />
-                  <span class="mx-auto">Conda</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-java-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/java-icon.png" alt="Running Java Jobs" />
-                  <span class="mx-auto">Java</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-julia-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/julia-icon.png" alt="Running Julia Jobs" />
-                  <span class="mx-auto">Julia</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-matlab-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/matlab-icon.png" alt="Running Matlab Jobs" />
-                  <span class="mx-auto">Matlab</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-python-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/python-icon.png" alt="Running Python Jobs" />
-                  <span class="mx-auto">Python</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-r-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/r-icon.png" alt="Running R Jobs" />
-                  <span class="mx-auto">R</span>
-               </button>
-            </div>
-        
-    </div>
-    <div class="card-body side-divider" style="display: block;">
-        
-            <div class="excerpt" id="create-a-portable-python-installation-with-miniconda" style="display: block;">
-                <h2 id="quickstart-conda">Quickstart: Conda</h2>
+<ul>
+  <li><strong>Sequential DAG</strong>: all the nodes are connected in a sequence of one after the other, with no branching or splitting. This is good for conducting increasingly refined analyses of a dataset or initial result, or chaining together a long-running calculation. The simplest example of this type is used in the guide <a href="dagman-simple-example">Simple Example of a DAGMan Workflow</a>.</li>
+  <li><strong>Split and recombine DAG</strong>: the first node is connected to many nodes of the same layer (split) which then all connect back to the final node (recombine). Here, you can set up the shared environment in the first node and use it to parallelize the work into many individual jobs, then finally combine/analyze the results in the final node. The simplest example of this type is the “Diamond DAG” - the subject of this tutorial.</li>
+  <li><strong>Collection DAG</strong>: no node is connected to any other node. This is good for the situation where you need to run a bunch of otherwise unrelated jobs, perhaps ones that are competing for a limited resource. The simplest example of this type is a DAG consisting of a single node.</li>
+</ul>
 
-<h3 id="option-a-recommended">Option A (recommended)</h3>
+<p>These types are by no means “official”, nor are they the only types of structure that a DAG can take. Rather, they serve as starting points from which you can build your own DAG workflow, which will likely consist of some combination of the above elements.</p>
 
-<p>Build a container with Conda packages installed inside:</p>
+<h2 id="the-diamond-dag">The Diamond DAG</h2>
+
+<p>As mentioned above, the “Diamond DAG” is the simplest example of a “split and recombine” DAG.
+In this case, the first node <code>TOP</code> is connected to two nodes <code>LEFT</code> and <code>RIGHT</code> (the “split”), which are then connected to the final node <code>BOTTOM</code> (the “recombine”).</p>
+
+<p><img src="https://raw.githubusercontent.com/OSGConnect/tutorial-dagman-intermediate/main/.images/DiamondDAG.png" alt="Diamond DAG figure" /></p>
+
+<p>To describe the flow of the DAG and the parts needed to execute it, DAGMan uses a custom description language in an input file, typically named <code>&lt;DAG Name&gt;.dag</code>. 
+The two most important commands in the DAG description language are:</p>
 
 <ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Conda">Example container recipes for Conda</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
+  <li><code>JOB &lt;NodeName&gt; &lt;NodeSubmitFile&gt;</code> - Describes a node and the submit file it will use to run the node.</li>
+  <li><code>PARENT &lt;NodeName1&gt; CHILD &lt;NodeName2&gt;</code> - Describes the edge starting from <code>&lt;NodeName1&gt;</code> and pointing to <code>&lt;NodeName2&gt;</code>.</li>
 </ol>
 
-<h3 id="option-b">Option B</h3>
+<p>These commands have been used to construct the Diamond DAG and are saved in the file <code>diamond.dag</code>. 
+To view the contents of <code>diamond.dag</code>, run</p>
 
-<p>Create your own portable copy of your Conda packages:</p>
+<pre class="term"><code>$ cat diamond.dag</code></pre>
 
-<ol>
-  <li>Follow the instructions in <a href="conda-installation.html#option-b-create-your-own-portable-copy">our guide</a></li>
-</ol>
+<p>Before you continue, we recommend that you closely examine the contents of <code>diamond.dag</code> and identify its components. 
+Furthermore, try to identify the submit file for each node, and use that submit file to determine the nature of the HTCondor job that will be submitted for each node.</p>
+
+<h2 id="submitting-a-dag">Submitting a DAG</h2>
+
+<p>To submit a DAGMan workflow to HTCondor, you can use one of the following commands:</p>
+
+<pre class="term"><code>$ condor_submit_dag diamond.dag
+  or
+$ htcondor dag submit diamond.dag</code></pre>
+
+<h2 id="what-happens">What Happens?</h2>
+
+<p>When a DAG is submitted to HTCondor a special job is created to run DAGMan
+on behalf of you the user. This job runs the provided HTCSS DAGMan executable
+in the AP job queue. This is an actual job that can be queried and acted upon.</p>
+
+<p>You may also notice that lots of files are created. These files are all part
+of DAGMan and have various purposes. In general, the files that should
+always exist are as follows:</p>
+
+<ul>
+  <li>DAGMan job proper files
+    <ol>
+      <li><code>&lt;DAG Name&gt;.condor.sub</code> - Submit file for the DAGMan job proper</li>
+      <li><code>&lt;DAG Name&gt;.dagman.log</code> - Job event log file for the DAGMan job proper</li>
+      <li><code>&lt;DAG Name&gt;.lib.err</code> - Standard error stream file for the DAGMan job proper</li>
+      <li><code>&lt;DAG Name&gt;.lib.out</code> - Standard output stream file for the DAGMan job proper</li>
+    </ol>
+  </li>
+  <li>Informational DAGMan files
+    <ol>
+      <li><code>&lt;DAG Name&gt;.dagman.out</code> - General DAGMan process logging file</li>
+      <li><code>&lt;DAG Name&gt;.nodes.log</code> - Collective job event log file for all managed jobs (Heart of DAGMan)</li>
+      <li><code>&lt;DAG Name&gt;.metrics</code> - JSON formatted information about the DAG</li>
+    </ol>
+  </li>
+</ul>
+
+<p>Of these files, the two most important are the <code>&lt;DAG Name&gt;.dagman.out</code> and <code>&lt;DAG Name&gt;.nodes.log</code>. 
+The <code>.dagman.out</code> file contains the entire history and status of DAGMan’s execution of your workflow. 
+The <code>.nodes.log</code> file on the other hand is the accumulated log entries for every HTCondor job that DAGMan submitted, 
+and DAGMan monitors the contents of this file to generate the contents of the  <code>.dagman.out</code> file.</p>
 
 <blockquote>
-  <p>This approach may be sensitive to the operating system of the execution point. 
-We recommend building a container instead, but are keeping these instructions as a backup.</p>
+  <p>Note: these are not all the files that DAGMan can produce.
+Depending on the options and features you employ in your DAG input file, more files with different purposes can be created.</p>
 </blockquote>
 
+<h2 id="monitoring-dagman">Monitoring DAGMan</h2>
 
-                <a href="/uw-research-computing/conda-installation" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-java-jobs" style="display: none;">
-                <h2 id="quickstart-java">Quickstart: Java</h2>
+<p>The DAGMan job and the jobs in the DAG workflow can be found in the AP job queue 
+and so the normal methods of job monitoring work. 
+That also means that you can interact with these jobs, though in a more limited fashion than a regular job (see <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-interaction.html">Running and Managing DAGMan</a> for more details).</p>
 
-<p>To use Java on the HTC system, we recommend that you use the Java Development Kit (JDK).</p>
+<p>A plain <code>condor_q</code> command will show a condensed batch view of the jobs submitted, running, and managed by the DAGMan job proper. 
+For more information about jobs running under DAGMan, use the <code>-nobatch</code> and <code>-dag</code> flags:</p>
 
-<ol>
-  <li>
-    <p>Obtain a copy of the pre-compiled JDK for “Linux/x64” from <a href="https://jdk.java.net/">https://jdk.java.net/</a>.</p>
-  </li>
-  <li>
-    <p>Include the JDK <code>.tar.gz</code> file in your submit file with the list of files to be transferred:</p>
+<pre class="term"><code># Basic job query (Batched/Condensed)
+$ condor_q
 
-    <pre class="sub"><code>transfer_input_files = openjdk-22_linux-x64_bin.tar.gz, program.jar
-</code></pre>
-  </li>
-  <li>
-    <p>Include instructions for using the JDK in your <code>executable</code> file:</p>
+# Non-Batched query
+$ condor_q -nobatch
 
-    <pre><code>#!/bin/bash
+# Increased information
+$ condor_q -nobatch -dag</code></pre>
 
-tar -xzf openjdk-22_linux-x64_bin.tar.gz
-export JAVA_HOME=$PWD/jdk-22
-export PATH=$JAVA_HOME/bin:$PATH
+<p>You can also watch the progress of the DAG and the jobs running under it
+by running:</p>
 
-java -jar program.jar
-</code></pre>
-  </li>
-</ol>
-
-
-                <a href="/uw-research-computing/java-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-julia-jobs" style="display: none;">
-                <h2 id="quickstart-julia">Quickstart: Julia</h2>
-
-<h3 id="option-a-recommended">Option A (recommended)</h3>
-
-<p>Build a container with Julia &amp; packages installed inside:</p>
-
-<ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Julia">Example container recipes for Julia</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
-</ol>
-
-<h3 id="option-b">Option B</h3>
-
-<p>Use a portable copy of Julia and create your own portable copy of your Julia packages:</p>
-
-<ol>
-  <li>Follow the instructions in our guide <a href="julia-jobs.html#option-b-create-your-own-portable-copy">Run Julia Jobs</a>.</li>
-</ol>
+<pre class="term"><code>$ condor_watch_q</code></pre>
 
 <blockquote>
-  <p>This approach may be sensitive to the operating system of the execution point. 
-We recommend building a container instead, but are keeping these instructions as a backup.</p>
+  <p>Note that <code>condor_watch_q</code> works by monitoring the log files of jobs that are in the queue, but only at the time of its execution. 
+Additional jobs submitted by DAGMan while <code>condor_watch_q</code> is running will not appear in <code>condor_watch_q</code>.
+To see additional jobs as they are submitted, wait for DAGMan to create the <code>.nodes.log</code> file, then run</p>
+
+  <pre class="term"><code>$ condor_watch_q -files *.log</code></pre>
+
 </blockquote>
 
+<p>For more detail about the status and progress of your DAG workflow, you can use the noun-verb command:</p>
 
-                <a href="/uw-research-computing/julia-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-matlab-jobs" style="display: none;">
-                <h2 id="quickstart-matlab">Quickstart: Matlab</h2>
+<pre class="term"><code>$ htcondor dag status DAGManJobID</code></pre>
 
-<p>Build a container with Matlab &amp; toolboxes installed inside:</p>
+<p>where <code>DAGManJobID</code> is the ID for the DAGMan job proper. 
+Note that the information in the output of this command does not update frequently, and so it is not suited for short-lived DAG workflows such as the current example.</p>
 
-<ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab">Example container recipes for Matlab</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
-</ol>
+<p>When your DAG workflow has completed, the DAGMan job proper will disappear from the queue. 
+If the DAG workflow completed successfully, then the <code>.dag.dagman.out</code> file should have a message that <code>All jobs Completed!</code>, though it may be difficult to find manually (try using <code>grep "All jobs Completed!" *.dag.dagman.out</code> instead).
+If the DAG workflow was aborted due to an error, then the <code>.dag.dagman.out</code> file should have the message <code>Aborting DAG...</code>.
+Assuming that the DAGMan job proper did not crash, then regardless the final line of the <code>.dag.dagman.out</code> file should contain <code>(condor_DAGMAN) pid ####### EXITING WITH STATUS #</code>, where the number after <code>STATUS</code> is the exit code (0 if success, not 0 if failure).</p>
+
+<h2 id="how-dagman-handles-relative-paths">How DAGMan Handles Relative Paths</h2>
+
+<p>By default, the directory that DAGMan submits all jobs from is the same directory you are in when you run <code>condor_submit_dag</code>.
+This directory (let’s call it the submit directory) is the starting directory for any relative path in the <code>.dag</code> input file <em>or in the node <code>.sub</code> files that DAGMan submits</em>.</p>
+
+<p>This can be observed by inspecting the <code>sleep.sub</code> submit file in the <code>SleepJob</code> sub-directory and by inspecting the <code>diamond.dag</code> input file. 
+In the <code>diamond.dag</code> file, the jobs are declared using a relative path.
+For example:</p>
+
+<pre><code>JOB TOP ./SleepJob/sleep.sub
+</code></pre>
+
+<p>This tells DAGMan that the submit file for the <code>JOB</code> <code>TOP</code> is <code>sleep.sub</code>, located in the <code>SleepJob</code> in the submit directory (<code>.</code>). 
+Similarly, the submit file <code>sleep.sub</code> uses paths relative to the submit directory for defining the save locations for the <code>.log</code>, <code>.out</code>, and <code>.err</code> files, i.e.,</p>
+
+<pre><code>log        = ./SleepJob/$(JOB).log
+</code></pre>
+
+<p>This behavior is consistent with submission of regular (non-DAGMan) jobs, e.g. <code>condor_submit SleepJob/sleep.sub</code>.</p>
 
 <blockquote>
-  <p><strong>Note</strong>: Because Matlab is a licensed software, you <strong>must</strong> add the following line to your submit file:</p>
-
-  <pre class="sub"><code>concurrency_limits = MATLAB:1
-</code></pre>
-
-  <p>Failure to do so may cause your or other users’ jobs to fail to obtain a license from the license server.</p>
+  <p>Contrary to the above behavior, the <code>.dag.*</code> log/output files generated by the DAGMan job proper will always be in the same directory as the <code>.dag</code> input file.</p>
 </blockquote>
 
+<p>This is just the default behavior, and there are ways to make the location of job submission/management more obvious.
+See the HTCondor documentation for more details: <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-interaction.html#file-paths-in-dags">File Paths in DAGs</a>.</p>
 
-                <a href="/uw-research-computing/matlab-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-python-jobs" style="display: none;">
-                <h2 id="quickstart-python">Quickstart: Python</h2>
+<h2 id="additional-examples">Additional Examples</h2>
 
-<h3 id="option-a-recommended">Option A (recommended)</h3>
-
-<p>Build a container with Python &amp; packages installed inside:</p>
+<p><a href="https://github.com/OSGConnect/tutorial-dagman-intermediate/tree/main/additional_examples">Additional examples</a> that cover various topics related to DAGMan are provided in the folder <code>additional_examples</code> with corresponding READMEs. 
+The following order of the examples is recommended:</p>
 
 <ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Example container recipes for Python</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
+  <li><code>RescueDag</code> - Example for DAGs that don’t exit successfully</li>
+  <li><code>PreScript</code>- Example using a pre-script for a node</li>
+  <li><code>PostScript</code> - Example using a post-script for a node</li>
+  <li><code>Retry</code> - Example for retrying a failed node</li>
+  <li><code>VARS</code> - Example of reusing a single submit file for multiple nodes with differing variables</li>
+  <li><code>SubDAG</code> (advanced) - Example using a subDAG</li>
+  <li><code>Splice</code> (advanced) - Example of using DAG splices</li>
 </ol>
-
-<h4 id="option-b">Option B</h4>
-
-<p>Use an existing container with a base installation of Python:</p>
-
-<ol>
-  <li>Choose an existing container. See 
-<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#base">OSG Base Containers</a>
-or
-<a href="https://hub.docker.com/_/python">DockerHub Python Containers</a>.</li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use the container in your HTC jobs</a></li>
-</ol>
-
-
-                <a href="/uw-research-computing/python-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-r-jobs" style="display: none;">
-                <h2 id="quickstart-r">Quickstart: R</h2>
-
-<h4 id="option-a-recommended">Option A (recommended)</h4>
-
-<p>Build a container with R &amp; packages installed inside:</p>
-
-<ol>
-  <li><a href="#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/">Example container recipes for R</a></li>
-  <li><a href="#use-an-existing-container">Use your container in your HTC jobs</a></li>
-</ol>
-
-<h4 id="option-b">Option B</h4>
-
-<p>Use an existing container with a base installation of R:</p>
-
-<ol>
-  <li>Choose an existing container. See 
-<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#:~:text=R%20(opensciencegrid/osgvo%2Dr)">OSG R containers</a>
-or 
-<a href="https://rocker-project.org/images/">Rocker R containers</a>.</li>
-  <li><a href="#use-an-existing-container">Use the container in your HTC jobs</a></li>
-</ol>
-
-
-                <a href="/uw-research-computing/r-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-    </div>
-</div>
-
-<hr />
-
-<h2 id="recipes">Recipes</h2>
-
-<p>CHTC provides specific examples for software and workflows for use on our systems in our “Recipes” repository on Github: 
-<a href="https://github.com/CHTC/recipes">https://github.com/CHTC/recipes</a>.</p>
-
-<p>Links to specific recipes are used in the <a href="#software">Software</a> section for certain softwares and coding languages.</p>
-
-<hr />
-
-<h2 id="containers">Containers</h2>
-
-<p>Many of the recipes in our Recipes repository involve building your own container. 
-In this section, we provide a brief introduction into how to use containers for setting up your own software to run on the High Throughput system.</p>
-
-<h3 id="what-is-a-container">What is a Container?</h3>
-
-<p><em>“A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.”</em> 
-– <a href="https://www.docker.com/resources/what-container/">Docker</a></p>
-
-<p>A container is a portable, self-contained operating system and can be easily executed on different computers regardless of their operating systems or programs.
-When building the container you can choose the operating system you want to use, and can install programs as if you were the owner of the computer.</p>
-
-<p>While there are some caveats, containers are useful for deploying software on shared computing systems like CHTC, where you do not have permission to install programs directly.</p>
-
-<p><em>“You can build a container using Apptainer on your laptop, and then run it on many of the largest HPC clusters in the world, local university or company clusters, a single server, in the cloud, or on a workstation down the hall.”</em>
-– <a href="https://apptainer.org/docs/user/main/introduction.html">Apptainer</a></p>
-
-<blockquote>
-  <p><em>What is a Container</em> <strong><em>Image</em></strong>? <a name="what-is-container-image"></a></p>
-
-  <p>A “container image” is the persistent, on-disk copy of the container. 
-When we talk about building or moving or distributing a container, we’re actually talking about the file(s) that constitute the container. 
-When a container is “running” or “executed”, the container image is used to create the run time environment for executing the programs installed inside of it.</p>
-</blockquote>
-
-<h3 id="container-technologies">Container Technologies</h3>
-
-<p>There are two container technologies supported by CHTC: <a href="https://www.docker.com/">Docker</a> and <a href="https://apptainer.org/">Apptainer</a>.
-Here we briefly discuss the advantages of each.</p>
-
-<h4 id="docker-">Docker <a name="docker-info"></a></h4>
-
-<p><a href="https://www.docker.com/">https://www.docker.com/</a></p>
-
-<p>Docker is a commercial container technology for building and distributing containers.
-Docker provides a platform for distributing containers, called <a href="https://hub.docker.com/">Docker Hub</a>.
-Docker Hub can make it easy to share containers with colleagues without having to worry about the minutiae of moving files around.</p>
-
-<p>On the HTC system, you can provide the name of your Docker Hub container in your submit file, 
-and HTCondor will automatically pull (download) the container and use it to create the software environment for executing your job.
-Unfortunately, however, you are unable to build a Docker container and upload it to Docker Hub from CHTC servers, 
-so your container must already exist on Docker Hub in a public repository.
-This requires that you have Docker installed on your computer so that you can build the container and upload it to Docker Hub.</p>
-
-<h4 id="apptainer-">Apptainer <a name="apptainer-info"></a></h4>
-
-<p><a href="https://apptainer.org/">https://apptainer.org/</a></p>
-
-<p>Apptainer is an open-source container technology for building containers. 
-Apptainer creates a single, stand-alone file that is the (<a href="#what-is-container-image">container image</a>).
-As long as you have the container image file, you can use Apptainer to run your container.</p>
-
-<p>On the HTC system, you can provide the name of your Apptainer file in your submit file,
-and HTCondor will use a copy of it to create the software environment for executing your job.
-You can use Apptainer to build the container image file on CHTC servers, so there is no need to install the container software on your own computer.</p>
-
-<h3 id="use-an-existing-container">Use an Existing Container</h3>
-
-<p>If you or a colleague have already built a container for use on CHTC, it is fairly straightforward to modify your jobs to use the container environment as discussed below.</p>
-
-<h4 id="use-a-docker-container">Use a Docker container</h4>
-
-<p><em>Full Guide</em>: <a href="docker-jobs.html">Running HTC Jobs Using Docker Containers</a></p>
-
-<p>If the container you want to use is hosted on Docker Hub, find the container “address” and provide it in your submit file.
-The address typically has the convention of <code>user/repository:tag</code>, though official repositories such as Python are just <code>repository:tag</code>.
-In your submit file, use</p>
-
-<pre class="sub"><code>container_image = docker://user/repository:tag
-</code></pre>
-
-<p>If the container you want to use is hosted in a different container registry, there should still be a container “address” to use,
-but now there will be a website prefix.</p>
-
-<pre class="sub"><code>container_image = docker://registry_address/user/repository:tag
-</code></pre>
-
-<p>For example, to use a container from the <a href="https://catalog.ngc.nvidia.com/containers">NVIDIA Container Registry</a> (<code>nvcr</code>), 
-you would have <code>docker://nvcr.io/nvidia/repository:tag</code>.</p>
-
-<p><a href="#top">Back to Top</a></p>
-
-<h4 id="use-an-apptainer-container">Use an Apptainer container</h4>
-
-<p><em>Full Guide</em>: <a href="apptainer-htc.html">Use Apptainer Containers</a></p>
-
-<p>For historical reasons, the Apptainer container file has the file extension <code>.sif</code>. 
-The syntax for giving HTCondor the name of the container file depends on where it is located on the CHTC system.</p>
-
-<p>If the <code>.sif</code> file is in a <strong><code>/home</code> directory</strong>:</p>
-
-<pre class="sub"><code>container_image = path/to/my-container.sif
-</code></pre>
-
-<p>If the <code>.sif</code> file is in a <strong><code>/staging</code> directory</strong>:</p>
-
-<pre class="sub"><code>container_image = file:///staging/path/to/my-container.sif
-</code></pre>
-
-<p>If the <code>.sif</code> file is <strong>in a <code>/staging</code> directory AND you are using <code>+WantFlocking</code> or <code>+WantGliding</code></strong>:</p>
-
-<pre class="sub"><code>container_image = osdf:///chtc/staging/path/to/my-container.sif
-</code></pre>
-
-<p><a href="#top">Back to Top</a></p>
-
-<h3 id="build-your-own-container">Build Your Own Container</h3>
-
-<p>You can build your own container with the operating system and software that you want to use.
-The general process is the same whether you are using Docker or Apptainer.</p>
-
-<ol>
-  <li>
-    <p><strong>Consult your software’s documentation</strong></p>
-
-    <p>Determine the requirements for installing the software you want to use.
-In particular you are looking for (a) the operating systems it is compatible with and (b) the prerequisite libraries or packages.</p>
-  </li>
-  <li>
-    <p><strong>Choose a base container</strong></p>
-
-    <p>The base container should at minimum use an operating system compatible with your software. 
-Ideally the container you choose also has many of the prerequisite libraries/programs already installed.</p>
-  </li>
-  <li>
-    <p><strong>Create your own definition file</strong></p>
-
-    <p>The definition file contains the installation commands needed to set up your software.
-(The structure of the container “definition” file differs between Docker and Apptainer, but it is fairly straightforward to translate between the two.)</p>
-  </li>
-  <li>
-    <p><strong>Build the container</strong></p>
-
-    <p>Once the definition file has been written, you must “build” the container. 
-The computer you use to build the container will run through the installation commands, almost as if you were actually installing the software on that computer,
-but will save the results into the container file(s) for later use.</p>
-  </li>
-  <li>
-    <p><strong>Distribute the container</strong></p>
-
-    <p>To use the container on CHTC servers, you’ll need to distribute the container to right location.
-For Docker containers, this means “pushing” the container to Docker Hub or similar container registry.
-For Apptainer containers, this typically means copying the container <code>.sif</code> file to the <a href="file-avail-largedata.html">/staging system</a>.</p>
-  </li>
-</ol>
-
-<p>You can then use the container following the <a href="#use-an-existing-container">instructions above</a>.</p>
-
-<blockquote>
-  <p>A common question is whether the software installation process is repeated each time a container is used. 
-The answer is “no”. 
-The software installation process only occurs when the container is actually being built.
-Once the container has been built, no changes can be made to the container when being used (on CHTC systems).</p>
-</blockquote>
-
-<h4 id="build-your-own-docker-container">Build your own Docker container</h4>
-
-<p>Please follow the instructions in our guide <a href="docker-build.html">Build a Docker Container Image</a> to build your own container using Docker.
-As mentioned above, you will need to have Docker installed on your own computer.
-This is so that you can push the completed container to Docker Hub.</p>
-
-<p><em>You are unable to push containers from CHTC to Docker Hub, so please do not build Docker containers using CHTC!</em></p>
-
-<h4 id="build-your-own-apptainer-container">Build your own Apptainer container</h4>
-
-<p>Please follow the instructions in our guide <a href="apptainer-htc.html">Use Apptainer Containers</a> to build your own container using Apptainer.
-You can use CHTC servers to build the container, so there is no need to install any software on your computer.</p>
-
-<p><a href="#top">Back to Top</a></p>
-
-<hr />
 
         </div>
         <div class="col-3 d-none d-lg-block">
@@ -758,11 +509,11 @@ You can use CHTC servers to build the container, so there is no need to install 
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="job-submission">
-                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#job-submission-collapse" aria-expanded="false" aria-controls="job-submission">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#job-submission-collapse" aria-expanded="false" aria-controls="job-submission">
                                     Job Submission
                                 </button>
                             </h2>
-                            <div id="job-submission-collapse" class="accordion-collapse collapse " aria-labelledby="job-submission" data-bs-parent="#guide-sidebar">
+                            <div id="job-submission-collapse" class="accordion-collapse collapse show " aria-labelledby="job-submission" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
@@ -796,7 +547,7 @@ You can use CHTC servers to build the container, so there is no need to install 
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-xalim-dagman/uw-research-computing/htc/tutorial-dagman-intermediate">Intermediate DAGMan: Uses and Features</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-xalim-dagman/uw-research-computing/htc/tutorial-dagman-intermediate">Intermediate DAGMan: Uses and Features</a>
                                     </div>
                                 
                             </div>
@@ -844,15 +595,15 @@ You can use CHTC servers to build the container, so there is no need to install 
 
                         <div class="accordion-item">
                             <h2 class="accordion-header mt-0" id="software-solutions">
-                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
+                                <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#software-solutions-collapse" aria-expanded="false" aria-controls="software-solutions">
                                     Software Solutions
                                 </button>
                             </h2>
-                            <div id="software-solutions-collapse" class="accordion-collapse collapse show " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
+                            <div id="software-solutions-collapse" class="accordion-collapse collapse " aria-labelledby="software-solutions" data-bs-parent="#guide-sidebar">
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-xalim-dagman/uw-research-computing/software-overview-htc">Overview: How to Use Software</a>
+                                        <a class="" href="/web-preview/preview-xalim-dagman/uw-research-computing/software-overview-htc">Overview: How to Use Software</a>
                                     </div>
                                 
 
