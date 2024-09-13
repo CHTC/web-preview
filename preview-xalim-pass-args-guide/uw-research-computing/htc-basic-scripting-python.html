@@ -230,11 +230,15 @@
             <h3 id="code">Code</h3>
 <p>Our executable written in Python, <code>echo-next.py</code>:</p>
 <pre><code>import sys
-print(sys.argv[1])
+filename = sys.argv[1]
+print(filename)
 </code></pre>
-<p>See <a href="https://docs.python.org/3/library/sys.html#sys.argv">Python documentation on sys.argv</a> for details.</p>
 
-<p>We can use it on the command line, assuming Python is installed and on the <code>PATH</code>:</p>
+<p><code>sys.argv</code> is a list – if you have multiple arguments, you can reference each item in the 
+list using Python’s usual notation (<code>sys.argv[1]</code>, <code>sys.argv[2]</code>, etc.). 
+See <a href="https://docs.python.org/3/library/sys.html#sys.argv">Python documentation on sys.argv</a> for details.</p>
+
+<p>We can use the script on the command line, assuming Python is installed and on the <code>PATH</code>:</p>
 <pre class="term"><code>[user@login]$ python3 echo-next.py data.csv
 data.csv
 </code></pre>
@@ -411,7 +415,7 @@ arguments = $(data)
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-basic-scripting">Basic scripting with arguments</a>
+                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-basic-scripting">Basic Scripting and Job Submission with Arguments</a>
                                     </div>
                                 
 
@@ -421,7 +425,7 @@ arguments = $(data)
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-passing-arguments-2">Practice: Passing Multiple Arguments to Multiple Jobs with One Submit File</a>
+                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-passing-arguments-multiple">Practice: Passing Multiple Arguments to Multiple Jobs with One Submit File</a>
                                     </div>
                                 
                             </div>

@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Basic scripting with arguments</title>
+<title>Basic Scripting and Job Submission with Arguments</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -224,7 +224,7 @@
         <div class="col-12 col-lg-9 mw-1000">
 
             <h1 class="uw-mini-bar mb-4">
-    Basic scripting with arguments
+    Basic Scripting and Job Submission with Arguments
 </h1>
 
             <script type="text/javascript" src="/web-preview/preview-xalim-pass-args-guide/assets/js/pages/software-overview.js" defer=""></script>
@@ -326,6 +326,12 @@ echo $1
 data.csv
 </code></pre>
 
+<blockquote>
+  <p>In bash, <code>$1</code> references the first argument to a script. If you have more 
+arguments, <code>$2</code> will refer to the second, <code>$3</code> to the third, etc. There are 
+also ways to refer to the whole list of arguments if needed.</p>
+</blockquote>
+
 <h3 id="wrapper-script">Wrapper script</h3>
 
 <p>We can now write a wrapper script! This script checks that one argument is passed, and also allows room for pre- and post-processing in this simple workflow.</p>
@@ -378,11 +384,15 @@ arguments = $(data)
                 <h3 id="code">Code</h3>
 
 <p>Our executable written in Julia, <code>echo-next.jl</code>:</p>
-<pre><code>println(ARGS[1])
+<pre><code>filename = ARGS[1]
+println(filename)
 </code></pre>
-<p>See <a href="https://docs.julialang.org/en/v1/manual/command-line-interface/">Julia documentation on arguments</a> for details.</p>
 
-<p>We can use it on the command line, assuming Julia is installed and on the <code>PATH</code>:</p>
+<p>The <code>ARGS</code> constant is an array – if you have multiple arguments, you can reference 
+them using Julia’s usual notation (<code>ARGS[1]</code>, <code>ARGS[2]</code>, etc.)
+See <a href="https://docs.julialang.org/en/v1/manual/command-line-interface/">Julia documentation on arguments</a> for details.</p>
+
+<p>We can use the script on the command line, assuming Julia is installed and on the <code>PATH</code>:</p>
 <pre class="term"><code>[user@login]$ julia echo-next.jl data.csv
 data.csv
 </code></pre>
@@ -439,11 +449,15 @@ arguments = $(data)
                 <h3 id="code">Code</h3>
 <p>Our executable written in Python, <code>echo-next.py</code>:</p>
 <pre><code>import sys
-print(sys.argv[1])
+filename = sys.argv[1]
+print(filename)
 </code></pre>
-<p>See <a href="https://docs.python.org/3/library/sys.html#sys.argv">Python documentation on sys.argv</a> for details.</p>
 
-<p>We can use it on the command line, assuming Python is installed and on the <code>PATH</code>:</p>
+<p><code>sys.argv</code> is a list – if you have multiple arguments, you can reference each item in the 
+list using Python’s usual notation (<code>sys.argv[1]</code>, <code>sys.argv[2]</code>, etc.). 
+See <a href="https://docs.python.org/3/library/sys.html#sys.argv">Python documentation on sys.argv</a> for details.</p>
+
+<p>We can use the script on the command line, assuming Python is installed and on the <code>PATH</code>:</p>
 <pre class="term"><code>[user@login]$ python3 echo-next.py data.csv
 data.csv
 </code></pre>
@@ -500,11 +514,15 @@ arguments = $(data)
                 <h3 id="code">Code</h3>
 <p>Our executable written in R, <code>echo-next.R</code>:</p>
 <pre><code>args &lt;- commandArgs(trailingOnly = TRUE)
-cat(args[1],"\n")
+filename &lt;- args[1]
+cat(filename,"\n")
 </code></pre>
-<p>See <a href="https://search.r-project.org/CRAN/refmans/R.utils/html/commandArgs.html">R documentation on commandArgs</a> for details.</p>
 
-<p>We can use it on the command line, assuming R is installed and on the <code>PATH</code>:</p>
+<p>The output of <code>commandArgs</code> is a vector – if you have multiple arguments, you can reference each 
+item using R’s usual notation (<code>args[1]</code>, <code>args[2]</code>, etc.). 
+See <a href="https://search.r-project.org/CRAN/refmans/R.utils/html/commandArgs.html">R documentation on commandArgs</a> for details.</p>
+
+<p>We can use the script on the command line, assuming R is installed and on the <code>PATH</code>:</p>
 <pre class="term"><code>[user@login]$ Rscript echo-next.R data.csv
 data.csv
 </code></pre>
@@ -694,7 +712,7 @@ arguments = $(data)
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-basic-scripting">Basic scripting with arguments</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-basic-scripting">Basic Scripting and Job Submission with Arguments</a>
                                     </div>
                                 
 
@@ -704,7 +722,7 @@ arguments = $(data)
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-passing-arguments-2">Practice: Passing Multiple Arguments to Multiple Jobs with One Submit File</a>
+                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-passing-arguments-multiple">Practice: Passing Multiple Arguments to Multiple Jobs with One Submit File</a>
                                     </div>
                                 
                             </div>

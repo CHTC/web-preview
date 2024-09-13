@@ -230,11 +230,15 @@
             <h3 id="code">Code</h3>
 <p>Our executable written in R, <code>echo-next.R</code>:</p>
 <pre><code>args &lt;- commandArgs(trailingOnly = TRUE)
-cat(args[1],"\n")
+filename &lt;- args[1]
+cat(filename,"\n")
 </code></pre>
-<p>See <a href="https://search.r-project.org/CRAN/refmans/R.utils/html/commandArgs.html">R documentation on commandArgs</a> for details.</p>
 
-<p>We can use it on the command line, assuming R is installed and on the <code>PATH</code>:</p>
+<p>The output of <code>commandArgs</code> is a vector – if you have multiple arguments, you can reference each 
+item using R’s usual notation (<code>args[1]</code>, <code>args[2]</code>, etc.). 
+See <a href="https://search.r-project.org/CRAN/refmans/R.utils/html/commandArgs.html">R documentation on commandArgs</a> for details.</p>
+
+<p>We can use the script on the command line, assuming R is installed and on the <code>PATH</code>:</p>
 <pre class="term"><code>[user@login]$ Rscript echo-next.R data.csv
 data.csv
 </code></pre>
@@ -411,7 +415,7 @@ arguments = $(data)
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-basic-scripting">Basic scripting with arguments</a>
+                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-basic-scripting">Basic Scripting and Job Submission with Arguments</a>
                                     </div>
                                 
 
@@ -421,7 +425,7 @@ arguments = $(data)
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-passing-arguments-2">Practice: Passing Multiple Arguments to Multiple Jobs with One Submit File</a>
+                                        <a class="" href="/web-preview/preview-xalim-pass-args-guide/uw-research-computing/htc-passing-arguments-multiple">Practice: Passing Multiple Arguments to Multiple Jobs with One Submit File</a>
                                     </div>
                                 
                             </div>
