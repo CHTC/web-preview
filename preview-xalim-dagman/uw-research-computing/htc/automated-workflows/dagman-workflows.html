@@ -431,7 +431,7 @@ SCRIPT POST my_node cleanup.sh
   <li>Execute <code>cleanup.sh</code> (the <code>POST</code> script)</li>
 </ol>
 
-<p>All of these steps count as part of DAGMan’s attempt to execute the node <code>my_node</code> and may affect whether DAGMan considers the node to have succeeded or failed. For more information on <code>PRE</code> and <code>POST</code> scripts as well as other scripts that DAGMan can use, see the <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-scripts.html">HTCondor documentation</a>.</p>
+<p>All of these steps count as part of DAGMan’s attempt to execute the node <code>my_node</code> and may affect whether DAGMan considers the node to have succeeded or failed. For more information on <code>PRE</code> and <code>POST</code> scripts as well as other scripts that DAGMan can use, see the <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-introduction.html">HTCondor documentation</a>.</p>
 
 <h3 id="2-retrying-failed-nodes">2. Retrying failed nodes</h3>
 
@@ -462,7 +462,7 @@ If a job is failing repeatedly, it is better to troubleshoot the cause of that f
 This is especially true when you applying the <code>RETRY</code> statement to all of the nodes in your DAG.</p>
 
 <p>DAGMan considers the exit code of the last executed step when it considers the success or failure of the node overall.
-There are various possible combinations that can determine the success or failure of the node itself, as discussed in the HTCondor documentation <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/node-pass-or-fail.html#">here</a>.
+There are various possible combinations that can determine the success or failure of the node itself, as discussed in the HTCondor documentation <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-completion.html#node-success-failure">here</a>.
 DAGMan only considers the success/failure of the node as a whole when deciding if it needs to attempt a retry.
 <strong>Importantly, if the <code>.sub</code> file for a node submits multiple HTCondor jobs, when any one of those jobs fails, DAGMan considers all of the jobs to have failed and will remove them from queue.</strong></p>
 
@@ -470,7 +470,7 @@ DAGMan only considers the success/failure of the node as a whole when deciding i
 In that case, you can include a command in the submit file to automatically remove a held job from the queue. 
 When a job is removed from the queue, DAGMan considers that job to be failed (though as noted above, failure of the HTCondor job does not necessarily mean the node has failed).</p>
 
-<p>For more information on the <code>RETRY</code> statement, see the <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/node-pass-or-fail.html#retrying-failed-nodes">HTCondor documentation</a>.</p>
+<p>For more information on the <code>RETRY</code> statement, see the <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-completion.html#retrying-failed-nodes">HTCondor documentation</a>.</p>
 
 <h3 id="3-restarting-a-failed-dag">3. Restarting a failed DAG</h3>
 
@@ -500,7 +500,7 @@ condor_submit_dag example.dag
 condor_submit_dag -force example.dag
 </code></pre>
 
-<p>For more information on Rescue DAGs and how to explicitly control them, see the <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-resubmit-failed.html">HTCondor documentation</a>.</p>
+<p>For more information on Rescue DAGs and how to explicitly control them, see the <a href="https://htcondor.readthedocs.io/en/latest/automated-workflows/dagman-completion.html#resubmitting-a-failed-dag">HTCondor documentation</a>.</p>
 
 <blockquote>
   <p>If the DAGMan scheduler job itself crashes (or is placed on hold) and is unable to write a Rescue DAG, then when the DAGMan job is resubmitted (or released), DAGMan will go into “recovery mode”. 
@@ -512,14 +512,12 @@ DAGMan will then resume the DAG based on its analysis of the files that do exist
 
 <h3 id="tutorials">Tutorials</h3>
 
-<p>If you are interested in using DAGMan to automatically run a workflow, we highly recommend that you first go through our tutorial <a href="../dagman-simple-example">Simple Example of a DAG Workflow</a>. 
+<p>If you are interested in using DAGMan to automatically run a workflow, we highly recommend that you first go through our tutorial <a href="dagman-simple-example">Simple Example of a DAG Workflow</a>. 
 This tutorial takes you step by step through the mechanics of creating and submitting a DAG.</p>
 
-<p>Once you’ve understood the basics from the simple tutorial, you are ready to explore more examples and scenarios in our <a href="../tutorial-dagman-intermediate">Intermediate DAGMan Tutorial</a>.</p>
+<p>Once you’ve understood the basics from the simple tutorial, you are ready to explore more examples and scenarios in our <a href="tutorial-dagman-intermediate">Intermediate DAGMan Tutorial</a>.</p>
 
 <h3 id="trainings--videos">Trainings &amp; Videos</h3>
-
-<p>A recent live training covering the materials in the Intermediate DAGMan Tutorial was held by the current lead developer for HTCondor’s DAGMan utility: <a href="../../../support_and_training/training/osgusertraining/#dagman-htcondors-workflow-manager">DAGMan: HTCondor’s Workflow Manager</a>.</p>
 
 <p>An introductory tutorial to DAGMan previously presented at HTCondor Week was recorded and is available on YouTube: <a href="https://www.youtube.com/watch?v=1MvVHxRs7iU">HTCondor DAGMan Workflows tutorial</a>.</p>
 
