@@ -228,22 +228,42 @@
             <p>The HPC Cluster uses SLURM to manage jobs on the HPC Cluster. This page describes 
 how to submit and manage jobs using SLURM.</p>
 
-<h1 id="contents">Contents</h1>
+<div class="d-flex flex-column mb-5">
 
-<ol>
-  <li><a href="#1-submitting-jobs-using-slurm">Submitting Jobs Using SLURM</a></li>
-  <li><a href="#2-viewing-jobs-in-the-queue">Viewing Jobs in the Queue</a></li>
-  <li><a href="#3-removing-or-holding-jobs">Removing or Holding Jobs</a></li>
-</ol>
+<h2>Table of Contents</h2>
+
+<div class="uw-sidebar-box me-auto">
+<div class="uw-directory">
+
+      <ul>
+        <li><a href="#1-submitting-jobs-using-slurm">1. Submitting Jobs Using SLURM</a>
+          <ul>
+            <li><a href="#a-submitting-a-job">A. Submitting a Job</a></li>
+            <li><a href="#b-optimizing-your-submit-file">B. Optimizing Your Submit File</a></li>
+            <li><a href="#c-requesting-an-interactive-job-int-and-pre-partitions">C. Requesting an Interactive Job ("int" and "pre" partitions)</a>
+              <ul>
+                <li><a href="#for-simple-testing-or-compiling">For simple testing or compiling</a></li>
+                <li><a href="#for-running-mpi-code">For running MPI code</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#2-viewing-jobs-in-the-queue">2. Viewing Jobs in the Queue</a></li>
+        <li><a href="#3-removing-or-holding-jobs">3. Removing or Holding Jobs</a></li>
+      </ul>
+
+    </div>
+</div>
+</div>
 
 <p>The following assumes that you have been granted access to the HPC cluster 
 and can log into the head node <code>spark-login.chtc.wisc.edu</code>. If this is not
 the case, please see the <a href="form.html">CHTC account application page</a> or email
 the facilitation team at chtc@cs.wisc.edu.</p>
 
-<h1 id="1-submitting-jobs-using-slurm"><strong>1. Submitting Jobs Using SLURM</strong></h1>
+<h1 id="1-submitting-jobs-using-slurm">1. Submitting Jobs Using SLURM</h1>
 
-<h2 id="a-submitting-a-job"><strong>A. Submitting a Job</strong></h2>
+<h2 id="a-submitting-a-job">A. Submitting a Job</h2>
 
 <p>Jobs can be submitted to the cluster using a submit file, sometimes also 
 called a “batch” file. The top half of the file consists of <code>#SBATCH</code> 
@@ -282,7 +302,7 @@ srun --mpi=pmix -n 64 /home/username/mpiprogram
 <pre class="term"><code>[alice@login]$ sbatch submit-script.sh
 </code></pre>
 
-<h2 id="b-optimizing-your-submit-file"><strong>B. Optimizing Your Submit File</strong></h2>
+<h2 id="b-optimizing-your-submit-file">B. Optimizing Your Submit File</h2>
 
 <p>The new cluster has different partition names and different sized nodes. <strong>We always recommend requesting cores per node (instead of total cores), using a multiple of 32 cores as your request per node.</strong> Requesting multiple nodes is not advantageous if your jobs are smaller than 128 cores. We also now recommend requesting memory per core instead of memory per node, for similar reasons, using the <code>--mem-per-cpu</code> flag with units of MB. Here are our recommendations for different sized jobs:</p>
 
@@ -315,7 +335,7 @@ srun --mpi=pmix -n 64 /home/username/mpiprogram
 	</tr>
 </table>
 
-<h2 id="c-requesting-an-interactive-job-int-and-pre-partitions"><strong>C. Requesting an Interactive Job ("int" and "pre" partitions)</strong></h2>
+<h2 id="c-requesting-an-interactive-job-int-and-pre-partitions">C. Requesting an Interactive Job ("int" and "pre" partitions)</h2>
 
 <p>If you want to run your job commands yourself, as a test before submitting 
 a job as described above, you can request an interactive job on the cluster.</p>
@@ -452,7 +472,7 @@ a <code>SLURM_JOB_UID</code> variable is created for the interactive <code>srun<
   </blockquote>
 </blockquote>
 
-<h1 id="2-viewing-jobs-in-the-queue"><strong>2. Viewing Jobs in the Queue</strong></h1>
+<h1 id="2-viewing-jobs-in-the-queue">2. Viewing Jobs in the Queue</h1>
 
 <p>To view your jobs in the SLURM queue, use the following command:</p>
 
@@ -462,7 +482,7 @@ a <code>SLURM_JOB_UID</code> variable is created for the interactive <code>srun<
 <p>Issuing <code>squeue</code> alone will show all user jobs in the queue. You can
 view all jobs for a particular partition with <code>squeue -p shared</code>.</p>
 
-<h1 id="3-removing-or-holding-jobs"><strong>3. Removing or Holding Jobs</strong></h1>
+<h1 id="3-removing-or-holding-jobs">3. Removing or Holding Jobs</h1>
 
 <p>You can kill and/or remove your job from the
 queue with the following:</p>
