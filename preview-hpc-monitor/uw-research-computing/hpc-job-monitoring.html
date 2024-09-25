@@ -228,24 +228,41 @@
             <p>The HPC Cluster uses SLURM to manage jobs on the HPC Cluster. This page describes 
 how to review job performance and monitor other job information.</p>
 
-<h1 id="contents">Contents</h1>
+<div class="d-flex flex-column mb-5">
 
-<ol>
-  <li><a href="#view-job-performance-with-seff">View Job Performance with <code>seff</code></a></li>
-  <li><a href="#view-job-information-with-sacct">View Job Information with <code>sacct</code></a></li>
-</ol>
+<h2>Table of Contents</h2>
+
+<div class="uw-sidebar-box me-auto">
+<div class="uw-directory">
+
+      <ul>
+        <li><a href="#view-job-performance-with-seff">View Job Performance with <code>seff</code></a></li>
+        <li><a href="#view-job-information-with-sacct">View Job Information with <code>sacct</code></a>
+          <ul>
+            <li><a href="#how-to-select-jobs">How To Select Jobs</a></li>
+            <li><a href="#displaying-specific-fields">Displaying Specific Fields</a></li>
+            <li><a href="#recommended-fields">Recommended Fields</a></li>
+            <li><a href="#other-useful-options">Other Useful Options</a></li>
+            <li><a href="#a-sample-sacct-query">A Sample <code>sacct</code> Query</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+</div>
+</div>
 
 <p>The following assumes that you have been granted access to the HPC cluster 
 and can log into the head node <code>spark-login.chtc.wisc.edu</code>. If this is not
 the case, please see the <a href="form.html">CHTC account application page</a> or email
 the facilitation team at chtc@cs.wisc.edu.</p>
 
-<h1 id="view-job-performance-with-seff">View Job Performance with <code>seff</code></h1>
+<h2 id="view-job-performance-with-seff">View Job Performance with <code>seff</code></h2>
 
 <p>The <code>seff</code> command will print out a summary of usage and efficiency metrics for 
 a specific job. The usage and output looks like this:</p>
 
-<pre><code>[alice@login]$ seff 79950
+<pre class="term"><code>[alice@login]$ seff 79950
 Job ID: 79950
 Cluster: spark_el9
 User/Group: alice/alice
@@ -259,7 +276,7 @@ Memory Utilized: 876.69 MB (estimated maximum)
 Memory Efficiency: 2.74% of 31.25 GB (1.95 GB/core)
 </code></pre>
 
-<h1 id="view-job-information-with-sacct">View Job Information with <code>sacct</code></h1>
+<h2 id="view-job-information-with-sacct">View Job Information with <code>sacct</code></h2>
 
 <p>SLURM saves jobs information in a database that can be queried using the <code>sacct</code> command.</p>
 
@@ -270,45 +287,48 @@ Memory Efficiency: 2.74% of 31.25 GB (1.95 GB/core)
 </code></pre>
 </blockquote>
 
-<h2 id="how-to-select-jobs">How To Select Jobs</h2>
+<h3 id="how-to-select-jobs">How To Select Jobs</h3>
 
 <p>By default <code>sacct</code> shows only your jobs, that ran or were submitted on the current 
 date. See the following list for different ways to select groups of jobs to review. Some of the options – especially the time and user options – can both be added to the same query.</p>
 
 <ul>
-  <li>
-    <p>To display information about a <strong>specific job or list of jobs</strong> use <code>-j</code> or <code>--jobs</code> followed by a job number or comma separated list of job numbers.</p>
+  <li>To display information about a <strong>specific job or list of jobs</strong> use <code>-j</code> or <code>--jobs</code> followed by a job number or comma separated list of job numbers.</li>
+</ul>
 
-    <pre class="term"><code>[alice@login]$ sacct --jobs job1,job2,job3
+<pre class="term"><code>[alice@login]$ sacct --jobs job1,job2,job3
 </code></pre>
-    <!-- Sample output -->
-  </li>
-  <li>
-    <p>To select information about jobs in a <strong>certain date range</strong> use <code>--start</code> and <code>--end</code> Without it, <code>sacct</code> will only return jobs from the current day.</p>
+<!-- Sample output -->
 
-    <pre class="term"><code>[alice@login]$ sacct --start=YYYY-MM-DD
+<ul>
+  <li>To select information about jobs in a <strong>certain date range</strong> use <code>--start</code> and <code>--end</code> Without it, <code>sacct</code> will only return jobs from the current day.</li>
+</ul>
+
+<pre class="term"><code>[alice@login]$ sacct --start=YYYY-MM-DD
 </code></pre>
-  </li>
+
+<ul>
   <li>To select information about jobs in a <strong>certain time range</strong> use <code>--starttime</code> and <code>--endtime</code> The default start time is 00:00:00 of the current day, unless used with <code>-j</code>, then the default start time is Unix Epoch 0. The default end time is time of running the command. Valid time formats are
     <pre><code>HH:MM[:SS] [AM|PM]
 MMDD[YY] or MM/DD[/YY] or MM.DD[.YY]
 MM/DD[/YY]-HH:MM[:SS]
 YYYY-MM-DD[THH:MM[:SS]] 
 </code></pre>
-
-    <pre class="term"><code>[alice@login]$ sacct --starttime 08/23 --endtime 08/24
-</code></pre>
-  </li>
-  <li>
-    <p>To display another <strong>user’s</strong> jobs use <code>--user</code></p>
-
-    <pre class="term"><code>[alice@login]$ sacct --user BuckyBadger
-</code></pre>
-    <p><!-- Sample output --></p>
   </li>
 </ul>
 
-<h2 id="displaying-specific-fields">Displaying Specific Fields</h2>
+<pre class="term"><code>[alice@login]$ sacct --starttime 08/23 --endtime 08/24
+</code></pre>
+
+<ul>
+  <li>To display another <strong>user’s</strong> jobs use <code>--user</code></li>
+</ul>
+
+<pre class="term"><code>[alice@login]$ sacct --user BuckyBadger
+</code></pre>
+<!-- Sample output -->
+
+<h3 id="displaying-specific-fields">Displaying Specific Fields</h3>
 
 <p><code>sacct</code> can display different fields about your jobs. You can use the <code>--helpformat</code> flag to get a full list.</p>
 
@@ -338,17 +358,15 @@ submit
 user
 </code></pre>
 
-<h2 id="other-useful-options">Other Useful Options</h2>
+<h3 id="other-useful-options">Other Useful Options</h3>
 
-<p>To only show statistics relevant to the job allocation itself, not taking steps into consideration use <code>-X</code>. This can be useful when trying to figure out which part of a job errored out.</p>
+<p>To only show statistics relevant to the job allocation itself, not taking steps into consideration, use <code>-X</code>. This can be useful when trying to figure out which part of a job errored out.</p>
 
-<pre><code>``` [alice@login]$ sacct -X
-```
-{:.term}
-&lt;!-- Sample Output --&gt;
+<pre class="term"><code>[alice@login]$ sacct -X
 </code></pre>
+<!-- Sample Output -->
 
-<h2 id="a-sample-sacct-query">A Sample <code>sacct</code> Query</h2>
+<h3 id="a-sample-sacct-query">A Sample <code>sacct</code> Query</h3>
 
 <p>For example to view all of your jobs since January 1, 2024, printing 
 out which partition you used, how many nodes, and what the final status of the job was, 
