@@ -227,7 +227,55 @@
     Data Storage Locations on the HTC
 </h1>
 
-            
+            <h2>Which Option is the Best for Your Files?</h2>
+<br>
+<table class="gtable">
+    <tr>
+        <th>Input Sizes</th>
+        <th>Output Sizes</th>
+        <th>File Location</th>
+        <th>Syntax for <code>transfer_input_files</code></th>
+        <th>Availability, Security</th>
+        <!--<th>Special Considerations</th>-->
+    </tr>
+
+    <tr>
+        <td>0 - 100 MB per file, up to 500 MB per job</td>
+        <td>0 - 5 GB per job</td>
+        <td><code>/home</code></td>
+        <td>No special syntax</td>
+        <td>CHTC, UW Grid, and OSG; works for <i>your</i> jobs</td>
+        <!--<td><font color="red">DO NOT USE HTCondor transfer for files in <code>/staging</code> OR <code>/squid</code></font></td>-->
+    </tr>
+
+    <tr>
+        <td>100 MB - TBs per job-specific file; repeatedly-used files > 1GB</td>
+        <td>4 GB - TBs per job</td>
+         <td><code>/staging</code></td>
+        <td><code>osdf://</code> or <code>file:///</code></td>
+        <td>a portion of CHTC; accessible only to <i>your</i> jobs</td>
+        <!--<td>special submit "Requirements"</td>-->
+    </tr>
+
+</table>
+
+<!--
+<h2>Best Practices for File Delivery</h2>
+
+<p>Remember to review best practices in our File Handling guide,
+including the following:</p>
+
+<ul>
+<li>Pre-split large input files when each of many jobs will only need a portion of the
+large input data.</li>
+<li>Remove ALL unwanted/temporary files in the working director of the job that have
+appeared since the job started.</li>
+<li>Use tar with compression (*.tar.gz) for any relevant input/output files and ALL
+desired output directories prior to their transfer/delivery.</li>
+</ul>
+-->
+
+
 <div class="d-flex flex-column mb-5">
 
 <h2>Table of Contents</h2>
@@ -356,6 +404,9 @@ transfer_input_files = file1, osdf://chtc/staging/username/file2, file:///stagin
   <li><a href="/uw-research-computing/transfer-files-computer">Transfer files between CHTC and your computer</a></li>
   <li><a href="/uw-research-computing/transfer-data-researchdrive">Transfer files between CHTC and ResearchDrive</a></li>
 </ul>
+
+
+
 
         </div>
         <div class="col-3 d-none d-lg-block">
