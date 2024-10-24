@@ -288,8 +288,8 @@ familiar with:</strong></p>
   <li>Using the command-line to: navigate directories,
 create/edit/copy/move/delete files and directories, and run intended
 programs (aka “executables”).</li>
-  <li>CHTC’s <a href="helloworld.html">Intro to Running HTCondor Jobs</a></li>
-  <li>CHTC’s guide for <a href="file-availability.html">Typical File Transfer</a></li>
+  <li>CHTC’s <a href="htcondor-job-submission">Intro to Running HTCondor Jobs</a></li>
+  <li>CHTC’s guide for <a href="htc-job-file-transfer">Typical File Transfer</a></li>
 </ol>
 
 <div class="d-flex flex-column mb-5">
@@ -299,18 +299,32 @@ programs (aka “executables”).</li>
 <div class="uw-sidebar-box me-auto">
 <div class="uw-directory">
 
-      <ol>
-        <li><a href="#1-policies-and-intended-use">Policies and Intended Use</a></li>
-        <li><a href="#2-staging-large-data">Staging Large Data</a></li>
-        <li><a href="#3-using-staged-files-in-a-job">Using Staged Files in a Job</a>
+      <ul>
+        <li><a href="#1-policies-and-intended-use">1. Policies and Intended Use</a>
           <ul>
-            <li><a href="#a-accessing-large-input-files">Accessing Large Input Files</a></li>
-            <li><a href="#b-moving-large-output-files">Moving Large Output Files</a></li>
+            <li><a href="#a-intended-use">A. Intended Use</a></li>
+            <li><a href="#b-access-to-large-data-staging">B. Access to Large Data Staging</a></li>
+            <li><a href="#c-user-data-management-responsibilities">C. User Data Management Responsibilities</a></li>
+            <li><a href="#d-data-access-within-jobs">D. Data Access Within Jobs</a></li>
           </ul>
         </li>
-        <li><a href="#4-submit-jobs-using-staged-data">Submit Jobs Using Staged Data</a></li>
-        <li><a href="#5-checking-your-quota-data-use-and-file-counts">Checking your Quota, Data Use, and File Counts</a></li>
-      </ol>
+        <li><a href="#2-staging-large-data">2. Staging Large Data</a>
+          <ul>
+            <li><a href="#a-get-a-directory">A. Get a Directory</a></li>
+            <li><a href="#b-reduce-file-counts">B. Reduce File Counts</a></li>
+            <li><a href="#c-use-the-transfer-server">C. Use the Transfer Server</a></li>
+            <li><a href="#d-remove-files-after-jobs-complete">D. Remove Files After Jobs Complete</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-using-staged-files-in-a-job">3. Using Staged Files in a Job</a>
+          <ul>
+            <li><a href="#a-transferring-large-input-files">A. Transferring Large Input Files</a></li>
+            <li><a href="#b-transferring-large-output-files">B. Transferring Large Output Files</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-submit-jobs-using-staged-data">4. Submit Jobs Using Staged Data</a></li>
+        <li><a href="#5-checking-your-quota-data-use-and-file-counts">5. Checking your Quota, Data Use, and File Counts</a></li>
+      </ul>
 
     </div>
 </div>
@@ -447,10 +461,7 @@ mechanisms as uploaded files (as above).</p>
 <p>Staged files should be specified in the job submit file using the <code>osdf://</code> or <code>file:///</code> syntax,
 depending on the size of the files to be transferred. <a href="htc-job-file-transfer#transferring-data-to-jobs-with-transfer_input_files">See this table for more information</a>.</p>
 
-<pre class="sub"><code>transfer_input_files = osdf://chtc/staging/username/file
-</code></pre>
-
-<pre class="sub"><code>transfer_input_files = file:///staging/username/file
+<pre class="sub"><code>transfer_input_files = osdf://chtc/staging/username/file1, file:///staging/username/file2, file3 
 </code></pre>
 
 <h2 id="b-transferring-large-output-files">B. Transferring Large Output Files</h2>
@@ -461,41 +472,6 @@ depending on the size of the files to be transferred. <a href="htc-job-file-tran
 
 <pre class="sub"><code>transfer_output_files = file1, file2
 transfer_output_remaps = "file1 = osdf://chtc/staging/username/file1; file2 = file:///staging/username/file2"
-</code></pre>
-
-<h2 id="c-handling-standard-output-if-needed">C. Handling Standard Output (if needed)</h2>
-
-<p>In some instances, your software may produce very large standard output
-(what would typically be output to the command screen, if you ran the
-command for yourself, instead of having <a href="https://htcondor.org">HTCondor</a> do it). Because such
-standard output from your software will usually be captured by HTCondor
-in the submit file “output” file, this “output” file WILL still be
-transferred by HTCondor back to your home directory on the submit
-server, which may be very bad for you and others, if that captured
-standard output is very large.</p>
-
-<p>In these cases, it is useful to redirect the standard output of commands
-in your executable to a file in the working directory, and then move it
-into <code>/staging</code> at the end of the job.</p>
-
-<p>Example, if “<code>myprogram</code>” produces very large standard output, and is
-run from a script (bash) executable:</p>
-
-<pre class="file"><code>#!/bin/bash
-#
-# script to run myprogram,
-# 
-# redirecting large standard output to a file in the working directory:
-./myprogram myinput.txt myoutput.txt &gt; large_std.out
-# 
-# tar and move large files to staging so they're not copied to the submit server:
-tar -czvf large_stdout.tar.gz large_std.out
-# END
-</code></pre>
-
-<p>We also need to tell HTCondor to transfer the large standard output using the file transfer protocols above.</p>
-<pre class="sub"><code>transfer_output_files = file1, large_stdout.tar.gz
-transfer_output_remaps = "large_stdout.tar.gz = osdf://chtc/staging/username/large_stdout.tar.gz;"
 </code></pre>
 
 <h1 id="4-submit-jobs-using-staged-data">4. Submit Jobs Using Staged Data</h1>
