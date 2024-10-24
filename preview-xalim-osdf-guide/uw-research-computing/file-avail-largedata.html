@@ -244,7 +244,7 @@
         <td>0 - 5 GB per job</td>
         <td><code>/home</code></td>
         <td>No special syntax</td>
-        <td>CHTC, UW Grid, and OSG; works for <i>your</i> jobs</td>
+        <td>CHTC and external pools</td>
         <!--<td><font color="red">DO NOT USE HTCondor transfer for files in <code>/staging</code> OR <code>/squid</code></font></td>-->
     </tr>
 
@@ -457,7 +457,7 @@ depending on the size of the files to be transferred. <a href="htc-job-file-tran
 
 <p>By default, any new or changed files in the top-level directory are transferred to your working directory on <code>/home</code>. If you have large output files, this is undesirable.</p>
 
-<p>Large outputs should be transferred to staging using the same file transfer protocols in conjunction with <code>transfer_output_remaps</code>.</p>
+<p>Large outputs should be transferred to staging using the same file transfer protocols in HTCondor’s <code>transfer_output_remaps</code> option:</p>
 
 <pre class="sub"><code>transfer_output_files = file1, file2
 transfer_output_remaps = "file1 = osdf://chtc/staging/username/file1; file2 = file:///staging/username/file2"
