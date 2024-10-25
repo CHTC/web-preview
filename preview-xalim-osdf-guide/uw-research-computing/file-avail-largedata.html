@@ -323,7 +323,7 @@ programs (aka “executables”).</li>
           </ul>
         </li>
         <li><a href="#4-submit-jobs-using-staged-data">4. Submit Jobs Using Staged Data</a></li>
-        <li><a href="#5-checking-your-quota-data-use-and-file-counts">5. Checking your Quota, Data Use, and File Counts</a></li>
+        <li><a href="#5-related-pages">5. Related Pages</a></li>
       </ul>
 
     </div>
@@ -516,26 +516,13 @@ Requirements = (Target.HasCHTCStaging == true)
 queue
 </code></pre>
 
-<h1 id="5-checking-your-quota-data-use-and-file-counts">5. Checking your Quota, Data Use, and File Counts</h1>
+<h1 id="5-related-pages">5. Related Pages</h1>
 
-<p>You can use the command <code>get_quotas</code> to see what disk 
-and items quotas are currently set for a given directory path. 
-This command will also let you see how much disk is in use and how many 
-items are present in a directory:</p>
-
-<pre class="term"><code>[username@transfer ~]$ get_quotas /staging/username
-</code></pre>
-
-<p>Alternatively, the <code>ncdu</code> command can also be used to see how many 
-files and directories are contained in a given path:</p>
-
-<pre class="term"><code>[username@transfer ~]$ ncdu /staging/username
-</code></pre>
-
-<p>When <code>ncdu</code> has finished running, the output will give you a total file
-count and allow you to navigate between subdirectories for even more
-details. Type <code>q</code> when you're ready to exit the output viewer. More
-info here: <a href="https://lintut.com/ncdu-check-disk-usage/">https://lintut.com/ncdu-check-disk-usage/</a></p>
+<ul>
+  <li><a href="htc-job-file-transfer">Data Storage Locations on the HTC</a></li>
+  <li><a href="check-quota">Check Disk Quota and Usage</a></li>
+  <li><a href="quota-request">Request a /staging directory or quota change</a></li>
+</ul>
 
 
 
