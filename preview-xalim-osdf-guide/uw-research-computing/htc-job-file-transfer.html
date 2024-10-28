@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Data Storage Locations on the HTC</title>
+<title>Using and transferring data in jobs on the HTC system</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -224,7 +224,7 @@
         <div class="col-12 col-lg-9 mw-1000">
 
             <h1 class="uw-mini-bar mb-4">
-    Data Storage Locations on the HTC
+    Using and transferring data in jobs on the HTC system
 </h1>
 
             <h2>Which Option is the Best for Your Files?</h2>
@@ -388,14 +388,14 @@ transfer_input_files = file1, osdf://chtc/staging/username/file2, file:///stagin
 
 <h3 id="specify-which-output-files-to-transfer-with-transfer_output_files-and-transfer_output_remaps">Specify Which Output Files to Transfer with <code>transfer_output_files</code> and <code>transfer_output_remaps</code></h3>
 <p>If you don’t want to transfer all files but only <em>specific files</em>, in your HTCondor submit file, use</p>
-<pre class="sub"><code>transfer_output_files = file1.txt, file2.txt
+<pre class="sub"><code>transfer_output_files = file1.txt, file2.txt, file3.txt
 </code></pre>
 
 <p>To transfer a file or folder back to <code>/staging</code>, you will need an additional line in your HTCondor submit file:</p>
-<pre class="sub"><code>transfer_output_remaps = "output1.txt = file:///staging/NetID/output1.txt"
+<pre class="sub"><code>transfer_output_remaps = "file1.txt = file:///staging/NetID/output1.txt; file2.txt = /home/NetId/outputs/output2.txt"
 </code></pre>
 
-<p>where <code>output1.txt</code> is the name of the output file or folder you would like transferred back to a <code>/staging</code> directory. Ensure you have the right file transfer syntax (<code>osdf://</code> or <code>file:///</code> depending on the anticipated file size).</p>
+<p>In this example above, <code>file1.txt</code> is remapped to the staging directory using the <code>file:///</code> transfer protocol and simultaneously renamed <code>output1.txt</code>. In addition, <code>file2.txt</code> is renamed to <code>output2.txt</code>and will be transferred to a different directory on <code>/home</code>. Ensure you have the right file transfer syntax (<code>osdf://</code> or <code>file:///</code> depending on the anticipated file size).</p>
 
 <p>If you have multiple files or folders to transfer back to <code>/staging</code>, use a semicolon (;) to separate each object:</p>
 <pre class="sub"><code>transfer_output_remaps = "output1.txt = file:///staging/NetID/output1.txt; output2.txt = file:///staging/NetID/output2.txt"
@@ -556,7 +556,7 @@ transfer_input_files = file1, osdf://chtc/staging/username/file2, file:///stagin
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="fw-bolder" href="/web-preview/preview-xalim-osdf-guide/uw-research-computing/htc-job-file-transfer">Data Storage Locations on the HTC</a>
+                                        <a class="fw-bolder" href="/web-preview/preview-xalim-osdf-guide/uw-research-computing/htc-job-file-transfer">Using and transferring data in jobs on the HTC system</a>
                                     </div>
                                 
 
