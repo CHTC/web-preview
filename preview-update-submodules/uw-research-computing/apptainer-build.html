@@ -31,9 +31,11 @@
 <script src="/web-preview/preview-update-submodules/assets/js/lunr.js" type="text/javascript" async></script>
 <script type="text/javascript" src="/web-preview/preview-update-submodules/assets/js/search_bar.js" defer></script>
 <script type="text/javascript" src="/web-preview/preview-update-submodules/assets/js/copy-content.js" defer></script>
+<script type="text/javascript" src="/web-preview/preview-update-submodules/assets/js/main.js" defer></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/fonts/fonts.0.0.1.css" rel="stylesheet">
-<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v11.css" rel="stylesheet">
+<link type="text/css" href="/web-preview/preview-update-submodules/assets/css/style-v12.css" rel="stylesheet">
 
 <link type="text/css" href="/web-preview/preview-update-submodules/assets/css/research-style.css" rel="stylesheet">
 
@@ -348,6 +350,12 @@ From: nvcr.io/nvidia/tensorflow:24.02-tf2-py3
 </code></pre>
 
 <p>would use the <a href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorflow/tags">NVIDIA TensorFlow 2 v24.02</a> container hosted on the <a href="https://catalog.ngc.nvidia.com/containers">NVIDIA Container Registry</a> (<code>nvcr</code>).</p>
+
+<p>To build on a local Apptainer image (e.g. <code>container.sif</code>), use:</p>
+
+<pre><code>Bootstrap: localimage
+From: container.sif
+</code></pre>
 
 <blockquote>
   <p>If you just want to convert an existing Docker container into an Apptainer container, you do not need to use a definition file.
