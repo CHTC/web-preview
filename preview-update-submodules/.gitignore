@@ -1,0 +1,13 @@
+_site
+.jekyll-cache/
+Gemfile.lock
+
+vendor/
+.DS_Store
+
+.idea/
+.vscode/
+.vagrant/
+
+# The staff/schedules symlink is created by the GHA build_deploy.yml
+/staff/schedules
