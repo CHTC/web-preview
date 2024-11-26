@@ -1,0 +1,46 @@
+#!/bin/bash
+set -x
+set -e
+
+: "${BRANCH:=master}"
+: "${TARGET_REPO=CHTC/chtc.github.io.git}"
+JEKYLL_OUTPUT_FOLDER=_site
+
+echo "$GITHUB_EVENT_NAME"
+
+commitmessage=$(mktemp)
+trap 'rm -f "$commitmessage"' EXIT
+
+git log -1 --pretty=format:"GHA $GITHUB_RUN_NUMBER: \"%s\" by %an [%h] pushed to GitHub Pages
+
+%b" > "$commitmessage"
+
+echo -e "Starting to deploy to Github Pages\n"
+
+if [[ $GITHUB_ACTIONS == true ]]; then
+    git config --global user.email "actions@github.com"
+    git config --global user.name "GitHub Actions"
+fi
+
+#using token clone target repository
+git clone --quiet --branch=$BRANCH git@github.com:$TARGET_REPO built_website > /dev/null
+#go into directory and copy data we're interested in to that directory
+mkdir -p built_website
+cd built_website
+rsync -av --delete --include-from=../script/rsync_include_list --exclude-from=../script/rsync_exclude_list "../$JEKYLL_OUTPUT_FOLDER/" .
+# We need this single well-known directory to support OIDC metadata discovery for SciTokens.
+rsync -av --delete ../$JEKYLL_OUTPUT_FOLDER/.well-known .
+for issuer in icecube nsdf; do
+  mkdir -p ./$issuer
+  rsync -av --delete ../$JEKYLL_OUTPUT_FOLDER/$issuer/.well-known ./$issuer
+done
+# Prevent GitHub from trying to render files as MarkDown - we're just static HTML!
+touch .nojekyll
+set -x
+#add, commit and push files
+git add -f -A
+git commit -F "$commitmessage"
+if [[ -z $NO_PUSH ]]; then
+    git push -fq origin $BRANCH > /dev/null
+fi
+echo -e "Deploy completed\n"
