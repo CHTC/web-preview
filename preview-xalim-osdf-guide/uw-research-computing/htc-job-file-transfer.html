@@ -252,7 +252,7 @@
         <td>100 MB - TBs per job-specific file; repeatedly-used files > 1GB</td>
         <td>4 GB - TBs per job</td>
          <td><code>/staging</code></td>
-        <td><code>osdf://</code> or <code>file:///</code></td>
+        <td><code>osdf:///</code> or <code>file:///</code></td>
         <td>all of CHTC/external pools or a subset of CHTC</td>
         <!--<td>special submit "Requirements"</td>-->
     </tr>
@@ -292,7 +292,7 @@ desired output directories prior to their transfer/delivery.</li>
         </li>
         <li><a href="#transferring-data-to-jobs-with-transfer_input_files">Transferring Data to Jobs with <code>transfer_input_files</code></a>
           <ul>
-            <li><a href="#important-note-file-transfers-and-caching-with-osdf">Important Note: File Transfers and Caching with <code>osdf://</code></a></li>
+            <li><a href="#important-note-file-transfers-and-caching-with-osdf">Important Note: File Transfers and Caching with <code>osdf:///</code></a></li>
           </ul>
         </li>
         <li><a href="#transferring-data-back-from-jobs-to-home-or-staging">Transferring Data Back from Jobs to <code>/home</code> or <code>/staging</code></a>
@@ -350,7 +350,7 @@ desired output directories prior to their transfer/delivery.</li>
     <tr>
       <td>100 MB - 30 GB</td>
       <td><code>/staging</code></td>
-      <td><code>transfer_input_files = osdf://chtc/staging/NetID/input.txt</code></td>
+      <td><code>transfer_input_files = osdf:///chtc/staging/NetID/input.txt</code></td>
     </tr>
     <tr>
       <td>&gt; 30 GB</td>
@@ -369,15 +369,15 @@ desired output directories prior to their transfer/delivery.</li>
 
 <pre class="sub"><code># My job submit file
 
-transfer_input_files = file1, osdf://chtc/staging/username/file2, file:///staging/username/file3, dir1, dir2/
+transfer_input_files = file1, osdf:///chtc/staging/username/file2, file:///staging/username/file3, dir1, dir2/
 
 ... other submit file details ...
 </code></pre>
 
 <p>Ensure you are using the correct file transfer protocol for efficiency. Failure to use the right protocol can result in slow file transfers or overloading the system.</p>
 
-<h3 id="important-note-file-transfers-and-caching-with-osdf">Important Note: File Transfers and Caching with <code>osdf://</code></h3>
-<p>The <code>osdf://</code> file transfer protocol uses a <a href="https://en.wikipedia.org/wiki/Cache_(computing)">caching</a> mechanism for input files to reduce file transfers over the network. This can affect users who refer to input files that are frequently modified.</p>
+<h3 id="important-note-file-transfers-and-caching-with-osdf">Important Note: File Transfers and Caching with <code>osdf:///</code></h3>
+<p>The <code>osdf:///</code> file transfer protocol uses a <a href="https://en.wikipedia.org/wiki/Cache_(computing)">caching</a> mechanism for input files to reduce file transfers over the network. This can affect users who refer to input files that are frequently modified.</p>
 
 <p><em>If you are changing the contents of the input files frequently, you should rename the file or change its path to ensure the new version is transferred.</em></p>
 
@@ -395,7 +395,7 @@ transfer_input_files = file1, osdf://chtc/staging/username/file2, file:///stagin
 <pre class="sub"><code>transfer_output_remaps = "file1.txt = file:///staging/NetID/output1.txt; file2.txt = /home/NetId/outputs/output2.txt"
 </code></pre>
 
-<p>In this example above, <code>file1.txt</code> is remapped to the staging directory using the <code>file:///</code> transfer protocol and simultaneously renamed <code>output1.txt</code>. In addition, <code>file2.txt</code> is renamed to <code>output2.txt</code>and will be transferred to a different directory on <code>/home</code>. Ensure you have the right file transfer syntax (<code>osdf://</code> or <code>file:///</code> depending on the anticipated file size).</p>
+<p>In this example above, <code>file1.txt</code> is remapped to the staging directory using the <code>file:///</code> transfer protocol and simultaneously renamed <code>output1.txt</code>. In addition, <code>file2.txt</code> is renamed to <code>output2.txt</code>and will be transferred to a different directory on <code>/home</code>. Ensure you have the right file transfer syntax (<code>osdf:///</code> or <code>file:///</code> depending on the anticipated file size).</p>
 
 <p>If you have multiple files or folders to transfer back to <code>/staging</code>, use a semicolon (;) to separate each object:</p>
 <pre class="sub"><code>transfer_output_remaps = "output1.txt = file:///staging/NetID/output1.txt; output2.txt = file:///staging/NetID/output2.txt"
