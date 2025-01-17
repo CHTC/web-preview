@@ -262,23 +262,17 @@
 </blockquote>
 
 <blockquote class="tip">
-  <p>We are planning to delete all recovered data (located in <code>/recovery</code>) on Monday, February 17 to free up space to improve the performance of the <code>/staging</code> and <code>/projects</code> file system. To facilitate this process, we have made recovered files readable + writable for users to move and delete their files.
+  <p>Data in the <code>/recovery</code> space will be available until Monday, February 17. 
 <br /><br />
 <strong>Before Feb 17, you should move all data you want to keep</strong> to your new <code>/staging</code> or <code>/projects</code> directory or other locations such as ResearchDrive.
-<br /></p>
-  <ul>
-    <li>If you are moving data to new <code>/staging</code> or <code>/projects</code> spaces, we recommend that you <em>move</em> data (<code>mv</code>) instead of copying data (<code>cp</code>).
-      <ul>
-        <li>By moving the data, the data will stay in the same location in the storage system, but its metadata will be updated with the new <code>/staging</code> or <code>/projects</code> address. (Only data with their metadata pointing to <code>/recovery</code> will be removed on Feb 17.)</li>
-        <li>By copying the data, you will instead rewrite <em>all</em> of the data into a new location in the storage system. The write process will be intensive and time-consuming, and is ultimately unnecessary.</li>
-      </ul>
-    </li>
-    <li>If you have files you no longer need in <code>/recovery</code> directories, please delete them.
+<br /><br />
+If you are moving data to new <code>/staging</code> or <code>/projects</code> spaces, we recommend that you <em>move</em> data (<code>mv</code>) instead of copying data (<code>cp</code>), as moving data is more efficient than copying.
+<br /><br />
+If you have files you no longer need in <code>/recovery</code> directories, please delete them.
 <br /><br />
 <em><strong>After February 17, all data in /recovery will no longer be accessible.</strong></em>
 <br /><br />
-More information about recovering <code>/staging</code>, <code>/software</code>, and <code>/projects</code> data is presented in the below sections. If you have concerns about this timeline or other factors, please reach out to us as soon as possible at <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a>.</li>
-  </ul>
+More information about recovering <code>/staging</code>, <code>/software</code>, and <code>/projects</code> data is presented in the below sections. If you have concerns about this timeline or other factors, please reach out to us as soon as possible at <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a>.</p>
 </blockquote>
 
 <h4 id="recover-staging-and-software-data">Recover <code>/staging</code> and <code>/software</code> data</h4>
