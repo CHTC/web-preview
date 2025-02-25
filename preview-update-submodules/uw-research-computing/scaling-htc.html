@@ -269,8 +269,6 @@ Statistics) or large physics projects (IceCube, CMS). Through agreements
 with these groups, jobs submitted in CHTC can opt into running on these
 other campus pools if there is space.</p>
 
-<p>We call sending jobs to other pools on campus <em>flocking</em>.</p>
-
 <p><span name="osg"></span></p>
 
 <h2 id="b-uw-madisons-osg-pool">B. UW-Madison’s OSG Pool</h2>
@@ -278,8 +276,6 @@ other campus pools if there is space.</p>
 <p>CHTC maintains an OSG pool for the campus community, which includes 
 resources contributed by campuses, national labs, and other institutions 
 across and beyond the US.</p>
-
-<p>When you send jobs to other institutions in our OSG pool, we call that <em>gliding</em>.</p>
 
 <p><span name="job"></span></p>
 
@@ -318,11 +314,11 @@ the following to your submit file:</p>
 <table class="gtable">
   <tbody>
     <tr>
-      <td>+WantFlocking = true</td>
+      <td><code>want_campus_pools = true</code></td>
       <td>Also send jobs to other HTCondor Pools on campus (UW Grid)<br />Good for jobs that are less than ~8 hours, on average, or checkpointing jobs.</td>
     </tr>
     <tr>
-      <td>+WantGlideIn = true</td>
+      <td><code>want_ospool = true</code></td>
       <td>Also send jobs to the OS Pool. <br /> Good for jobs that are less than ~8 hours, on average, or checkpointing jobs.</td>
     </tr>
   </tbody>
@@ -355,8 +351,8 @@ facilitator</a>.</p>
     <p><strong>Scaling Up:</strong> Once you have tested your jobs and they seem to be
 running successfully, you are ready to submit a full batch of jobs
 that uses CHTC and the UW Grid/OS Pool. <strong>REMOVE</strong> the <code>Poolname</code>
-requirement from the test jobs but leave the <code>+wantFlocking</code> and
-<code>+wantGlidein</code> lines.</p>
+requirement from the test jobs but leave the <code>want_campus_pools</code> and
+<code>want_ospool</code> lines.</p>
   </li>
 </ol>
 
