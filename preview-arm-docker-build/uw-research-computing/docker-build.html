@@ -482,16 +482,12 @@ your status bar, and running <code>docker info</code> shouldn’t indicate any e
 <code>imagename</code> and <code>tag</code> with the values of your choice. Note the <code>.</code> at the end
 of the command (to indicate “the current directory”).</p>
 
-<p>If you get errors, try to determine what you may need to add or change
-to your Dockerfile and then run the build command again. Debugging a Docker
-build is largely the same as debugging any software installation process.</p>
-
 <blockquote class="tip-header">
-  <h4 id="building-on-macos--arm">Building on MacOS / ARM</h4>
+  <h3 id="building-on-macos--arm">Building on MacOS / ARM</h3>
 </blockquote>
 
 <blockquote class="tip">
-  <p>If you are using a MacOS computer, particular with an M# chip which uses 
+  <p>If you are using a MacOS computer, particularly with an M# chip which uses 
 the ARM architecture, you will need to use a special option to make sure
 the Docker container is compatible with CHTC systems:</p>
 
@@ -501,6 +497,10 @@ the Docker container is compatible with CHTC systems:</p>
   <p>Otherwise, HTCondor may fail to pull or launch the container when it starts
 the job.</p>
 </blockquote>
+
+<p>If you get errors, try to determine what you may need to add or change
+to your Dockerfile and then run the build command again. Debugging a Docker
+build is largely the same as debugging any software installation process.</p>
 
 <h2 id="5-test-locally">5. Test Locally</h2>
 
