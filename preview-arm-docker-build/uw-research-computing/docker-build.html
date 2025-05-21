@@ -486,6 +486,20 @@ of the command (to indicate “the current directory”).</p>
 to your Dockerfile and then run the build command again. Debugging a Docker
 build is largely the same as debugging any software installation process.</p>
 
+<blockquote class="tip-header">
+  <h4 id="building-on-macos--arm">Building on MacOS / ARM</h4>
+</blockquote>
+
+<blockquote class="tip">
+  <p>If you are using a MacOS computer, particular with an M# chip which uses 
+the ARM architecture, you will need to use a special option to make sure
+the Docker container is compatible with CHTC systems:</p>
+
+  <pre class="term"><code>$ docker build --platform linux/amd64 -t username/imagename:tag .
+</code></pre>
+
+</blockquote>
+
 <h2 id="5-test-locally">5. Test Locally</h2>
 
 <p>This page describes how to interact with your new Docker image on your
