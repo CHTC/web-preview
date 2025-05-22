@@ -304,12 +304,7 @@ desired output directories prior to their transfer/delivery.</li>
 <div class="uw-directory">
 
       <ul>
-        <li><a href="#data-storage-locations">Data Storage Locations</a>
-          <ul>
-            <li><a href="#home">/home</a></li>
-            <li><a href="#staging">/staging</a></li>
-          </ul>
-        </li>
+        <li><a href="#data-storage-locations">Data Storage Locations</a></li>
         <li><a href="#transferring-data-to-jobs-with-transfer_input_files">Transferring Data to Jobs with <code>transfer_input_files</code></a>
           <ul>
             <li><a href="#important-note-file-transfers-and-caching-with-osdf">Important Note: File Transfers and Caching with <code>osdf:///</code></a></li>
@@ -334,24 +329,51 @@ desired output directories prior to their transfer/delivery.</li>
 
 <p>The HTC system has two primary locations where users can place their files:</p>
 
-<h3 id="home">/home</h3>
-<ul>
-  <li>The default location for files and job submission</li>
-  <li>Efficiently handles many files</li>
-  <li>Smaller input files (&lt;100 MB) should be placed here</li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><strong><code>/home</code></strong></th>
+      <th><strong><code>/staging</code></strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Purpose</td>
+      <td>Default file system, handles most files</td>
+      <td>Stages large files/containers for file transfer into jobs</td>
+    </tr>
+    <tr>
+      <td>Job submission</td>
+      <td>✓</td>
+      <td>✕</td>
+    </tr>
+    <tr>
+      <td>Recommended location for</td>
+      <td>Many, small files (&lt;1 GB)</td>
+      <td>Few, large files (&gt;1 GB)</td>
+    </tr>
+    <tr>
+      <td>Default quota (disk)</td>
+      <td>40 GB</td>
+      <td>100 GB</td>
+    </tr>
+    <tr>
+      <td>Default quota (number of items)</td>
+      <td>none</td>
+      <td>1000 items</td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="staging">/staging</h3>
-<ul>
-  <li>Expandable storage system but cannot efficiently handle many small (few MB or less) files</li>
-  <li>Larger input files (&gt;100 MB) should be placed here, including container images (.sif)</li>
-</ul>
+<p>The data management mechanisms behind <code>/home</code> and <code>/staging</code> are different and are optimized to handle different file sizes and numbers of files. It’s important to place your files in the correct location to improve the efficiency at which your data is handled and maintain the stability of the HTC file systems.</p>
 
-<p>The data management mechanisms behind <code>/home</code> and <code>/staging</code> are different and are optimized to handle different file sizes and numbers of files. It’s important to place your files in the correct location, as it will improve the speed and efficiency at which your data is handled and will help maintain the stability of the HTC filesystem.</p>
-
-<blockquote>
-  <p>If you need a <code>/staging</code> directory, <a href="quota-request">request one here</a>.</p>
-</blockquote>
+<p style="text-align: center; margin-bottom: 0; font-weight: bold;">Need a <code>/staging</code> directory?</p>
+<div class="d-flex mb-3">
+	<div class="p-3 m-auto">
+		<a class="btn btn-primary" style="text-align: center" href="quota-request">Request one here</a>
+	</div>
+</div>
 
 <h2 id="transferring-data-to-jobs-with-transfer_input_files">Transferring Data to Jobs with <code>transfer_input_files</code></h2>
 
