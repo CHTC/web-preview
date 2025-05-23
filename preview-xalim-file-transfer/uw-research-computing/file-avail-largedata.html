@@ -325,30 +325,29 @@ create and manage files, and use scripts.</li>
 <div class="uw-directory">
 
       <ul>
-        <li><a href="#1-policies-and-intended-use">1. Policies and Intended Use</a>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#policies-and-intended-use">Policies and intended use</a>
           <ul>
-            <li><a href="#a-intended-use">A. Intended Use</a></li>
-            <li><a href="#b-access-to-large-data-staging">B. Access to Large Data Staging</a></li>
-            <li><a href="#c-user-data-management-responsibilities">C. User Data Management Responsibilities</a></li>
-            <li><a href="#d-data-access-within-jobs">D. Data Access Within Jobs</a></li>
+            <li><a href="#intended-use">Intended use</a></li>
+            <li><a href="#user-responsibilities">User responsibilities</a></li>
           </ul>
         </li>
-        <li><a href="#2-staging-large-data">2. Staging Large Data</a>
+        <li><a href="#stage-large-data">Stage large data</a>
           <ul>
-            <li><a href="#a-get-a-directory">A. Get a Directory</a></li>
-            <li><a href="#b-reduce-file-counts">B. Reduce File Counts</a></li>
-            <li><a href="#c-use-the-transfer-server">C. Use the Transfer Server</a></li>
-            <li><a href="#d-remove-files-after-jobs-complete">D. Remove Files After Jobs Complete</a></li>
+            <li><a href="#request-a-staging-directory">Request a <code>/staging</code> directory</a></li>
+            <li><a href="#reduce-file-counts">Reduce file counts</a></li>
+            <li><a href="#use-the-transfer-server">Use the transfer server</a></li>
+            <li><a href="#remove-files-after-jobs-complete">Remove files after jobs complete</a></li>
           </ul>
         </li>
-        <li><a href="#3-using-staged-files-in-a-job">3. Using Staged Files in a Job</a>
+        <li><a href="#use-staged-files-in-a-job">Use staged files in a job</a>
           <ul>
-            <li><a href="#a-transferring-large-input-files">A. Transferring Large Input Files</a></li>
-            <li><a href="#b-transferring-large-output-files">B. Transferring Large Output Files</a></li>
+            <li><a href="#transfer-large-input-files">Transfer large input files</a></li>
+            <li><a href="#transfer-large-output-files">Transfer large output files</a></li>
           </ul>
         </li>
-        <li><a href="#4-submit-jobs-using-staged-data">4. Submit Jobs Using Staged Data</a></li>
-        <li><a href="#5-related-pages">5. Related Pages</a></li>
+        <li><a href="#submit-jobs-using-staged-data">Submit jobs using staged data</a></li>
+        <li><a href="#related-pages">Related pages</a></li>
       </ul>
 
     </div>
@@ -371,7 +370,7 @@ PROBLEMATIC USER DATA AT ANY TIME IN ORDER TO PRESERVE PERFORMANCE.</strong></p>
 <p>Users are expected to abide by this intended use expectation and follow the 
 instructions for using <code>/staging</code> written in this guide.</p>
 
-<h3 id="user-responsibilities">User Responsibilities</h3>
+<h3 id="user-responsibilities">User responsibilities</h3>
 
 <p>As with all CHTC data spaces, users should:</p>
 
@@ -456,7 +455,7 @@ transfer_output_remaps = "file1 = osdf:///chtc/staging/username/file1; file2 = f
 
 <p>Read more about how to transfer output data, including the <code>output_destination</code> option, in our <a href="htc-job-file-transfer">file transfer guide</a>.</p>
 
-<h2 id="submit-jobs-using-staged-data">Submit Jobs Using Staged Data</h2>
+<h2 id="submit-jobs-using-staged-data">Submit jobs using staged data</h2>
 
 <p>In order to properly submit jobs using staged large data, always do the following:</p>
 
@@ -498,10 +497,10 @@ Requirements = (Target.HasCHTCStaging == true)
 queue
 </code></pre>
 
-<h2 id="related-pages">Related Pages</h2>
+<h2 id="related-pages">Related pages</h2>
 
 <ul>
-  <li><a href="htc-job-file-transfer">Data Storage Locations on the HTC</a></li>
+  <li><a href="htc-job-file-transfer">Use and transfer data in jobs on the HTC system</a></li>
   <li><a href="check-quota">Check Disk Quota and Usage</a></li>
   <li><a href="quota-request">Request a /staging directory or quota change</a></li>
 </ul>
@@ -671,7 +670,7 @@ queue
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-xalim-file-transfer/uw-research-computing/htc-uwdf-researchdrive">Directly transfer files between ResearchDrive and your Jobs</a>
+                                        <a class="" href="/web-preview/preview-xalim-file-transfer/uw-research-computing/htc-uwdf-researchdrive">Directly transfer files between ResearchDrive and your jobs</a>
                                     </div>
                                 
 
