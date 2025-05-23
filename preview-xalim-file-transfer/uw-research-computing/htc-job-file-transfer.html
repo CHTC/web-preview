@@ -441,8 +441,19 @@ desired output directories prior to their transfer/delivery.</li>
 
 transfer_input_files = file1, osdf:///chtc/staging/username/file2, file:///staging/username/file3, dir1, dir2/
 
+requirements = (HasCHTCStaging == true)
+
 ... other submit file details ...
 </code></pre>
+
+<blockquote class="tip-header">
+  <h3 id="️-file-transfers-referencing-staging">⚠️ File transfers referencing <code>/staging</code></h3>
+</blockquote>
+<blockquote class="tip">
+  <p>If you are transferring files to or from <code>/staging</code>, ensure that you include the following requirement:</p>
+  <pre><code>requirements = (HasCHTCStaging == true)
+</code></pre>
+</blockquote>
 
 <p>Ensure you are using the correct file transfer protocol for efficiency. Failure to use the right protocol can result in slow file transfers or overloading the system.</p>
 
