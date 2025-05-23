@@ -489,6 +489,19 @@ transfer_input_files = file1, osdf:///chtc/staging/username/file2, file:///stagi
 
 <p>Do not use <code>output_destination</code> and <code>transfer_output_remaps</code> simultaneously.</p>
 
+<h2 id="transfer-and-unpack-files-with-osdf">Transfer and unpack files with <code>osdf:///</code></h2>
+
+<p>The <code>osdf:///</code> file transfer plugin is powered by the <a href="https://docs.pelicanplatform.org/about-pelican">Pelican Platform</a>. One useful feature is that the plugin can be configured to unpack files during the transfer step. This can reduce the amount of disk space you need to request (for the compressed file <em>and</em> the unpacked file contents) and eliminate an unpacking step in your executable.</p>
+
+<p>To transfer and unpack files, append a <code>?pack=auto</code> at the end of the plugin path of the compressed object to be transferred.</p>
+
+<pre><code>transfer_input_files = osdf:///chtc/staging/netid/filename.tar.gz?pack=auto, input1.txt, input2.txt
+</code></pre>
+
+<p>This feature is only availble for Pelican-based plugins (<code>osdf://</code>, <code>pelican://</code>) and is not available for <code>file://</code> or normal file transfers. This feature is also not recommended for compressed files larger than 30 GB.</p>
+
+<p>Read more about the unpacking files in the <a href="https://docs.pelicanplatform.org/getting-data-with-pelican/client#packing-objects-with-the-pack-query">Pelican documentation</a>.</p>
+
 <h2 id="related-pages">Related pages</h2>
 <ul>
   <li><a href="/uw-research-computing/file-avail-largedata">Manage Large Data in HTC Jobs</a></li>
@@ -641,7 +654,7 @@ transfer_input_files = file1, osdf:///chtc/staging/username/file2, file:///stagi
                                 
 
                                     <div class="document-link-wrapper bg-light">
-                                        <a class="" href="/web-preview/preview-xalim-file-transfer/uw-research-computing/file-avail-largedata">Manage Large Data in HTC Jobs</a>
+                                        <a class="" href="/web-preview/preview-xalim-file-transfer/uw-research-computing/file-avail-largedata">Manage large data in /staging</a>
                                     </div>
                                 
 
