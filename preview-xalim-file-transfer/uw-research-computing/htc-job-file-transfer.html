@@ -356,7 +356,7 @@ desired output directories prior to their transfer/delivery.</li>
       <td>Stages large files/containers for file transfer into jobs</td>
     </tr>
     <tr>
-      <td>Job submission</td>
+      <td>Can you run <code>condor_submit</code> here?</td>
       <td>✓</td>
       <td>✕</td>
     </tr>
@@ -447,10 +447,10 @@ requirements = (HasCHTCStaging == true)
 </code></pre>
 
 <blockquote class="tip-header">
-  <h3 id="️-file-transfers-referencing-staging">⚠️ File transfers referencing <code>/staging</code></h3>
+  <h3 id="️-file-transfers-with-file">⚠️ File transfers with <code>file:///</code></h3>
 </blockquote>
 <blockquote class="tip">
-  <p>If you are transferring files to or from <code>/staging</code>, ensure that you include the following requirement:</p>
+  <p>If you are transferring files with <code>file:///</code>, include the following requirement:</p>
   <pre><code>requirements = (HasCHTCStaging == true)
 </code></pre>
 </blockquote>
