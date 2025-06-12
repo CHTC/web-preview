@@ -478,13 +478,13 @@ requirements = (HasCHTCStaging == true)
 <caption>The directory structure of an example job on the execution point. In this example, according to its default behavior, HTCondor will only transfer the newly created "output_file" and will not transfer the subdirectory "output/".</caption>
 
 <h3 id="specify-which-output-files-to-transfer-with-transfer_output_files">Specify which output files to transfer with <code>transfer_output_files</code></h3>
-<p>If you don’t want to transfer all files but only <em>specific files</em>, in your HTCondor submit file, use</p>
+<p>If you don’t want to transfer all files but only <em>specific files</em> or subdirectories, in your HTCondor submit file, use</p>
 <pre class="sub"><code>transfer_output_files = output_file, output/output_file2, output/output_file3
 </code></pre>
 
 <h3 id="transfer-files-to-other-locations-with-transfer_output_remaps">Transfer files to other locations with <code>transfer_output_remaps</code></h3>
 
-<p>To transfer files back to <code>/staging</code>, you will need an additional line in your HTCondor submit file, with each item separated by a semicolon (;):</p>
+<p>To transfer files back to <code>/staging</code> or a specific directory in <code>/home</code>, you will need an additional line in your HTCondor submit file, with each item separated by a semicolon (;):</p>
 <pre class="sub"><code>transfer_output_remaps = "output_file = osdf:///chtc/staging/NetID/output1.txt; output_file2 = /home/netid/outputs/output_file2"
 </code></pre>
 
@@ -512,7 +512,7 @@ requirements = (HasCHTCStaging == true)
 
 <p>This feature is only availble for Pelican-based plugins (<code>osdf://</code>, <code>pelican://</code>) and is not available for <code>file://</code> or normal file transfers. This feature is also not recommended for compressed files larger than 30 GB.</p>
 
-<p>Read more about the unpacking files in the <a href="https://docs.pelicanplatform.org/getting-data-with-pelican/client#packing-objects-with-the-pack-query">Pelican documentation</a>.</p>
+<p>Read more about unpacking files in the <a href="https://docs.pelicanplatform.org/getting-data-with-pelican/client#packing-objects-with-the-pack-query">Pelican documentation</a>.</p>
 
 <h2 id="related-pages">Related pages</h2>
 <ul>
