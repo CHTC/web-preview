@@ -233,9 +233,12 @@
     Staging directory transition
 </h1>
 
-            <h2 id="announcement">Announcement</h2>
+            <p style="text-align:center"><img src="/images/staging-transition.svg" alt="Illustration of the `/staging` directory structure transition. On the left hand panel, the `/staging` directories has the subdirectories `alice`, `alison`, `bucky`, and `cathy`. An arrow points to the right hand panel, which has the `/staging` directory with the subdirectories `a`, `b`, and `c`. Subdirectories `alice` and `alison` are in the `a` subdirectory, `bucky` in the `b` subdirectory, and `cathy` in the `c` subdirectory." width="500px" /></p>
+<p style="text-align:center"><caption>Illustration of the <code>/staging</code> directory structure transition.</caption></p>
 
-<p>This fall, we are transitioning to a new directory structure for personal staging directories. <strong>This affects all users on the HTC system</strong>.</p>
+<h2 id="transition-to-a-new-staging-directory-structure">Transition to a new <code>/staging</code> directory structure</h2>
+
+<p>Starting Thursday, September 11, 2025, we are transitioning to a new directory structure for personal staging directories. <strong>This affects all users on the HTC system</strong>.</p>
 
 <p>Personal staging directories will now be located in <strong>alphabetized subdirectories</strong> based on the first letter of your NetID. For example:</p>
 
@@ -258,24 +261,27 @@
   </tbody>
 </table>
 
-<p>Group <code>/staging</code> directories are not affected, and will remain in the <code>/staging/groups</code> subdirectory.</p>
+<p>Group <code>/staging</code> directories are not affected and will remain in the <code>/staging/groups</code> subdirectory.</p>
 
-<h2 id="transition-timeline-and-process">Transition timeline and process</h2>
-
-<p>We will start transitioning users’ personal <code>/staging</code> directories to this new structure <strong>starting Thursday, September 11, 2025</strong>.</p>
+<h2 id="transition-process">Transition process</h2>
 
 <p>CHTC will:</p>
 
 <ol>
   <li>Copy your files to your new <code>/staging</code> directory.</li>
-  <li>Create a symlink at your previous <code>/staging</code> directory path that points to the new <code>/staging</code> directory path.</li>
+  <li>Create a <a href="https://en.wikipedia.org/wiki/Symbolic_link">symlink</a> at your previous <code>/staging</code> directory path that points to the new <code>/staging</code> directory path.</li>
 </ol>
 
-<p>We will complete this transition on <strong>Wednesday, December 31</strong> and delete all symlinks.</p>
+<h2 id="timeline">Timeline</h2>
 
-<h3 id="what-you-should-do">What you should do</h3>
+<ul>
+  <li><strong>September 11, 2025</strong>. Transition begins. Users may begin using their new <code>/staging</code> directory.</li>
+  <li><strong>December 31, 2025</strong>. Transition ends. Symlinks at previous <code>/staging</code> directory paths will be deleted.</li>
+</ul>
 
-<p>If you have an existing <code>/staging</code> directory, <strong>between September 11 and December 31</strong>, please review all your files that reference your <code>/staging</code> directory. This may include but are not limited to:</p>
+<h2 id="what-you-should-do">What you should do</h2>
+
+<p>If you have an existing <code>/staging</code> directory, <strong>between September 11 and December 31</strong>, please review all your files that reference your <code>/staging</code> directory. This may include but is not limited to:</p>
 
 <ul>
   <li>HTCondor submit files</li>
@@ -295,6 +301,10 @@
 
 <pre><code>container_image = osdf:///chtc/staging/n/netid/my-container.sif
 </code></pre>
+
+<h2 id="why-we-are-transitioning">Why we are transitioning</h2>
+
+<p>Our <code>/staging</code> directories are backed by the Ceph File System, which has <a href="https://docs.ceph.com/en/reef/cephfs/app-best-practices/#very-large-directories">slower performance when it must load very large directories</a>. To mitigate large loads on the file system, we are sorting users personal <code>/staging</code> directories into alphabetized subdirectories.</p>
 
 <h2 id="get-support">Get support</h2>
 
