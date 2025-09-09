@@ -409,8 +409,8 @@ Disk quotas for user alice (uid 20384):
 
 <h3 id="check-staging-quota-and-usage">Check <code>/staging</code> Quota and Usage</h3>
 
-<p>To see your <code>/staging</code> quota and usage, use the <code>get_quotas &lt;NetID&gt;</code> command. For example,</p>
-<pre class="term"><code>[NetID@ap2001 ~]$ get_quotas /staging/NetID
+<p>To see your <code>/staging</code> quota and usage, use the <code>get_quotas</code> command. For example,</p>
+<pre class="term"><code>[NetID@ap2001 ~]$ get_quotas
 </code></pre>
 
 <p>If the output of this command is blank, it means you do not have a <code>/staging</code> directory. Contact CHTC staff to request one at any time.</p>
@@ -421,8 +421,8 @@ Disk quotas for user alice (uid 20384):
 <p>Alternatively, the <code>ncdu</code> command can also be used to see how many 
 files and directories are contained in a given path:</p>
 
-<pre class="term"><code>[NetID@ap2001 ~]$ ncdu /home/NetID
-[NetID@ap2001 ~]$ ncdu /staging/NetID
+<pre class="term"><code>[NetID@ap2001 ~]$ ncdu /home/username
+[NetID@ap2001 ~]$ ncdu /staging/u/username
 </code></pre>
 
 <p>When <code>ncdu</code> has finished running, the output will give you a total file
