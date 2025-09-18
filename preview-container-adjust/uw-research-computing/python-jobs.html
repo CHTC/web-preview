@@ -231,17 +231,20 @@
 
             <h2 id="quickstart-python">Quickstart: Python</h2>
 
-<h3 id="option-a-recommended">Option A (recommended)</h3>
+<h3 id="option-a---own-container-recommended">Option A - Own Container (recommended)</h3>
 
-<p>Build a container with Python &amp; packages installed inside:</p>
+<p>Build a container with Python &amp; packages installed inside. Start by reviewing 
+the container build instructions for either Apptainer or Docker. Then, when 
+following the build instructions, use the example recipes for either a 
+<code>.def</code> or <code>Dockerfile</code>, respectively.</p>
 
 <ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Example container recipes for Python</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
+  <li>How to build your own container: <a href="apptainer-htc#use-an-apptainer-container-in-htc-jobs">Apptainer</a> / <a href="docker-build">Docker</a></li>
+  <li>Tips and tricks, container recipes: <a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Example container recipes for Python</a></li>
+  <li>Use your container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
 </ol>
 
-<h4 id="option-b">Option B</h4>
+<h4 id="option-b---existing-container">Option B - Existing Container</h4>
 
 <p>Use an existing container with a base installation of Python:</p>
 
@@ -250,7 +253,7 @@
 <a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#base">OSG Base Containers</a>
 or
 <a href="https://hub.docker.com/_/python">DockerHub Python Containers</a>.</li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use the container in your HTC jobs</a></li>
+  <li>Use the container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
 </ol>
 
 <!--more-->

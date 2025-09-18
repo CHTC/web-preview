@@ -244,9 +244,9 @@ This guide introduces how to build software in a container (our recommended stra
 
       <ul>
         <li><a href="#start-here">Start here</a></li>
+        <li><a href="#quickstart-by-software-type">Quickstart by software type</a></li>
         <li><a href="#what-approach-should-i-use">What approach should I use?</a></li>
-        <li><a href="#container-overview">Containers</a></li>
-        <li><a href="#other-paths">Other Paths</a></li>
+        <li><a href="#container-overview">Container Overview</a></li>
         <li><a href="#related-pages">Related pages</a></li>
       </ul>
 
@@ -271,11 +271,261 @@ containers.</p>
 </div>
 
 <ul>
+  <li>For more specific guidance about <em>your</em> software, see: <a href="#quickstart-by-software-type">Quickstart by software type</a></li>
   <li>For more guidance in whether jumping right into Apptainer is best for you: 
  <a href="#what-approach-should-i-use">What approach should I use?</a></li>
   <li>To learn more about containers in general see: <a href="#container-overview">Containers</a></li>
-  <li>If you think containers might not be for you, see: <a href="#other-paths">Other Paths</a></li>
 </ul>
+
+<h2 id="quickstart-by-software-type">Quickstart by software type</h2>
+
+<p>Click the link in the table below to jump to the instructions for the language/program/software that you want to use, and then click on “More Information.”</p>
+
+<div class="shadow p-3 border rounded">
+    <div class="row gx-1">
+        
+        
+            <div class="col col-6 col-md-2">
+               <button class="btn btn-guide mb-lg-0 d-flex flex-column btn-guide-highlighted" href="#quickstart" onclick="showExcerpt('create-a-portable-python-installation-with-miniconda', 'side-divider')">
+                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/conda-icon.png" alt="Create a Portable Python Installation with Miniconda" />
+                  <span class="mx-auto">Conda</span>
+               </button>
+            </div>
+        
+            <div class="col col-6 col-md-2">
+               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-java-jobs', 'side-divider')">
+                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/java-icon.png" alt="Running Java Jobs" />
+                  <span class="mx-auto">Java</span>
+               </button>
+            </div>
+        
+            <div class="col col-6 col-md-2">
+               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-julia-jobs', 'side-divider')">
+                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/julia-icon.png" alt="Running Julia Jobs" />
+                  <span class="mx-auto">Julia</span>
+               </button>
+            </div>
+        
+            <div class="col col-6 col-md-2">
+               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-matlab-jobs', 'side-divider')">
+                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/matlab-icon.png" alt="Running Matlab Jobs" />
+                  <span class="mx-auto">Matlab</span>
+               </button>
+            </div>
+        
+            <div class="col col-6 col-md-2">
+               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-python-jobs', 'side-divider')">
+                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/python-icon.png" alt="Running Python Jobs" />
+                  <span class="mx-auto">Python</span>
+               </button>
+            </div>
+        
+            <div class="col col-6 col-md-2">
+               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-r-jobs', 'side-divider')">
+                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/r-icon.png" alt="Running R Jobs" />
+                  <span class="mx-auto">R</span>
+               </button>
+            </div>
+        
+    </div>
+    <div class="card-body side-divider" style="display: block;">
+        
+            <div class="excerpt" id="create-a-portable-python-installation-with-miniconda" style="display: block;">
+                <h2 id="quickstart-conda">Quickstart: Conda</h2>
+
+<h3 id="option-a---container-recommended">Option A - Container (recommended)</h3>
+
+<p>Build a container with Conda packages installed inside. Start by reviewing 
+the container build instructions for either Apptainer or Docker. Then, when 
+following the build instructions, use the example recipes for either a 
+<code>.def</code> or <code>Dockerfile</code>, respectively.</p>
+
+<ol>
+  <li>How to build your own container: <a href="apptainer-htc#use-an-apptainer-container-in-htc-jobs">Apptainer</a> / <a href="docker-build">Docker</a></li>
+  <li>Tips and tricks, container recipes: <a href="https://github.com/CHTC/recipes/tree/main/software/Conda">Example container recipes for Conda</a></li>
+  <li>Use your container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
+</ol>
+
+<!-- replace this eventually with conda walkthrough -->
+
+<h3 id="option-b---packed-conda-env">Option B - “Packed” Conda Env</h3>
+
+<p>Create your own portable copy of your Conda packages:</p>
+
+<blockquote>
+  <p>This approach may be sensitive to the operating system of the execution point. 
+We recommend building a container instead, but are keeping these instructions as a backup.</p>
+</blockquote>
+
+
+                <a href="/uw-research-computing/conda-installation" style="font-weight: bold; text-decoration: underline;">More Information</a>
+            </div>
+        
+            <div class="excerpt" id="running-java-jobs" style="display: none;">
+                <h2 id="quickstart-java">Quickstart: Java</h2>
+
+<p>To use Java on the HTC system, we recommend that you use the Java Development Kit (JDK).</p>
+
+<ol>
+  <li>
+    <p>Obtain a copy of the pre-compiled JDK for “Linux/x64” from <a href="https://jdk.java.net/">https://jdk.java.net/</a>.</p>
+  </li>
+  <li>
+    <p>Include the JDK <code>.tar.gz</code> file in your submit file with the list of files to be transferred:</p>
+
+    <pre class="sub"><code>transfer_input_files = openjdk-22_linux-x64_bin.tar.gz, program.jar
+</code></pre>
+  </li>
+  <li>
+    <p>Include instructions for using the JDK in your <code>executable</code> file:</p>
+
+    <pre><code>#!/bin/bash
+
+tar -xzf openjdk-22_linux-x64_bin.tar.gz
+export JAVA_HOME=$PWD/jdk-22
+export PATH=$JAVA_HOME/bin:$PATH
+
+java -jar program.jar
+</code></pre>
+  </li>
+</ol>
+
+
+                <a href="/uw-research-computing/java-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
+            </div>
+        
+            <div class="excerpt" id="running-julia-jobs" style="display: none;">
+                <h2 id="quickstart-julia">Quickstart: Julia</h2>
+
+<h3 id="option-a---container-recommended">Option A - Container (recommended)</h3>
+
+<p>Build (or find) a container with Julia &amp; packages installed inside. 
+Start by reviewing 
+the container build instructions for either Apptainer or Docker. Then, when 
+following the build instructions, use the example recipes for either a 
+<code>.def</code> or <code>Dockerfile</code>, respectively.</p>
+
+<ol>
+  <li>How to build your own container: <a href="apptainer-htc#use-an-apptainer-container-in-htc-jobs">Apptainer</a> / <a href="docker-build">Docker</a></li>
+  <li>Tips and tricks, container recipes: <a href="https://github.com/CHTC/recipes/tree/main/software/Julia">Example container recipes for Julia</a></li>
+  <li>Use your container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
+</ol>
+
+<h3 id="option-b---portable-binary">Option B - Portable Binary</h3>
+
+<p>Use a portable copy of Julia and create your own portable copy of your Julia packages:</p>
+
+<ol>
+  <li>Follow the instructions in our guide <a href="julia-jobs.html#option-b-create-your-own-portable-copy">Run Julia Jobs</a>.</li>
+</ol>
+
+<blockquote>
+  <p>This approach may be sensitive to the operating system of the execution point. 
+We recommend building a container instead, but are keeping these instructions as a backup.</p>
+</blockquote>
+
+
+                <a href="/uw-research-computing/julia-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
+            </div>
+        
+            <div class="excerpt" id="running-matlab-jobs" style="display: none;">
+                <h2 id="quickstart-matlab">Quickstart: Matlab</h2>
+
+<p>Build a container with Matlab &amp; toolboxes installed inside. 
+Start by reviewing 
+the container build instructions for either Apptainer or Docker. Then, when 
+following the build instructions, use the example recipes for either a 
+<code>.def</code> or <code>Dockerfile</code>, respectively.</p>
+
+<h3 id="useful-links">Useful links</h3>
+
+<ol>
+  <li>How to build your own container: <a href="apptainer-htc#use-an-apptainer-container-in-htc-jobs">Apptainer</a></li>
+  <li>Tips and tricks, container recipes: <a href="https://github.com/CHTC/recipes/tree/main/software/Matlab">Example container recipes for Matlab</a></li>
+  <li>Use your container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
+</ol>
+
+<h3 id="needed-submit-file-option">Needed submit file option</h3>
+
+<blockquote>
+  <p><strong>Note</strong>: Because Matlab is a licensed software, you <strong>must</strong> add the following line to your submit file:</p>
+
+  <pre class="sub"><code>concurrency_limits = MATLAB:1
+</code></pre>
+
+  <p>Failure to do so may cause your or other users’ jobs to fail to obtain a license from the license server.</p>
+</blockquote>
+
+
+                <a href="/uw-research-computing/matlab-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
+            </div>
+        
+            <div class="excerpt" id="running-python-jobs" style="display: none;">
+                <h2 id="quickstart-python">Quickstart: Python</h2>
+
+<h3 id="option-a---own-container-recommended">Option A - Own Container (recommended)</h3>
+
+<p>Build a container with Python &amp; packages installed inside. Start by reviewing 
+the container build instructions for either Apptainer or Docker. Then, when 
+following the build instructions, use the example recipes for either a 
+<code>.def</code> or <code>Dockerfile</code>, respectively.</p>
+
+<ol>
+  <li>How to build your own container: <a href="apptainer-htc#use-an-apptainer-container-in-htc-jobs">Apptainer</a> / <a href="docker-build">Docker</a></li>
+  <li>Tips and tricks, container recipes: <a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Example container recipes for Python</a></li>
+  <li>Use your container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
+</ol>
+
+<h4 id="option-b---existing-container">Option B - Existing Container</h4>
+
+<p>Use an existing container with a base installation of Python:</p>
+
+<ol>
+  <li>Choose an existing container. See 
+<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#base">OSG Base Containers</a>
+or
+<a href="https://hub.docker.com/_/python">DockerHub Python Containers</a>.</li>
+  <li>Use the container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
+</ol>
+
+
+                <a href="/uw-research-computing/python-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
+            </div>
+        
+            <div class="excerpt" id="running-r-jobs" style="display: none;">
+                <h2 id="quickstart-r">Quickstart: R</h2>
+
+<h3 id="option-a---your-container-recommended">Option A - Your Container (recommended)</h3>
+
+<p>Build a container with R &amp; packages installed inside. Start by reviewing 
+the container build instructions for either Apptainer or Docker. Then, when 
+following the build instructions, use the example recipes for either a 
+<code>.def</code> or <code>Dockerfile</code>, respectively.</p>
+
+<ol>
+  <li>How to build your own container: <a href="apptainer-htc#use-an-apptainer-container-in-htc-jobs">Apptainer</a> / <a href="docker-build">Docker</a></li>
+  <li>Tips and tricks, container recipes: <a href="https://github.com/CHTC/recipes/tree/main/software/R/">Example container recipes for R</a></li>
+  <li>Use your container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
+</ol>
+
+<h3 id="option-b---existing-container">Option B - Existing Container</h3>
+
+<p>Use an existing container with a base installation of R:</p>
+
+<ol>
+  <li>Choose an existing container. See 
+<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#:~:text=R%20(opensciencegrid/osgvo%2Dr)">OSG R containers</a>
+or 
+<a href="https://rocker-project.org/images/">Rocker R containers</a>.</li>
+  <li>Use the container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
+</ol>
+
+
+                <a href="/uw-research-computing/r-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
+            </div>
+        
+    </div>
+</div>
 
 <h2 id="what-approach-should-i-use">What approach should I use?</h2>
 
@@ -284,10 +534,12 @@ containers.</p>
 
 <p>There are two container implementations we support, Docker and Apptainer.</p>
 
-<ul>
-  <li><a href="apptainer-htc">Use Custom Software in Jobs Using Apptainer</a></li>
-  <li><a href="docker-jobs">Use Custom Software in Jobs Using Docker</a></li>
-</ul>
+<div class="d-flex mb-3">
+	<div class="p-3 m-auto">
+		<a class="btn btn-primary" href="docker-jobs.html">Use Docker in Jobs</a>
+		<a class="btn btn-primary" href="apptainer-htc.html">Use Apptainer in Jobs</a>
+	</div>
+</div>
 
 <p>We recommend using Apptainer as a first choice because you can build the container 
 on our servers and it has some features that allow it to be used on a greater variety 
@@ -299,11 +551,13 @@ circumstances. Here is a list of things to consider when deciding which path to 
 <ul>
   <li>If your software has an existing Docker or Apptainer/Singularity implementation, use that.</li>
   <li>If you or your group have an existing Docker container, use Docker.</li>
-  <li>If you already know how to use Docker or Singularity, use whichever you are familiar with.</li>
+  <li>If you already know how to use Docker or Apptainer/Singularity, use whichever you are familiar with.</li>
   <li>If you want to create a container that can run both on CHTC and your own computer, use Docker.</li>
-  <li>If you want to create a container that you and collaborators can use on your own computers and CHTC, use Docker</li>
+  <li>If you want to create a container that you and collaborators can use on your own computers and CHTC, use Docker.</li>
   <li>If you want to keep your container more private, use Apptainer.</li>
 </ul>
+
+<p>In certain cases, it is reasonable to use a non-container option for software installation, especially when using a package manager like <code>conda</code>.</p>
 
 <p>If you are not sure what to choose, talk to the facilitation team! That’s why we’re here.</p>
 
@@ -312,7 +566,7 @@ circumstances. Here is a list of things to consider when deciding which path to 
 <p>In this section, we provide a brief introduction into what containers are, 
 why we recommend them, and a big picture view of how to use them on our High Throughput system.</p>
 
-<h3 id="what-is-a-container">What is a Container?</h3>
+<h3 id="what-is-a-container">What is a container?</h3>
 
 <p><em>“A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.”</em> 
 – <a href="https://www.docker.com/resources/what-container/">Docker</a></p>
@@ -397,7 +651,7 @@ The software installation process only occurs when the container is actually bei
 Once the container has been built, no changes can be made to the container when being used (on CHTC systems).</p>
 </blockquote>
 
-<h3 id="recipes">Recipes</h3>
+<h3 id="container-build-recipes">Container build recipes</h3>
 
 <p>If you need to create your own build file, CHTC provides many specific examples 
 in our “Recipes” repository on Github: 
@@ -405,7 +659,7 @@ in our “Recipes” repository on Github:
 
 <p>Links to specific recipes are used in the <a href="#software">Software</a> section for certain softwares and coding languages.</p>
 
-<h3 id="container-technologies">Container Technologies</h3>
+<h3 id="container-technologies">Container technologies</h3>
 
 <p>There are two container technologies supported by CHTC: <a href="https://www.docker.com/">Docker</a> and <a href="https://apptainer.org/">Apptainer</a>.
 Here we briefly discuss the advantages of each.</p>
@@ -435,239 +689,6 @@ As long as you have the container image file, you can use Apptainer to run your 
 <p>On the HTC system, you can provide the name of your Apptainer file in your submit file,
 and HTCondor will use a copy of it to create the software environment for executing your job.
 You can use Apptainer to build the container image file on CHTC servers, so there is no need to install the container software on your own computer.</p>
-
-<h2 id="other-paths">Other Paths</h2>
-
-<p>Containers are not the only options for software installation on CHTC.</p>
-
-<p>Click the link in the table below to jump to the instructions for the language/program/software that you want to use.</p>
-
-<div class="shadow p-3 border rounded">
-    <div class="row gx-1">
-        
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column btn-guide-highlighted" href="#quickstart" onclick="showExcerpt('create-a-portable-python-installation-with-miniconda', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/conda-icon.png" alt="Create a Portable Python Installation with Miniconda" />
-                  <span class="mx-auto">Conda</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-java-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/java-icon.png" alt="Running Java Jobs" />
-                  <span class="mx-auto">Java</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-julia-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/julia-icon.png" alt="Running Julia Jobs" />
-                  <span class="mx-auto">Julia</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-matlab-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/matlab-icon.png" alt="Running Matlab Jobs" />
-                  <span class="mx-auto">Matlab</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-python-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/python-icon.png" alt="Running Python Jobs" />
-                  <span class="mx-auto">Python</span>
-               </button>
-            </div>
-        
-            <div class="col col-6 col-md-2">
-               <button class="btn btn-guide mb-lg-0 d-flex flex-column " href="#quickstart" onclick="showExcerpt('running-r-jobs', 'side-divider')">
-                  <img class="img-btn-guide mx-auto" src="/uw-research-computing/guide-icons/r-icon.png" alt="Running R Jobs" />
-                  <span class="mx-auto">R</span>
-               </button>
-            </div>
-        
-    </div>
-    <div class="card-body side-divider" style="display: block;">
-        
-            <div class="excerpt" id="create-a-portable-python-installation-with-miniconda" style="display: block;">
-                <h2 id="quickstart-conda">Quickstart: Conda</h2>
-
-<h3 id="option-a-recommended">Option A (recommended)</h3>
-
-<p>Build a container with Conda packages installed inside:</p>
-
-<ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Conda">Example container recipes for Conda</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
-</ol>
-
-<h3 id="option-b">Option B</h3>
-
-<p>Create your own portable copy of your Conda packages:</p>
-
-<ol>
-  <li>Follow the instructions in <a href="conda-installation.html#option-b-create-your-own-portable-copy">our guide</a></li>
-</ol>
-
-<blockquote>
-  <p>This approach may be sensitive to the operating system of the execution point. 
-We recommend building a container instead, but are keeping these instructions as a backup.</p>
-</blockquote>
-
-
-                <a href="/uw-research-computing/conda-installation" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-java-jobs" style="display: none;">
-                <h2 id="quickstart-java">Quickstart: Java</h2>
-
-<p>To use Java on the HTC system, we recommend that you use the Java Development Kit (JDK).</p>
-
-<ol>
-  <li>
-    <p>Obtain a copy of the pre-compiled JDK for “Linux/x64” from <a href="https://jdk.java.net/">https://jdk.java.net/</a>.</p>
-  </li>
-  <li>
-    <p>Include the JDK <code>.tar.gz</code> file in your submit file with the list of files to be transferred:</p>
-
-    <pre class="sub"><code>transfer_input_files = openjdk-22_linux-x64_bin.tar.gz, program.jar
-</code></pre>
-  </li>
-  <li>
-    <p>Include instructions for using the JDK in your <code>executable</code> file:</p>
-
-    <pre><code>#!/bin/bash
-
-tar -xzf openjdk-22_linux-x64_bin.tar.gz
-export JAVA_HOME=$PWD/jdk-22
-export PATH=$JAVA_HOME/bin:$PATH
-
-java -jar program.jar
-</code></pre>
-  </li>
-</ol>
-
-
-                <a href="/uw-research-computing/java-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-julia-jobs" style="display: none;">
-                <h2 id="quickstart-julia">Quickstart: Julia</h2>
-
-<h3 id="option-a-recommended">Option A (recommended)</h3>
-
-<p>Build a container with Julia &amp; packages installed inside:</p>
-
-<ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Julia">Example container recipes for Julia</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
-</ol>
-
-<h3 id="option-b">Option B</h3>
-
-<p>Use a portable copy of Julia and create your own portable copy of your Julia packages:</p>
-
-<ol>
-  <li>Follow the instructions in our guide <a href="julia-jobs.html#option-b-create-your-own-portable-copy">Run Julia Jobs</a>.</li>
-</ol>
-
-<blockquote>
-  <p>This approach may be sensitive to the operating system of the execution point. 
-We recommend building a container instead, but are keeping these instructions as a backup.</p>
-</blockquote>
-
-
-                <a href="/uw-research-computing/julia-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-matlab-jobs" style="display: none;">
-                <h2 id="quickstart-matlab">Quickstart: Matlab</h2>
-
-<p>Build a container with Matlab &amp; toolboxes installed inside:</p>
-
-<ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Matlab">Example container recipes for Matlab</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
-</ol>
-
-<blockquote>
-  <p><strong>Note</strong>: Because Matlab is a licensed software, you <strong>must</strong> add the following line to your submit file:</p>
-
-  <pre class="sub"><code>concurrency_limits = MATLAB:1
-</code></pre>
-
-  <p>Failure to do so may cause your or other users’ jobs to fail to obtain a license from the license server.</p>
-</blockquote>
-
-
-                <a href="/uw-research-computing/matlab-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-python-jobs" style="display: none;">
-                <h2 id="quickstart-python">Quickstart: Python</h2>
-
-<h3 id="option-a-recommended">Option A (recommended)</h3>
-
-<p>Build a container with Python &amp; packages installed inside:</p>
-
-<ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Python/">Example container recipes for Python</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
-</ol>
-
-<h4 id="option-b">Option B</h4>
-
-<p>Use an existing container with a base installation of Python:</p>
-
-<ol>
-  <li>Choose an existing container. See 
-<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#base">OSG Base Containers</a>
-or
-<a href="https://hub.docker.com/_/python">DockerHub Python Containers</a>.</li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use the container in your HTC jobs</a></li>
-</ol>
-
-
-                <a href="/uw-research-computing/python-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-            <div class="excerpt" id="running-r-jobs" style="display: none;">
-                <h2 id="quickstart-r">Quickstart: R</h2>
-
-<h4 id="option-a-recommended">Option A (recommended)</h4>
-
-<p>Build a container with R &amp; packages installed inside:</p>
-
-<ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/R/">Example container recipes for R</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
-</ol>
-
-<h4 id="option-b">Option B</h4>
-
-<p>Use an existing container with a base installation of R:</p>
-
-<ol>
-  <li>Choose an existing container. See 
-<a href="https://portal.osg-htc.org/documentation/htc_workloads/using_software/available-containers-list/#:~:text=R%20(opensciencegrid/osgvo%2Dr)">OSG R containers</a>
-or 
-<a href="https://rocker-project.org/images/">Rocker R containers</a>.</li>
-  <li><a href="#use-an-existing-container">Use the container in your HTC jobs</a></li>
-</ol>
-
-
-                <a href="/uw-research-computing/r-jobs" style="font-weight: bold; text-decoration: underline;">More Information</a>
-            </div>
-        
-    </div>
-</div>
 
 <h2 id="related-pages">Related Pages</h2>
 

@@ -231,17 +231,21 @@
 
             <h2 id="quickstart-julia">Quickstart: Julia</h2>
 
-<h3 id="option-a-recommended">Option A (recommended)</h3>
+<h3 id="option-a---container-recommended">Option A - Container (recommended)</h3>
 
-<p>Build a container with Julia &amp; packages installed inside:</p>
+<p>Build (or find) a container with Julia &amp; packages installed inside. 
+Start by reviewing 
+the container build instructions for either Apptainer or Docker. Then, when 
+following the build instructions, use the example recipes for either a 
+<code>.def</code> or <code>Dockerfile</code>, respectively.</p>
 
 <ol>
-  <li><a href="software-overview-htc.html#build-your-own-container">How to build your own container</a></li>
-  <li><a href="https://github.com/CHTC/recipes/tree/main/software/Julia">Example container recipes for Julia</a></li>
-  <li><a href="software-overview-htc.html#use-an-existing-container">Use your container in your HTC jobs</a></li>
+  <li>How to build your own container: <a href="apptainer-htc#use-an-apptainer-container-in-htc-jobs">Apptainer</a> / <a href="docker-build">Docker</a></li>
+  <li>Tips and tricks, container recipes: <a href="https://github.com/CHTC/recipes/tree/main/software/Julia">Example container recipes for Julia</a></li>
+  <li>Use your container in your HTC jobs: <a href="software-overview-htc.html#use-an-existing-container">Apptainer</a> / <a href="docker-jobs.html#use-a-docker-container-in-a-job">Docker</a></li>
 </ol>
 
-<h3 id="option-b">Option B</h3>
+<h3 id="option-b---portable-binary">Option B - Portable Binary</h3>
 
 <p>Use a portable copy of Julia and create your own portable copy of your Julia packages:</p>
 
