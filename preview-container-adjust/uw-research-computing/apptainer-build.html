@@ -475,8 +475,6 @@ This can make it easier for yourself and others to interact and use the containe
 
 <h2 id="creating-a-definition-file">Creating a definition file</h2>
 
-<p>TODO: add a reference to the recipes repo</p>
-
 <p>Here is general process for creating your own definition file for building your custom container:</p>
 
 <ol>
@@ -502,6 +500,18 @@ a definition file for your software.</p>
 
 <p>Remember that the <code>.def</code> file contains the <em>instructions</em> for creating your container and is not itself the container. 
 To use the software defined within the <code>.def</code> file, you will need to first “build” the container and create the <code>.sif</code> file, as described in the following sections.</p>
+
+<blockquote class="tip-header">
+  <h3 id="-reference-chtcs-recipes-repository">📝 Reference: CHTC’s “Recipes” Repository</h3>
+</blockquote>
+
+<blockquote class="tip">
+  <p>To see multiple examples of Apptainer definition files for different
+softwares, check out the software section of CHTC’s “recipes” repository:</p>
+  <ul>
+    <li><a href="https://github.com/CHTC/recipes/tree/main/software">CHTC software recipes</a></li>
+  </ul>
+</blockquote>
 
 <h2 id="the-apptainer-container-image">The Apptainer container image</h2>
 
@@ -647,7 +657,7 @@ On CHTC systems, the following should address this issue:</p>
   <li><a href="apptainer-htc-advanced-example.html">Advanced Apptainer Example - SUMO</a></li>
   <li><a href="htc-docker-to-apptainer.html">Convert Docker Images to Apptainer Images</a></li>
   <li><a href="apptainer-htc.html">Use Custom Software in Jobs Using Apptainer</a></li>
-  <li><a href="apptainer-hpc.html">Using Apptainer Containers on HPC</a>.</li>
+  <li><a href="apptainer-hpc.html">Using Apptainer Containers on HPC</a></li>
 </ul>
 
 

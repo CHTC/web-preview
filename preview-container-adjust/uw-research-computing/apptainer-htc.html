@@ -237,9 +237,6 @@ submit jobs that use Apptainer containers.</p>
 
 <p>HTCondor supports the use of Apptainer (formerly known as Singularity) container environments for jobs on the High Throughput Computing system.</p>
 
-<p>Similar to Docker containers, Apptainer environments allow users to prepare portable software and computing environments that can be sent to many jobs. 
-This means your jobs will run in a more consistent environment that is easily reproducible by others.</p>
-
 <p>Container jobs are able to take advantage of more of CHTC’s High Throughput resources because the operating system where the job is running does not need to match the operating system where the container was built.</p>
 
 <div class="d-flex flex-column mb-5">
@@ -280,14 +277,14 @@ image file, usually with the suffix <code>.sif</code>.</p>
 
 <p><strong>If you do not have an existing <code>.sif</code> container</strong>, you can create one in two ways:</p>
 <ul>
-  <li><a href="#build-your-own-apptainer-container">Build your own apptainer container</a></li>
-  <li><a href="htc-docker-to-apptainer.html">Convert Docker Images to Apptainer Images</a></li>
+  <li><em>If you have no container to start from:</em> <a href="#build-your-own-apptainer-container">Build your own Apptainer container</a></li>
+  <li><em>If you have an existing Docker container image</em>: <a href="htc-docker-to-apptainer.html">Convert Docker Images to Apptainer Images</a></li>
 </ul>
 
 <p>Once you have created the <code>.sif</code> file by using one of the above methods
 ready, circle back to <a href="#use-an-apptainer-container-in-htc-jobs">Use an Apptainer Container in HTC Jobs</a>.</p>
 
-<p><strong>For more details about using Apptainer</strong>, see <a href="#suggestions-for-testing">Suggestions for testing</a> and <a href="#more-details-about-htcondor-and-apptainer">More details about HTCondor and Apptainer</a>.</p>
+<p>For more details about using Apptainer, see <a href="#suggestions-for-testing">Suggestions for testing</a> and <a href="#more-details-about-htcondor-and-apptainer">More details about HTCondor and Apptainer</a>.</p>
 
 <h2 id="use-an-apptainer-container-in-htc-jobs">Use an Apptainer Container in HTC Jobs</h2>
 
@@ -358,9 +355,9 @@ process looks like this:</p>
   <li><strong>Move the container to a persistent location.</strong> We recommend placing the image file into your <code>/staging</code> folder</li>
 </ol>
 
-<h3 id="create-a-definition-file">Create a Definition File</h3>
+<h3 id="create-a-definition-file">Create a definition file</h3>
 
-<p>To create your own container using Apptainer, you will need to create a definition (<code>.def</code>) file. CHTC provides example definition files in the <code>software</code> folder of our <a href="https://github.com/CHTC/recipes">Recipes GitHub repository</a>.</p>
+<p>To create your own container using Apptainer, you will need to create a definition (<code>.def</code>) file. CHTC provides example definition files in the <code>software</code> folder of our <a href="https://github.com/CHTC/recipes/tree/main/software">Recipes GitHub repository</a>.</p>
 
 <div class="d-flex mb-3">
 	<div class="p-3 m-auto">
@@ -382,7 +379,7 @@ the definition file <code>image.def</code>.</p>
 <a href="apptainer-build.html#the-apptainer-definition-file">The Apptainer Definition File</a></p>
 </blockquote>
 
-<h3 id="start-an-interactive-build-job">Start an Interactive Build Job</h3>
+<h3 id="start-an-interactive-build-job">Start an interactive build job</h3>
 
 <p>Building a container can be a computationally intense process, so 
 we require that you build containers while in an interactive build job.</p>
@@ -561,7 +558,7 @@ If the <code>.sif</code> file is located on the login server, you can use</p>
 <ul>
   <li><a href="apptainer-build">Building an Apptainer Container</a></li>
   <li><a href="htc-docker-to-apptainer.html">Convert Docker Images to Apptainer Images</a></li>
-  <li><a href="apptainer-htc-advanced-example">Advanced Example</a></li>
+  <li><a href="apptainer-htc-advanced-example">Advanced Apptainer Example - SUMO</a></li>
   <li><a href="apptainer-hpc.html">Using Apptainer Containers on HPC</a></li>
   <li><a href="docker-jobs">Use Custom Software in Jobs Using Docker</a></li>
   <li><a href="software-overview-htc">Overview: How to Use Software</a></li>
