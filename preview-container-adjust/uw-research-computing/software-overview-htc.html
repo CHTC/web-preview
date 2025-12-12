@@ -353,7 +353,7 @@ following the build instructions, use the example recipes for either a
 <p>Create your own portable copy of your Conda packages:</p>
 
 <blockquote>
-  <p>This approach may be sensitive to the operating system of the execution point. 
+  <p>This approach is sensitive to the operating system of the execution point. 
 We recommend building a container instead, but are keeping these instructions as a backup.</p>
 </blockquote>
 
@@ -463,7 +463,7 @@ following the build instructions, use the example recipes for either a
             <div class="excerpt" id="running-python-jobs" style="display: none;">
                 <h2 id="quickstart-python">Quickstart: Python</h2>
 
-<h3 id="option-a---own-container-recommended">Option A - Own Container (recommended)</h3>
+<h3 id="option-a---your-container-recommended">Option A - Your Container (recommended)</h3>
 
 <p>Build a container with Python &amp; packages installed inside. Start by reviewing 
 the container build instructions for either Apptainer or Docker. Then, when 
@@ -621,7 +621,13 @@ There are typically two ways of doing so:</p>
   <li>Build your own container image</li>
 </ol>
 
-<p>If building your own container, the process will include:</p>
+<h4 id="find-an-existing-container-image">Find an existing container image</h4>
+
+<p>TBD: guidance on finding useful, trusted container images online.</p>
+
+<h4 id="build-your-own-container-image">Build your own container image</h4>
+
+<p>To build your own container, the process will include:</p>
 
 <ol>
   <li>Writing a build file, called either a <code>Dockerfile</code> or definition (<code>.def</code>) file.

@@ -230,7 +230,7 @@
 </h1>
 
             <p>This guide describes the general process for creating an Apptainer container. 
-Specifically, we discuss the components of the “definition file” and how that file is used to construct or “build” the container itself. For a more step-by-step description of 
+Specifically, we discuss the components of the “definition file” and how that file is used to construct or “build” the container itself. <strong>Use this guide as a reference to help customize the contents of your container.</strong> For a step-by-step tutorial of 
 how to build a container, see <a href="apptainer-htc.html">Use Custom Software in Jobs Using Apptainer</a>.</p>
 
 <div class="d-flex flex-column mb-5">
@@ -379,9 +379,14 @@ Environment variables can be set as well, but they will only be active during th
 <p>For example, if using an <code>ubuntu</code> based container, then you should be able to use the <code>apt</code> package manager to install your program’s dependencies.</p>
 
 <pre><code>%post
+    chmod 777 /tmp
     apt update -y
     apt install -y gcc make wget
 </code></pre>
+
+<blockquote>
+  <p>The <code>chmod 777 /tmp</code> is a specific workaround for building containers on the HTC system at CHTC. <strong>Do not use this</strong> line if you are using Apptainer to build containers <strong>on a different system</strong>.</p>
+</blockquote>
 
 <p>Note that we have used the <code>-y</code> option for <code>apt</code> to pre-emptively agree to update <code>apt</code> and to install the <code>gcc</code>, <code>make</code>, and <code>wget</code> packages. 
 Otherwise, the <code>apt</code> command will prompt you to confirm the executions via the command line. 
