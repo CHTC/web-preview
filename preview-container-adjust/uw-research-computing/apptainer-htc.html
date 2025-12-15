@@ -345,7 +345,7 @@ queue
 <p>If you need to build your own Apptainer container (<code>.sif</code> file), the
 process looks like this:</p>
 
-<p>TBD: graphic</p>
+<!-- TBD: graphic -->
 
 <ol>
   <li><strong>Create a definition file.</strong> The definition file describes a starting software environment in the first two lines and then what to add to it.</li>
@@ -384,14 +384,35 @@ the definition file <code>image.def</code>.</p>
 <p>Building a container can be a computationally intense process, so 
 we require that you build containers while in an interactive build job.</p>
 
-<p>On the High Throughput system, you can run the following commands to start an 
-interactive job that includes your definition file:</p>
+<!-- On the High Throughput system, you can run the following commands to start an 
+interactive job that includes your definition file: 
 
-<pre class="term"><code>chtc-submit-apptainer-build -build image.def
+```
+chtc-submit-apptainer-build -build image.def
 condor_submit -i apptainer-build.sub
+```
+{:.term} -->
+
+<p>Create a file that looks like this (called <code>apptainer-build.sub</code> below):</p>
+
+<pre><code>log = $(job_name).log
+
+transfer_input_files = image.def
+
++IsBuildJob = True
+
+request_cpus = 8
+request_memory = 16GB
+request_disk = 30GB
+
+queue
 </code></pre>
 
 <p>Note that this submit file assumes you have a definition file named <code>image.def</code> in the same directory as the submit file.</p>
+
+<p>To start the interactive job, run:</p>
+<pre class="term"><code>condor_submit -i apptainer-build.sub
+</code></pre>
 
 <h3 id="build-your-container">Build your container</h3>
 
