@@ -26,7 +26,7 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
 <script type="text/javascript" src="/web-preview/preview-staging-transition/assets/js/uw-style.js" defer></script>
 <script src="/web-preview/preview-staging-transition/assets/js/lunr.js" type="text/javascript" async></script>
 <script type="text/javascript" src="/web-preview/preview-staging-transition/assets/js/search_bar.js" defer></script>
@@ -41,6 +41,24 @@
 
 <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'')})(document.documentElement)</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(["setDoNotTrack", true]);
+  _paq.push(["disableCookies"]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//analytics.osg-htc.org/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '2']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
 
 
 
@@ -92,6 +110,55 @@
                 
                     
 
+
+<li id="uw-research-computing">
+    <a href="/web-preview/preview-staging-transition/uw-research-computing/index.html" aria-current="page">Research Computing</a>
+</li>
+
+
+                
+                    
+
+
+<li id="technologies">
+    <a href="/web-preview/preview-staging-transition/technologies.html" aria-current="page">Technologies</a>
+</li>
+
+
+                
+                    
+
+<li id="community" class="uw-dropdown">
+    <a href="" role="button" aria-haspopup="true" aria-expanded="false">
+        Community
+        <svg aria-hidden="true" class="uw-caret" focusable="false">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-down"></use>
+        </svg>
+        <svg aria-hidden="true" class="uw-caret" focusable="false">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-caret-up"></use>
+        </svg>
+    </a>
+    <ul aria-hidden="true" aria-label="Community submenu" class="uw-child-menu">
+
+    
+        <li>
+            <a href="/web-preview/preview-staging-transition/news.html">News</a>
+        </li>
+    
+        <li>
+            <a href="/web-preview/preview-staging-transition/events.html">Events</a>
+        </li>
+    
+        <li>
+            <a href="/web-preview/preview-staging-transition/presentations.html">Presentations</a>
+        </li>
+    
+    </ul>    
+
+
+                
+                    
+
 <li id="about" class="uw-dropdown">
     <a href="/web-preview/preview-staging-transition/about.html" role="button" aria-haspopup="true" aria-expanded="false">
         About
@@ -125,52 +192,11 @@
             <a href="/web-preview/preview-staging-transition/jobs.html">Open Positions</a>
         </li>
     
+        <li>
+            <a href="/web-preview/preview-staging-transition/research.html">Research</a>
+        </li>
+    
     </ul>    
-
-
-                
-                    
-
-
-<li id="uw-research-computing">
-    <a href="/web-preview/preview-staging-transition/uw-research-computing/index.html" aria-current="page">Research Computing</a>
-</li>
-
-
-                
-                    
-
-
-<li id="technologies">
-    <a href="/web-preview/preview-staging-transition/technologies.html" aria-current="page">Technologies</a>
-</li>
-
-
-                
-                    
-
-
-<li id="research">
-    <a href="/web-preview/preview-staging-transition/research.html" aria-current="page">Research</a>
-</li>
-
-
-                
-                    
-
-
-<li id="news">
-    <a href="/web-preview/preview-staging-transition/news.html" aria-current="page">News</a>
-</li>
-
-
-                
-                    
-
-
-<li id="events">
-    <a href="/web-preview/preview-staging-transition/events.html" aria-current="page">Events</a>
-</li>
 
 
                 
@@ -229,7 +255,7 @@ page to display the news articles next to eachother-->
     <div class="uw-card-content pb-0">
         
             <a href="" class="col-6">
-                <img class="img-fluid rounded-top rounded-bottom" style="aspect-ratio: 2; object-fit: cover" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/htc25-featured.jpg" alt="Erik Wright presenting his HTC25 Keynote Presenation." />
+                <img class="img-fluid rounded-top rounded-bottom" style="aspect-ratio: 2; object-fit: cover" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/protein-design/visual-2-by-1.jpeg" alt="Mukul Sherekar pictured with protein structure" />
             </a>
         
             <a href="" class="col-6">
@@ -247,8 +273,8 @@ page to display the news articles next to eachother-->
                     <div class="col-6 pb-0">
                         <div class="row pb-2">
                             <div class="col-12">
-                                <a href="/40-years-of-htcondor.html" style="font-weight: bold;">HTCondor Celebrates 40 Years Powered by Community</a>
-                                <p style="font-size: 0.95em;">July 25, 2025 </p>
+                                <a href="/using-ospool-to-design-proteins.html" style="font-weight: bold;">OSPool and Its Computing Capacity Helps Researchers Design New Proteins</a>
+                                <p style="font-size: 0.95em;">December 15, 2025 </p>
                             </div>
                         </div>
                     </div>
@@ -264,7 +290,7 @@ page to display the news articles next to eachother-->
     <div class="uw-card-content pb-0">
         
             <a href="" class="col-6">
-                <img class="img-fluid rounded-top rounded-bottom" style="aspect-ratio: 2; object-fit: cover" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/blackhole-ai-feature.jpg" alt="Image of Black Hole" />
+                <img class="img-fluid rounded-top rounded-bottom" style="aspect-ratio: 2; object-fit: cover" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/european-condor-2025/image4.png" alt="Group photo of workshop attendees" />
             </a>
         
             <a href="" class="col-6">
@@ -282,8 +308,8 @@ page to display the news articles next to eachother-->
                     <div class="col-6 pb-0">
                         <div class="row pb-2">
                             <div class="col-12">
-                                <a href="/htc-strikes-again.html" style="font-weight: bold;">HTC Strikes Again</a>
-                                <p style="font-size: 0.95em;">June 09, 2025 </p>
+                                <a href="/european-condor-week-2025.html" style="font-weight: bold;">2025 HTCondor European Workshop Showcases Advances in High Throughput Computing</a>
+                                <p style="font-size: 0.95em;">December 03, 2025 </p>
                             </div>
                         </div>
                     </div>
@@ -348,19 +374,19 @@ page to display the news articles next to eachother-->
 <div class="mb-4">
     <div>
         
-            <a href="/events/2026/06/09/throughput-computing-week">
-                <img alt="Madison Skyline"  class="rounded w-100" src="https://raw.githubusercontent.com/CHTC/events/main/images/Madison_Skyline.jpg" style="max-height: 200px; object-fit: cover;">
+            <a href="/events/2026/01/08/co-working-and-cookies">
+                <img alt="Co-working and Cookies"  class="rounded w-100" src="https://raw.githubusercontent.com/CHTC/events/main/images/cookies-stock-image.jpg" style="max-height: 200px; object-fit: cover;">
             </a>
         
     </div>
     <div class="px-3">
         <h3 class="uw-mini-bar mb-1 mt-4">
-            <a href="/events/2026/06/09/throughput-computing-week">Save the Date for Throughput Computing Week June 9 - 12, 2026.</a>
+            <a href="/events/2026/01/08/co-working-and-cookies">Co-working and Cookies</a>
         </h3>
         
             <h4 class="mt-0 text-muted">
                 
-                June  9-12, 2026
+                January  8, 2026
             </h4>
         
     </div>
@@ -390,7 +416,7 @@ page to display the news articles next to eachother-->
     <div class="uw-card-content pb-0">
         
             <a href="" class="col-6">
-                <img class="img-fluid rounded-top rounded-bottom" style="aspect-ratio: 2; object-fit: cover" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/htc25-featured.jpg" alt="Erik Wright presenting his HTC25 Keynote Presenation." />
+                <img class="img-fluid rounded-top rounded-bottom" style="aspect-ratio: 2; object-fit: cover" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/protein-design/visual-2-by-1.jpeg" alt="Mukul Sherekar pictured with protein structure" />
             </a>
         
             <a href="" class="col-6">
@@ -408,8 +434,8 @@ page to display the news articles next to eachother-->
                     <div class="col-6 pb-0">
                         <div class="row pb-2">
                             <div class="col-12">
-                                <a href="/40-years-of-htcondor.html" style="font-weight: bold;">HTCondor Celebrates 40 Years Powered by Community</a>
-                                <p style="font-size: 0.95em;">July 25, 2025 </p>
+                                <a href="/using-ospool-to-design-proteins.html" style="font-weight: bold;">OSPool and Its Computing Capacity Helps Researchers Design New Proteins</a>
+                                <p style="font-size: 0.95em;">December 15, 2025 </p>
                             </div>
                         </div>
                     </div>
@@ -425,7 +451,7 @@ page to display the news articles next to eachother-->
     <div class="uw-card-content pb-0">
         
             <a href="" class="col-6">
-                <img class="img-fluid rounded-top rounded-bottom" style="aspect-ratio: 2; object-fit: cover" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/blackhole-ai-feature.jpg" alt="Image of Black Hole" />
+                <img class="img-fluid rounded-top rounded-bottom" style="aspect-ratio: 2; object-fit: cover" src="https://raw.githubusercontent.com/CHTC/Articles/main/images/european-condor-2025/image4.png" alt="Group photo of workshop attendees" />
             </a>
         
             <a href="" class="col-6">
@@ -443,8 +469,8 @@ page to display the news articles next to eachother-->
                     <div class="col-6 pb-0">
                         <div class="row pb-2">
                             <div class="col-12">
-                                <a href="/htc-strikes-again.html" style="font-weight: bold;">HTC Strikes Again</a>
-                                <p style="font-size: 0.95em;">June 09, 2025 </p>
+                                <a href="/european-condor-week-2025.html" style="font-weight: bold;">2025 HTCondor European Workshop Showcases Advances in High Throughput Computing</a>
+                                <p style="font-size: 0.95em;">December 03, 2025 </p>
                             </div>
                         </div>
                     </div>
@@ -692,7 +718,7 @@ or across the world.</p>
 
     <div class="uw-copyright">
         <p class="uw-contact-item">For all user support, questions, and comments:  <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></p>
-        <p>© 2022 Board of Regents of the <a href="http://www.wisconsin.edu">University of Wisconsin System</a></p>
+        <p><a href="https://www.wisc.edu/privacy-notice/">Privacy Policy</a> | © 2025 Board of Regents of the <a href="http://www.wisconsin.edu">University of Wisconsin System</a></p>
     </div>
 </footer>
 

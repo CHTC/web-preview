@@ -26,7 +26,7 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
 <script type="text/javascript" src="/web-preview/preview-staging-transition/assets/js/uw-style.js" defer></script>
 <script src="/web-preview/preview-staging-transition/assets/js/lunr.js" type="text/javascript" async></script>
 <script type="text/javascript" src="/web-preview/preview-staging-transition/assets/js/search_bar.js" defer></script>
@@ -41,6 +41,24 @@
 
 <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'')})(document.documentElement)</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(["setDoNotTrack", true]);
+  _paq.push(["disableCookies"]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//analytics.osg-htc.org/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '2']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
 
 
 
@@ -125,10 +143,6 @@
 
     
         <li>
-            <a href="/web-preview/preview-staging-transition/uw-research-computing/account-details.html">Get an Account</a>
-        </li>
-    
-        <li>
             <a href="/web-preview/preview-staging-transition/uw-research-computing/user-expectations.html">User Expectations</a>
         </li>
     
@@ -180,6 +194,10 @@
     </a>
     <ul aria-hidden="true" aria-label="Other Resources submenu" class="uw-child-menu">
 
+    
+        <li>
+            <a href="https://community.chtc.wisc.edu/">CHTC Community Forum</a>
+        </li>
     
         <li>
             <a href="/web-preview/preview-staging-transition/uw-research-computing/bioinformatics-cafe">Bioinformatics Cafe</a>
@@ -244,15 +262,15 @@
 <div class="uw-sidebar-box me-auto">
 <div class="uw-directory">
 
+      <p><!--* [[General] When submitting a job, it doesn't run / goes on hold and shows the error "Job credentials are not available".](#general-when-submitting-a-job-it-doesnt-run-goes-on-hold-and-shows-the-error-job-credentials-are-not-available)--></p>
       <ul>
-        <li><a href="#general-when-submitting-a-job-it-doesnt-run-goes-on-hold-and-shows-the-error-job-credentials-are-not-available">[General] When submitting a job, it doesn’t run / goes on hold and shows the error “Job credentials are not available”.</a></li>
         <li><a href="#general-my-job-exits-with-an-illegal-instructions-error">[General] My job exits with an “Illegal instructions” error.</a></li>
         <li><a href="#general-i-used-generative-ai-to-create-my-submit-file-and-the-job-is-stuck-on-idle">[General] I used generative AI to create my submit file and the job is stuck on “Idle”.</a></li>
         <li><a href="#container-when-building-an-apptainer-apt-commands-in-the-post-block-fail-to-run">[Container] When building an Apptainer, “apt” commands in the %post block fail to run.</a></li>
-        <li><a href="#container-when-attempting-to-run-a-docker-container-it-fails-with-the-error-message-fatal-tini-7-exec-myexecutablesh-failed-exec-format-error">[Container] When attempting to run a Docker container, it fails with the error message “[FATAL tini (7)] exec ./myExecutable.sh failed: Exec format error”.</a></li>
+        <li><a href="#container-after-submitting-a-job-with-a-docker-container-it-goes-on-hold-with-a-message-like-cannot-pull-image-userrepotag">[Container] After submitting a job with a Docker container, it goes on hold with a message like, “Cannot pull image user/repo:tag”.</a></li>
         <li><a href="#container-my-interactive-apptainer-job-is-failing-with-the-error-message-cant-open-master-pty-bad-file-descriptor">[Container] My interactive Apptainer job is failing with the error message, “Can’t open master pty Bad file descriptor”.</a></li>
         <li><a href="#gpu-my-gpu-job-has-been-in-the-queue-for-a-long-period-of-time-and-is-not-starting">[GPU] My GPU job has been in the queue for a long period of time and is not starting.</a></li>
-        <li><a href="#general-python-my-job-has-an-error-that-mentions-homenetid">[General, Python] My job has an error that mentions <code>/home/netid/</code>.</a></li>
+        <li><a href="#general-python-my-job-has-an-error-that-mentions-homenetid">[General, Python] My job has an error that mentions <code>/home/netid/</code> or the root directory <code>/</code>.</a></li>
         <li><a href="#cant-find-your-issue">Can’t find your issue?</a></li>
       </ul>
 
@@ -260,24 +278,27 @@
 </div>
 </div>
 
-<hr width="100%" size="2" />
+<!-- Removing since this seems to be fixed
+<hr width="100%" size="2">
 
 <h3 style="color:#c5050c" id="general-when-submitting-a-job-it-doesnt-run-goes-on-hold-and-shows-the-error-job-credentials-are-not-available">[General] When submitting a job, it doesn't run / goes on hold and shows the error "Job credentials are not available".</h3>
 
-<h4 id="cause">Cause:</h4>
-<p>This is a complicated bug that can strike randomly. We’re working on a fix.</p>
-<h4 id="solution">Solution:</h4>
-<p>To work around this issue, run the following command on the access point before resubmitting the job.</p>
-<pre class="term"><code>echo | condor_store_cred add-oauth -s scitokens -i -
-</code></pre>
-
+#### Cause:
+This is a complicated bug that can strike randomly. We're working on a fix.
+#### Solution:
+To work around this issue, run the following command on the access point before resubmitting the job.
+```
+echo | condor_store_cred add-oauth -s scitokens -i -
+```
+{:.term}
+-->
 <hr width="100%" size="2" />
 
-<h3 style="color:#c5050c" id="#general-my-job-exits-with-an-illegal-instructions-error">[General] My job exits with an "Illegal instructions" error.</h3>
+<h3 style="color:#c5050c" id="general-my-job-exits-with-an-illegal-instructions-error">[General] My job exits with an "Illegal instructions" error.</h3>
 
-<h4 id="cause-1">Cause:</h4>
+<h4 id="cause">Cause:</h4>
 <p>The instructions for communicating with the processor does not match between software and hardware.</p>
-<h4 id="solution-1">Solution:</h4>
+<h4 id="solution">Solution:</h4>
 <p>In the submit file, try adding <strong>one</strong> of the following to your requirements line:</p>
 <pre><code>requirements = (has_avx || has_avx2)
 requirements = has_avx2
@@ -289,13 +310,13 @@ requirements = (Microarch &gt; x86-64-v3)
 
 <h3 style="color:#c5050c" id="general-i-used-generative-ai-to-create-my-submit-file-and-the-job-is-stuck-on-idle">[General] I used generative AI to create my submit file and the job is stuck on "Idle".</h3>
 
-<h4 id="cause-2">Cause:</h4>
+<h4 id="cause-1">Cause:</h4>
 <p>Generative AI (such as Copilot, ChatGPT, etc.) may be inaccurate. 
 In our experience, generative AI almost always gets something wrong when it comes to an HTCondor submit file. 
 This is because HTCondor has significantly changed since its creation over 40 years ago, and is highly configurable.
 This means that while there is a lot of information online in forums and site-specific documentation, the information is not always relevant to our local HTC system.
 As such, submit files created by generative AI are usually not applicable to our HTC system.</p>
-<h4 id="solution-2">Solution:</h4>
+<h4 id="solution-1">Solution:</h4>
 <p>The CHTC website provides documentation - including example submit files - for how to submit jobs on the HTC system.</p>
 
 <ul>
@@ -305,14 +326,14 @@ As such, submit files created by generative AI are usually not applicable to our
 
 <hr width="100%" size="2" />
 
-<h3 style="color:#c5050c" id="containers-when-building-an-apptainer-apt-commands-in-the-post-block-fail-to-run">[Container] When building an Apptainer, "apt" commands in the %post block fail to run.</h3>
+<h3 style="color:#c5050c" id="container-when-building-an-apptainer-apt-commands-in-the-post-block-fail-to-run">[Container] When building an Apptainer, "apt" commands in the %post block fail to run.</h3>
 
 <h4 id="example-error-message">Example error message:</h4>
 <pre class="term"><code>Couldn't create temporary file /tmp/apt.conf.9vQdLs for passing config to apt-key
 </code></pre>
-<h4 id="cause-3">Cause:</h4>
+<h4 id="cause-2">Cause:</h4>
 <p>The container needs global read/write permissions in order to update or install packages using the <code>apt</code> command.</p>
-<h4 id="solution-3">Solution:</h4>
+<h4 id="solution-2">Solution:</h4>
 <p>Add <code>chmod 777 /tmp</code> to the front of your <code>%post</code> block. See the example below:</p>
 <pre><code>Bootstrap: docker
 From: ubuntu:22.04
@@ -325,11 +346,11 @@ From: ubuntu:22.04
 
 <hr width="100%" size="2" />
 
-<h3 style="color:#c5050c" id="containers-when-attempting-to-run-a-docker-container-it-fails-with-the-error-message-fatal-tini-7-exec-myexecutablesh-failed-exec-format-error">[Container] When attempting to run a Docker container, it fails with the error message "[FATAL tini (7)] exec ./myExecutable.sh failed: Exec format error".</h3>
+<h3 style="color:#c5050c" id="container-after-submitting-a-job-with-a-docker-container-it-goes-on-hold-with-a-message-like-cannot-pull-image-userrepotag">[Container] After submitting a job with a Docker container, it goes on hold with a message like, "Cannot pull image user/repo:tag".</h3>
 
-<h4 id="cause-4">Cause:</h4>
+<h4 id="cause-3">Cause:</h4>
 <p>The Docker container is likely built on an Apple computer using an ARM processor, which is incompatible with Linux machines.</p>
-<h4 id="solution-4">Solution:</h4>
+<h4 id="solution-3">Solution:</h4>
 <p>To resolve this, when building your Docker container, use the command:</p>
 <pre class="term"><code>docker build --platform linux/amd64 .
 </code></pre>
@@ -338,20 +359,20 @@ From: ubuntu:22.04
 
 <h3 style="color:#c5050c" id="container-my-interactive-apptainer-job-is-failing-with-the-error-message-cant-open-master-pty-bad-file-descriptor">[Container] My interactive Apptainer job is failing with the error message, "Can't open master pty Bad file descriptor". </h3>
 
-<h4 id="cause-5">Cause:</h4>
+<h4 id="cause-4">Cause:</h4>
 <p>Interactive Apptainer jobs are incompatible with CentOS7 machines.</p>
-<h4 id="solution-5">Solution:</h4>
+<h4 id="solution-4">Solution:</h4>
 <p>To your submit file, add the following line and resubmit:</p>
 <pre><code>requirements = (OpSysMajorVer &gt; 7)
 </code></pre>
 
 <hr width="100%" size="2" />
 
-<h3 style="color:#c5050c" id="gpus-my-gpu-job-has-been-in-the-queue-for-a-long-period-of-time-and-is-not-starting">[GPU] My GPU job has been in the queue for a long period of time and is not starting. </h3>
+<h3 style="color:#c5050c" id="gpu-my-gpu-job-has-been-in-the-queue-for-a-long-period-of-time-and-is-not-starting">[GPU] My GPU job has been in the queue for a long period of time and is not starting. </h3>
 
-<h4 id="cause-6">Cause:</h4>
+<h4 id="cause-5">Cause:</h4>
 <p>To use our shared use GPU machines, you must opt into the GPU Lab.</p>
-<h4 id="solution-6">Solution:</h4>
+<h4 id="solution-5">Solution:</h4>
 <p>To your submit file, add the following line and resubmit:</p>
 <pre><code>+WantGPULab = true
 </code></pre>
@@ -359,12 +380,12 @@ From: ubuntu:22.04
 <p><br /></p>
 <hr width="100%" size="2" />
 
-<h3 style="color:#c5050c" id="general-python-my-job-has-an-error-that-mentions-homenetid">[General, Python] My job has an error that mentions `/home/netid/` or the root directory `/`. </h3>
+<h3 style="color:#c5050c" id="general-python-my-job-has-an-error-that-mentions-homenetid">[General, Python] My job has an error that mentions <code>/home/netid/</code> or the root directory <code>/</code>. </h3>
 
-<h4 id="cause-7">Cause:</h4>
+<h4 id="cause-6">Cause:</h4>
 <p>Sometimes programs assume that they can write into the <code>/home</code> or root <code>/</code> directory. However, these directories are not writeable on the Execution Points.</p>
 
-<h4 id="solution-7">Solution:</h4>
+<h4 id="solution-6">Solution:</h4>
 <p>To your executable (<code>.sh</code> script), add the following line and resubmit:</p>
 <pre><code>export HOME=$PWD
 </code></pre>
@@ -617,12 +638,6 @@ From: ubuntu:22.04
 
                             
                                 
-    <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/software-overview-htc#quickstart#main">Quickstart</a>
-    </div>
-
-                            
-                                
     <div class="document-link-wrapper" style="background-color: #d3d3d3;">
     <span style="font-size: .8rem;">
       <i class="bi bi-folder me-2"></i>
@@ -633,10 +648,17 @@ From: ubuntu:22.04
         
             
             
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/software-overview-htc#container-overview#main">What are containers?</a>
+    </div>
+
+        
+            
+            
     <div class="document-link-wrapper" style="background-color: #d3d3d3;">
     <span style="font-size: .8rem;">
       <i class="bi bi-folder me-2"></i>
-      Build a software environment with containers 
+      Using software in Apptainer containers
     </span>
     </div>
     <div class="list-group ps-4 border-start bg-light">
@@ -644,21 +666,58 @@ From: ubuntu:22.04
             
             
     <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/software-overview-htc#containers#main">What are containers?</a>
+        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/apptainer-htc#main">Use Apptainer containers</a>
     </div>
 
         
             
             
     <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/apptainer-build#main">Apptainer/Singularity</a>
+        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/apptainer-build#main">More about Apptainer containers</a>
     </div>
 
         
             
             
     <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/docker-build#main">Docker</a>
+        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/htc-docker-to-apptainer#main">Convert Docker images to Apptainer/Singularity images</a>
+    </div>
+
+        
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper" style="background-color: #d3d3d3;">
+    <span style="font-size: .8rem;">
+      <i class="bi bi-folder me-2"></i>
+      Using software in Docker containers
+    </span>
+    </div>
+    <div class="list-group ps-4 border-start bg-light">
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/docker-jobs#main">Use Docker containers</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/docker-build#main">More about Docker containers</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/docker-test#main">Reference: Explore and test Docker containers</a>
+    </div>
+
+        
     </div>
 
         
@@ -671,52 +730,37 @@ From: ubuntu:22.04
         
     </div>
 
-        
-            
-            
-    <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/htc-docker-to-apptainer#main">Convert Docker images to Apptainer/Singularity images</a>
-    </div>
-
-        
-            
-            
-    <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/apptainer-htc#main">Use Apptainer containers</a>
-    </div>
-
-        
-            
-            
-    <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/docker-jobs#main">Use Docker containers</a>
-    </div>
-
-        
-    </div>
-
                             
                                 
+    <div class="document-link-wrapper" style="background-color: #d3d3d3;">
+    <span style="font-size: .8rem;">
+      <i class="bi bi-folder me-2"></i>
+      Other Modes of Software Use
+    </span>
+    </div>
+    <div class="list-group ps-4 border-start bg-light">
+        
+            
+            
     <div class="document-link-wrapper bg-light">
         <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/inter-submit#main">Compile software in an interactive job</a>
     </div>
 
-                            
-                                
+        
+            
+            
     <div class="document-link-wrapper bg-light">
         <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/licensed-software#main">Licensed software and modules</a>
     </div>
 
-                            
-                                
+        
+            
+            
     <div class="document-link-wrapper bg-light">
         <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/htc-modules#main">Use software available in modules</a>
     </div>
 
-                            
-                                
-    <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/htc-modules-transition-to-el9#main">HTC modules transition to EL9</a>
+        
     </div>
 
                             
@@ -842,6 +886,12 @@ From: ubuntu:22.04
                             
                                 
     <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/variable-memory#main">Request variable memory</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
         <a class="" href="/web-preview/preview-staging-transition/uw-research-computing/dos-unix#main">Windows/Linux incompatibility</a>
     </div>
 
@@ -938,7 +988,7 @@ From: ubuntu:22.04
 
     <div class="uw-copyright">
         <p class="uw-contact-item">For all user support, questions, and comments:  <a href="mailto:chtc@cs.wisc.edu">chtc@cs.wisc.edu</a></p>
-        <p>© 2022 Board of Regents of the <a href="http://www.wisconsin.edu">University of Wisconsin System</a></p>
+        <p><a href="https://www.wisc.edu/privacy-notice/">Privacy Policy</a> | © 2025 Board of Regents of the <a href="http://www.wisconsin.edu">University of Wisconsin System</a></p>
     </div>
 </footer>
 
