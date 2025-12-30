@@ -287,33 +287,48 @@
 
 <h2 id="before-you-start">Before you start</h2>
 
-<p>You will need the following:</p>
-
+<p>You will need the <strong>path to a directory</strong> containing:</p>
 <ul>
-  <li>Path to a directory containing:
-    <ul>
-      <li>Job submission script</li>
-      <li>Other supporting files</li>
-    </ul>
-  </li>
+  <li>Your job submission script</li>
+  <li>Other supporting files</li>
 </ul>
+
+<p>For example, the path <code>/scratch/netid/ase</code> points to a directory with the submit script <code>submit-N2Cu.sh</code> and a Python script used in the job, <code>N2Cu.py</code>.</p>
+<pre class="term"><code>/scratch/netid/ase
+├── N2Cu.py
+└── submit-N2Cu.sh
+</code></pre>
+
+<blockquote class="tip-header">
+  <h3 id="-tip-remove-extra-files">💡 Tip: Remove extra files</h3>
+</blockquote>
+<blockquote class="tip">
+  <p>Job Composer will <strong>copy the entire directory</strong> to a new location, so you should remove any extra files that aren’t needed to start your job.</p>
+</blockquote>
 
 <h2 id="create-and-submit-a-new-job">Create and submit a new job</h2>
 
 <ol>
-  <li>In the Job Composer, click the <strong>+New Job</strong> dropdown menu.</li>
-  <li>Select <strong>From Specified Path</strong>.</li>
+  <li>In the navigation bar, click <strong>Jobs</strong> then <strong>Job Composer</strong>.
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-01.png" style="border: 1px solid #000; max-width: 500px; max-height: 300px" /></p>
+  </li>
+  <li>In the Job Composer, click the <strong>+New Job</strong> dropdown menu. Select <strong>From Specified Path</strong>.
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-02.png" style="border: 1px solid #000; max-width: 500px; max-height: 300px" /></p>
+  </li>
   <li>You will see a new page. Fill each field with your job information.
     <ul>
       <li><strong>Source Path</strong>. Path to the directory containing your job submission script and supporting files.</li>
       <li><strong>Name</strong>. Name for your job.</li>
       <li><strong>Script name</strong>. File name for your job submission script.</li>
       <li><strong>Cluster</strong>. Select <em>CHTC Spark Cluster</em>.</li>
-      <li><strong>Account</strong>. You may leave this blank.</li>
+      <li><strong>Account</strong>. Leave this blank.</li>
     </ul>
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-03.png" style="border: 1px solid #000; max-width: 500px; max-height: 500px" /></p>
+    <p>Click <strong>Save</strong>.</p>
   </li>
-  <li>Click <strong>Save</strong>.</li>
-  <li>Review the details of your job (located on the right-hand side). If needed, use the editor to edit your submit script.</li>
+  <li>Review the details of your job (located on the right-hand side). If needed, use the editor to edit your submit script.
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-05.png" style="border: 1px solid #000; max-width: 500px; max-height: 300px" /></p>
+  </li>
   <li>When you are ready to submit your job, click the green <strong>▶ Submit</strong> button.</li>
 </ol>
 
@@ -323,15 +338,28 @@
 
 <ol>
   <li>In the <em>Job</em> view, select a job to use as a template.</li>
-  <li>Click <strong>☆ Create Template</strong>.</li>
-  <li>Fill out each field.</li>
+  <li>Click <strong>☆ Create Template</strong>.
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-06.png" style="border: 1px solid #000; max-width: 500px; max-height: 300px" /></p>
+  </li>
+  <li>Fill out each field.
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-07.png" style="border: 1px solid #000; max-width: 500px; max-height: 500px" /></p>
+  </li>
   <li>Click <strong>Save</strong>. You will be redirected to the <em>Templates</em> view of the Job Composer.</li>
-  <li>Edit template files. Delete any extraneous outputs that should not be part of the template.</li>
+  <li>Edit template files. Delete any extra files that should not be part of the template, such as standard output, error, or other output files. To delete, click the <strong>Open Dir</strong> button.
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-08.png" style="border: 1px solid #000; max-width: 500px; max-height: 300px" /></p>
+  </li>
+  <li>In the file browser, select and delete extra files.
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-09.png" style="border: 1px solid #000; max-width: 500px; max-height: 300px" /></p>
+  </li>
+  <li>Now you can submit a job with your template! From the <em>Template</em> view, select your new template and click <strong>Create New Job</strong>.
+    <p style="text-align:center; margin:10px"><img src="/images/uw-research-computing/ood-job-composer-10.png" style="border: 1px solid #000; max-width: 500px; max-height: 300px" /></p>
+    <p>This creates a new directory in <code>/scratch/$USER/ondemand/projects/default</code>, from which you can use the file browser/text editor to modify files before you submit.</p>
+  </li>
 </ol>
 
-<p>Notes:</p>
+<h3 id="notes">Notes</h3>
 <ul>
-  <li>The <code>manifest.yml</code> file describes information about your template.</li>
+  <li>The <code>manifest.yml</code> file describes information about your template. You can edit this manually in the text editor.</li>
   <li>When you create a new job from the template, it copies all contents from the template directory (except <code>manifest.yml</code>) to the job directory.</li>
 </ul>
 
@@ -411,6 +439,32 @@
                                 
     <div class="document-link-wrapper bg-light">
         <a class="" href="/web-preview/preview-xalim-ood/uw-research-computing/hpc-job-monitoring#main">Reviewing job information using SLURM</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper" style="background-color: #d3d3d3;">
+    <span style="font-size: .8rem;">
+      <i class="bi bi-folder me-2"></i>
+      Open OnDemand
+    </span>
+    </div>
+    <div class="list-group ps-4 border-start bg-light">
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-xalim-ood/uw-research-computing/ood#main">Overview</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="fw-bolder" href="/web-preview/preview-xalim-ood/uw-research-computing/ood-job-composer#main">Job Composer</a>
+    </div>
+
+        
     </div>
 
                             
