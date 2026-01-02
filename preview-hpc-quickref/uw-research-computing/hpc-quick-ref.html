@@ -267,8 +267,9 @@
         <li><a href="#submit-jobs">Submit jobs</a></li>
         <li><a href="#monitor-jobs">Monitor jobs</a></li>
         <li><a href="#machine-information">Machine information</a></li>
-        <li><a href="#glossary">Glossary</a></li>
-        <li><a href="#related-pages">Related Pages</a></li>
+        <li><a href="#modules">Modules</a></li>
+        <li><a href="#check-quotas">Check quotas</a></li>
+        <li><a href="#related-pages">Related pages</a></li>
       </ul>
 
     </div>
@@ -369,29 +370,31 @@ Do not include the brackets in your command.</li>
 
 <h2 id="monitor-jobs">Monitor jobs</h2>
 
+<p>Use these commands to monitor your submitted jobs.</p>
+
 <table>
   <thead>
     <tr>
       <th>Command</th>
       <th>Use</th>
-      <th>Notes</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <td><code>squeue --me</code></td>
+      <td>displays status of your submitted jobs</td>
+    </tr>
+    <tr>
       <td><code>squeue -u &lt;username&gt;</code></td>
       <td>displays status of your submitted jobs by username</td>
-      <td> </td>
     </tr>
     <tr>
       <td><code>squeue -p &lt;partition&gt;</code></td>
       <td>displays status of your submitted jobs by partition</td>
-      <td> </td>
     </tr>
     <tr>
       <td><code>seff &lt;job_ID&gt;</code></td>
       <td>view job performance</td>
-      <td> </td>
     </tr>
   </tbody>
 </table>
@@ -422,7 +425,7 @@ Do not include the brackets in your command.</li>
 
 <h2 id="machine-information">Machine information</h2>
 
-<p>These commands display information about the execution points - machines that execute/run jobs.</p>
+<p>These commands display information about the machines that execute jobs.</p>
 
 <table class="command-table">
   <thead>
@@ -434,31 +437,84 @@ Do not include the brackets in your command.</li>
   </thead>
   <tbody>
     <tr>
-      <td><code>condor_status</code></td>
-      <td>lists all execution point slots</td>
+      <td><code>sinfo</code></td>
+      <td>displays information about nodes</td>
       <td> </td>
+    </tr>
+    <tr>
+      <td><code>sinfo -n &lt;node&gt;</code></td>
+      <td>displays information about specified node</td>
+      <td>Example: <code>sinfo -n spark-a006</code></td>
+    </tr>
+    <tr>
+      <td><code>sinfo -p &lt;partition&gt;</code></td>
+      <td>displays information about specified partition</td>
+      <td>Example: <code>sinfo -p pre</code></td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="glossary">Glossary</h2>
+<h2 id="modules">Modules</h2>
 
-<table>
+<p>These commands access software in the module system. Read <a href="hpc-software#2-using-pre-installed-software-in-modules">this guide</a> for more information.</p>
+
+<table class="command-table">
   <thead>
     <tr>
-      <th>Term</th>
-      <th>Meaning</th>
+      <th>Command</th>
+      <th>Use</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>access point</td>
-      <td>The machine which you log into to access CHTC’s servers. This is the machine you use to prepare files for job submission and submit jobs.</td>
+      <td><code>module avail</code></td>
+      <td>displays available software modules</td>
+    </tr>
+    <tr>
+      <td><code>module spider &lt;keyword&gt;</code></td>
+      <td>searches for <code>&lt;keyword&gt;</code> in available modules</td>
+    </tr>
+    <tr>
+      <td><code>module load &lt;module&gt;</code></td>
+      <td>loads <code>&lt;module&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code>module unload &lt;module&gt;</code></td>
+      <td>unloads <code>&lt;module&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code>module list</code></td>
+      <td>shows all currently loaded modules</td>
+    </tr>
+    <tr>
+      <td><code>module purge</code></td>
+      <td>unloads all modules</td>
     </tr>
   </tbody>
 </table>
 
-<h2 id="related-pages">Related Pages</h2>
+<h2 id="check-quotas">Check quotas</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>get_quotas</code></td>
+      <td>shows your <code>/home</code> and <code>/scratch</code> disk and files quota</td>
+    </tr>
+    <tr>
+      <td><code>get_quotas -p &lt;path&gt;</code></td>
+      <td>shows the disk and files quota for a specified path, such as a group directory</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="related-pages">Related pages</h2>
 
 <ul>
   <li><a href="https://slurm.schedmd.com/">Slurm documentation</a></li>
@@ -509,7 +565,13 @@ Do not include the brackets in your command.</li>
                             
                                 
     <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-hpc-quickref/uw-research-computing/basic-shell-commands#main">Basic shell commands</a>
+        <a class="" href="/web-preview/preview-hpc-quickref/uw-research-computing/basic-shell-commands#main">Quick reference: Basic shell commands</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="fw-bolder" href="/web-preview/preview-hpc-quickref/uw-research-computing/hpc-quick-ref#main">Quick reference: HPC and SLURM commands</a>
     </div>
 
                             
