@@ -272,6 +272,27 @@
 
       <ul>
         <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#develop-and-test">Develop and test</a>
+          <ul>
+            <li><a href="#create-your-software-environment">Create your software environment</a></li>
+          </ul>
+        </li>
+        <li><a href="#distribute-your-work">Distribute your work</a>
+          <ul>
+            <li><a href="#gpu-versus-cpu-availability">GPU versus CPU availability</a></li>
+            <li><a href="#data-size">Data size</a></li>
+            <li><a href="#job-lengthduration">Job length/duration</a></li>
+            <li><a href="#test-your-workflow">Test your workflow</a></li>
+            <li><a href="#get-more-throughput-by-submitting-multiple-jobs">Get more throughput by submitting multiple jobs</a></li>
+          </ul>
+        </li>
+        <li><a href="#improve-your-workflow">Improve your workflow</a></li>
+        <li><a href="#gotchas-and-tips">Gotchas and tips</a>
+          <ul>
+            <li><a href="#cuda-capability">CUDA capability</a></li>
+          </ul>
+        </li>
+        <li><a href="#related-pages">Related pages</a></li>
       </ul>
 
     </div>
@@ -286,33 +307,45 @@
 
 <p style="text-align:center"><img src="/images/hyperparameter-tuning.png" alt="Flowchart illustrating a hyperparameter tuning workflow." width="500px" /></p>
 
-<p>Instead of developing your scripts to run entire workflow as a single job, you should develop scripts for sections of your workflow. In our example of hyperparameter tuning, we’ll want to focus on developing scripts for the <em>training</em> step, which can then be submitted as many different jobs for the different parameters. Pre-processing and post-processing may be submitted as separate jobs or scripts managed by <a href="http://localhost:8013/uw-research-computing/htc/dagman-workflows">DAGMan</a>.</p>
+<p>Instead of developing your scripts to run entire workflow as a single job, you should develop scripts for sections of your workflow. In our example of hyperparameter tuning, we’ll want to focus on developing scripts for the <em>training</em> step. Why?</p>
+
+<p>If we develop a general training workflow, we can <strong>reuse the same scripts to submit multiple training tasks</strong>. This is an example of <em>high throughput computing</em>!</p>
+
+<p>For other steps, like pre-processing and post-processing, we can submit them as separate jobs or scripts managed by <a href="uw-research-computing/htc/dagman-workflows">DAGMan</a>.</p>
 
 <h3 id="create-your-software-environment">Create your software environment</h3>
 
-<p>We recommend running all ML/AI workflows will run inside a <a href="software-overview-htc">container</a> software environment.</p>
+<p>Before we start anything, we need to consider our software environment. We recommend running all ML/AI workflows will run inside a <a href="software-overview-htc">container</a> software environment.</p>
 
 <p>Each software stack is different, so we encourage users to manage their own software environments and build their own containers.</p>
 
+<p>Be aware that CHTC does not provide consultation services for code development.</p>
+
 <blockquote class="tip-header">
-  <h3 id="-tip">📝 Tip</h3>
+  <h3 id="write-down-your-software-environment">Write down your software environment</h3>
 </blockquote>
 
 <blockquote class="tip">
-  <p>Note which CUDA library version you are using to run your code.</p>
+  <p>Write down what you need to run your software environment, including but not limited to:</p>
+  <ul>
+    <li>Software (e.g., Python, R)</li>
+    <li>Packages (e.g., matplotlib, Pytorch, pandas)</li>
+    <li>Dependencies and libraries (e.g., specific versions of GLIBC, libxc)</li>
+    <li>Environment variables</li>
+    <li>CUDA library version (if applicable)</li>
+  </ul>
 </blockquote>
+
+<p>Next, you’ll need to build your software environment in a new container or use an existing container with your environment.</p>
 
 <h4 id="docker-containers">Docker containers</h4>
 
+<p>Docker is a commonly-used container engine, with many existing containers distributed on Docker Hub.</p>
+
 <p>To see how you can use Docker containers to run jobs in CHTC, see our guides:</p>
 <ul>
-  <li><a href="docker-jobs.html">Docker Jobs in CHTC</a></li>
+  <li><a href="docker-jobs">Docker Jobs in CHTC</a></li>
   <li><a href="https://github.com/CHTC/templates-GPUs">GPU/Machine Learning Job Examples on Github</a></li>
-</ul>
-
-<p>You can also test and examine containers on your own computer:</p>
-<ul>
-  <li><a href="docker-test.html">Exploring and Testing Docker Containers</a></li>
 </ul>
 
 <p>Some machine learning frameworks publish ready-to-go Docker images:</p>
@@ -330,32 +363,26 @@ test your own Docker container, see this guide:</p>
   <li><a href="docker-build.html">Building Docker Containers</a></li>
 </ul>
 
+<h4 id="apptainer-containers">Apptainer containers</h4>
+
+<p>CHTC also supports Apptainer, another container engine. We recommend new users try Apptainer, since Apptainer is already installed on CHTC machines, and users don’t need to download it, unlike Docker.</p>
+
+<ul>
+  <li><a href="apptainer-htc">Use and build Apptainer containers</a></li>
+  <li><a href="apptainer-build">Additional considerations on building Apptainer containers</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software">Software recipes</a></li>
+</ul>
+
 <h4 id="conda-environments">Conda environments</h4>
 
 <p>The Python package manager conda is a popular tool for installing and 
-managing machine learning tools.
-See <a href="conda-installation.html">this guide</a> for information on how 
-to use conda to provide dependencies for CHTC jobs.</p>
+managing machine learning tools. You can build a conda environment in Docker or Apptainer containers.</p>
 
-<p>Note that when installing TensorFlow using <code>conda</code>, it is important to install 
-not the generic <code>tensorflow</code> package, but <code>tensorflow-gpu</code>. This ensures that 
-the installation will include the <code>cudatoolkit</code> and <code>cudnn</code> dependencies
-required for TensorFlow ‘s GPU capability.</p>
+<p><a href="https://github.com/CHTC/recipes/tree/main/software/Conda">See our conda recipes here.</a></p>
 
-<h3 id="test-your-workflow">Test your workflow</h3>
+<h2 id="distribute-your-work">Distribute your work</h2>
 
-<p>Before you submitting your full workflow, <strong>you should always test with a single job first</strong>. This will allow you to catch any bugs and errors in a manageable way, as well as reducing the usage of computational resources on failed jobs.</p>
-
-<p>While every workflow looks different, follow our guidelines for development and testing.</p>
-
-<ol>
-  <li><strong>Consider runtime, disk space, memory, and GPU needs.</strong> The more (or specific) resources you need, the less of these jobs you will be able to have running at a time. Consider developing your scripts to use fewer or more generalized resources.</li>
-  <li><strong>Test with a subset of your data.</strong> Instead of using a large dataset (especially those &gt;100 GB), use a smaller dataset to reduce resource usage and time to test.</li>
-</ol>
-
-<h2 id="consider-your-job-requirements">Consider your job requirements</h2>
-
-<p>Before you run any job, let’s consider your what your jobs might need.</p>
+<p>After getting your software stack set up, the next step is to figure out how to effectively utilize the available resources to run your workflow. This section outlines available resources and considerations for your workflow.</p>
 
 <h3 id="gpu-versus-cpu-availability">GPU versus CPU availability</h3>
 
@@ -419,9 +446,50 @@ not you are using GPUs, as shown in the <a href="#2-software-options">software s
 
 <p>If you need longer runtimes, consider implementing <a href="checkpointing">checkpointing</a> into your jobs.</p>
 
+<h3 id="test-your-workflow">Test your workflow</h3>
+
+<p>Before you submitting your workflow, <strong>you should always test with a single job first</strong>. This will allow you to catch any bugs and errors in a manageable way, as well as reducing the usage of computational resources on failed jobs.</p>
+
+<p>While every workflow looks different, follow our guidelines for development and testing.</p>
+
+<ol>
+  <li><strong>Consider runtime, disk space, memory, and GPU needs.</strong> The more (or specific) resources you need, the less of these jobs you will be able to have running at a time. Consider developing your scripts to use fewer or more generalized resources.</li>
+  <li><strong>Test with a subset of your data.</strong> Instead of using a large dataset (especially those &gt;100 GB), use a smaller dataset to reduce resource usage and time to test.</li>
+</ol>
+
 <h3 id="get-more-throughput-by-submitting-multiple-jobs">Get more throughput by submitting multiple jobs</h3>
 
 <p>Do you have the ability to break your work into many independent pieces? (e.g., hyperparameter tuning, inference) If so, you can take advantage of CHTC’s capability to run many independent jobs at once, especially when each job is using a CPU. See <a href="multiple-jobs.html">our guide for running multiple jobs</a>.</p>
+
+<h2 id="improve-your-workflow">Improve your workflow</h2>
+
+<p>Once you’ve gotten a subset of your workflow going, it’s time to refine and improve your workflow! This section highlights how to get more out of the available resources (“do more with less”), monitor and organize runs, and/or create ensembles of models.</p>
+
+<ul>
+  <li>Use automated workflows to manage your tasks (e.g. using <a href="htc/dagman-workflows">DAGMan</a>)</li>
+  <li>Monitor your training with <a href="https://wandb.ai/site/">Weights and Biases</a>—however, be aware of API key leakage.</li>
+  <li>Use <a href="checkpointing">checkpointing</a> to shorten your jobs and <a href="#job-lengthduration">increase the number of jobs</a> you can have running concurrently. This also makes your job resilient against job eviction and machine issues.</li>
+</ul>
+
+<h2 id="gotchas-and-tips">Gotchas and tips</h2>
+
+<ul>
+  <li>Check your job logs, especially during testing, to understand your usage (memory, CPU, disk, GPU memory). Use these values to optimize your resource requests.</li>
+  <li>If your job is using the conda environment but not utilizing the GPU, check that you are specifying the gpu-specific version of <code>pytorch/tensorflow</code>.</li>
+  <li>Unsure about something? <a href="get-help">Ask for help or give us feedback!</a></li>
+</ul>
+
+<h3 id="cuda-capability">CUDA capability</h3>
+
+<p>The CUDA capability is a number that corresponds to the computational capability of NVIDIA devices and loosely correlates with GPU generation. There are considerations between versions of CUDA and capability. See <a href="https://en.wikipedia.org/wiki/CUDA#GPUs_supported">Wikipedia</a> for a matrix of compatibility.</p>
+
+<h2 id="related-pages">Related pages</h2>
+
+<ul>
+  <li><a href="gpu-jobs">Use GPUs</a></li>
+  <li><a href="https://github.com/CHTC/recipes/tree/main/software">CHTC Recipes</a></li>
+  <li><a href="checkpointing">Checkpoint jobs</a></li>
+</ul>
 
         </div>
         <div class="col-3 d-none d-lg-block">
