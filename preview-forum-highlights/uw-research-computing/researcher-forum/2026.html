@@ -251,10 +251,25 @@
     Researcher Forum 2026
 </h1>
 
-            <h1 id="researcher-forum-2026-highlights">Researcher Forum 2026 Highlights</h1>
+            <!-- an image from the forum would be great here -->
+
+<h2 id="researcher-forum-2026-highlights">Researcher Forum 2026 Highlights</h2>
 
 <p>Read on for highlights from the 2026 CHTC Researcher Forum,
 where CHTC staff provided updates on how CHTC has improved over the past year.</p>
+
+<ul>
+  <li><a href="#community-knowledge-sharing">Community knowledge sharing</a></li>
+  <li><a href="#integrating-data-with-computing">Integrating data with computing</a></li>
+  <li><a href="#ai-at-chtc">AI at CHTC</a></li>
+  <li><a href="#improvements-to-htcondor">Improvements to HTCondor</a></li>
+  <li><a href="#access-compute-from-a-browser">Access compute from a browser</a></li>
+  <li><a href="#facilitation-improvements">Facilitation improvements</a></li>
+  <li><a href="#save-the-dates---summer-2026">Save the dates - Summer 2026</a></li>
+  <li><a href="#keynote-speaker-ariana-negreiro">Keynote speaker: Ariana Negreiro</a></li>
+  <li><a href="#about-chtc">About CHTC</a></li>
+  <li><a href="#share-your-feedback">Share your feedback</a></li>
+</ul>
 
 <h2 id="community-knowledge-sharing">Community knowledge sharing</h2>
 
@@ -266,14 +281,14 @@ We want to help people share that knowledge with each other.</p>
 <p>This community-of-practice started Fall 2025 and brings together life-science researchers using CHTC resources.
 Monthly meetings include tutorials and facilitation support.</p>
 
-<p>For more information, see the <a href="bhttps://chtc.cs.wisc.edu/uw-research-computing/bioinformatics-cafe">dedicated web page</a>.
+<p>For more information, see the <a href="https://chtc.cs.wisc.edu/uw-research-computing/bioinformatics-cafe">dedicated web page</a>.
 <strong>Beginners are welcome!</strong></p>
 
 <h3 id="chtc-community-forum">CHTC Community Forum</h3>
 
 <p>(Not to be confused with the Researcher Forum event!)</p>
 
-<p>The facilitation team regularly get questions like “is there anyone else doing <strong>__ on CHTC?” and “do you have any tips for doing __</strong>?”.
+<p>The facilitation team regularly get questions like “is there anyone else doing ____ on CHTC?” and “do you have any tips for doing ____?”.
 With the CHTC Community Forum, we hope to help users connect and share knowledge with each other.</p>
 
 <p>Ask questions, share ideas, and search previous posts from other users to learn more about using CHTC to power your research.
@@ -327,16 +342,11 @@ The facilitation team has been developing tutorials and guides for users interes
 
 <ul>
   <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>AlphaFold3 tutorial (<a href="https://chtc.cs.wisc.edu/events/2026/02/11/AlphaFold3-on-CHTC">February 11</a>). <a href="https://docs.google.com/presentation/d/10-UUBKlYnul6KslN5slFQyCEebI6a0tyZwlucis-ynQ/edit?usp=sharing">Slides</a></td>
-          <td><a href="https://github.com/CHTC/tutorial-CHTC-AF3">Materials</a></td>
-        </tr>
-      </tbody>
-    </table>
+    <p>AlphaFold3 tutorial (<a href="https://chtc.cs.wisc.edu/events/2026/02/11/AlphaFold3-on-CHTC">February 11</a>). <a href="https://docs.google.com/presentation/d/10-UUBKlYnul6KslN5slFQyCEebI6a0tyZwlucis-ynQ/edit?usp=sharing">Slides</a>. <a href="https://github.com/CHTC/tutorial-CHTC-AF3">Materials</a>.</p>
   </li>
-  <li>PyTorch tutorial (<a href="https://chtc.cs.wisc.edu/events/2026/03/25/PyTorch-Training">March 25</a>).</li>
+  <li>
+    <p>PyTorch tutorial (<a href="https://chtc.cs.wisc.edu/events/2026/03/25/PyTorch-Training">March 25</a>).</p>
+  </li>
 </ul>
 
 <p>In addition to our general facilitation support, we also have an expert facilitator who is willing to consult on AI workflows.</p>
@@ -357,26 +367,14 @@ These GPUs are available to anyone with a CHTC account, with the option to scale
 
 <ul>
   <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>new <code>shell</code> submit command - users can now declare the command they want their job to execute, directly in the submit file. <a href="https://chtc.cs.wisc.edu/uw-research-computing/htcondor-job-submission#option-1-submit-with-shell">CHTC guide</a></td>
-          <td><a href="https://htcondor.readthedocs.io/en/latest/man-pages/condor_submit.html#shell">HTCondor manual</a></td>
-        </tr>
-      </tbody>
-    </table>
+    <p><strong>new <code>shell</code> submit command</strong> - users can now declare the command they want their job to execute, directly in the submit file. <a href="https://chtc.cs.wisc.edu/uw-research-computing/htcondor-job-submission#option-1-submit-with-shell">CHTC guide</a>. <a href="https://htcondor.readthedocs.io/en/latest/man-pages/condor_submit.html#shell">HTCondor manual</a>.</p>
   </li>
   <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>new <code>retry_request_memory</code> submit command - users can now provide a second, larger memory request for jobs that exceed the initial memory request, and HTCondor will automatically retry the job with the larger amount. <a href="https://chtc.cs.wisc.edu/uw-research-computing/variable-memory">CHTC guide</a></td>
-          <td><a href="https://htcondor.readthedocs.io/en/latest/man-pages/condor_submit.html#retry_request_memory">HTCondor manual</a></td>
-        </tr>
-      </tbody>
-    </table>
+    <p><strong>new <code>retry_request_memory</code> submit command</strong> - users can now provide a second, larger memory request for jobs that exceed the initial memory request, and HTCondor will automatically retry the job with the larger amount. <a href="https://chtc.cs.wisc.edu/uw-research-computing/variable-memory">CHTC guide</a>. <a href="https://htcondor.readthedocs.io/en/latest/man-pages/condor_submit.html#retry_request_memory">HTCondor manual</a>.</p>
   </li>
-  <li>improvements to <code>condor_watch_q</code> command - users’ favorite command for monitoring the progress of their jobs now shows when jobs are transferring files, and now accepts “any key” to exit.</li>
+  <li>
+    <p><strong>improvements to <code>condor_watch_q</code> command</strong> - users’ favorite command for monitoring the progress of their jobs now shows when jobs are transferring files, and now accepts “any key” to exit.</p>
+  </li>
 </ul>
 
 <h3 id="active-development">Active development</h3>
@@ -386,13 +384,13 @@ These GPUs are available to anyone with a CHTC account, with the option to scale
 
 <ul>
   <li>
-    <p>“common files” transfer - users can declare a set of files that every job needs and HTCondor will automatically reuse said files across multiple jobs on the same machine.</p>
+    <p><strong>“common files” transfer</strong> - users can declare a set of files that every job needs and HTCondor will automatically reuse said files across multiple jobs on the same machine.</p>
   </li>
   <li>
-    <p>tool for resource usage analysis - users can see a summary report of the amount of resources their jobs actually used, to help optimize the amounts that they are requesting.</p>
+    <p><strong>tool for resource usage analysis</strong> - users can see a summary report of the amount of resources their jobs actually used, to help optimize the amounts that they are requesting.</p>
   </li>
   <li>
-    <p>“remote submit” - users can submit jobs directly from their own computer using Python.</p>
+    <p><strong>“remote submit”</strong> - users can submit jobs directly from their own computer using Python.</p>
   </li>
 </ul>
 
@@ -403,13 +401,13 @@ These GPUs are available to anyone with a CHTC account, with the option to scale
 
 <ul>
   <li>
-    <p>“noun verb” commands interface - users would be able to interact with HTCondor using an easier-to-learn set of commands that are more consistent with other CLI tools.</p>
+    <p><strong>“noun verb” commands interface</strong> - users would be able to interact with HTCondor using an easier-to-learn set of commands that are more consistent with other CLI tools.</p>
   </li>
   <li>
-    <p>finer-grained declaration of file transfers - users would be able to more easily declare multiple file transfers and mappings, while preserving backwards compatibility.</p>
+    <p><strong>finer-grained declaration of file transfers</strong> - users would be able to more easily declare multiple file transfers and mappings, while preserving backwards compatibility.</p>
   </li>
   <li>
-    <p>more support for interactive work - users would be able to deploy interactive computing environments more easily.</p>
+    <p><strong>more support for interactive work</strong> - users would be able to deploy interactive computing environments more easily.</p>
   </li>
 </ul>
 
@@ -503,9 +501,13 @@ Dr. Negreiro worked closely with CHTC staff to develop her workflow and to set u
 
 <h2 id="about-chtc">About CHTC</h2>
 
-<p>The Center for High Throughput Computing (CHTC) is more than just a compute cluster - we’re a research center dedicated to empowering researchers worldwide through the paradigm of High Throughput Computing (HTC).
-Based out of the <a href="https://www.cs.wisc.edu/">Department of Computer Sciences at the University of Wisconsin - Madison</a> and out of the <a href="https://morgridge.org/">Morgridge Institute for Research</a>, we are the developers of the <a href="https://htcondor.org/">HTCondor Software Suite</a> and the <a href="https://pelicanplatform.org/">Pelican Platform</a>.
-As founding members of the <a href="https://osg-htc.org">OSG Consortium</a>, we support critical functions of the <a href="https://osg-htc.org/services/ospool">OSPool</a>, the <a href="https://osg-htc.org/services/osdf">OSDF</a>, and other large scientific computing collaborations.</p>
+<p>The Center for High Throughput Computing (CHTC) is more than just a compute cluster - we’re a research center dedicated to empowering researchers worldwide through the paradigm of High Throughput Computing (HTC).</p>
+
+<ul>
+  <li>Based out of the <a href="https://www.cs.wisc.edu/">Department of Computer Sciences at the University of Wisconsin - Madison</a> and out of the <a href="https://morgridge.org/">Morgridge Institute for Research</a></li>
+  <li>Developers of the <a href="https://htcondor.org/">HTCondor Software Suite</a> and the <a href="https://pelicanplatform.org/">Pelican Platform</a>.</li>
+  <li>Founding members of the <a href="https://osg-htc.org">OSG Consortium</a>, supporting critical functions of the <a href="https://osg-htc.org/services/ospool">OSPool</a>, the <a href="https://osg-htc.org/services/osdf">OSDF</a>, and other large scientific computing collaborations.</li>
+</ul>
 
 <p>For more information, see our main website at <a href="https://chtc.cs.wisc.edu">chtc.cs.wisc.edu</a>.</p>
 
