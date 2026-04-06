@@ -292,7 +292,7 @@
 <h2 id="availablility">Availablility</h2>
 <h3 id="shared-gpus">Shared GPUs</h3>
 
-<p>Interactive jobs on CHTC’s shared GPU machines are limited to the following resources:</p>
+<p>We have <em>dedicated</em> slots for interactive jobs on CHTC’s shared GPU machines:</p>
 
 <table>
   <thead>
@@ -319,13 +319,15 @@
   </tbody>
 </table>
 
-<p><strong>Interactive GPU jobs have a maximum runtime of 4 hours.</strong></p>
+<p>The slots in the table above <em>only</em> run interactive GPU jobs. Interactive GPU jobs can still run on other slots on shared GPU machines, depending on availability upon submission.</p>
 
-<p>Users will <strong>only</strong> be able to run <code>condor_ssh_to_job</code> on interactive GPU jobs. This function is disabled for noninteractive GPU jobs.</p>
+<p><strong>All interactive GPU jobs have a maximum runtime of 4 hours and are limited to 1 GPU.</strong> Interactive multi-GPU jobs are not permitted on CHTC’s shared GPU machines.</p>
+
+<p>You will not be able to run <code>condor_ssh_to_job</code> on noninteractive GPU jobs.</p>
 
 <h3 id="researcher-owned-gpus">Researcher-owned GPUs</h3>
 
-<p>Users with access to researcher-owned GPU machines may submit interactive jobs within those machines’ resource limits.</p>
+<p>If you have access to researcher-owned GPU machines, you may submit interactive jobs within those machines’ resource limits. <code>condor_ssh_to_job</code> is permitted on these machines.</p>
 
 <h2 id="submit-an-interactive-gpu-job">Submit an interactive GPU job</h2>
 
@@ -349,6 +351,7 @@
 <h2 id="related-pages">Related pages</h2>
 <ul>
   <li><a href="gpu-jobs">Use GPUs</a></li>
+  <li><a href="htc-monitor-jobs">Monitor your jobs</a></li>
   <li><a href="machine-learning-htc">Machine learning jobs</a></li>
   <li><a href="https://badgercompute.wisc.edu">Interactive computing with BadgerCompute</a></li>
 </ul>
@@ -461,7 +464,7 @@
             
             
     <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-gpu-interactive/uw-research-computing/condor_q#main">Monitor your job</a>
+        <a class="" href="/web-preview/preview-gpu-interactive/uw-research-computing/htc-monitor-jobs#main">Monitor your jobs</a>
     </div>
 
         
