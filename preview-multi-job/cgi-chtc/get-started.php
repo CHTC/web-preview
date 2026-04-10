@@ -1,0 +1,1 @@
+get-started_captcha.php
