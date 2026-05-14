@@ -343,7 +343,7 @@
   <h3 id="use-the-environment-variable-staging">Use the environment variable <code>STAGING</code></h3>
 </blockquote>
 <blockquote class="tip">
-  <p>We have set the environment variable <code>STAGING</code> to refer to your personal staging directory. For example:</p>
+  <p>We have set the environment variable <code>STAGING</code> on the Access Points to refer to your personal staging directory. For example:</p>
   <pre class="term"><code>[netid@ap2001] echo $STAGING
 /staging/n/netid
 </code></pre>
@@ -352,6 +352,10 @@
   <pre><code>container_image = osdf:///chtc$ENV(STAGING)/my-container.sif
 </code></pre>
   <p>HTCondor will replace <code>$ENV(STAGING)</code> with the path to your personal staging directory (i.e., <code>/staging/n/netid</code>). <a href="https://htcondor.readthedocs.io/en/latest/users-manual/submitting-a-job.html#function-macros-in-the-submit-description-file">See HTCondor docs</a> for more details about the <code>$ENV()</code> macro.</p>
+
+  <p>If you want to refer to your staging directory using the <code>$STAGING</code> environment variable <strong>in your jobs</strong>, add this to your submit file:</p>
+  <pre><code>environment = "STAGING=$ENV(STAGING)"
+</code></pre>
 </blockquote>
 
 <h2 id="why-we-are-transitioning">Why we are transitioning</h2>
