@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scale Beyond Local HTC Capacity</title>
+<title>Connect to CHTC with VS Code</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -261,12 +261,13 @@
         <div class="col-12 col-lg-9 mw-1000">
 
             <h1 class="uw-mini-bar mb-4">
-    Scale Beyond Local HTC Capacity
+    Connect to CHTC with VS Code
 </h1>
 
-            <p>This guide provides an introduction to running jobs outside of CHTC: why
-using these resources is beneficial, what resources are available, and
-how to use them.</p>
+            <p>VS Code and similar “IDE” programs make it easy to develop and manage coding projects.
+This familiar interface can also make it easier to login and interact with CHTC.</p>
+
+<p>This guide explains how to connect to CHTC using VS Code, best practices for using the interface, and how to troubleshoot issues.</p>
 
 <div class="d-flex flex-column mb-5">
 
@@ -276,182 +277,330 @@ how to use them.</p>
 <div class="uw-directory">
 
       <ul>
-        <li><a href="#why-run-on-additional-capacity-outside-chtc">Why run on additional capacity outside CHTC?</a></li>
-        <li><a href="#is-this-capacity-for-you">Is this capacity for you?</a></li>
-        <li><a href="#external-computing-capacity-available-from-chtc">External computing capacity accessible from CHTC</a></li>
-        <li><a href="#how-to-use-external-capacity">How to use external capacity</a>
-          <ul>
-            <li><a href="#testing-jobs-outside-chtc">Testing jobs outside CHTC</a></li>
-          </ul>
-        </li>
-        <li><a href="#things-to-consider">Things to consider</a></li>
-        <li><a href="#related-pages">Related Pages</a></li>
+        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#initial-set-up">Initial set-up</a></li>
+        <li><a href="#connect-again">Connect again</a></li>
+        <li><a href="#use-vs-code-on-chtc">Use VS Code on CHTC</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+        <li><a href="#other-ides">Other IDEs</a></li>
+        <li><a href="#related-pages">Related pages</a></li>
       </ul>
 
     </div>
 </div>
 </div>
 
-<h2 id="why-run-on-additional-capacity-outside-chtc">Why run on additional capacity outside CHTC?</h2>
+<h2 id="requirements">Requirements</h2>
 
-<p>Running on other resources in addition to CHTC has one huge benefit:
-<strong>size!</strong></p>
+<ul>
+  <li>VS Code or similar IDE installed on your local computer</li>
+  <li>Login access to the HTC or HPC system (requires a <a href="form.md">CHTC account</a>)</li>
+  <li>How to use VS Code’s “command palette”</li>
+</ul>
 
-<p>In addition to what’s available at CHTC, UW-Madison groups and the national OSG Consortium make 
-thousands of computers available for high throughput computing, including specialized 
-hardware resources like GPUs.</p>
+<blockquote class="tip-header">
+  <h3 id="confirm-access">Confirm access</h3>
+</blockquote>
 
-<p>Most CHTC users who submit jobs to CHTC, campus pools, and the OSPool can get more than 100,000 computer
-hours (more than 11 years of computing!) in a single day.</p>
+<blockquote class="tip">
+  <p>Before starting, make sure that you can login to CHTC “normally” via a plain terminal, as described in our <a href="connecting.md">Log in to CHTC guide</a>.</p>
+</blockquote>
 
-<!--to do: cool graphic or link to story about OSPool user?-->
+<h2 id="initial-set-up">Initial set-up</h2>
 
-<h2 id="is-this-capacity-for-you">Is this capacity for you?</h2>
+<ol>
+  <li>Install the “Remote-SSH” extension</li>
+  <li>Add access point as a new SSH host</li>
+  <li>Login</li>
+  <li>Login with the file viewer</li>
+</ol>
 
-<p>Many jobs on CHTC’s HTC system would benefit from extra computing capacity! We make 
-the following recommendations to decide if your jobs would be a good fit.</p>
+<h3 id="install-the-remote-ssh-extension">Install the Remote-SSH extension</h3>
+
+<p>Open VS Code and navigate to the “Extensions” menu.
+(Click on the “View” menu and select “Extensions”, or use the <code>Ctrl</code>+<code>Shift</code>+<code>X</code> shortcut.)</p>
+
+<p>Search for the “Remote - SSH” extension, it will likely be the first extension listed. 
+<strong>The publisher should be “Microsoft”.</strong>
+Install this extension.</p>
+
+<h3 id="add-access-point-as-a-new-ssh-host">Add access point as a new SSH host</h3>
+
+<p>Use the “Command Palette” to search for the “Remote-SSH: Add New SSH Host” command.</p>
+
+<p>You will be prompted to enter your SSH command.
+Enter the same command that you would normally use to login to your access point.</p>
+
+<p>For example, if your NetID is <code>bbadger</code> and you are logging into <code>ap2002</code>, you would use</p>
+
+<pre class="term"><code>ssh bbadger@ap2002.chtc.wisc.edu
+</code></pre>
+
+<p>You will then be prompted to choose an SSH configuration file that you wish to update.
+Several options will be provided for you; select the location you wish to save the SSH settings.</p>
+
+<blockquote>
+  <p>If you want to save the settings to a different location, then you will need to specify that location in the VS Code settings.
+Go to the settings menu and search for “Remote.SSH: Config File”, then enter the desired absolute path in the text box.
+Then repeat the above instructions and this location will be the only available choice.</p>
+</blockquote>
+
+<h3 id="login">Login</h3>
+
+<p>After adding the access point as a host, VS Code will automatically log you in.</p>
+
+<ol>
+  <li>VS Code will ask you to confirm the authenticity of the host; enter “yes” to confirm and proceed.
+(Contact the facilitation team if you want to verify the authenticity.)</li>
+  <li>You’ll be prompted for a password - enter your NetID password.</li>
+  <li>You’ll be prompted to complete DUO authentication; either (a) enter <code>1</code> to receive a push notification to your DUO app, or (b) enter the current sequence from your app or fob.</li>
+</ol>
+
+<p>The rest of the process should be automatic, as VS Code sets things up in your personal directory to work with VS Code.</p>
+
+<p>You are successful in the first login if there are no error messages.
+You should also see “SSH: server_name” in the very bottom left corner of the window.</p>
+
+<h3 id="login-with-the-file-viewer">Login with the file viewer</h3>
+
+<p>To see your files on the access point via VS Code, you will need to login a second time.</p>
+
+<p>Open the “Explorer” toolbar and click the “Open Folder” button.
+A pop-up interface will prompt you to provide a path; just hit the enter key to accept the default value (your home directory).</p>
+
+<p>You will be prompted to login again - do so.
+The window will refresh, after which you should be able to see your home directory in the file explorer.</p>
+
+<h2 id="connect-again">Connect again</h2>
+
+<blockquote>
+  <p>This assumes that you’ve already completed the initial set-up on the current device!</p>
+</blockquote>
+
+<ol>
+  <li>“Open Recent”</li>
+</ol>
+
+<p>or</p>
+
+<ol>
+  <li>“Connect to Host”</li>
+  <li>Login with file viewer</li>
+</ol>
+
+<h3 id="open-recent">Open recent</h3>
+
+<p>If the connection to CHTC was a recent session, you should be able to find it in the “Open Recent” menu.</p>
+
+<p>You can find the “Open Recent” menu</p>
+
+<ul>
+  <li>on the VS Code start-up page,</li>
+  <li>under “File &gt; Open Recent”,</li>
+  <li>searching for “File: Open Recent” in the command palette, or</li>
+  <li>using the keyboard shortcut <code>Ctrl</code>+<code>R</code>.</li>
+</ul>
+
+<h3 id="connect-to-host">Connect to host</h3>
+
+<p>If the connection to CHTC is not in your recents list, you can also find it in the “Connect to Host” menu.</p>
+
+<p>You can find the “Connect to Host” menu</p>
+
+<ul>
+  <li>clicking the “&gt;&lt;” icon in the very bottom left corner of the window, or</li>
+  <li>searching for “Remote-SSH: Connect to Host” in the command palette.</li>
+</ul>
+
+<p>You can select or search for the access point from this menu.
+If you don’t see the access point in the menu, you probably need to follow the instructions in <a href="#initial-set-up">Initial set-up</a> again.</p>
+
+<p>Once you’ve connected to your access point, open the “Explorer” toolbar and click the “Open Folder” button.
+Hit the enter key to accept the default value (your home directory) or navigate to only have access to a sub-directory.</p>
+
+<h2 id="use-vs-code-on-chtc">Use VS Code on CHTC</h2>
+
+<p>VS Code is connected to the <strong>access point</strong>.</p>
+
+<p>To run calculations, you will still need to submit a job!</p>
+
+<blockquote class="tip-header">
+  <h3 id="️-intensive-work">⚠️ Intensive work</h3>
+</blockquote>
+
+<blockquote class="tip">
+  <p>Do not run intensive commands or scripts via the VS Code connection to CHTC.
+(This includes anything your AI Agent may run!)</p>
+</blockquote>
+
+<h3 id="find-and-edit-files">Find and edit files</h3>
+
+<p>If you’ve set up the file viewer (“explorer”), then you can find and edit files that are on the access point just like you would with VS Code and the files on your computer.</p>
+
+<h3 id="submit-jobs">Submit jobs</h3>
+
+<p>Regardless of whether you are using HTCondor or Slurm, you will still need to submit jobs via the terminal.</p>
+
+<p>To access the built-in terminal with VS Code,</p>
+
+<ul>
+  <li>go to “Terminal” and click “New Terminal”,</li>
+  <li>use the <code>Ctrl</code>+<code>\</code>` keyboard shortcut, or</li>
+  <li>right-click a file or directory and select “Open in integrated terminal”.</li>
+</ul>
+
+<p>This will open a terminal in your VS Code window.</p>
+
+<p>In this terminal window, you can run the usual HTCondor or Slurm commands for submitting jobs and interacting with the system as usual.
+Remember to <code>cd</code> into the correct directory first!</p>
+
+<blockquote class="tip-header">
+  <h3 id="️-interactive-jobs">⚠️ Interactive jobs</h3>
+</blockquote>
+
+<blockquote class="tip">
+  <p>When you submit an interactive job via the terminal, <strong>only that terminal</strong> is connected to the interactive job.
+The rest of the VS Code interface (including new terminals) are still connected to the access point!</p>
+</blockquote>
+
+<h3 id="extensions">Extensions</h3>
+
+<p>If there are extensions you want to use in the remote session, you may need to install them again through the “Extensions” toolbar.</p>
+
+<p>Avoid installing extensions that use a lot of computing power (e.g., that cause your computer to run more slowly), as this will cause the login server to run more slowly as well.</p>
+
+<h3 id="htcondor-vs-code-extension">HTCondor VS Code Extension</h3>
+
+<p>HTCondor provides a VS Code extension.</p>
+
+<p>You can find the extension by searching for “Htcondor”, <strong>published by htcondor</strong>.</p>
+
+<p>Current features include syntax highlighting for submit files, documentation tooltips on hover over submit commands, and submit file templates.
+Create a file that ends with <code>.sub</code> and test it out!</p>
+
+<p>This extension is not fully developed. 
+Contact the facilitation team if you have feedback about the extension.</p>
+
+<h3 id="ai-integration">AI integration</h3>
+
+<p>VS Code supports integration with AI Agents.</p>
+
+<p>You are not discouraged from using said Agents, but you should be sure to supervise them responsibly.
+<strong>You are ultimately responsible for anything your AI Agent does on the access point!</strong></p>
+
+<p>For more guidance on working with AI Agents on the access point, see our guide here:</p>
+
+<div class="d-flex mb-3">
+	<div class="p-3 m-auto">
+		<a class="btn btn-primary" href="https://chtc.cs.wisc.edu/uw-research-computing/agent-recommendations">AI Agents on CHTC</a>
+	</div>
+</div>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>The most common issue is not being able to login.</p>
 
 <table>
-<tr>
-  <th>Job Length</th>
-  <td>10-24 hours (per job)</td>
-  <td>Your job should complete in under 10 hours
-    — either it finishes in that amount of time, or it
-    <a href="checkpointing">self-checkpoints</a> at least that frequently. If you would like to implement
-    self-checkpointing for a longer code, we are happy to provide resources 
-    and guidance. </td>
-</tr>
-<tr>
-  <th>Data Size</th>
-  <td>Up to 20GB input/output per job</td>
-  <td>This covers input files that would normally be 
-	transferred out of a <code>/home</code> directory or using an <code>osdf:///</code> URL from 
-	the  <code>/staging</code> directory.</td>
-</tr>
-<tr>
-  <th>Software</th>
-  <td>An Apptainer container (recommended)</td>
-  <td>Almost any software that runs in CHTC will run outside CHTC, but the best 
-  scenario is using a container to maintain a consistent software environment.</td>
-</tr>
-</table>
-
-<p>If you have large data files, long jobs, or questions about containers,
-please <a href="mailto:chtc@cs.wisc.edu">contact us</a>!</p>
-
-<h2 id="external-computing-capacity-accessible-from-chtc">External computing capacity accessible from CHTC</h2>
-
-<h3 id="uw-campus-pools">UW Campus Pools</h3>
-
-<p>CHTC has connections with other groups and centers 
-on campus that run their own high throughput computing pool that
-uses HTCondor. Some of these groups include departments (Biochemistry,
-Statistics) or large physics projects (IceCube, CMS). Through agreements
-with these groups, jobs submitted in CHTC can opt into running on these
-other campus pools if they are not fully utilized by their owners.</p>
-
-<h3 id="open-science-pool-ospool">Open Science Pool (OSPool)</h3>
-
-<p>As the home for the <a href="https://path-cc.io/">PATh project</a>, CHTC operates a 
-national high throughput computing pool called the 
-<a href="https://osg-htc.org/services/ospool/">Open Science Pool</a>, composed of 
-computing capacity contributed by campuses, national labs, and other institutions 
-across and beyond the United States. CHTC users submitting from a CHTC Access Point can 
-opt into allowing their jobs to utilize this national pool.</p>
-
-<h2 id="how-to-use-external-capacity">How to use external capacity</h2>
-
-<p>If your jobs meet the characteristics above and you would like to use
-external HTC pools to run jobs, in addition to CHTC, you can add
-the following to your submit file:</p>
-
-<table class="gtable">
+  <thead>
+    <tr>
+      <th>Intervention</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <td><code>want_campus_pools = true</code></td>
-      <td>Opts into sending jobs to other HTCondor Pools on campus.<br />Good for jobs that are less than ~12 hours, on average, or jobs with checkpointing.</td>
+      <td>Confirm regular login access</td>
+      <td>If you can’t login with a plain terminal, you won’t be able to using VS Code</td>
     </tr>
     <tr>
-      <td><code>want_ospool = true</code></td>
-      <td>Opts into sending jobs to the OS Pool. <br /> Good for jobs that are less than ~12 hours, on average, or jobs with checkpointing</td>
+      <td>“Kill VS Code Server on Host”</td>
+      <td>Built-in command that attempts to login and automatically shut-down VS Code on the remote server</td>
+    </tr>
+    <tr>
+      <td>“Uninstall VS Code Server from Host”</td>
+      <td>Built-in command that attempts to login, shut-down, and uninstall VS Code on the remote server</td>
+    </tr>
+    <tr>
+      <td>Manual clean-up</td>
+      <td>You login with a plain terminal to shut-down and uninstall VS Code from the remote server</td>
+    </tr>
+    <tr>
+      <td>Ask for help</td>
+      <td>If nothing else works, ask a facilitator for help!</td>
     </tr>
   </tbody>
 </table>
 
-<p><span name="testing"></span></p>
+<p>When you connect to the access point, VS Code installs a “remote server” on the access point, allowing you to use VS Code to write and manipulate files directly.
+Most issues occur when there is a problem connecting to or restarting this remote server.</p>
 
-<h3 id="testing-jobs-outside-chtc">Testing jobs outside CHTC</h3>
+<h3 id="kill-vs-code-server-on-host">“Kill VS Code Server on Host”</h3>
 
-<p>To guarantee maximum efficiency, please do the following steps
-whenever submitting a new type of job beyond CHTC.</p>
+<p>In VS Code, use the command palette and search for the command <code>Remote-SSH: Kill VS Code Server on Host</code> and select the server that you are having issues connecting to.
+You will be prompted to log in to the access point and VS Code will automatically run the necessary commands before logging out again.</p>
 
-<ol>
-  <li>
-    <p><strong>Run test jobs:</strong> You should run set of test jobs (anywhere from
-10-2000 jobs) outside CHTC before submitting your full workflow. To
-do this, take a job submission that you know runs successfully on
-CHTC. Add the following options in the submit file and submit the
-test jobs:</p>
+<p>This command can only work if you are able to login to the access point with a plain terminal.</p>
 
-    <pre><code class="language-{.sub}">requirements = (Poolname =!= "CHTC")
-want_campus_pools = true
-want_ospool = true
+<h3 id="uninstall-vs-code-server-from-host">“Uninstall VS Code Server from Host”</h3>
+
+<p>In VS Code, use the command palette and search for the command <code>Remote-SSH: Uninstall VS Code Server from Host</code> and select the server that you are having issues connecting to.
+You will be prompted to log in to the access point and VS Code will automatically run the necessary commands before logging out again.</p>
+
+<p>This can only work if you are able to login to the access point with a plain terminal.</p>
+
+<p>The next time you login with VS Code, it should automatically set up what it needs to work.</p>
+
+<h3 id="manual-clean-up">Manual clean-up</h3>
+
+<p>VS Code isn’t always able to clean-up after itself like it should, in which case a manual clean-up may fix the problem.</p>
+
+<p>Log in to the access point using a plain terminal.
+Then, run the following command:</p>
+
+<pre class="term"><code>kill -9 $(ps aux | grep VS Code-server | grep $USER | grep -v grep | awk '{print $2}')
 </code></pre>
 
-    <p>(If your submit file already has a <code>requirements = </code> line, you can
-appending the <code>Poolname</code> requirement by using a double ampersand
-(<code>&amp;&amp;</code>) and then the additional requirement.)</p>
-  </li>
-  <li>
-    <p><strong>Identify problems:</strong> If your jobs don't run successfully on the UW
-Grid or OS Pool, please <a href="get-help.html">get in touch with a research computing
-facilitator</a>.</p>
-  </li>
-  <li>
-    <p><strong>Scale up:</strong> Once you have tested your jobs and they seem to be
-running successfully, you are ready to submit a full batch of jobs
-that uses CHTC and the UW Grid/OS Pool. <strong>REMOVE</strong> the <code>Poolname</code>
-requirement from the test jobs but leave the <code>want_campus_pools</code> and
-<code>want_ospool</code> lines.</p>
-  </li>
-</ol>
+<p>This command looks for left-over processes from your VS Code on the server and then removes (“kill”) them.
+(If you don’t have any VS Code processes running on the server, then you may get the help text for the <code>kill</code> command.)</p>
 
-<h2 id="things-to-consider">Things to consider</h2>
+<p>Next, remove the VS Code directory from your home directory:</p>
 
-<h3 id="containers">Containers</h3>
+<pre class="term"><code>rm -rf ~/.vscode-server
+</code></pre>
 
-<p>Containers are the best way to ensure a consistent software environment for 
-your jobs when running inside and outside CHTC. We generally recommend using
-Apptainer, since the OSPool provides the best support for Apptainer containers.</p>
+<p>This removes the items that VS Code automatically uploaded to set up the remote server, which may be responsible for causing problems.
+The next time you try to connect with VS Code, it should automatically set up what it needs to work.</p>
+
+<h3 id="lots-of-files">Lots of files</h3>
+
+<p>If you have a lot of files in your directory on the access point, then VS Code may struggle to list and scan those files for the file viewer.</p>
+
+<p>If this is causing you problems, here are some things to try:</p>
 
 <ul>
-  <li><strong>Already using Apptainer?</strong> Great! No changes needed.</li>
-  <li><strong>Already using Docker?</strong> Convert your container to the apptainer format and use 
-staging and and <code>osdf:///</code> URL to send it to your jobs. See 
-<a href="apptainer-build#converting-a-docker-image-to-an-apptainer-container-image">this guide</a> for details.</li>
-  <li><strong>Not using containers at all?</strong> <a href="apptainer-htc">Check out our docs</a> or 
-<a href="get-help">talk to CHTC facilitators</a> about the best approach for your code.</li>
+  <li>Reduce the number of files on the server.</li>
+  <li>Open a specific directory in the file viewer, instead of the default home directory. (“Connect to host” then “Open Folder” and select a sub-directory in the dialog.)</li>
+  <li>Configure VS Code to ignore the directories that contain a lot of files.</li>
 </ul>
 
-<h3 id="data">Data</h3>
+<h2 id="other-ides">Other IDEs</h2>
 
-<p>If you are transferring your data to jobs:</p>
+<p>If the program you want to use is a derivative of VS Code (e.g., Google’s Antigravity), then the Remote SSH extension is likely already built-in.
+The instructions in this guide should map nearly perfectly to that program.</p>
+
+<p>Other IDE programs usually include an equivalent feature. 
+There should be instructions in the program’s documentation about the process.
+Look for “remote server” or “ssh” or the like. 
+The overall process should be similar.</p>
+
+<p>The facilitation team may be able to help you figure out the process, but keep in mind that we do not explicitly support these tools.</p>
+
+<h2 id="related-pages">Related pages</h2>
 
 <ul>
-  <li>from <code>/home</code>, using normal HTCondor file transfer</li>
-  <li>from an individual <code>/staging</code> directory, using an <code>osdf:///</code> URL.</li>
-</ul>
-
-<p>You can use capacity outside of CHTC. If you are using a different method to 
-access your files, <a href="get-help">contact the facilitation team</a> about how you might 
-run your work outside CHTC.</p>
-
-<h2 id="related-pages">Related Pages</h2>
-
-<ul>
-  <li><a href="htc-job-file-transfer">Use and transfer data in jobs on the HTC system</a></li>
-  <li><a href="apptainer-htc">Use Apptainer Containers </a></li>
-  <li><a href="apptainer-build#converting-a-docker-image-to-an-apptainer-container-image">Convert docker to apptainer</a></li>
+  <li><a href="connecting.md">Log in to CHTC</a></li>
+  <li><a href="transfer-files-computer.md">Transfer Files between CHTC and your Computer</a></li>
+  <li><a href="https://code.visualstudio.com/docs/remote/ssh">VS Code Remote SSH manual</a></li>
 </ul>
 
         </div>
@@ -517,7 +666,7 @@ run your work outside CHTC.</p>
                             
                                 
     <div class="document-link-wrapper bg-light">
-        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/vs-code#main">Connect to CHTC with VS Code</a>
+        <a class="fw-bolder" href="/web-preview/preview-vs-code/uw-research-computing/vs-code#main">Connect to CHTC with VS Code</a>
     </div>
 
                             
@@ -909,7 +1058,7 @@ run your work outside CHTC.</p>
                             
                                 
     <div class="document-link-wrapper bg-light">
-        <a class="fw-bolder" href="/web-preview/preview-vs-code/uw-research-computing/scaling-htc#main">Scale beyond local HTC capacity</a>
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/scaling-htc#main">Scale beyond local HTC capacity</a>
     </div>
 
                             
@@ -1002,6 +1151,307 @@ run your work outside CHTC.</p>
                                 
     <div class="document-link-wrapper bg-light">
         <a class="" href="https://sts.doit.wisc.edu/workshops/#main">UW-Madison software training for students</a>
+    </div>
+
+                            
+                        </div>
+                    </div>
+            
+        </div>
+    
+        
+                <h6 class="mt-5">HPC guides</h6>
+        
+        
+        <div class="accordion accordion-flush">
+            
+            
+                <div class="accordion-item">
+                        
+                        <span class="accordion-header mt-0" id="get-startedhpc-guides">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#get-startedhpc-guides-collapse" aria-expanded="false" aria-controls="get-startedhpc-guides">
+                                Get started
+                            </button>
+                        </span>
+                        <div id="get-startedhpc-guides-collapse" class="accordion-collapse collapse" aria-labelledby="get-startedhpc-guides" data-bs-parent="#guide-sidebar">
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-overview#main">System overview</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/connecting#main">Log in to CHTC</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/configure-ssh#main">Automate CHTC login</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/basic-shell-commands#main">Quick reference: Basic shell commands</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-quick-ref#main">Quick reference: HPC and SLURM commands</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="fw-bolder" href="/web-preview/preview-vs-code/uw-research-computing/vs-code#main">Connect to CHTC with VS Code</a>
+    </div>
+
+                            
+                        </div>
+                    </div>
+            
+            
+                <div class="accordion-item">
+                        
+                        <span class="accordion-header mt-0" id="submit-jobshpc-guides">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#submit-jobshpc-guides-collapse" aria-expanded="false" aria-controls="submit-jobshpc-guides">
+                                Submit jobs
+                            </button>
+                        </span>
+                        <div id="submit-jobshpc-guides-collapse" class="accordion-collapse collapse" aria-labelledby="submit-jobshpc-guides" data-bs-parent="#guide-sidebar">
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-job-submission#main">Submitting and managing jobs using SLURM</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-job-monitoring#main">Reviewing job information using SLURM</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper" style="background-color: #d3d3d3;">
+    <span style="font-size: .8rem;">
+      <i class="bi bi-folder me-2"></i>
+      Open OnDemand
+    </span>
+    </div>
+    <div class="list-group ps-4 border-start bg-light">
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/ood#main">Overview</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/ood-job-composer#main">Job Composer</a>
+    </div>
+
+        
+    </div>
+
+                            
+                        </div>
+                    </div>
+            
+            
+                <div class="accordion-item">
+                        
+                        <span class="accordion-header mt-0" id="manage-datahpc-guides">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#manage-datahpc-guides-collapse" aria-expanded="false" aria-controls="manage-datahpc-guides">
+                                Manage data
+                            </button>
+                        </span>
+                        <div id="manage-datahpc-guides-collapse" class="accordion-collapse collapse" aria-labelledby="manage-datahpc-guides" data-bs-parent="#guide-sidebar">
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-check-quota#main">Check disk quota and usage</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper" style="background-color: #d3d3d3;">
+    <span style="font-size: .8rem;">
+      <i class="bi bi-folder me-2"></i>
+      Transfer files to/from CHTC
+    </span>
+    </div>
+    <div class="list-group ps-4 border-start bg-light">
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/transfer-files-computer#main">Local computer</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/transfer-data-researchdrive#main">ResearchDrive</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/github-remote-access#main">Private GitHub repo</a>
+    </div>
+
+        
+    </div>
+
+                            
+                        </div>
+                    </div>
+            
+            
+                <div class="accordion-item">
+                        
+                        <span class="accordion-header mt-0" id="softwarehpc-guides">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#softwarehpc-guides-collapse" aria-expanded="false" aria-controls="softwarehpc-guides">
+                                Software
+                            </button>
+                        </span>
+                        <div id="softwarehpc-guides-collapse" class="accordion-collapse collapse" aria-labelledby="softwarehpc-guides" data-bs-parent="#guide-sidebar">
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-software#main">Overview and Policies</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-custom-modules#main">Create and manage custom modules</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper" style="background-color: #d3d3d3;">
+    <span style="font-size: .8rem;">
+      <i class="bi bi-folder me-2"></i>
+      Spack
+    </span>
+    </div>
+    <div class="list-group ps-4 border-start bg-light">
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-spack-setup#main">Set up</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-spack-install#main">Install software</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-spack-modules#main">Create custom Spack modules</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-el9-spack#main">Recreate Spack installs on a new operating system</a>
+    </div>
+
+        
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper" style="background-color: #d3d3d3;">
+    <span style="font-size: .8rem;">
+      <i class="bi bi-folder me-2"></i>
+      Containers
+    </span>
+    </div>
+    <div class="list-group ps-4 border-start bg-light">
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/apptainer-hpc#main">Use Apptainer containers</a>
+    </div>
+
+        
+            
+            
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/apptainer-build#main">Build an Apptainer container</a>
+    </div>
+
+        
+    </div>
+
+                            
+                        </div>
+                    </div>
+            
+            
+                <div class="accordion-item">
+                        
+                        <span class="accordion-header mt-0" id="troubleshootinghpc-guides">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#troubleshootinghpc-guides-collapse" aria-expanded="false" aria-controls="troubleshootinghpc-guides">
+                                Troubleshooting
+                            </button>
+                        </span>
+                        <div id="troubleshootinghpc-guides-collapse" class="accordion-collapse collapse" aria-labelledby="troubleshootinghpc-guides" data-bs-parent="#guide-sidebar">
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="/web-preview/preview-vs-code/uw-research-computing/hpc-known-issues#main">Known issues on the HPC</a>
+    </div>
+
+                            
+                        </div>
+                    </div>
+            
+            
+                <div class="accordion-item">
+                        
+                        <span class="accordion-header mt-0" id="external-resourceshpc-guides">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#external-resourceshpc-guides-collapse" aria-expanded="false" aria-controls="external-resourceshpc-guides">
+                                External resources
+                            </button>
+                        </span>
+                        <div id="external-resourceshpc-guides-collapse" class="accordion-collapse collapse" aria-labelledby="external-resourceshpc-guides" data-bs-parent="#guide-sidebar">
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="http://slurm.schedmd.com/#main">Slurm manual</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="http://software-carpentry.org/lessons/#main">Software Carpentry</a>
+    </div>
+
+                            
+                                
+    <div class="document-link-wrapper bg-light">
+        <a class="" href="http://www.doit.wisc.edu/training/student/#main">UW-Madison software training for students</a>
     </div>
 
                             
