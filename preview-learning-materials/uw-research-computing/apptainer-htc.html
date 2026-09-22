@@ -73,7 +73,7 @@
 <div class="container-fluid">
     <div class="row justify-content-between bg-primary"  role="navigation">
         <div class="col-auto">
-            <a class="uw-global-name-link" href="https://cdis.wisc.edu/" aria-label="University home page">UW-Madison CDIS</a> | <a class="uw-global-name-link" href="https://morgridge.org/" aria-label="Morgridge home page">Morgridge Institute</a>
+            <a class="uw-global-name-link" href="https://cai.wisc.edu/" aria-label="University home page">UW-Madison CAI</a> | <a class="uw-global-name-link" href="https://morgridge.org/" aria-label="Morgridge home page">Morgridge Institute</a>
         </div>
         <div class="col-auto">
             <div class="row">
@@ -99,9 +99,9 @@
         
 
 
-    <div class="alert alert-warning text-center mb-0 rounded-0" role="alert">
+    <!--<div class="alert alert-warning text-center mb-0 rounded-0" role="alert">
         <b>HTC users</b>: From May 15 - August 31, we are transitioning users' personal /staging directories. See how you're affected and what you should do on <a href="/uw-research-computing/staging-transition">staging transition page</a>.
-    </div>
+    </div>-->
 
     
     <button id="uw-top-menus-button" class="uw-mobile-menu-button-bar uw-mobile-menu-button-bar-reversed uw-is-closed" data-menu="uw-top-menus" aria-label="Open menu" aria-expanded="true" aria-controls="uw-top-menus">UW-Research Computing<svg aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-menu"></use></svg><svg aria-hidden="true" focusable="false"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#uw-symbol-close"></use></svg></button>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="d-none d-lg-block border-start border-primary border-2 align-self-stretch my-2"></div>
                 <div class="d-none d-lg-flex align-items-center gap-1 ps-2">
-                    <a href="https://cdis.wisc.edu/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://cai.wisc.edu/" target="_blank" rel="noopener noreferrer">
                         <img src="/web-preview/preview-learning-materials/images/logos/UW_Crest.svg" height="40" width="35" class="uw-logo-svg" alt="Link to UW-Madison Home Page">
                     </a>
                     <a href="https://morgridge.org" target="_blank" rel="noopener noreferrer">
@@ -383,6 +383,14 @@ process looks like this:</p>
   <li><strong>Move the container to a persistent location.</strong> We recommend placing the image file into your <code>/staging</code> folder.</li>
 </ol>
 
+<p>You can follow a step by step example of building a container here:</p>
+
+<div class="d-flex mb-3">
+	<div class="p-3 m-auto">
+		<a class="btn btn-primary" href="https://chtc.cs.wisc.edu/uw-research-computing/hello-containers">Practice: Building Apptainer Containers on CHTC</a>
+	</div>
+</div>
+
 <h3 id="create-a-definition-file">Create a definition file</h3>
 
 <p>To create your own container using Apptainer, you will need to create a definition (<code>.def</code>) file. CHTC provides example definition files in the <code>software</code> folder of our <a href="https://github.com/CHTC/recipes/tree/main/software">Recipes GitHub repository</a>.</p>
@@ -514,13 +522,26 @@ Search the internet for the error message as a starting point for troubleshootin
 <p>Since Apptainer <code>.sif</code> files are routinely more than 1GB in size, we recommend that you transfer <code>my-container.sif</code> to your <code>/staging</code> directory.
 It is usually easiest to move the container file directly to staging while still in the interactive build job:</p>
 
-<pre class="term"><code>mv my-container.sif /staging/$USER
+<pre class="term"><code>mv my-container.sif &lt;replace with your staging directory&gt;
 </code></pre>
 
-<p>If you do not have a <code>/staging</code> directory, you can skip this step and the <code>.sif</code> file will be automatically transferred back to the login server when you exit the interactive job.</p>
+<blockquote class="tip-header">
+  <h3 id="-your-path-to-your-staging-directory">💡 Your path to your staging directory</h3>
+</blockquote>
 
-<p>We encourage you to request a <code>/staging</code> directory, especially if you plan on running many jobs using this container.
-See our <a href="file-avail-largedata.html">Managing Large Data in Jobs</a> guide for more information on using staging.</p>
+<blockquote class="tip">
+  <p>Your path to your staging directory is unique! It should have the following format:</p>
+  <pre><code>/staging/&lt;first letter of your NetID&gt;/&lt;NetID&gt;
+</code></pre>
+  <p>For example, if your NetID is <code>bbadger</code>, your path to your staging directory is:</p>
+  <pre><code>/staging/b/bbadger
+</code></pre>
+  <p>And you should move your container, like so:</p>
+  <pre class="term"><code>mv my-container.sif /staging/b/bbadger
+</code></pre>
+</blockquote>
+
+<p>See our <a href="file-avail-largedata.html">Managing Large Data in Jobs</a> guide for more information on using staging.</p>
 
 <p>At this point, you can use the container in jobs, as described <a href="#use-an-apptainer-container-in-htc-jobs">above</a>.</p>
 
@@ -609,6 +630,7 @@ If the <code>.sif</code> file is located on the login server, you can use</p>
 <ul>
   <li><a href="apptainer-build">Building an Apptainer Container</a></li>
   <li><a href="htc-docker-to-apptainer.html">Convert Docker Images to Apptainer Images</a></li>
+  <li><a href="hello-containers">Practice Building Apptainer Containers on CHTC</a></li>
   <li><a href="apptainer-htc-advanced-example">Advanced Apptainer Example - SUMO</a></li>
   <li><a href="apptainer-hpc.html">Using Apptainer Containers on HPC</a></li>
   <li><a href="docker-jobs">Running HTC Jobs Using Docker Containers</a></li>
