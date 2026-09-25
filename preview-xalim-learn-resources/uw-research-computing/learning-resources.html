@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHTC User portal</title>
+<title>Learning Resources</title>
 <script type="text/javascript">
     function resizeIframe(iframe) {
         var newheight;
@@ -62,6 +62,8 @@
 
 
 
+
+<script src="/web-preview/preview-xalim-learn-resources/assets/js/pages/learning-resources.js" type="module" defer></script>
 
 
 
@@ -256,273 +258,680 @@
 
     </div>
     <main id="main" style="min-height: 60vh;">
-        <div class="container-xl mb-4">
-    <h1 class="uw-mini-bar mt-5 mb-4">User Portal</h1>
+        
+
+
+
+
+
+
+<div class="container-xxl pt-3" id="learning-resources">
+    <h1 class="uw-mini-bar mb-4">
+    Learning Resources
+</h1>
+
+
+    <p class="lm-intro">
+        Tutorials, workshop resources, and examples for learning how to run
+        your research computing work at scale. Filter by topic using the tags or search for a keyword.
+
+        Have a resource to contribute? <a href="https://uwmadison.co1.qualtrics.com/jfe/form/SV_42AO08VKRLP6lVA">Fill out our contribution form.</a>
+    </p>
+
     <div class="row">
-        <div class="col-xl-8 col-lg-12 mb-4">
-            
 
-            
-            
-            
-            
+        <!-- Sidebar: tag selector -->
+        <div class="col-12 col-lg-3">
+            <button class="btn btn-outline-primary w-100 mb-3 d-lg-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#lm-tag-panel"
+                    aria-expanded="false" aria-controls="lm-tag-panel">
+                Browse by tag
+            </button>
 
-            <div class="card mb-4 border-0">
-                    <div class="card-header bg-primary">
-                        <h2 class="m-0 text-light">
-                            Guides
-                        </h2>
+            <div class="collapse d-lg-block" id="lm-tag-panel">
+                <div class="lm-sidebar mb-4">
+                    <div class="lm-sidebar-header">
+                        <h2 class="h6 mb-0 mt-0">Tags</h2>
+                        <button type="button" class="btn btn-link btn-sm p-0 lm-clear-tags" id="lm-clear-tags" hidden>
+                            Clear
+                        </button>
                     </div>
-                    <div class="row g-3 text-dark">
-                        
-                            
-                            
-                            <div class="col-6 pt-3">
-                            
-                                <a href="htc/guides.html" class="portal-card btn w-100 h-100 p-4 border rounded-3 d-flex flex-column align-items-start">
-                                    
-                                    <i class="bi bi-book mb-2" style="font-size: 1.5rem;"></i>
-                                    
-                                    <span class="fw-bold" style="font-size: 1.25rem;">
-                                        HTC Guides
-                                    </span>
-                                    <p style="font-size: 0.9rem; margin-top: 0.5rem; text-align: left;">
-                                        Guides for the High Throughput Computing (HTC) system.
 
-                                    </p>
-                                </a>
-                            </div>
+                    <ul class="lm-tag-list list-unstyled mb-0 ms-0">
                         
-                            
-                            
-                            <div class="col-6 pt-3">
-                            
-                                <a href="hpc/guides.html" class="portal-card btn w-100 h-100 p-4 border rounded-3 d-flex flex-column align-items-start">
-                                    
-                                    <i class="bi bi-book mb-2" style="font-size: 1.5rem;"></i>
-                                    
-                                    <span class="fw-bold" style="font-size: 1.25rem;">
-                                        HPC Guides
-                                    </span>
-                                    <p style="font-size: 0.9rem; margin-top: 0.5rem; text-align: left;">
-                                        Guides for the High Performance Computing (HPC) system.
-
-                                    </p>
-                                </a>
-                            </div>
                         
-                    </div>
-                    
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-beginner-friendly">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-beginner-friendly"
+                                       value="beginner-friendly"
+                                       data-lm-tag="beginner-friendly">
+                                <span class="lm-tag-name">beginner-friendly</span>
+                                <span class="lm-tag-count" aria-label="2 guides">2</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-bioinformatics">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-bioinformatics"
+                                       value="bioinformatics"
+                                       data-lm-tag="bioinformatics">
+                                <span class="lm-tag-name">bioinformatics</span>
+                                <span class="lm-tag-count" aria-label="4 guides">4</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-chtc-created">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-chtc-created"
+                                       value="CHTC-created"
+                                       data-lm-tag="CHTC-created">
+                                <span class="lm-tag-name">CHTC-created</span>
+                                <span class="lm-tag-count" aria-label="8 guides">8</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-conda">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-conda"
+                                       value="conda"
+                                       data-lm-tag="conda">
+                                <span class="lm-tag-name">conda</span>
+                                <span class="lm-tag-count" aria-label="1 guide">1</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-container">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-container"
+                                       value="container"
+                                       data-lm-tag="container">
+                                <span class="lm-tag-name">container</span>
+                                <span class="lm-tag-count" aria-label="1 guide">1</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-data">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-data"
+                                       value="data"
+                                       data-lm-tag="data">
+                                <span class="lm-tag-name">data</span>
+                                <span class="lm-tag-count" aria-label="1 guide">1</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-gpu">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-gpu"
+                                       value="GPU"
+                                       data-lm-tag="GPU">
+                                <span class="lm-tag-name">GPU</span>
+                                <span class="lm-tag-count" aria-label="2 guides">2</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-hpc">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-hpc"
+                                       value="HPC"
+                                       data-lm-tag="HPC">
+                                <span class="lm-tag-name">HPC</span>
+                                <span class="lm-tag-count" aria-label="1 guide">1</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-htc">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-htc"
+                                       value="HTC"
+                                       data-lm-tag="HTC">
+                                <span class="lm-tag-name">HTC</span>
+                                <span class="lm-tag-count" aria-label="8 guides">8</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-machine-learning-and-ai">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-machine-learning-and-ai"
+                                       value="machine learning and AI"
+                                       data-lm-tag="machine learning and AI">
+                                <span class="lm-tag-name">machine learning and AI</span>
+                                <span class="lm-tag-count" aria-label="1 guide">1</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-python">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-python"
+                                       value="Python"
+                                       data-lm-tag="Python">
+                                <span class="lm-tag-name">Python</span>
+                                <span class="lm-tag-count" aria-label="1 guide">1</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-r">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-r"
+                                       value="R"
+                                       data-lm-tag="R">
+                                <span class="lm-tag-name">R</span>
+                                <span class="lm-tag-count" aria-label="1 guide">1</span>
+                            </label>
+                        </li>
+                        
+                        
+                        <li>
+                            <label class="lm-tag-option" for="lm-tag-workflow-managers">
+                                <input class="form-check-input" type="checkbox"
+                                       id="lm-tag-workflow-managers"
+                                       value="workflow managers"
+                                       data-lm-tag="workflow managers">
+                                <span class="lm-tag-name">workflow managers</span>
+                                <span class="lm-tag-count" aria-label="1 guide">1</span>
+                            </label>
+                        </li>
+                        
+                    </ul>
+                </div>
             </div>
-            
-
-            
-            
-            
-            
-
-            <div class="card mb-4 border-0">
-                    <div class="card-header bg-primary">
-                        <h2 class="m-0 text-light">
-                            Featured learning resources
-                        </h2>
-                    </div>
-                    <div class="row g-3 text-dark">
-                        
-                            
-                            
-                            <div class="col-4 pt-3">
-                            
-                                <a href="https://github.com/CHTC/tutorial-CHTC-AF3" class="portal-card btn w-100 h-100 p-4 border rounded-3 d-flex flex-column align-items-start">
-                                    
-                                    <i class="bi bi-github mb-2" style="font-size: 1.5rem;"></i>
-                                    
-                                    <span class="fw-bold" style="font-size: 1.25rem;">
-                                        Predict Protein Structures with Alphafold3
-                                    </span>
-                                    <p style="font-size: 0.9rem; margin-top: 0.5rem; text-align: left;">
-                                        AlphaFold3 (AF3) predicts atomic-resolution biomolecular structures
-for proteins, nucleic acids, and complexes.
-
-                                    </p>
-                                </a>
-                            </div>
-                        
-                            
-                            
-                            <div class="col-4 pt-3">
-                            
-                                <a href="https://github.com/chtc/tutorial-rstudio-to-chtc" class="portal-card btn w-100 h-100 p-4 border rounded-3 d-flex flex-column align-items-start">
-                                    
-                                    <i class="bi bi-github mb-2" style="font-size: 1.5rem;"></i>
-                                    
-                                    <span class="fw-bold" style="font-size: 1.25rem;">
-                                        Learn How to Deploy R Calculations
-                                    </span>
-                                    <p style="font-size: 0.9rem; margin-top: 0.5rem; text-align: left;">
-                                        A step-by-step example of transitioning from running R calculations
-on your computer using RStudio, to running many such calculations
-on a HTC system.
-
-                                    </p>
-                                </a>
-                            </div>
-                        
-                            
-                            
-                            <div class="col-4 pt-3">
-                            
-                                <a href="https://github.com/CHTC/biocafe-containers" class="portal-card btn w-100 h-100 p-4 border rounded-3 d-flex flex-column align-items-start">
-                                    
-                                    <i class="bi bi-github mb-2" style="font-size: 1.5rem;"></i>
-                                    
-                                    <span class="fw-bold" style="font-size: 1.25rem;">
-                                        Build a Conda-based Container for Bioinformatics
-                                    </span>
-                                    <p style="font-size: 0.9rem; margin-top: 0.5rem; text-align: left;">
-                                        This tutorial covers the basics of how to use containers to deploy software.
-While this example is bioinformatics-flavored, the concepts can be applied
-to any software stack.
-
-                                    </p>
-                                </a>
-                            </div>
-                        
-                    </div>
-                    
-                    <div class="pt-3">
-                        <a href="/uw-research-computing/learning-resources.html" class="btn btn-outline-primary">
-                            See all learning resources <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    
-            </div>
-            
-
-            
-            
-            
-            
-
-            <div class="card mb-4 border-0">
-                    <div class="card-header bg-primary">
-                        <h2 class="m-0 text-light">
-                            Interactive computing
-                        </h2>
-                    </div>
-                    <div class="row g-3 text-dark">
-                        
-                            
-                            
-                            <div class="col-6 pt-3">
-                            
-                                <a href="https://ondemand.chtc.wisc.edu" class="portal-card btn w-100 h-100 p-4 border rounded-3 d-flex flex-column align-items-start">
-                                    
-                                    <i class="bi bi-box-arrow-up-right mb-2" style="font-size: 1.5rem;"></i>
-                                    
-                                    <span class="fw-bold" style="font-size: 1.25rem;">
-                                        OpenOnDemand
-                                    </span>
-                                    <p style="font-size: 0.9rem; margin-top: 0.5rem; text-align: left;">
-                                        Web-based interface to the HPC system.
-
-                                    </p>
-                                </a>
-                            </div>
-                        
-                            
-                            
-                            <div class="col-6 pt-3">
-                            
-                                <a href="https://badgercompute.wisc.edu" class="portal-card btn w-100 h-100 p-4 border rounded-3 d-flex flex-column align-items-start">
-                                    
-                                    <i class="bi bi-box-arrow-up-right mb-2" style="font-size: 1.5rem;"></i>
-                                    
-                                    <span class="fw-bold" style="font-size: 1.25rem;">
-                                        BadgerCompute
-                                    </span>
-                                    <p style="font-size: 0.9rem; margin-top: 0.5rem; text-align: left;">
-                                        Jupyter-based interactive computing.
-
-                                    </p>
-                                </a>
-                            </div>
-                        
-                    </div>
-                    
-            </div>
-            
         </div>
 
-        <div class="col-xl-4 d-none d-xl-block">
-            <div class="list-group">
+        <!-- Cards, with filter + sort controls -->
+        <div class="col-12 col-lg-9">
+
+            <div class="lm-toolbar">
+                <div class="lm-search">
+                    <label class="visually-hidden" for="lm-search-input">Search learning resources</label>
+                    <i class="bi bi-search lm-search-icon" aria-hidden="true"></i>
+                    <input type="search" class="form-control" id="lm-search-input"
+                           placeholder="Search titles, descriptions, and tags" autocomplete="off">
+                </div>
+
+                <div class="lm-sort">
+                    <label class="form-label mb-0" for="lm-sort-select">Sort by</label>
+                    <select class="form-select" id="lm-sort-select">
+                        <option value="featured" selected>Featured first</option>
+                        <option value="updated-desc">Recently updated</option>
+                        <option value="updated-asc">Least recently updated</option>
+                        <option value="title-asc">Title (A&ndash;Z)</option>
+                        <option value="title-desc">Title (Z&ndash;A)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="lm-status">
+                <p class="mb-0 text-muted" id="lm-count" aria-live="polite">
+                    Showing 8 of 8 guides
+                </p>
+                <div id="lm-active-tags" class="lm-active-tags"></div>
+            </div>
+
+            <div class="row" id="lm-grid">
                 
-                    <div class="mb-4">
-                        <div class="d-flex" style="font-size: 1.25rem; font-weight: 500;">
-                            <div class="mb-0">Support</div>
-                        </div>
-                        
-                            <a href=/uw-research-computing/get-help.html class="list-group-item list-group-item-action d-flex border">
-                                Get Help
-                            </a>
-                        
-                            <a href=https://community.chtc.wisc.edu/ class="list-group-item list-group-item-action d-flex border">
-                                Community Forum
-                            </a>
-                        
-                            <a href=https://status.chtc.wisc.edu/ class="list-group-item list-group-item-action d-flex border">
-                                System Status
-                            </a>
-                        
-                            <a href=/uw-research-computing/form class="list-group-item list-group-item-action d-flex border">
-                                Request an account
-                            </a>
-                        
-                            <a href=/uw-research-computing/quota-request class="list-group-item list-group-item-action d-flex border">
-                                Request a quota change
-                            </a>
-                        
-                    </div>
+
                 
-                    <div class="mb-4">
-                        <div class="d-flex" style="font-size: 1.25rem; font-weight: 500;">
-                            <div class="mb-0">Events</div>
-                        </div>
-                        
-                            <a href=/events.html class="list-group-item list-group-item-action d-flex border">
-                                Events and Training
-                            </a>
-                        
-                            <a href=/uw-research-computing/bioinformatics-cafe class="list-group-item list-group-item-action d-flex border">
-                                Bioinformatics Café
-                            </a>
-                        
-                            <a href=/uw-research-computing/email-list class="list-group-item list-group-item-action d-flex border">
-                                Sign up for our email list
-                            </a>
-                        
-                    </div>
                 
-                    <div class="mb-4">
-                        <div class="d-flex" style="font-size: 1.25rem; font-weight: 500;">
-                            <div class="mb-0">About and information</div>
+                
+
+                <div class="col-12 col-md-6 col-xl-4 mb-4 lm-card-col"
+                     data-tags="bioinformatics|CHTC-created|HTC|GPU"
+                     data-featured="true"
+                     data-updated="2026-09-11"
+                     data-title="Predict Protein Structures with Alphafold3"
+                     data-search="Predict Protein Structures with Alphafold3 AlphaFold3 (AF3) predicts atomic-resolution biomolecular structures for proteins, nucleic acids, and complexes. bioinformatics CHTC-created HTC GPU">
+                    <div class="lm-card lm-card-featured">
+                        
+                        <span class="lm-featured-label" title="Featured">
+                            <i class="bi bi-star-fill" aria-hidden="true"></i><span class="lm-featured-text">Featured</span>
+                        </span>
+                        
+                        <div class="lm-card-head">
+                            <h3 class="lm-card-title">
+                                <a class="stretched-link" href="https://github.com/CHTC/tutorial-CHTC-AF3">Predict Protein Structures with Alphafold3</a>
+                            </h3>
                         </div>
-                        
-                            <a href=/about class="list-group-item list-group-item-action d-flex border">
-                                About
-                            </a>
-                        
-                            <a href=/uw-research-computing/user-expectations class="list-group-item list-group-item-action d-flex border">
-                                User expectations
-                            </a>
-                        
-                            <a href=/uw-research-computing/cite-chtc class="list-group-item list-group-item-action d-flex border">
-                                Cite us
-                            </a>
-                        
+
+                        <div class="lm-card-description">
+                            <p>AlphaFold3 (AF3) predicts atomic-resolution biomolecular structures
+for proteins, nucleic acids, and complexes.</p>
+
+                        </div>
+
+                        <div class="lm-card-tags">
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="bioinformatics">bioinformatics</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="CHTC-created">CHTC-created</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HTC">HTC</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="GPU">GPU</button>
+                            
+                        </div>
+
+                        <div class="lm-card-footer">
+                            <span class="lm-card-source">
+                                
+                                <i class="bi bi-github lm-card-icon" aria-hidden="true"></i>
+                                
+                            </span>
+                            <span class="lm-card-meta">
+                                
+                                <span class="lm-card-updated">Updated Sep 11, 2026</span>
+                                
+                            </span>
+                        </div>
                     </div>
+                </div>
+                
+
+                
+                
+                
+
+                <div class="col-12 col-md-6 col-xl-4 mb-4 lm-card-col"
+                     data-tags="R|CHTC-created|beginner-friendly|HTC"
+                     data-featured="true"
+                     data-updated="2026-03-23"
+                     data-title="Learn How to Deploy R Calculations"
+                     data-search="Learn How to Deploy R Calculations A step-by-step example of transitioning from running R calculations on your computer using RStudio, to running many such calculations on a HTC system. R CHTC-created beginner-friendly HTC">
+                    <div class="lm-card lm-card-featured">
+                        
+                        <span class="lm-featured-label" title="Featured">
+                            <i class="bi bi-star-fill" aria-hidden="true"></i><span class="lm-featured-text">Featured</span>
+                        </span>
+                        
+                        <div class="lm-card-head">
+                            <h3 class="lm-card-title">
+                                <a class="stretched-link" href="https://github.com/chtc/tutorial-rstudio-to-chtc">Learn How to Deploy R Calculations</a>
+                            </h3>
+                        </div>
+
+                        <div class="lm-card-description">
+                            <p>A step-by-step example of transitioning from running R calculations
+on your computer using RStudio, to running many such calculations
+on a HTC system.</p>
+
+                        </div>
+
+                        <div class="lm-card-tags">
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="R">R</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="CHTC-created">CHTC-created</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="beginner-friendly">beginner-friendly</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HTC">HTC</button>
+                            
+                        </div>
+
+                        <div class="lm-card-footer">
+                            <span class="lm-card-source">
+                                
+                                <i class="bi bi-github lm-card-icon" aria-hidden="true"></i>
+                                
+                            </span>
+                            <span class="lm-card-meta">
+                                
+                                <span class="lm-card-updated">Updated Mar 23, 2026</span>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+                
+                
+
+                <div class="col-12 col-md-6 col-xl-4 mb-4 lm-card-col"
+                     data-tags="conda|HTC|bioinformatics|CHTC-created|container"
+                     data-featured="true"
+                     data-updated="2026-03-10"
+                     data-title="Build a Conda-based Container for Bioinformatics"
+                     data-search="Build a Conda-based Container for Bioinformatics This tutorial covers the basics of how to use containers to deploy software. While this example is bioinformatics-flavored, the concepts can be applied to any software stack. conda HTC bioinformatics CHTC-created container">
+                    <div class="lm-card lm-card-featured">
+                        
+                        <span class="lm-featured-label" title="Featured">
+                            <i class="bi bi-star-fill" aria-hidden="true"></i><span class="lm-featured-text">Featured</span>
+                        </span>
+                        
+                        <div class="lm-card-head">
+                            <h3 class="lm-card-title">
+                                <a class="stretched-link" href="https://github.com/CHTC/biocafe-containers">Build a Conda-based Container for Bioinformatics</a>
+                            </h3>
+                        </div>
+
+                        <div class="lm-card-description">
+                            <p>This tutorial covers the basics of how to use containers to deploy software.
+While this example is bioinformatics-flavored, the concepts can be applied
+to any software stack.</p>
+
+                        </div>
+
+                        <div class="lm-card-tags">
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="conda">conda</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HTC">HTC</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="bioinformatics">bioinformatics</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="CHTC-created">CHTC-created</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="container">container</button>
+                            
+                        </div>
+
+                        <div class="lm-card-footer">
+                            <span class="lm-card-source">
+                                
+                                <i class="bi bi-github lm-card-icon" aria-hidden="true"></i>
+                                
+                            </span>
+                            <span class="lm-card-meta">
+                                
+                                <span class="lm-card-updated">Updated Mar 10, 2026</span>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+                
+                
+
+                <div class="col-12 col-md-6 col-xl-4 mb-4 lm-card-col"
+                     data-tags="CHTC-created|HTC|bioinformatics"
+                     data-featured="false"
+                     data-updated="2026-04-08"
+                     data-title="Genome Assembly using Nanopore Reads on CHTC"
+                     data-search="Genome Assembly using Nanopore Reads on CHTC A genome assembly workflow for Oxford Nanopore long reads using hifiasm on CHTC&#39;s High Throughput Computing infrastructure. CHTC-created HTC bioinformatics">
+                    <div class="lm-card">
+                        
+                        <div class="lm-card-head">
+                            <h3 class="lm-card-title">
+                                <a class="stretched-link" href="https://github.com/CHTC/tutorial-CHTC-Genome-Assembly">Genome Assembly using Nanopore Reads on CHTC</a>
+                            </h3>
+                        </div>
+
+                        <div class="lm-card-description">
+                            <p>A genome assembly workflow for Oxford Nanopore long reads using hifiasm
+on CHTC’s High Throughput Computing infrastructure.</p>
+
+                        </div>
+
+                        <div class="lm-card-tags">
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="CHTC-created">CHTC-created</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HTC">HTC</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="bioinformatics">bioinformatics</button>
+                            
+                        </div>
+
+                        <div class="lm-card-footer">
+                            <span class="lm-card-source">
+                                
+                                <i class="bi bi-github lm-card-icon" aria-hidden="true"></i>
+                                
+                            </span>
+                            <span class="lm-card-meta">
+                                
+                                <span class="lm-card-updated">Updated Apr 8, 2026</span>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+                
+                
+
+                <div class="col-12 col-md-6 col-xl-4 mb-4 lm-card-col"
+                     data-tags="CHTC-created|HTC|HPC|data"
+                     data-featured="false"
+                     data-updated="2026-04-07"
+                     data-title="Using ResearchDrive with CHTC"
+                     data-search="Using ResearchDrive with CHTC Learn how to use the computing power of CHTC with the data you keep in ResearchDrive. CHTC-created HTC HPC data">
+                    <div class="lm-card">
+                        
+                        <div class="lm-card-head">
+                            <h3 class="lm-card-title">
+                                <a class="stretched-link" href="https://github.com/CHTC/tutorial-researchdrive">Using ResearchDrive with CHTC</a>
+                            </h3>
+                        </div>
+
+                        <div class="lm-card-description">
+                            <p>Learn how to use the computing power of CHTC with the data you keep in ResearchDrive.</p>
+
+                        </div>
+
+                        <div class="lm-card-tags">
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="CHTC-created">CHTC-created</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HTC">HTC</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HPC">HPC</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="data">data</button>
+                            
+                        </div>
+
+                        <div class="lm-card-footer">
+                            <span class="lm-card-source">
+                                
+                                <i class="bi bi-github lm-card-icon" aria-hidden="true"></i>
+                                
+                            </span>
+                            <span class="lm-card-meta">
+                                
+                                <span class="lm-card-updated">Updated Apr 7, 2026</span>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+                
+                
+
+                <div class="col-12 col-md-6 col-xl-4 mb-4 lm-card-col"
+                     data-tags="CHTC-created|HTC|GPU|machine learning and AI|Python"
+                     data-featured="false"
+                     data-updated="2026-03-25"
+                     data-title="Cat-Dog Classifier: Run a PyTorch workflow on the HTC system"
+                     data-search="Cat-Dog Classifier: Run a PyTorch workflow on the HTC system Learn how to run PyTorch training and inference workflows with this cat-dog image classifier. Contains example container recipes that you can use as a starting point for your own ML workflows. CHTC-created HTC GPU machine learning and AI Python">
+                    <div class="lm-card">
+                        
+                        <div class="lm-card-head">
+                            <h3 class="lm-card-title">
+                                <a class="stretched-link" href="https://github.com/CHTC/tutorial-pytorch-catdog">Cat-Dog Classifier: Run a PyTorch workflow on the HTC system</a>
+                            </h3>
+                        </div>
+
+                        <div class="lm-card-description">
+                            <p>Learn how to run PyTorch training and inference workflows with this
+cat-dog image classifier. Contains example container recipes that
+you can use as a starting point for your own ML workflows.</p>
+
+                        </div>
+
+                        <div class="lm-card-tags">
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="CHTC-created">CHTC-created</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HTC">HTC</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="GPU">GPU</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="machine learning and AI">machine learning and AI</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="Python">Python</button>
+                            
+                        </div>
+
+                        <div class="lm-card-footer">
+                            <span class="lm-card-source">
+                                
+                                <i class="bi bi-github lm-card-icon" aria-hidden="true"></i>
+                                
+                            </span>
+                            <span class="lm-card-meta">
+                                
+                                <span class="lm-card-updated">Updated Mar 25, 2026</span>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+                
+                
+
+                <div class="col-12 col-md-6 col-xl-4 mb-4 lm-card-col"
+                     data-tags="CHTC-created|HTC|bioinformatics|beginner-friendly"
+                     data-featured="false"
+                     data-updated="2024-10-02"
+                     data-title="Analyzing Multiple Sequence Files with fastqc"
+                     data-search="Analyzing Multiple Sequence Files with fastqc How to run a set of jobs using different input files, with bioinformatics as the example domain. This process can be applied to any other workflow that processes individual data files. CHTC-created HTC bioinformatics beginner-friendly">
+                    <div class="lm-card">
+                        
+                        <div class="lm-card-head">
+                            <h3 class="lm-card-title">
+                                <a class="stretched-link" href="https://github.com/CHTC/tutorial-fastqc">Analyzing Multiple Sequence Files with fastqc</a>
+                            </h3>
+                        </div>
+
+                        <div class="lm-card-description">
+                            <p>How to run a set of jobs using different input files, with bioinformatics as the
+example domain. This process can be applied to any other workflow that processes individual data files.</p>
+
+                        </div>
+
+                        <div class="lm-card-tags">
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="CHTC-created">CHTC-created</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HTC">HTC</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="bioinformatics">bioinformatics</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="beginner-friendly">beginner-friendly</button>
+                            
+                        </div>
+
+                        <div class="lm-card-footer">
+                            <span class="lm-card-source">
+                                
+                                <i class="bi bi-github lm-card-icon" aria-hidden="true"></i>
+                                
+                            </span>
+                            <span class="lm-card-meta">
+                                
+                                <span class="lm-card-updated">Updated Oct 2, 2024</span>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+                
+                
+
+                <div class="col-12 col-md-6 col-xl-4 mb-4 lm-card-col"
+                     data-tags="CHTC-created|HTC|workflow managers"
+                     data-featured="false"
+                     data-updated="2024-09-18"
+                     data-title="Automating Job Submission with HTCondor&#39;s DAGMan"
+                     data-search="Automating Job Submission with HTCondor&#39;s DAGMan HTCondor&#39;s Directed Acyclic Graph Manager (DAGMan) utility enables you to automate the submission of your HTCondor jobs. This tutorial guides you through how to use DAGMan to submit two HTCondor jobs. CHTC-created HTC workflow managers">
+                    <div class="lm-card">
+                        
+                        <div class="lm-card-head">
+                            <h3 class="lm-card-title">
+                                <a class="stretched-link" href="https://github.com/CHTC/tutorial-dagman-intro">Automating Job Submission with HTCondor's DAGMan</a>
+                            </h3>
+                        </div>
+
+                        <div class="lm-card-description">
+                            <p>HTCondor’s Directed Acyclic Graph Manager (DAGMan) utility enables you to automate the submission of
+your HTCondor jobs. This tutorial guides you through how to use DAGMan to submit two HTCondor jobs.</p>
+
+                        </div>
+
+                        <div class="lm-card-tags">
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="CHTC-created">CHTC-created</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="HTC">HTC</button>
+                            
+                            <button type="button" class="lm-tag-badge" data-lm-tag-toggle="workflow managers">workflow managers</button>
+                            
+                        </div>
+
+                        <div class="lm-card-footer">
+                            <span class="lm-card-source">
+                                
+                                <i class="bi bi-github lm-card-icon" aria-hidden="true"></i>
+                                
+                            </span>
+                            <span class="lm-card-meta">
+                                
+                                <span class="lm-card-updated">Updated Sep 18, 2024</span>
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 
             </div>
+
+            <div id="lm-no-results" class="lm-no-results" hidden>
+                <p class="mb-2"><strong>No learning resources match your filters.</strong></p>
+                <button type="button" class="btn btn-outline-primary btn-sm" id="lm-reset-all">Clear all filters</button>
+            </div>
+
+            
+            <nav id="lm-pagination" class="lm-pagination" aria-label="Learning resources pages" hidden></nav>
+
         </div>
     </div>
 </div>
